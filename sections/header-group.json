@@ -1,0 +1,19 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "diamension-header": {
+      "type": "custom-section-diamension-header",
+      "settings": {
+        "announcement_text": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k",
+        "header_mode": "auto",
+        "menu": "main-menu",
+        "logo_width": 190,
+        "currency_text": "INR / ₹"
+      }
+    }
+  },
+  "order": [
+    "diamension-header"
+  ]
+}

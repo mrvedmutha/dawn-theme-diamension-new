@@ -1,0 +1,1134 @@
+/* ============================================
+   Diamension Header - Custom Section
+   ============================================ */
+
+/* Font Face - Neue Haas Grotesk Display Pro */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   TEMPORARY FIX: Hide Default Dawn Header & Announcement
+   ============================================ */
+/* Hide the default Shopify header when custom header is present */
+body:has([data-header]) .shopify-section-header,
+body:has([data-header]) header.header {
+  display: none !important;
+}
+
+/* Hide the default Dawn announcement bar */
+body:has([data-header]) .shopify-section-announcement-bar,
+body:has([data-header]) .announcement-bar {
+  display: none !important;
+}
+
+/* ============================================
+   Layout Fix: Image Banner Behind Header
+   ============================================ */
+/* Remove top spacing and make first section start at top */
+body:has([data-header]) .shopify-section:first-of-type {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Ensure main content area has no top spacing */
+body:has([data-header]) main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Make image banner full height and start from top */
+body:has([data-header]) .shopify-section--image-banner,
+body:has([data-header]) [id*='shopify-section'] .image-banner {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ============================================
+   Block: diamension-header
+   ============================================ */
+
+.diamension-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transform: translateY(0);
+}
+
+/* Transparent state (default) */
+.diamension-header {
+  background-color: transparent;
+  color: #fffaf5;
+}
+
+/* Hidden state (scrolling down) */
+.diamension-header--hidden {
+  transform: translateY(-100%);
+}
+
+/* Solid/Sticky state (added via JavaScript on scroll) */
+.diamension-header--scrolled {
+  background-color: #fffaf5;
+  color: #183754;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Solid state when search is open */
+.diamension-header--search-open {
+  background-color: #fffaf5;
+  color: #183754;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   Header Mode: Solid Variant
+   ============================================ */
+
+/* Solid Mode - Header takes up space in layout (position: relative) */
+.diamension-header--solid {
+  position: relative; /* Takes up space instead of overlaying */
+  background-color: #fffaf5;
+  color: #183754;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 999;
+}
+
+/* Always show dark logo for solid mode */
+.diamension-header--solid .diamension-header__logo-img--light {
+  display: none !important;
+}
+
+.diamension-header--solid .diamension-header__logo-img--dark {
+  display: block !important;
+}
+
+/* Always show dark icons for solid mode */
+.diamension-header--solid .diamension-header__icon-svg--light,
+.diamension-header--solid .diamension-header__hamburger-svg--light {
+  display: none !important;
+}
+
+.diamension-header--solid .diamension-header__icon-svg--dark,
+.diamension-header--solid .diamension-header__hamburger-svg--dark {
+  display: block !important;
+}
+
+/* Content follows below solid header (normal document flow) */
+body:has(.diamension-header--solid) main {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body:has(.diamension-header--solid) .shopify-section:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Transparent Mode keeps existing behavior (position: fixed, overlays content) */
+/* No additional styles needed - inherits from .diamension-header base styles */
+
+/* ============================================
+   Element: Announcement Bar
+   ============================================ */
+
+.diamension-header__announcement {
+  text-align: center;
+  padding: 15.66px 40px;
+  transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
+  border-bottom: 1px solid rgba(255, 250, 245, 0.5);
+}
+
+/* Hover on announcement bar - only announcement becomes solid */
+.diamension-header__announcement:hover {
+  background-color: #fffaf5;
+  color: #183754;
+  border-bottom-color: #183754;
+}
+
+/* Dark border when scrolled, hovered, or search open */
+.diamension-header--scrolled .diamension-header__announcement,
+.diamension-header--search-open .diamension-header__announcement {
+  border-bottom-color: #183754;
+}
+
+/* Dark border when main header is hovered */
+.diamension-header:has(.diamension-header__main:hover) .diamension-header__announcement {
+  border-bottom-color: #183754;
+}
+
+.diamension-header__announcement-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  /* letter-spacing: 0.24px; */
+  margin: 0;
+}
+
+/* ============================================
+   Element: Divider Line
+   ============================================ */
+
+.diamension-header__divider {
+  display: none;
+}
+
+/* ============================================
+   Element: Main Header
+   ============================================ */
+
+.diamension-header__main {
+  padding: 20px 0;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover on main header - makes both announcement AND header solid */
+.diamension-header__main:hover {
+  background-color: #fffaf5;
+}
+
+/* When hovering main header, also make announcement bar solid */
+.diamension-header__main:hover ~ .diamension-header__announcement,
+.diamension-header:has(.diamension-header__main:hover) .diamension-header__announcement {
+  background-color: #fffaf5;
+  color: #183754;
+}
+
+/* When hovering main header, change header text color */
+.diamension-header:has(.diamension-header__main:hover) {
+  color: #183754;
+}
+
+/* When hovering main header, add shadow to whole header */
+.diamension-header:has(.diamension-header__main:hover) {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.diamension-header__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 50.5px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   Element: Navigation (Left)
+   ============================================ */
+
+.diamension-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+}
+
+.diamension-header__nav-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.24px;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.diamension-header__nav-link:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   Element: Logo (Center)
+   ============================================ */
+
+.diamension-header__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.diamension-header__logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.diamension-header__logo-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.diamension-header__logo-img {
+  display: block;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+/* Position dark logo absolutely on top of light logo for smooth transition */
+.diamension-header__logo-img--dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Show light logo by default (transparent state) */
+.diamension-header__logo-img--light {
+  opacity: 1;
+}
+
+.diamension-header__logo-img--dark {
+  opacity: 0;
+}
+
+/* Show dark logo when scrolled OR when main header is hovered OR when search is open */
+.diamension-header--scrolled .diamension-header__logo-img--light,
+.diamension-header__main:hover .diamension-header__logo-img--light,
+.diamension-header--search-open .diamension-header__logo-img--light {
+  opacity: 0;
+}
+
+.diamension-header--scrolled .diamension-header__logo-img--dark,
+.diamension-header__main:hover .diamension-header__logo-img--dark,
+.diamension-header--search-open .diamension-header__logo-img--dark {
+  opacity: 1;
+}
+
+/* ============================================
+   Element: Actions (Right)
+   ============================================ */
+
+.diamension-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.diamension-header__icon {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  transition: opacity 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.diamension-header__icon:hover {
+  opacity: 0.7;
+}
+
+.diamension-header__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Icon switching - light/dark versions */
+.diamension-header__icon {
+  position: relative;
+}
+
+.diamension-header__icon-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* Light/Dark color switching for ALL icons */
+.diamension-header__icon-svg--light {
+  opacity: 1;
+}
+
+.diamension-header__icon-svg--dark {
+  opacity: 0;
+}
+
+/* Show dark icons when scrolled OR when main header is hovered OR when search is open */
+.diamension-header--scrolled .diamension-header__icon-svg--light,
+.diamension-header__main:hover .diamension-header__icon-svg--light,
+.diamension-header--search-open .diamension-header__icon-svg--light {
+  opacity: 0;
+}
+
+.diamension-header--scrolled .diamension-header__icon-svg--dark,
+.diamension-header__main:hover .diamension-header__icon-svg--dark,
+.diamension-header--search-open .diamension-header__icon-svg--dark {
+  opacity: 1;
+}
+
+/* Search/Close visibility controlled by JavaScript via class toggle */
+/* Default: Show search icons, hide close icons */
+.diamension-header__icon-svg--close {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* When close is active: Hide search icons, show close icons */
+.diamension-header__icon--close-active .diamension-header__icon-svg--search {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.diamension-header__icon--close-active .diamension-header__icon-svg--close {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* BUT: Light/dark color switching still works within visible icons */
+.diamension-header__icon--close-active .diamension-header__icon-svg--close.diamension-header__icon-svg--light {
+  opacity: 1 !important;
+}
+
+.diamension-header__icon--close-active .diamension-header__icon-svg--close.diamension-header__icon-svg--dark {
+  opacity: 0 !important;
+}
+
+.diamension-header--scrolled
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--light,
+.diamension-header__main:hover
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--light,
+.diamension-header--search-open
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--light {
+  opacity: 0 !important;
+}
+
+.diamension-header--scrolled
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--dark,
+.diamension-header__main:hover
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--dark,
+.diamension-header--search-open
+  .diamension-header__icon--close-active
+  .diamension-header__icon-svg--close.diamension-header__icon-svg--dark {
+  opacity: 1 !important;
+}
+
+.diamension-header__currency {
+  display: none; /* Hidden - not needed */
+  align-items: center;
+}
+
+.diamension-header__currency-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  color: inherit;
+}
+
+.diamension-header__cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #183754;
+  color: #fffaf5;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  display: none;
+}
+
+.diamension-header__cart-count:not(:empty) {
+  display: block;
+}
+
+/* Invert cart count colors when scrolled OR main header hovered OR search open */
+.diamension-header--scrolled .diamension-header__cart-count,
+.diamension-header__main:hover .diamension-header__cart-count,
+.diamension-header--search-open .diamension-header__cart-count {
+  background-color: #fffaf5;
+  color: #183754;
+  border: 1px solid #183754;
+}
+
+/* ============================================
+   Mobile Hamburger Menu
+   ============================================ */
+
+.diamension-header__hamburger {
+  display: none; /* Hidden on desktop */
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+}
+
+.diamension-header__hamburger-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* Show light hamburger by default */
+.diamension-header__hamburger-svg--light {
+  opacity: 1;
+}
+
+.diamension-header__hamburger-svg--dark {
+  opacity: 0;
+}
+
+/* Show dark hamburger when scrolled, hovered, menu open, or search open */
+.diamension-header--scrolled .diamension-header__hamburger-svg--light,
+.diamension-header__main:hover .diamension-header__hamburger-svg--light,
+.diamension-header--menu-open .diamension-header__hamburger-svg--light,
+.diamension-header--search-open .diamension-header__hamburger-svg--light {
+  opacity: 0;
+}
+
+.diamension-header--scrolled .diamension-header__hamburger-svg--dark,
+.diamension-header__main:hover .diamension-header__hamburger-svg--dark,
+.diamension-header--menu-open .diamension-header__hamburger-svg--dark,
+.diamension-header--search-open .diamension-header__hamburger-svg--dark {
+  opacity: 1;
+}
+
+/* Mobile Menu Overlay */
+.diamension-header__mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #fffaf5; /* Cream background */
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.diamension-header__mobile-menu.is-open {
+  transform: translateX(0);
+}
+
+/* Close Button */
+.diamension-header__mobile-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.diamension-header__mobile-close:hover {
+  opacity: 0.7;
+}
+
+.diamension-header__mobile-menu-content {
+  padding-top: 100px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.diamension-header__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.diamension-header__mobile-nav-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.48px;
+  text-decoration: none;
+  color: #183754; /* Dark text */
+  transition: opacity 0.2s ease;
+}
+
+.diamension-header__mobile-nav-link:hover {
+  opacity: 0.7;
+}
+
+/* Header becomes solid when menu is open */
+.diamension-header--menu-open {
+  background-color: #fffaf5;
+  color: #183754;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+/* Large Desktop - Center content, don't stretch beyond 1440px */
+@media (min-width: 1441px) {
+  .diamension-header__container {
+    max-width: 1440px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .diamension-header__container {
+    padding: 0 30px;
+  }
+
+  .diamension-header__nav {
+    gap: 24px;
+  }
+
+  .diamension-header__actions {
+    gap: 24px;
+  }
+
+  .diamension-header__nav-link {
+    font-size: 11px;
+  }
+
+  .diamension-header__announcement-text {
+    font-size: 11px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  /* Hide announcement bar on mobile */
+  .diamension-header__announcement {
+    display: none;
+  }
+
+  /* Hide divider on mobile */
+  .diamension-header__divider {
+    display: none;
+  }
+
+  .diamension-header__container {
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Show hamburger on mobile */
+  .diamension-header__hamburger {
+    display: block;
+    grid-column: 1;
+  }
+
+  /* Hide desktop nav on mobile */
+  .diamension-header__nav {
+    display: none;
+  }
+
+  /* Logo in center */
+  .diamension-header__logo {
+    position: static;
+    transform: none;
+    grid-column: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .diamension-header__logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .diamension-header__logo-img {
+    max-width: 140px;
+  }
+
+  /* Icons on right */
+  .diamension-header__actions {
+    grid-column: 3;
+    gap: 16px;
+  }
+
+  /* Hide profile icon on mobile */
+  .diamension-header__icon-profile {
+    display: none;
+  }
+
+  .diamension-header__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .diamension-header__announcement {
+    padding: 12px 20px;
+  }
+
+  .diamension-header__announcement-text {
+    font-size: 9px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .diamension-header__container {
+    padding: 0 15px;
+  }
+
+  .diamension-header__actions {
+    gap: 12px;
+  }
+
+  .diamension-header__currency {
+    display: none;
+  }
+}
+
+/* ============================================
+   SEARCH OVERLAY STYLES
+   ============================================ */
+
+/* Search Overlay Container */
+.diamension-search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 998;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  --header-height: 105px; /* Announcement bar (43.66px) + Main header (61px) + buffer */
+}
+
+.diamension-search-overlay--active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.diamension-search-overlay--active .diamension-search-overlay__backdrop,
+.diamension-search-overlay--active .diamension-search-overlay__content {
+  pointer-events: all;
+}
+
+/* Backdrop */
+.diamension-search-overlay__backdrop {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  height: calc(100% - var(--header-height));
+  background-color: rgba(24, 55, 84, 0.3);
+  z-index: 1;
+}
+
+/* Content Container */
+.diamension-search-overlay__content {
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  background-color: #fffaf5;
+  z-index: 2;
+  height: 0;
+  opacity: 0;
+  padding-bottom: 40px;
+  max-height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+/* Search Input Wrapper */
+.diamension-search-overlay__input-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 60px 0 0;
+}
+
+.diamension-search-overlay__form {
+  width: 760px;
+  max-width: calc(100% - 40px);
+  position: relative;
+}
+
+.diamension-search-overlay__input {
+  width: 100%;
+  height: 60px;
+  background-color: #eae9e7;
+  border: none;
+  padding: 20px 60px 20px 20px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(24, 55, 84, 0.57);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  outline: none;
+}
+
+.diamension-search-overlay__input::placeholder {
+  color: rgba(24, 55, 84, 0.57);
+  text-transform: uppercase;
+}
+
+.diamension-search-overlay__input:focus {
+  color: #183754;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Search Icon Button */
+.diamension-search-overlay__search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diamension-search-overlay__search-icon:hover {
+  opacity: 0.7;
+}
+
+/* Divider Line */
+.diamension-search-overlay__divider {
+  position: absolute;
+  left: 19.67px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  width: 29.533px;
+  height: 1px;
+  background-color: #183754;
+}
+
+/* Suggested Terms */
+.diamension-search-overlay__suggested {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.diamension-search-overlay__suggested-label {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  text-transform: uppercase;
+  letter-spacing: 0.28px;
+  margin: 0;
+}
+
+.diamension-search-overlay__suggested-terms {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.diamension-search-overlay__suggested-term {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  text-transform: uppercase;
+  letter-spacing: 0.28px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.diamension-search-overlay__suggested-term:hover {
+  color: #183754;
+}
+
+/* Search Results Container */
+.diamension-search-overlay__results {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 60px 20px 0;
+}
+
+/* Loading Spinner */
+.diamension-search-overlay__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+.diamension-search-overlay__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #eae9e7;
+  border-top-color: #183754;
+  border-radius: 50%;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* No Results */
+.diamension-search-overlay__no-results {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.diamension-search-overlay__no-results-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #183754;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Products Grid */
+.diamension-search-overlay__products {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+/* Product Card */
+.diamension-search-overlay__product-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  transition: opacity 0.3s ease;
+}
+
+.diamension-search-overlay__product-card:hover {
+  opacity: 0.8;
+}
+
+.diamension-search-overlay__product-image-wrapper {
+  width: 100%;
+  aspect-ratio: 223 / 271;
+  background-color: #f0efea;
+  overflow: hidden;
+  position: relative;
+}
+
+.diamension-search-overlay__product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.diamension-search-overlay__product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.diamension-search-overlay__product-title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 26px;
+  color: #183754;
+  text-align: left;
+  margin: 0;
+}
+
+.diamension-search-overlay__product-price {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #3e6282;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0;
+}
+
+/* View More Link */
+.diamension-search-overlay__view-more {
+  text-align: center;
+  padding: 20px 0 40px;
+}
+
+.diamension-search-overlay__view-more-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.diamension-search-overlay__view-more-link:hover {
+  opacity: 0.7;
+}
+
+/* Responsive: Tablet */
+@media (max-width: 1024px) {
+  .diamension-search-overlay__products {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .diamension-search-overlay__input-wrapper {
+    padding-top: 50px;
+  }
+
+  .diamension-search-overlay__form {
+    width: 90%;
+  }
+
+  .diamension-search-overlay__suggested {
+    margin-top: 60px;
+    gap: 20px;
+  }
+
+  .diamension-search-overlay__suggested-terms {
+    gap: 20px;
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 767px) {
+  .diamension-search-overlay {
+    --header-height: 61px; /* Main header only on mobile (no announcement bar) */
+  }
+
+  .diamension-search-overlay__products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .diamension-search-overlay__input-wrapper {
+    padding-top: 40px;
+  }
+
+  .diamension-search-overlay__form {
+    width: calc(100% - 40px);
+  }
+
+  .diamension-search-overlay__input {
+    height: 50px;
+    font-size: 14px;
+    padding: 15px 50px 15px 15px;
+  }
+
+  .diamension-search-overlay__search-icon {
+    right: 15px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .diamension-search-overlay__search-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .diamension-search-overlay__suggested {
+    margin-top: 40px;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .diamension-search-overlay__suggested-label,
+  .diamension-search-overlay__suggested-term {
+    font-size: 12px;
+  }
+
+  .diamension-search-overlay__suggested-terms {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .diamension-search-overlay__product-title {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .diamension-search-overlay__product-price {
+    font-size: 12px;
+  }
+
+  .diamension-search-overlay__no-results-text {
+    font-size: 16px;
+  }
+
+  .diamension-search-overlay__results {
+    padding-top: 40px;
+  }
+}

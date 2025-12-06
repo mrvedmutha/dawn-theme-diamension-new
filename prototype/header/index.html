@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diamension - Header Prototype</title>
+  <!-- Custom Fonts -->
+  <link rel="stylesheet" href="../assets/fonts/neue-haas-display/stylesheet.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+  <!-- Prototype Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER SECTION -->
+  <header class="header header--transparent" id="main-header">
+
+    <!-- Top Bar: Shipping Message -->
+    <div class="header__top-bar">
+      <p class="header__shipping-message">
+        FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER 450€
+      </p>
+    </div>
+
+    <!-- Main Nav Bar -->
+    <div class="header__main">
+
+      <!-- Left Navigation -->
+      <nav class="header__nav header__nav--left" aria-label="Main navigation">
+        <ul class="header__nav-list">
+          <li class="header__nav-item"><a href="#shop">Shop</a></li>
+          <li class="header__nav-item"><a href="#customize">Customize</a></li>
+          <li class="header__nav-item"><a href="#brand">Brand</a></li>
+          <li class="header__nav-item"><a href="#origins">Origins</a></li>
+        </ul>
+      </nav>
+
+      <!-- Center Logo -->
+      <div class="header__logo">
+        <a href="/" aria-label="Diamension Home">
+          <!-- Logo White (for transparent header) -->
+          <img src="../assets/images/diamension-logo-white.svg" alt="DIAMENSION" class="header__logo-image header__logo-image--white">
+          <!-- Logo Dark (for filled header) -->
+          <img src="../assets/images/diamension-logo-dark.svg" alt="DIAMENSION" class="header__logo-image header__logo-image--dark">
+          <p class="header__logo-subtitle">jewellery</p>
+        </a>
+      </div>
+
+      <!-- Right Icon Group -->
+      <div class="header__icon-group">
+        <!-- Search Icon -->
+        <button class="header__icon header__icon--search" aria-label="Search">
+          <img src="../assets/icons/icon-search-white.svg" alt="" class="header__icon-image header__icon-image--white">
+          <img src="../assets/icons/icon-search-dark.svg" alt="" class="header__icon-image header__icon-image--dark">
+        </button>
+
+        <!-- Currency Selector -->
+        <div class="header__currency">
+          <button class="header__currency-toggle" aria-label="Select currency">
+            INR / ₹
+          </button>
+          <!-- Currency Dropdown -->
+          <div class="header__currency-dropdown" id="currency-dropdown">
+            <button class="header__currency-option" data-currency="USD">USD / $</button>
+            <button class="header__currency-option" data-currency="EUR">EUR / €</button>
+          </div>
+        </div>
+
+        <!-- Profile Icon -->
+        <button class="header__icon header__icon--profile" aria-label="Profile">
+          <img src="../assets/icons/icon-profile-white.svg" alt="" class="header__icon-image header__icon-image--white">
+          <img src="../assets/icons/icon-profile-dark.svg" alt="" class="header__icon-image header__icon-image--dark">
+        </button>
+
+        <!-- Cart Icon -->
+        <button class="header__icon header__icon--cart" aria-label="Shopping cart">
+          <img src="../assets/icons/icon-cart-white.svg" alt="" class="header__icon-image header__icon-image--white">
+          <img src="../assets/icons/icon-cart-dark.svg" alt="" class="header__icon-image header__icon-image--dark">
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle (Hidden on Desktop) -->
+      <button class="header__mobile-toggle" aria-label="Toggle menu" id="mobile-menu-toggle">
+        <span class="header__mobile-icon"></span>
+        <span class="header__mobile-icon"></span>
+        <span class="header__mobile-icon"></span>
+      </button>
+
+    </div>
+
+    <!-- Divider Line -->
+    <div class="header__divider"></div>
+
+  </header>
+
+  <!-- DEMO CONTENT (For Scroll Testing) -->
+  <main class="demo-content">
+    <section class="hero" style="height: 800px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+      <h1 style="color: white; font-size: 48px;">Scroll to see header transform</h1>
+    </section>
+    <section style="height: 1000px; background: #f5f5f5; padding: 50px; text-align: center;">
+      <h2>Content Section</h2>
+      <p>Keep scrolling to test the sticky header behavior...</p>
+    </section>
+    <section style="height: 1000px; background: white; padding: 50px; text-align: center;">
+      <h2>More Content</h2>
+      <p>The header should now be sticky with filled background.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

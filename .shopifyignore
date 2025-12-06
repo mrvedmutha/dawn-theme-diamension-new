@@ -1,0 +1,37 @@
+# Development files - don't push to Shopify store
+prototype/**
+backups/**
+docs/**
+tests/**
+
+# Node modules and dependencies
+node_modules/**
+package.json
+package-lock.json
+eslint.config.js
+
+# Documentation
+DEVELOPMENT-RULES.md
+README.md
+
+# Git files
+.git/**
+.gitignore
+
+# IDE and editor files
+.vscode/**
+.idea/**
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build and temp files
+*.log
+*.tmp
+.cache/**
+
+# Development tools
+.shopify/**

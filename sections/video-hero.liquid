@@ -1,0 +1,819 @@
+{%- style -%}
+  .video-hero-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    {%- if section.settings.video_poster != blank -%}
+      background-image: url('{{ section.settings.video_poster | image_url: width: 1920 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- endif -%}
+  }
+
+  .video-hero-{{ section.id }} .video-hero__video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__iframe {
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    min-height: 100vh;
+    min-width: 177.77vh; /* 16:9 aspect ratio */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+    z-index: 1;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 4rem 2rem;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.content_gap }}px;
+    max-width: {{ section.settings.content_width }}px;
+    width: 100%;
+  }
+
+  /* Text alignment classes */
+  .video-hero-{{ section.id }} .text-align--left {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .video-hero-{{ section.id }} .text-align--center {
+    text-align: center;
+    align-items: center;
+  }
+
+  .video-hero-{{ section.id }} .text-align--right {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  /* Grid positioning classes */
+  .video-hero-{{ section.id }} .position--top-left {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .video-hero-{{ section.id }} .position--top-center {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .video-hero-{{ section.id }} .position--top-right {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .video-hero-{{ section.id }} .position--middle-left {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .video-hero-{{ section.id }} .position--middle-center {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-hero-{{ section.id }} .position--middle-right {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .video-hero-{{ section.id }} .position--bottom-left {
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .video-hero-{{ section.id }} .position--bottom-center {
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .video-hero-{{ section.id }} .position--bottom-right {
+    grid-column: 1;
+    grid-row: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__heading {
+    font-size: {{ section.settings.heading_size_desktop }}px;
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+  }
+
+  .video-hero-{{ section.id }} .video-hero__subheading {
+    font-size: {{ section.settings.subheading_size_desktop }}px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin: 0;
+    color: {{ section.settings.subheading_color }};
+  }
+
+  .video-hero-{{ section.id }} .video-hero__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border-radius: {{ section.settings.button_radius }}px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .video-hero-{{ section.id }} .video-hero__button:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+
+  /* Tablet responsive */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .video-hero-{{ section.id }} .video-hero__heading {
+      font-size: {{ section.settings.heading_size_tablet }}px;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__subheading {
+      font-size: {{ section.settings.subheading_size_tablet }}px;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__content {
+      padding: 3rem 1.5rem;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__text-wrapper {
+      max-width: 500px;
+    }
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 749px) {
+    .video-hero-{{ section.id }} {
+      height: {{ section.settings.mobile_height }}vh;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__subheading {
+      font-size: {{ section.settings.subheading_size_mobile }}px;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__content {
+      padding: 2rem 1rem;
+    }
+
+    .video-hero-{{ section.id }} .video-hero__text-wrapper {
+      max-width: 100%;
+      gap: 1rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="video-hero-{{ section.id }}" data-header-trigger>
+  {%- liquid
+    assign video_type = section.settings.video_type | default: 'upload'
+    assign youtube_id = ''
+    assign vimeo_id = ''
+
+    if video_type == 'youtube' and section.settings.youtube_url != blank
+      assign youtube_url = section.settings.youtube_url
+      if youtube_url contains 'youtube.com/watch?v='
+        assign youtube_id = youtube_url | split: 'v=' | last | split: '&' | first
+      elsif youtube_url contains 'youtu.be/'
+        assign youtube_id = youtube_url | split: 'youtu.be/' | last | split: '?' | first
+      elsif youtube_url contains 'youtube.com/embed/'
+        assign youtube_id = youtube_url | split: 'embed/' | last | split: '?' | first
+      endif
+    endif
+
+    if video_type == 'vimeo' and section.settings.vimeo_url != blank
+      assign vimeo_url = section.settings.vimeo_url
+      if vimeo_url contains 'vimeo.com/'
+        assign vimeo_id = vimeo_url | split: 'vimeo.com/' | last | split: '/' | first | split: '?' | first
+      endif
+    endif
+  -%}
+
+  {%- if video_type == 'youtube' and youtube_id != blank -%}
+    <div id="youtube-player-{{ section.id }}" class="video-hero__video video-hero__iframe" data-video-id="{{ youtube_id }}">&nbsp;</div>
+  {%- elsif video_type == 'vimeo' and vimeo_id != blank -%}
+    <iframe
+      class="video-hero__video video-hero__iframe"
+      src="https://player.vimeo.com/video/{{ vimeo_id }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+  {%- elsif section.settings.video != blank -%}
+    {%- if section.settings.video_poster != blank -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'none',
+          image_size: '1920x',
+          poster: section.settings.video_poster,
+          class: 'video-hero__video'
+      }}
+    {%- else -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          preload: 'none',
+          class: 'video-hero__video'
+      }}
+    {%- endif -%}
+  {%- elsif section.settings.video_url != blank -%}
+    {%- comment -%} Fallback for external video URLs {%- endcomment -%}
+    <video
+      class="video-hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      loading="lazy"
+      {% if section.settings.video_poster != blank %}
+        poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
+      {% endif %}
+    >
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  {%- endif -%}
+
+  {%- if section.settings.show_overlay -%}
+    <div class="video-hero__overlay"></div>
+  {%- endif -%}
+
+  <div class="video-hero__content">
+    <div class="position--{{ section.settings.text_position }}">
+      <div class="video-hero__text-wrapper text-align--{{ section.settings.text_alignment }}">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="video-hero__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="video-hero__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <div class="video-hero__button-wrapper">
+            <a href="{{ section.settings.button_link }}" class="video-hero__button">
+              {{ section.settings.button_text }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Load YouTube IFrame API
+    if (!window.youtubeAPILoaded) {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      window.youtubeAPILoaded = true;
+    }
+
+    var sectionId = '{{ section.id | replace: "-", "_" }}';
+    var playerId = 'youtube-player-{{ section.id }}';
+    var youtubePlayer;
+
+    function initYouTubePlayer() {
+      var playerElement = document.getElementById(playerId);
+      if (!playerElement) return;
+
+      var videoId = playerElement.getAttribute('data-video-id');
+      if (!videoId) return;
+
+      youtubePlayer = new YT.Player(playerId, {
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          loop: 1,
+          playlist: videoId,
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          enablejsapi: 1
+        },
+        events: {
+          onReady: function(event) {
+            event.target.mute();
+            event.target.playVideo();
+          },
+          onStateChange: function(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+              event.target.playVideo();
+            }
+          }
+        }
+      });
+    }
+
+    // Initialize when API is ready
+    if (window.YT && window.YT.Player) {
+      initYouTubePlayer();
+    } else {
+      var originalCallback = window.onYouTubeIframeAPIReady || function() {};
+      window.onYouTubeIframeAPIReady = function() {
+        originalCallback();
+        initYouTubePlayer();
+      };
+    }
+  })();
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const videoElement = document.querySelector('.video-hero-{{ section.id }} .video-hero__video');
+
+    // Handle regular video elements (uploaded videos)
+    if (videoElement && !videoElement.classList.contains('video-hero__iframe')) {
+      // Ensure video stays muted (required for autoplay)
+      videoElement.muted = true;
+      videoElement.setAttribute('muted', '');
+      videoElement.setAttribute('playsinline', '');
+
+      // Use Intersection Observer for better lazy loading
+      const videoObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Load the video when it enters viewport
+              if (videoElement.preload === 'none') {
+                videoElement.preload = 'auto';
+                videoElement.load();
+              }
+
+              // Try to play the video
+              const playPromise = videoElement.play();
+
+              if (playPromise !== undefined) {
+                playPromise
+                  .then(() => {
+                    // Autoplay started successfully
+                    console.log('Video autoplay started');
+                  })
+                  .catch((error) => {
+                    // Autoplay was prevented, try to play on user interaction
+                    console.log('Autoplay prevented:', error);
+                    document.addEventListener(
+                      'click',
+                      function playOnClick() {
+                        videoElement.play();
+                        document.removeEventListener('click', playOnClick);
+                      },
+                      { once: true }
+                    );
+                  });
+              }
+
+              // Stop observing after video starts loading
+              videoObserver.unobserve(videoElement);
+            }
+          });
+        },
+        {
+          rootMargin: '50px', // Start loading 50px before entering viewport
+        }
+      );
+
+      // Start observing the video element
+      videoObserver.observe(videoElement);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Video Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "select",
+      "id": "video_type",
+      "label": "Video type",
+      "options": [
+        {
+          "value": "upload",
+          "label": "Uploaded Video"
+        },
+        {
+          "value": "youtube",
+          "label": "YouTube"
+        },
+        {
+          "value": "vimeo",
+          "label": "Vimeo"
+        }
+      ],
+      "default": "upload",
+      "info": "Choose your video source"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video file",
+      "info": "Upload an MP4 video file (for 'Uploaded Video' type)"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (fallback)",
+      "info": "Direct MP4 video URL if not using uploaded video"
+    },
+    {
+      "type": "text",
+      "id": "youtube_url",
+      "label": "YouTube URL",
+      "info": "Full YouTube video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)"
+    },
+    {
+      "type": "text",
+      "id": "vimeo_url",
+      "label": "Vimeo URL",
+      "info": "Full Vimeo video URL (e.g., https://vimeo.com/VIDEO_ID)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster image",
+      "info": "Shown while video loads (for uploaded videos only)"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show dark overlay",
+      "default": true,
+      "info": "Adds dark overlay for better text readability"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Power that feels invisible"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Until you need it"
+    },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle Left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle Center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle Right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "middle-left",
+      "info": "Position text overlay on a 9-grid layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "info": "Horizontal alignment of text and button within the content box"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 300,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 600,
+      "info": "Maximum width of the text content box"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "min": 8,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Content gap",
+      "default": 24,
+      "info": "Space between heading, subheading, and button"
+    },
+    {
+      "type": "header",
+      "content": "Text Styling"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "heading_size_tablet",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading size (tablet)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Subheading size (desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_tablet",
+      "min": 12,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Subheading size (tablet)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Subheading size (mobile)",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Button padding (vertical)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Button padding (horizontal)",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Mobile height",
+      "default": 80,
+      "info": "Height on mobile devices (viewport height percentage)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Hero"
+    }
+  ]
+}
+{% endschema %}

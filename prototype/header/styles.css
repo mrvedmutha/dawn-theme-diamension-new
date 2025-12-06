@@ -1,0 +1,459 @@
+/* ============================================
+   HEADER PROTOTYPE - DIAMENSION
+   ============================================
+
+   Design: Transparent to Filled Header on Scroll
+   BEM Methodology
+   Desktop-first approach (1440px base)
+
+   ============================================ */
+
+/* ============================================
+   CSS RESET & BASE
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ============================================
+   HEADER - BASE STYLES (1440px Desktop)
+   ============================================ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 105px;
+  z-index: 1000;
+  transition:
+    background-color 300ms ease-in-out,
+    box-shadow 300ms ease-in-out,
+    height 300ms ease-in-out;
+}
+
+/* ============================================
+   HEADER STATES
+   ============================================ */
+
+/* Transparent State (Initial) */
+.header--transparent {
+  background-color: transparent;
+  color: #fffaf5;
+}
+
+.header--transparent .header__divider {
+  background-color: #fffaf5;
+}
+
+/* Show white logo/icons, hide dark */
+.header--transparent .header__logo-image--white,
+.header--transparent .header__icon-image--white {
+  display: block;
+}
+
+.header--transparent .header__logo-image--dark,
+.header--transparent .header__icon-image--dark {
+  display: none;
+}
+
+/* Filled State (Scrolled) */
+.header--filled {
+  background-color: #fffaf5;
+  color: #183754;
+  height: 109px;
+  box-shadow: 0 2px 8px rgba(24, 55, 84, 0.1);
+}
+
+.header--filled .header__divider {
+  background-color: #183754;
+}
+
+/* Show dark logo/icons, hide white */
+.header--filled .header__logo-image--white,
+.header--filled .header__icon-image--white {
+  display: none;
+}
+
+.header--filled .header__logo-image--dark,
+.header--filled .header__icon-image--dark {
+  display: block;
+}
+
+/* ============================================
+   TOP BAR - Shipping Message
+   ============================================ */
+
+.header__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  border-bottom: 1px solid currentColor;
+}
+
+.header__shipping-message {
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.28px;
+  text-align: center;
+  line-height: normal;
+}
+
+/* ============================================
+   MAIN NAV CONTAINER
+   ============================================ */
+
+.header__main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 63px;
+  padding: 0 50px;
+}
+
+/* ============================================
+   LEFT NAVIGATION
+   ============================================ */
+
+.header__nav--left {
+  display: flex;
+  align-items: center;
+}
+
+.header__nav-list {
+  display: flex;
+  gap: 40px;
+}
+
+.header__nav-item a {
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.28px;
+  transition: opacity 300ms ease-in-out;
+}
+
+.header__nav-item a:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   CENTER LOGO
+   ============================================ */
+
+.header__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.header__logo a {
+  display: inline-block;
+}
+
+.header__logo-image {
+  display: block;
+  height: 22.813px;
+  width: auto;
+  margin: 0 auto;
+  transition: opacity 300ms ease-in-out;
+}
+
+.header__logo-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 6.269px;
+  font-weight: 400;
+  letter-spacing: 18.8055px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: 4px;
+  transition: color 300ms ease-in-out;
+}
+
+/* ============================================
+   RIGHT ICON GROUP
+   ============================================ */
+
+.header__icon-group {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  transition: opacity 300ms ease-in-out;
+  position: relative;
+}
+
+.header__icon:hover {
+  opacity: 0.7;
+}
+
+.header__icon-image {
+  width: 24px;
+  height: 24px;
+  transition: opacity 300ms ease-in-out;
+}
+
+/* ============================================
+   CURRENCY SELECTOR
+   ============================================ */
+
+.header__currency {
+  position: relative;
+}
+
+.header__currency-toggle {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 8px 12px;
+  transition: opacity 300ms ease-in-out;
+}
+
+.header__currency-toggle:hover {
+  opacity: 0.7;
+}
+
+/* Currency Dropdown */
+.header__currency-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: #fffaf5;
+  box-shadow: 0 4px 12px rgba(24, 55, 84, 0.15);
+  border-radius: 4px;
+  padding: 8px 0;
+  min-width: 112px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity 300ms ease-in-out,
+    visibility 300ms ease-in-out,
+    transform 300ms ease-in-out;
+  z-index: 1001;
+}
+
+.header__currency-dropdown.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header__currency-option {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: #183754;
+  text-align: left;
+  transition: background-color 200ms ease-in-out;
+}
+
+.header__currency-option:hover {
+  background-color: rgba(24, 55, 84, 0.05);
+}
+
+/* ============================================
+   DIVIDER LINE
+   ============================================ */
+
+.header__divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: background-color 300ms ease-in-out;
+}
+
+/* ============================================
+   MOBILE MENU TOGGLE (Hidden on Desktop)
+   ============================================ */
+
+.header__mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+}
+
+.header__mobile-icon {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transition: all 300ms ease-in-out;
+}
+
+/* ============================================
+   RESPONSIVE - LARGE DESKTOP (1441px+)
+   ============================================ */
+
+@media (min-width: 1441px) {
+  .header {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET (1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .header__main {
+    padding: 0 40px;
+  }
+
+  .header__nav-list {
+    gap: 30px;
+  }
+
+  .header__icon-group {
+    gap: 30px;
+  }
+
+  .header__shipping-message {
+    font-size: 12px;
+    padding: 0 20px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (767px)
+   ============================================ */
+
+@media (max-width: 767px) {
+  .header {
+    height: 70px;
+  }
+
+  .header--filled {
+    height: 70px;
+  }
+
+  /* Hide top bar on mobile */
+  .header__top-bar {
+    display: none;
+  }
+
+  .header__main {
+    height: 70px;
+    padding: 0 20px;
+  }
+
+  /* Hide desktop navigation */
+  .header__nav--left {
+    display: none;
+  }
+
+  /* Show mobile menu toggle */
+  .header__mobile-toggle {
+    display: flex;
+  }
+
+  /* Adjust logo size */
+  .header__logo-image {
+    height: 16px;
+  }
+
+  .header__logo-subtitle {
+    font-size: 4px;
+    letter-spacing: 12px;
+  }
+
+  /* Reduce icon group */
+  .header__icon-group {
+    gap: 20px;
+  }
+
+  .header__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header__icon-image {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hide currency on mobile (or adjust as needed) */
+  .header__currency-toggle {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL MOBILE (375px)
+   ============================================ */
+
+@media (max-width: 375px) {
+  .header__main {
+    padding: 0 16px;
+  }
+
+  .header__icon-group {
+    gap: 16px;
+  }
+
+  .header__logo-image {
+    height: 14px;
+  }
+}
+
+/* ============================================
+   DEMO CONTENT STYLES (For Testing)
+   ============================================ */
+
+.demo-content {
+  margin-top: 105px; /* Account for fixed header */
+}
+
+@media (max-width: 767px) {
+  .demo-content {
+    margin-top: 70px;
+  }
+}
