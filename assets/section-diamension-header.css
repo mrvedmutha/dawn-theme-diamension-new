@@ -68,7 +68,18 @@ body:has(.diamension-header--transparent-layout) [id*='shopify-section'] .image-
 
 /* Solid mode: Header pushes content down */
 .diamension-header--solid-layout {
-  position: relative;
+  position: relative !important;
+}
+
+/* When solid header starts scrolling, switch to fixed for hide/show animations */
+.diamension-header--solid-layout.diamension-header--scrolling {
+  position: fixed !important;
+  top: 0;
+}
+
+/* Add padding to body when solid header is scrolling to prevent content jump */
+body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
+  padding-top: 105px; /* Announcement bar (43.66px) + Main header (61px) + buffer */
 }
 
 .diamension-header--solid-layout + * {

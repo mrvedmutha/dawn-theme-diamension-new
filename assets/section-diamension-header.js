@@ -110,6 +110,15 @@ class DiamensionHeader {
     const scrollingDown = scrollPosition > this.lastScrollPosition;
     const scrollingUp = scrollPosition < this.lastScrollPosition;
 
+    // For solid mode: switch to fixed positioning when scrolling starts
+    if (this.behavior === 'solid') {
+      if (scrollPosition > 10) {
+        this.header.classList.add('diamension-header--scrolling');
+      } else {
+        this.header.classList.remove('diamension-header--scrolling');
+      }
+    }
+
     // Handle hide/show behavior for both modes
     if (scrollingDown && scrollPosition > this.scrollThreshold) {
       this.header.classList.add('diamension-header--hidden');
