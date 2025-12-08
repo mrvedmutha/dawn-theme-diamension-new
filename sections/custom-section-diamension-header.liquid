@@ -1,6 +1,6 @@
 {{ 'section-diamension-header.css' | asset_url | stylesheet_tag }}
 
-<header class="diamension-header" data-header>
+<header class="diamension-header" data-header data-header-behavior="{{ section.settings.header_behavior }}">
   {%- comment -%} Announcement Bar {%- endcomment -%}
   <div class="diamension-header__announcement">
     <p class="diamension-header__announcement-text">{{ section.settings.announcement_text }}</p>
@@ -279,6 +279,31 @@
       "id": "suggested_terms_menu",
       "label": "Suggested Search Terms Menu",
       "info": "Select a menu with search term suggestions. Links will appear below the search input."
+    },
+    {
+      "type": "header",
+      "content": "Header Behavior"
+    },
+    {
+      "type": "select",
+      "id": "header_behavior",
+      "label": "Header Behavior",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto (Transparent → Solid on Scroll)"
+        },
+        {
+          "value": "transparent",
+          "label": "Always Transparent"
+        },
+        {
+          "value": "solid",
+          "label": "Always Solid"
+        }
+      ],
+      "default": "auto",
+      "info": "Control header appearance behavior for this page"
     }
   ],
   "presets": [

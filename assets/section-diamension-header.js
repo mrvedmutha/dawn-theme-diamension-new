@@ -6,6 +6,7 @@
 class DiamensionHeader {
   constructor() {
     this.header = document.querySelector('[data-header]');
+    this.behavior = this.header?.dataset.headerBehavior || 'auto'; // 'auto', 'transparent', 'solid'
     this.hamburger = document.querySelector('[data-hamburger]');
     this.mobileMenu = document.querySelector('[data-mobile-menu]');
     this.scrollThreshold = 820;
@@ -19,6 +20,7 @@ class DiamensionHeader {
   }
 
   init() {
+    this.setInitialState();
     this.handleScroll();
     this.attachEventListeners();
     this.updateCartCount();
@@ -89,7 +91,31 @@ class DiamensionHeader {
     document.body.style.overflow = ''; // Restore scrolling
   }
 
+  setInitialState() {
+    // Apply initial state based on behavior setting
+    if (this.behavior === 'solid') {
+      this.header.classList.add('diamension-header--scrolled');
+      this.header.classList.add('diamension-header--solid-layout');
+      this.header.classList.remove('diamension-header--transparent-layout');
+      this.isScrolled = true;
+    } else if (this.behavior === 'transparent') {
+      this.header.classList.remove('diamension-header--scrolled');
+      this.header.classList.add('diamension-header--transparent-layout');
+      this.header.classList.remove('diamension-header--solid-layout');
+      this.isScrolled = false;
+    } else { // 'auto' behavior
+      this.header.classList.remove('diamension-header--solid-layout');
+      this.header.classList.add('diamension-header--transparent-layout');
+      // Auto starts as transparent but can become solid on scroll
+    }
+  }
+
   handleScroll() {
+    // Skip scroll handling if behavior is not 'auto'
+    if (this.behavior !== 'auto') {
+      return;
+    }
+    
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     const scrollingDown = scrollPosition > this.lastScrollPosition;
     const scrollingUp = scrollPosition < this.lastScrollPosition;
@@ -107,8 +133,12 @@ class DiamensionHeader {
       // If above threshold → transparent, if below → solid
       if (scrollPosition <= this.scrollThreshold) {
         this.header.classList.remove('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--transparent-layout');
+        this.header.classList.remove('diamension-header--solid-layout');
       } else {
         this.header.classList.add('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--solid-layout');
+        this.header.classList.remove('diamension-header--transparent-layout');
       }
     }
 
@@ -116,6 +146,8 @@ class DiamensionHeader {
     if (scrollPosition <= 10) {
       this.header.classList.remove('diamension-header--hidden');
       this.header.classList.remove('diamension-header--scrolled');
+      this.header.classList.add('diamension-header--transparent-layout');
+      this.header.classList.remove('diamension-header--solid-layout');
     }
 
     this.lastScrollPosition = scrollPosition;
@@ -234,6 +266,10 @@ class DiamensionSearch {
     const header = document.querySelector('[data-header]');
     if (header) {
       header.classList.add('diamension-header--search-open');
+      // Store original behavior to restore later
+      this.originalBehavior = header.dataset.headerBehavior;
+      // Temporarily treat as 'auto' for search overlay
+      header.dataset.headerBehavior = 'auto';
     }
 
     // Toggle icon visibility
@@ -274,10 +310,32 @@ class DiamensionSearch {
   closeSearch() {
     this.isOpen = false;
 
-    // Remove header solid class
+    // Restore original behavior
     const header = document.querySelector('[data-header]');
-    if (header) {
+    if (header && this.originalBehavior) {
       header.classList.remove('diamension-header--search-open');
+      header.dataset.headerBehavior = this.originalBehavior;
+      
+      // Re-apply initial state based on restored behavior
+      if (this.originalBehavior === 'solid') {
+        header.classList.add('diamension-header--scrolled');
+        header.classList.add('diamension-header--solid-layout');
+        header.classList.remove('diamension-header--transparent-layout');
+      } else if (this.originalBehavior === 'transparent') {
+        header.classList.remove('diamension-header--scrolled');
+        header.classList.add('diamension-header--transparent-layout');
+        header.classList.remove('diamension-header--solid-layout');
+      } else { // 'auto'
+        header.classList.remove('diamension-header--solid-layout');
+        header.classList.add('diamension-header--transparent-layout');
+        // Scroll position will determine if it should be solid
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollPosition > 820) {
+          header.classList.add('diamension-header--scrolled');
+          header.classList.add('diamension-header--solid-layout');
+          header.classList.remove('diamension-header--transparent-layout');
+        }
+      }
     }
 
     // Toggle icon visibility

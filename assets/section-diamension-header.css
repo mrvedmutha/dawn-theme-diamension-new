@@ -37,23 +37,41 @@ body:has([data-header]) .announcement-bar {
 }
 
 /* ============================================
-   Layout Fix: Image Banner Behind Header
+   Layout: Content Positioning Based on Header State
    ============================================ */
-/* Remove top spacing and make first section start at top */
-body:has([data-header]) .shopify-section:first-of-type {
+
+/* Transparent mode: Content starts at top, header overlays */
+.diamension-header--transparent-layout {
+  position: fixed;
+}
+
+.diamension-header--transparent-layout + * {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
-/* Ensure main content area has no top spacing */
-body:has([data-header]) main {
+body:has(.diamension-header--transparent-layout) .shopify-section:first-of-type {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
-/* Make image banner full height and start from top */
-body:has([data-header]) .shopify-section--image-banner,
-body:has([data-header]) [id*='shopify-section'] .image-banner {
+body:has(.diamension-header--transparent-layout) main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+body:has(.diamension-header--transparent-layout) .shopify-section--image-banner,
+body:has(.diamension-header--transparent-layout) [id*='shopify-section'] .image-banner {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Solid mode: Header pushes content down */
+.diamension-header--solid-layout {
+  position: relative;
+}
+
+.diamension-header--solid-layout + * {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
