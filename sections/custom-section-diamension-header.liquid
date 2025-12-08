@@ -1,26 +1,6 @@
 {{ 'section-diamension-header.css' | asset_url | stylesheet_tag }}
 
-{%- liquid
-  # Determine header mode based on template and settings
-  assign header_mode = 'transparent'
-
-  if section.settings.header_mode == 'auto'
-    # Auto-detect based on template type
-    if template.name == 'product' or template.name == 'collection' or template.name == 'cart'
-      assign header_mode = 'solid'
-    else
-      assign header_mode = 'transparent'
-    endif
-  elsif section.settings.header_mode == 'solid'
-    # Always solid mode
-    assign header_mode = 'solid'
-  else
-    # Always transparent mode (default)
-    assign header_mode = 'transparent'
-  endif
--%}
-
-<header class="diamension-header diamension-header--{{ header_mode }}" data-header data-mode="{{ header_mode }}">
+<header class="diamension-header" data-header>
   {%- comment -%} Announcement Bar {%- endcomment -%}
   <div class="diamension-header__announcement">
     <p class="diamension-header__announcement-text">{{ section.settings.announcement_text }}</p>
@@ -251,31 +231,6 @@
       "id": "announcement_text",
       "label": "Announcement Text",
       "default": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k"
-    },
-    {
-      "type": "header",
-      "content": "Header Display Mode"
-    },
-    {
-      "type": "select",
-      "id": "header_mode",
-      "label": "Header Mode",
-      "options": [
-        {
-          "value": "auto",
-          "label": "Auto (Smart detection)"
-        },
-        {
-          "value": "transparent",
-          "label": "Always Transparent"
-        },
-        {
-          "value": "solid",
-          "label": "Always Solid"
-        }
-      ],
-      "default": "auto",
-      "info": "Auto: Transparent on homepage, solid on product/collection/cart pages. Transparent: Content flows under header. Solid: Content starts below header. Both modes have same scroll behavior."
     },
     {
       "type": "link_list",

@@ -98,53 +98,6 @@ body:has([data-header]) [id*='shopify-section'] .image-banner {
 }
 
 /* ============================================
-   Header Mode: Solid Variant
-   ============================================ */
-
-/* Solid Mode - Header takes up space in layout (position: relative) */
-.diamension-header--solid {
-  position: relative; /* Takes up space instead of overlaying */
-  background-color: #fffaf5;
-  color: #183754;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  z-index: 999;
-}
-
-/* Always show dark logo for solid mode */
-.diamension-header--solid .diamension-header__logo-img--light {
-  display: none !important;
-}
-
-.diamension-header--solid .diamension-header__logo-img--dark {
-  display: block !important;
-}
-
-/* Always show dark icons for solid mode */
-.diamension-header--solid .diamension-header__icon-svg--light,
-.diamension-header--solid .diamension-header__hamburger-svg--light {
-  display: none !important;
-}
-
-.diamension-header--solid .diamension-header__icon-svg--dark,
-.diamension-header--solid .diamension-header__hamburger-svg--dark {
-  display: block !important;
-}
-
-/* Content follows below solid header (normal document flow) */
-body:has(.diamension-header--solid) main {
-  margin-top: 0;
-  padding-top: 0;
-}
-
-body:has(.diamension-header--solid) .shopify-section:first-of-type {
-  margin-top: 0;
-  padding-top: 0;
-}
-
-/* Transparent Mode keeps existing behavior (position: fixed, overlays content) */
-/* No additional styles needed - inherits from .diamension-header base styles */
-
-/* ============================================
    Element: Announcement Bar
    ============================================ */
 

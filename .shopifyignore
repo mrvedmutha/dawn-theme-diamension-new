@@ -35,3 +35,13 @@ Thumbs.db
 
 # Development tools
 .shopify/**
+
+# opencoder kimi-k2 flow files
+.opencoder/**
+scripts/**
+tests/**
+.playwright-mcp/**
+.shopify/**
+.github/**
+issues/**
+plans/**
