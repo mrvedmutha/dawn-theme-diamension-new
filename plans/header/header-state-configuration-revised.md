@@ -110,23 +110,19 @@ handleScroll() {
   }
 
   // Handle transparent/solid transition only for auto mode
+  // This needs to run on both scroll down AND scroll up to ensure correct state
   if (this.behavior === 'auto') {
-    if (scrollingDown && scrollPosition > this.scrollThreshold) {
+    // Apply state based on scroll position, regardless of direction
+    if (scrollPosition > this.scrollThreshold) {
+      // Below threshold → solid state
       this.header.classList.add('diamension-header--scrolled');
       this.header.classList.add('diamension-header--solid-layout');
       this.header.classList.remove('diamension-header--transparent-layout');
-    }
-
-    if (scrollingUp) {
-      if (scrollPosition <= this.scrollThreshold) {
-        this.header.classList.remove('diamension-header--scrolled');
-        this.header.classList.add('diamension-header--transparent-layout');
-        this.header.classList.remove('diamension-header--solid-layout');
-      } else {
-        this.header.classList.add('diamension-header--scrolled');
-        this.header.classList.add('diamension-header--solid-layout');
-        this.header.classList.remove('diamension-header--transparent-layout');
-      }
+    } else {
+      // Above threshold → transparent state
+      this.header.classList.remove('diamension-header--scrolled');
+      this.header.classList.add('diamension-header--transparent-layout');
+      this.header.classList.remove('diamension-header--solid-layout');
     }
 
     // At the very top → always transparent and visible
