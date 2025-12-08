@@ -109,6 +109,7 @@ class DiamensionHeader {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     const scrollingDown = scrollPosition > this.lastScrollPosition;
     const scrollingUp = scrollPosition < this.lastScrollPosition;
+    const isCurrentlyHidden = this.header.classList.contains('diamension-header--hidden');
 
     // For solid mode: switch to fixed positioning when scrolling starts
     if (this.behavior === 'solid') {
@@ -117,43 +118,48 @@ class DiamensionHeader {
       } else {
         this.header.classList.remove('diamension-header--scrolling');
       }
+      // For solid mode, don't process further - header is always solid
+      this.lastScrollPosition = scrollPosition;
+      return;
     }
 
-    // Handle hide/show behavior for both modes
-    if (scrollingDown && scrollPosition > this.scrollThreshold) {
+    // AUTO MODE ONLY from here
+    
+    // Handle hide/show behavior for auto mode
+    if (scrollingDown && scrollPosition > this.scrollThreshold && !isCurrentlyHidden) {
       this.header.classList.add('diamension-header--hidden');
+      this.lastScrollPosition = scrollPosition;
+      return;
     }
 
-    if (scrollingUp) {
+    if (scrollingUp && isCurrentlyHidden) {
       this.header.classList.remove('diamension-header--hidden');
+      // DON'T set state here - let the continuous logic below handle it
+      this.lastScrollPosition = scrollPosition;
+      return;
     }
 
-    // Handle transparent/solid transition only for auto mode
-    if (this.behavior === 'auto') {
-      if (scrollingDown && scrollPosition > this.scrollThreshold) {
-        this.header.classList.add('diamension-header--scrolled');
-        this.header.classList.add('diamension-header--solid-layout');
-        this.header.classList.remove('diamension-header--transparent-layout');
-      }
-
-      if (scrollingUp) {
-        if (scrollPosition <= this.scrollThreshold) {
-          this.header.classList.remove('diamension-header--scrolled');
-          this.header.classList.add('diamension-header--transparent-layout');
-          this.header.classList.remove('diamension-header--solid-layout');
-        } else {
-          this.header.classList.add('diamension-header--scrolled');
-          this.header.classList.add('diamension-header--solid-layout');
-          this.header.classList.remove('diamension-header--transparent-layout');
-        }
-      }
-
-      // At the very top → always transparent and visible
+    // Continuous transparent/solid transitions (only when header is visible)
+    if (!isCurrentlyHidden) {
       if (scrollPosition <= 10) {
+        // At the very top → always transparent and visible
         this.header.classList.remove('diamension-header--hidden');
         this.header.classList.remove('diamension-header--scrolled');
         this.header.classList.add('diamension-header--transparent-layout');
         this.header.classList.remove('diamension-header--solid-layout');
+        this.isScrolled = false;
+      } else if (scrollPosition > this.scrollThreshold) {
+        // Below threshold → solid (but respect hide/show state)
+        this.header.classList.add('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--solid-layout');
+        this.header.classList.remove('diamension-header--transparent-layout');
+        this.isScrolled = true;
+      } else {
+        // Between 10px and threshold → transparent
+        this.header.classList.remove('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--transparent-layout');
+        this.header.classList.remove('diamension-header--solid-layout');
+        this.isScrolled = false;
       }
     }
 
@@ -327,14 +333,21 @@ class DiamensionSearch {
         header.classList.remove('diamension-header--transparent-layout');
       } else { // 'auto'
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollPosition <= 820) {
+        if (scrollPosition <= 10) {
+          // At top - transparent
           header.classList.remove('diamension-header--scrolled');
           header.classList.add('diamension-header--transparent-layout');
           header.classList.remove('diamension-header--solid-layout');
-        } else {
+        } else if (scrollPosition > 820) {
+          // Below threshold - solid
           header.classList.add('diamension-header--scrolled');
           header.classList.add('diamension-header--solid-layout');
           header.classList.remove('diamension-header--transparent-layout');
+        } else {
+          // Between 10px and threshold - transparent
+          header.classList.remove('diamension-header--scrolled');
+          header.classList.add('diamension-header--transparent-layout');
+          header.classList.remove('diamension-header--solid-layout');
         }
       }
     }
