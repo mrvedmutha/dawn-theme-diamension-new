@@ -1,0 +1,90 @@
+{{ 'section-custom-rich-text-diamension.css' | asset_url | stylesheet_tag }}
+
+<style>
+  {%- if section.settings.headline_color != blank -%}
+    #shopify-section-{{ section.id }} {
+      --custom-rich-text-headline-color: {{ section.settings.headline_color }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.subtext_color != blank -%}
+    #shopify-section-{{ section.id }} {
+      --custom-rich-text-subtext-color: {{ section.settings.subtext_color }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.background_color != blank -%}
+    #shopify-section-{{ section.id }} {
+      --custom-rich-text-bg-color: {{ section.settings.background_color }};
+    }
+  {%- endif -%}
+</style>
+
+<section class="custom-section-rich-text-diamension">
+  <div class="custom-section-rich-text-diamension__container">
+    {%- if section.settings.headline != blank -%}
+      <h2 class="custom-section-rich-text-diamension__headline">
+        {{ section.settings.headline }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subtext != blank -%}
+      <p class="custom-section-rich-text-diamension__subtext">
+        {{ section.settings.subtext }}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Rich Text",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Luxury Within Reach. Brilliance Beyond Measure"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Backed by HVK Diamonds' 25-year heritage, we merge mastery in craftsmanship with next-gen innovation. Every piece is crafted in 14K gold, IGI certified, and designed to be cherished for a lifetime."
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline Color",
+      "default": "#183754"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext Color",
+      "default": "#3e6282"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fffaf5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Rich Text Diamension"
+    }
+  ]
+}
+{% endschema %}

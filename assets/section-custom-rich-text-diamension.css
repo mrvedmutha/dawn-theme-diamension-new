@@ -1,0 +1,157 @@
+/* ============================================
+   Custom Rich Text Diamension Section Styles
+   ============================================ */
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables */
+:root {
+  --custom-rich-text-headline-color: #183754;
+  --custom-rich-text-subtext-color: #3E6282;
+  --custom-rich-text-bg-color: #fffaf5;
+}
+
+/* Desktop Base - 1440px */
+.custom-section-rich-text-diamension {
+  display: inline-flex;
+  padding: 219.484px 412.333px 197.558px 404.439px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 33.958px;
+  background-color: var(--custom-rich-text-bg-color);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-section-rich-text-diamension__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 33.958px;
+  width: 100%;
+}
+
+.custom-section-rich-text-diamension__headline {
+  color: var(--custom-rich-text-headline-color);
+  text-align: center;
+  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 45px; /* 112.5% */
+  text-transform: uppercase;
+  margin: 0;
+  max-width: 619.228px;
+  width: 100%;
+}
+
+.custom-section-rich-text-diamension__subtext {
+  color: var(--custom-rich-text-subtext-color);
+  text-align: center;
+  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 30px; /* 150% */
+  margin: 0;
+  max-width: 477.15px;
+  width: 100%;
+}
+
+/* Large Desktop - 1441px+ */
+@media (min-width: 1441px) {
+  .custom-section-rich-text-diamension {
+    padding: 219.484px 412.333px 197.558px 404.439px;
+  }
+  
+  .custom-section-rich-text-diamension__headline {
+    max-width: 619.228px;
+  }
+  
+  .custom-section-rich-text-diamension__subtext {
+    max-width: 477.15px;
+  }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+  .custom-section-rich-text-diamension {
+    padding: 156px 80px 140px 80px;
+  }
+  
+  .custom-section-rich-text-diamension__container {
+    gap: 28px;
+  }
+  
+  .custom-section-rich-text-diamension__headline {
+    font-size: 32px;
+    line-height: 38px;
+    max-width: 100%;
+  }
+  
+  .custom-section-rich-text-diamension__subtext {
+    font-size: 18px;
+    line-height: 26px;
+    max-width: 100%;
+  }
+}
+
+/* Mobile - 767px */
+@media (max-width: 767px) {
+  .custom-section-rich-text-diamension {
+    padding: 100px 40px 90px 40px;
+  }
+  
+  .custom-section-rich-text-diamension__container {
+    gap: 24px;
+  }
+  
+  .custom-section-rich-text-diamension__headline {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  
+  .custom-section-rich-text-diamension__subtext {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .custom-section-rich-text-diamension {
+    padding: 80px 24px 70px 24px;
+  }
+  
+  .custom-section-rich-text-diamension__container {
+    gap: 20px;
+  }
+  
+  .custom-section-rich-text-diamension__headline {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .custom-section-rich-text-diamension__subtext {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
