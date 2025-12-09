@@ -220,6 +220,43 @@ git branch -d feature/custom-header
 
 ---
 
+## Feature Branch Workflow Example
+
+To keep your work organized and track both major and minor changes, use a feature-branch workflow. This lets you develop new sections or features in isolation, review changes, and merge them into `main` when ready.
+
+### Steps
+1. **Start from main branch**
+   - Checkout `main` and pull latest changes:  
+     `git checkout main && git pull`
+2. **Create a feature branch**
+   - Name it after your feature, e.g. `feature/new-section-header`:  
+     `git checkout -b feature/new-section-header`
+3. **Work and commit regularly**
+   - Make changes, commit often (even minute changes):  
+     `git add . && git commit -m "Initial header section"`  
+     `git commit -m "Minor fix: logo alignment"`
+4. **Push feature branch to remote**
+   - `git push origin feature/new-section-header`
+5. **Review and finalize**
+   - When feature is done, make final commits in the feature branch.
+6. **Merge feature branch into main**
+   - Checkout `main`, pull, then merge:  
+     `git checkout main && git pull`  
+     `git merge feature/new-section-header`
+   - Push to remote:  
+     `git push origin main`
+7. **Delete feature branch (optional)**
+   - Locally: `git branch -d feature/new-section-header`  
+   - Remotely: `git push origin --delete feature/new-section-header`
+
+### Further Considerations
+1. Use descriptive branch names for clarity (`feature/section-name`, `fix/header-logo`).
+2. Commit small, logical changes with clear messages.
+3. Always pull latest `main` before starting a new feature branch.
+4. Use pull requests for code review if collaborating.
+
+---
+
 ## Version Tags (Optional)
 
 ```bash
