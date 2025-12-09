@@ -3,6 +3,7 @@
     position: relative;
     width: 100%;
     height: 100vh;
+    max-height: {{ section.settings.max_height }}px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -241,19 +242,7 @@
 <div class="video-hero-{{ section.id }}" data-header-trigger>
   {%- liquid
     assign video_type = section.settings.video_type | default: 'upload'
-    assign youtube_id = ''
     assign vimeo_id = ''
-
-    if video_type == 'youtube' and section.settings.youtube_url != blank
-      assign youtube_url = section.settings.youtube_url
-      if youtube_url contains 'youtube.com/watch?v='
-        assign youtube_id = youtube_url | split: 'v=' | last | split: '&' | first
-      elsif youtube_url contains 'youtu.be/'
-        assign youtube_id = youtube_url | split: 'youtu.be/' | last | split: '?' | first
-      elsif youtube_url contains 'youtube.com/embed/'
-        assign youtube_id = youtube_url | split: 'embed/' | last | split: '?' | first
-      endif
-    endif
 
     if video_type == 'vimeo' and section.settings.vimeo_url != blank
       assign vimeo_url = section.settings.vimeo_url
@@ -263,9 +252,7 @@
     endif
   -%}
 
-  {%- if video_type == 'youtube' and youtube_id != blank -%}
-    <div id="youtube-player-{{ section.id }}" class="video-hero__video video-hero__iframe" data-video-id="{{ youtube_id }}">&nbsp;</div>
-  {%- elsif video_type == 'vimeo' and vimeo_id != blank -%}
+  {%- if video_type == 'vimeo' and vimeo_id != blank -%}
     <iframe
       class="video-hero__video video-hero__iframe"
       src="https://player.vimeo.com/video/{{ vimeo_id }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
@@ -349,70 +336,6 @@
 </div>
 
 <script>
-  (function() {
-    // Load YouTube IFrame API
-    if (!window.youtubeAPILoaded) {
-      var tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      window.youtubeAPILoaded = true;
-    }
-
-    var sectionId = '{{ section.id | replace: "-", "_" }}';
-    var playerId = 'youtube-player-{{ section.id }}';
-    var youtubePlayer;
-
-    function initYouTubePlayer() {
-      var playerElement = document.getElementById(playerId);
-      if (!playerElement) return;
-
-      var videoId = playerElement.getAttribute('data-video-id');
-      if (!videoId) return;
-
-      youtubePlayer = new YT.Player(playerId, {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          loop: 1,
-          playlist: videoId,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-          disablekb: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          enablejsapi: 1
-        },
-        events: {
-          onReady: function(event) {
-            event.target.mute();
-            event.target.playVideo();
-          },
-          onStateChange: function(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-              event.target.playVideo();
-            }
-          }
-        }
-      });
-    }
-
-    // Initialize when API is ready
-    if (window.YT && window.YT.Player) {
-      initYouTubePlayer();
-    } else {
-      var originalCallback = window.onYouTubeIframeAPIReady || function() {};
-      window.onYouTubeIframeAPIReady = function() {
-        originalCallback();
-        initYouTubePlayer();
-      };
-    }
-  })();
-
   document.addEventListener('DOMContentLoaded', function () {
     const videoElement = document.querySelector('.video-hero-{{ section.id }} .video-hero__video');
 
@@ -496,10 +419,6 @@
           "label": "Uploaded Video"
         },
         {
-          "value": "youtube",
-          "label": "YouTube"
-        },
-        {
           "value": "vimeo",
           "label": "Vimeo"
         }
@@ -518,12 +437,6 @@
       "id": "video_url",
       "label": "Video URL (fallback)",
       "info": "Direct MP4 video URL if not using uploaded video"
-    },
-    {
-      "type": "text",
-      "id": "youtube_url",
-      "label": "YouTube URL",
-      "info": "Full YouTube video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)"
     },
     {
       "type": "text",
@@ -797,6 +710,17 @@
     {
       "type": "header",
       "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Max height (desktop)",
+      "default": 800,
+      "info": "Maximum height of the video hero section on desktop"
     },
     {
       "type": "range",
