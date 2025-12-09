@@ -63,41 +63,44 @@
     {%- endif -%}
   </div>
 
-  <!-- Desktop Category Names -->
-  <div class="custom-section-featured-category-slider__category-names">
-    {%- for block in section.blocks -%}
-      <p
-        class="custom-section-featured-category-slider__category-name{% if forloop.first %} custom-section-featured-category-slider__category-name--active{% endif %}"
-        data-category-id="{{ forloop.index }}"
-        data-block-id="{{ block.id }}"
-        data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}"
-        data-video-file="{% if block.settings.video_file != blank %}{{ block.settings.video_file | file_url }}{% endif %}"
-        data-video-direct-url="{{ block.settings.video_direct_url }}"
-        data-video-youtube-vimeo="{{ block.settings.video_youtube_vimeo }}"
-        data-fallback-image="{% if block.settings.fallback_image != blank %}{{ block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
-        {{ block.shopify_attributes }}
-      >
-        {{ block.settings.category_name | default: 'Category Name' | upcase }}
-      </p>
-    {%- endfor -%}
+  <!-- Desktop Content Wrapper -->
+  <div class="custom-section-featured-category-slider__content-wrapper">
+    <!-- Desktop Category Names -->
+    <div class="custom-section-featured-category-slider__category-names">
+      {%- for block in section.blocks -%}
+        <p
+          class="custom-section-featured-category-slider__category-name{% if forloop.first %} custom-section-featured-category-slider__category-name--active{% endif %}"
+          data-category-id="{{ forloop.index }}"
+          data-block-id="{{ block.id }}"
+          data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}"
+          data-video-file="{% if block.settings.video_file != blank %}{{ block.settings.video_file | file_url }}{% endif %}"
+          data-video-direct-url="{{ block.settings.video_direct_url }}"
+          data-video-youtube-vimeo="{{ block.settings.video_youtube_vimeo }}"
+          data-fallback-image="{% if block.settings.fallback_image != blank %}{{ block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {{ block.settings.category_name | default: 'Category Name' | upcase }}
+        </p>
+      {%- endfor -%}
+    </div>
+
+    <!-- Desktop Shop Now Buttons -->
+    <a
+      href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+      class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--left"
+      data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+    >
+      {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
+    </a>
+
+    <a
+      href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+      class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--right"
+      data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+    >
+      {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
+    </a>
   </div>
-
-  <!-- Desktop Shop Now Buttons -->
-  <a
-    href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
-    class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--left"
-    data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
-  >
-    {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
-  </a>
-
-  <a
-    href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
-    class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--right"
-    data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
-  >
-    {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
-  </a>
 
   <!-- Mobile Controls -->
   <div class="custom-section-featured-category-slider__mobile-controls">
