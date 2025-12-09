@@ -51,7 +51,7 @@ tests/liquid/
 ### Schema Configuration
 ```json
 {
-  "name": "Featured Category Hover Slider",
+  "name": "Category Hover Slider",
   "settings": [
     {
       "type": "range",
@@ -146,7 +146,7 @@ tests/liquid/
 
 ### Responsive Breakpoints
 - **Base (1440px Desktop)**: Full desktop layout
-- **Large Desktop (1441px+)**: Center content, max-width 1440px
+- **Large Desktop (1441px+)**: Center content, max-width 1440px #[comment]: here the container and video will take full-width while the context having max-width container
 - **Tablet (1024px)**: Adjust spacing and sizing
 - **Mobile (767px)**: Full mobile layout with bottom controls
 - **Small Mobile (375px)**: Fine-tune for small screens
@@ -265,7 +265,7 @@ window.categoriesData = [
 
 ---
 
-## 5. TESTING WITH PLAYWRIGHT
+## 5. TESTING WITH PLAYWRIGHT [comment]: WRITE AFTER MANUAL TESTING AND ONLY IF TOLD
 
 **File**: `tests/liquid/section-featured-category-slider/featured-category-slider.spec.js`
 
@@ -414,7 +414,7 @@ Opens at: `http://localhost:9292`
 
 ---
 
-## 8. ASSET REQUIREMENTS
+## 8. ASSET REQUIREMENTS [comment]: ALL SECTIONS MADE HERE ARE MERCHANT UPLOAD BASED ONLY FONTS ARE APLOADED IN `./assets/fonts/` FOLDER
 
 ### Videos Required
 | Asset | Location | Format | Size | Notes |
@@ -450,6 +450,7 @@ Opens at: `http://localhost:9292`
 - Use appropriate resolution (1920x1080 or lower)
 - Enable autoplay with muted attribute
 - Add loop attribute for continuous playback
+- Add CDN input as fallback 
 
 ### JavaScript Performance
 - Use `defer` attribute on script tag
@@ -527,7 +528,7 @@ Opens at: `http://localhost:9292`
 **Solution**: Use `transform` instead of `top/left`, enable GPU acceleration with `will-change`
 
 ### Issue: GSAP not loading
-**Solution**: Ensure GSAP is loaded before section JS, add to theme.liquid if needed
+**Solution**: Ensure GSAP is loaded before section JS, add to theme.liquid if needed [comment]: ALREADY ADDED!!!
 
 ### Issue: Section settings not showing in editor
 **Solution**: Verify schema JSON is valid, check for syntax errors
@@ -541,7 +542,7 @@ Opens at: `http://localhost:9292`
 [Feature] Add featured category hover slider with desktop hover and mobile navigation
 ```
 
-### Files to Commit
+### Files to Commit [comment]: ONLY DO WHEN IT IS ASKED
 ```bash
 git add sections/custom-section-featured-category-slider.liquid
 git add assets/section-featured-category-slider.css
@@ -577,13 +578,13 @@ git push origin main
 
 ### Push to Unpublished
 ```bash
-shopify theme push --unpublished
+shopify theme push --unpublished [theme-]id
 ```
 - [ ] Test on unpublished theme
 - [ ] Verify all functionality
 - [ ] Get client approval
 
-### Push to Live
+### Push to Live [comment]: ONLY DO IF IT IS ASKED
 ```bash
 shopify theme push --theme [live-theme-id]
 ```
@@ -646,7 +647,7 @@ npm test
 npx playwright test --update-snapshots
 
 # Push to unpublished
-shopify theme push --unpublished
+shopify theme push --unpublished [theme-id] [comment]: PLEASE ASK IF NOT PROVIDED
 
 # Push to live
 shopify theme push --theme [theme-id]
