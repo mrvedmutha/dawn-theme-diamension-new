@@ -60,7 +60,7 @@ class DiamensionHeader {
 
       // Close menu when clicking on a link
       const mobileLinks = this.mobileMenu.querySelectorAll('a');
-      mobileLinks.forEach((link) => {
+      mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
           this.closeMobileMenu();
         });
@@ -98,8 +98,7 @@ class DiamensionHeader {
       this.header.classList.add('diamension-header--solid-layout');
       this.header.classList.remove('diamension-header--transparent-layout');
       this.isScrolled = true;
-    } else {
-      // 'auto' behavior
+    } else { // 'auto' behavior
       this.header.classList.remove('diamension-header--solid-layout');
       this.header.classList.add('diamension-header--transparent-layout');
       // Auto starts as transparent but can become solid on scroll
@@ -291,14 +290,14 @@ class DiamensionSearch {
       gsap.to(this.overlay, {
         opacity: 1,
         duration: 0.3,
-        ease: 'power2.out',
+        ease: 'power2.out'
       });
 
       gsap.to(content, {
         height: 'auto',
         opacity: 1,
         duration: 0.4,
-        ease: 'power2.out',
+        ease: 'power2.out'
       });
     } else {
       // Fallback without GSAP
@@ -320,14 +319,13 @@ class DiamensionSearch {
     const header = document.querySelector('[data-header]');
     if (header && this.originalBehavior) {
       header.classList.remove('diamension-header--search-open');
-
+      
       // Re-apply initial state based on restored behavior
       if (this.originalBehavior === 'solid') {
         header.classList.add('diamension-header--scrolled');
         header.classList.add('diamension-header--solid-layout');
         header.classList.remove('diamension-header--transparent-layout');
-      } else {
-        // 'auto'
+      } else { // 'auto'
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         if (scrollPosition <= 820) {
           header.classList.remove('diamension-header--scrolled');
@@ -361,7 +359,7 @@ class DiamensionSearch {
           this.searchInput.value = '';
           this.currentQuery = '';
           this.clearResults();
-        },
+        }
       });
     } else {
       // Fallback without GSAP
@@ -457,7 +455,7 @@ class DiamensionSearch {
     console.log('Displaying', displayProducts.length, 'products');
 
     // Generate product cards HTML
-    const productsHTML = displayProducts.map((product) => this.createProductCard(product)).join('');
+    const productsHTML = displayProducts.map(product => this.createProductCard(product)).join('');
 
     // TODO: debugging display results - checking generated HTML
     console.log('Generated HTML length:', productsHTML.length);
@@ -497,13 +495,7 @@ class DiamensionSearch {
     return `
       <a href="${product.url}" class="diamension-search-overlay__product-card">
         <div class="diamension-search-overlay__product-image-wrapper">
-          ${
-            imageUrl
-              ? `<img src="${imageUrl}" alt="${this.escapeHtml(
-                  product.title
-                )}" class="diamension-search-overlay__product-image" loading="lazy">`
-              : ''
-          }
+          ${imageUrl ? `<img src="${imageUrl}" alt="${this.escapeHtml(product.title)}" class="diamension-search-overlay__product-image" loading="lazy">` : ''}
         </div>
         <div class="diamension-search-overlay__product-info">
           <h3 class="diamension-search-overlay__product-title">${this.escapeHtml(product.title)}</h3>

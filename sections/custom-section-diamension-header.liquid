@@ -1,6 +1,14 @@
 {{ 'section-diamension-header.css' | asset_url | stylesheet_tag }}
 
-<header class="diamension-header" data-header data-header-behavior="{{ section.settings.header_behavior }}">
+{%- liquid
+  assign transparent_templates = 'index,blog' | split: ','
+  if transparent_templates contains template.name
+    assign header_behavior = 'auto'
+  else
+    assign header_behavior = 'solid'
+  endif
+-%}
+<header class="diamension-header" data-header data-header-behavior="{{ header_behavior }}">
   {%- comment -%} Announcement Bar {%- endcomment -%}
   <div class="diamension-header__announcement">
     <p class="diamension-header__announcement-text">{{ section.settings.announcement_text }}</p>
