@@ -1,0 +1,325 @@
+{{ 'section-featured-category-slider.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign first_block = section.blocks.first
+  assign section_height = section.settings.section_height | default: 950
+-%}
+
+<section
+  class="custom-section-featured-category-slider"
+  data-section-id="{{ section.id }}"
+  data-section-height="{{ section_height }}"
+  data-enable-animations="{{ section.settings.enable_animations }}"
+  style="--section-height: {{ section_height }}px;"
+>
+  <!-- Video Background Container -->
+  <div class="custom-section-featured-category-slider__video-container">
+    {%- if first_block -%}
+      {%- if first_block.settings.video_file != blank -%}
+        <video
+          class="custom-section-featured-category-slider__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          data-video-src="{{ first_block.settings.video_file | file_url }}"
+          data-video-type="direct"
+          poster="{% if first_block.settings.fallback_image != blank %}{{ first_block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
+        >
+          <source src="{{ first_block.settings.video_file | file_url }}" type="video/mp4">
+        </video>
+      {%- elsif first_block.settings.video_direct_url != blank -%}
+        <video
+          class="custom-section-featured-category-slider__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          data-video-src="{{ first_block.settings.video_direct_url }}"
+          data-video-type="direct"
+          poster="{% if first_block.settings.fallback_image != blank %}{{ first_block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
+        >
+          <source src="{{ first_block.settings.video_direct_url }}" type="video/mp4">
+        </video>
+      {%- elsif first_block.settings.video_youtube_vimeo != blank -%}
+        <div
+          class="custom-section-featured-category-slider__video-embed"
+          data-video-src="{{ first_block.settings.video_youtube_vimeo }}"
+          data-video-type="embed"
+        >
+          {{
+            first_block.settings.video_youtube_vimeo
+            | video_tag: autoplay: true, loop: true, controls: false, muted: true
+          }}
+        </div>
+      {%- elsif first_block.settings.fallback_image != blank -%}
+        <img
+          class="custom-section-featured-category-slider__fallback-image"
+          src="{{ first_block.settings.fallback_image | image_url: width: 1920 }}"
+          alt="{{ first_block.settings.category_name | escape }}"
+          loading="lazy"
+        >
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <!-- Desktop Category Names -->
+  <div class="custom-section-featured-category-slider__category-names">
+    {%- for block in section.blocks -%}
+      <p
+        class="custom-section-featured-category-slider__category-name{% if forloop.first %} custom-section-featured-category-slider__category-name--active{% endif %}"
+        data-category-id="{{ forloop.index }}"
+        data-block-id="{{ block.id }}"
+        data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}"
+        data-video-file="{% if block.settings.video_file != blank %}{{ block.settings.video_file | file_url }}{% endif %}"
+        data-video-direct-url="{{ block.settings.video_direct_url }}"
+        data-video-youtube-vimeo="{{ block.settings.video_youtube_vimeo }}"
+        data-fallback-image="{% if block.settings.fallback_image != blank %}{{ block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {{ block.settings.category_name | default: 'Category Name' | upcase }}
+      </p>
+    {%- endfor -%}
+  </div>
+
+  <!-- Desktop Shop Now Buttons -->
+  <a
+    href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+    class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--left"
+    data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+  >
+    {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
+  </a>
+
+  <a
+    href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+    class="custom-section-featured-category-slider__shop-now-btn custom-section-featured-category-slider__shop-now-btn--right"
+    data-collection-url="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+  >
+    {{ section.settings.shop_now_text | default: 'SHOP NOW' }}
+  </a>
+
+  <!-- Mobile Controls -->
+  <div class="custom-section-featured-category-slider__mobile-controls">
+    <!-- Full Width Progress Bar -->
+    <div class="custom-section-featured-category-slider__progress-bar-full">
+      <div class="custom-section-featured-category-slider__progress-bar-fill">&nbsp;</div>
+    </div>
+
+    <!-- Counter and Next Button -->
+    <div class="custom-section-featured-category-slider__mobile-controls-bottom">
+      <div class="custom-section-featured-category-slider__slider-counter">
+        <span class="custom-section-featured-category-slider__current-slide">01</span> /
+        <span class="custom-section-featured-category-slider__total-slides">
+          {{- section.blocks.size | default: 5 | prepend: '0' | slice: -2, 2 -}}
+        </span>
+      </div>
+
+      <button
+        class="custom-section-featured-category-slider__next-btn"
+        aria-label="Next category"
+      >
+        {{ section.settings.next_text | default: 'NEXT' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Category Content -->
+  <div class="custom-section-featured-category-slider__category-content-mobile">
+    {%- if first_block -%}
+      <h2 class="custom-section-featured-category-slider__category-title-mobile">
+        {{ first_block.settings.category_name | default: 'Category Name' | upcase }}
+      </h2>
+      <p class="custom-section-featured-category-slider__category-description-mobile">
+        {{ first_block.settings.description | default: 'Category description text goes here.' }}
+      </p>
+      <a
+        href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
+        class="custom-section-featured-category-slider__view-collection-btn"
+      >
+        {{ section.settings.view_collection_text | default: 'VIEW COLLECTION' }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <!-- Categories Data for JavaScript -->
+  <script type="application/json" data-categories-data>
+    [
+      {%- for block in section.blocks -%}
+        {
+          "id": {{ forloop.index }},
+          "blockId": "{{ block.id }}",
+          "name": "{{ block.settings.category_name | default: 'Category Name' | escape }}",
+          "videoFile": "{% if block.settings.video_file != blank %}{{ block.settings.video_file | file_url }}{% endif %}",
+          "videoDirectUrl": "{{ block.settings.video_direct_url | escape }}",
+          "videoYouTubeVimeo": "{{ block.settings.video_youtube_vimeo | escape }}",
+          "collectionUrl": "{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}",
+          "description": "{{ block.settings.description | default: 'Category description text goes here.' | escape }}",
+          "fallbackImage": "{% if block.settings.fallback_image != blank %}{{ block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+</section>
+
+<script src="{{ 'section-featured-category-slider.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Featured Category Slider",
+  "class": "section-featured-category-slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section Height (px)",
+      "min": 600,
+      "max": 1200,
+      "step": 50,
+      "default": 950,
+      "unit": "px",
+      "info": "Desktop section height. Mobile will be 100vh."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "Enable Animations",
+      "default": true,
+      "info": "Enable GSAP animations for smooth transitions"
+    },
+    {
+      "type": "header",
+      "content": "Button Text"
+    },
+    {
+      "type": "text",
+      "id": "shop_now_text",
+      "label": "Shop Now Button Text",
+      "default": "SHOP NOW",
+      "info": "Text for desktop shop now buttons"
+    },
+    {
+      "type": "text",
+      "id": "view_collection_text",
+      "label": "View Collection Button Text",
+      "default": "VIEW COLLECTION",
+      "info": "Text for mobile view collection button"
+    },
+    {
+      "type": "text",
+      "id": "next_text",
+      "label": "Next Button Text",
+      "default": "NEXT",
+      "info": "Text for mobile next button"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Category Information"
+        },
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category Name",
+          "placeholder": "e.g., Earrings",
+          "info": "Name of the jewelry category"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Select the collection this category links to"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Category Description",
+          "placeholder": "Enter category description for mobile view...",
+          "info": "Description shown on mobile below category title"
+        },
+        {
+          "type": "header",
+          "content": "Background Media"
+        },
+        {
+          "type": "video",
+          "id": "video_file",
+          "label": "Background Video (Upload)",
+          "info": "Upload MP4 video file for background. Recommended: 1920x1080, under 5MB"
+        },
+        {
+          "type": "text",
+          "id": "video_direct_url",
+          "label": "Background Video (Direct URL)",
+          "placeholder": "https://example.com/video.mp4",
+          "info": "Direct video URL (MP4/WebM). Video file upload takes priority."
+        },
+        {
+          "type": "video_url",
+          "id": "video_youtube_vimeo",
+          "label": "Background Video (YouTube/Vimeo)",
+          "accept": ["youtube", "vimeo"],
+          "info": "YouTube or Vimeo video URL. Note: May not autoplay on all devices."
+        },
+        {
+          "type": "image_picker",
+          "id": "fallback_image",
+          "label": "Fallback Image",
+          "info": "Image shown if video fails to load or as poster. Recommended: 1920x1080"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Category Slider",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Earrings",
+            "description": "Elegant earrings to complement any style. From classic studs to statement pieces."
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Necklace",
+            "description": "Beautiful necklaces that add sophistication to your look. Delicate chains to bold pendants."
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Rings",
+            "description": "Stunning rings for every occasion. From everyday elegance to special moments."
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Pendents",
+            "description": "Exquisite pendants that tell your story. Meaningful symbols and beautiful designs."
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Bracelets",
+            "description": "Graceful bracelets to adorn your wrist. Delicate chains to bold statement pieces."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
