@@ -361,24 +361,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateButtonPositions(categoryId, animate) {
-      if (!this.enableAnimations || typeof gsap === 'undefined' || this.isMobile) return;
+      if (this.isMobile) return;
 
       const categoryElement = this.section.querySelector(`[data-category-id="${categoryId}"]`);
-      if (!categoryElement) return;
+      const categoryNamesContainer = this.section.querySelector('.custom-section-featured-category-slider__category-names');
+      
+      if (!categoryElement || !categoryNamesContainer) return;
 
-      const sectionRect = this.section.getBoundingClientRect();
+      // Calculate position relative to the category names container center
+      const containerRect = categoryNamesContainer.getBoundingClientRect();
       const categoryRect = categoryElement.getBoundingClientRect();
-      const relativeTop = categoryRect.top - sectionRect.top;
+      
+      // Calculate offset from center of category names container
+      const containerCenter = containerRect.top + (containerRect.height / 2);
+      const categoryCenter = categoryRect.top + (categoryRect.height / 2);
+      const offsetFromCenter = categoryCenter - containerCenter;
 
       this.shopNowBtns.forEach(btn => {
-        if (animate) {
+        if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           gsap.to(btn, {
-            top: relativeTop + 'px',
+            y: offsetFromCenter,
             duration: 0.5,
             ease: 'power2.inOut'
           });
         } else {
-          btn.style.top = relativeTop + 'px';
+          btn.style.transform = `translateY(calc(-50% + ${offsetFromCenter}px))`;
         }
       });
     }
