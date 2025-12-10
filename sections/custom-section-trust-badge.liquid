@@ -1,0 +1,84 @@
+{{ 'section-custom-trust-badge.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-trust-badge">
+  <div class="custom-section-trust-badge__container">
+    <div class="custom-section-trust-badge__grid">
+      {% for block in section.blocks %}
+        <div class="custom-section-trust-badge__badge" {{ block.shopify_attributes }}>
+          {% if block.settings.badge_icon %}
+            <div class="custom-section-trust-badge__icon-wrapper">
+              <img
+                src="{{ block.settings.badge_icon | image_url: width: 120 }}"
+                alt="{{ block.settings.badge_label | escape }}"
+                class="custom-section-trust-badge__icon"
+                loading="lazy"
+              />
+            </div>
+          {% endif %}
+          {% if block.settings.badge_label != blank %}
+            <p class="custom-section-trust-badge__label">{{ block.settings.badge_label }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Trust Badge",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "badge_icon",
+          "label": "Badge Icon (PNG or SVG)"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge Label",
+          "placeholder": "e.g., 100% certified jewellery",
+          "default": "Trust Badge"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Custom Trust Badge",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_label": "100% certified jewellery"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_label": "15 days easy return"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_label": "lifetime exchange"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "badge_label": "lifetime warrenty"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
