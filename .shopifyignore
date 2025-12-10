@@ -45,3 +45,7 @@ tests/**
 .github/**
 issues/**
 plans/**
+
+# template json
+templates/*.json
+config/settings_data.json

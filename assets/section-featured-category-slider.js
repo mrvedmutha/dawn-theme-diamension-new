@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.currentCategoryId = 1;
       this.totalCategories = this.categoriesData.length;
       this.isAnimating = false;
-      this.isMobile = window.innerWidth <= 767;
+        this.isMobile = window.innerWidth <= 1024;
       this.hoverTimeout = null;
       this.pendingCategoryId = null;
       
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupResponsiveHandling() {
       const handleResize = () => {
         const wasMobile = this.isMobile;
-        this.isMobile = window.innerWidth <= 767;
+      this.isMobile = window.innerWidth <= 1024;
         
         if (wasMobile !== this.isMobile) {
           // Reset to first category when switching between mobile/desktop

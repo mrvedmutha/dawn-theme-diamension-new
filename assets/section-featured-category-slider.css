@@ -314,24 +314,8 @@
   }
 }
 
-/* Tablet Landscape - 1024px (Still Desktop Layout) */
+/* Tablet Landscape - 1024px (Switch to Mobile Layout) */
 @media (max-width: 1024px) {
-  :root {
-    --font-size-display-desktop: 50px;
-    --line-height-display: 42px;
-    --spacing-category-gap: 50px;
-    --category-stack-width: 300px;
-    --button-left-offset: calc(50% - 450px);
-    --button-right-offset: calc(50% + 300px);
-  }
-
-  .custom-section-featured-category-slider__shop-now-btn--right {
-    right: calc(50% - 300px);
-  }
-}
-
-/* Mobile - 767px */
-@media (max-width: 767px) {
   .custom-section-featured-category-slider {
     height: 100vh;
   }
@@ -350,7 +334,26 @@
     display: block;
   }
 
-  /* Adjust Mobile Typography */
+  /* Tablet-specific adjustments for mobile layout */
+  .custom-section-featured-category-slider__category-title-mobile {
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .custom-section-featured-category-slider__category-description-mobile {
+    font-size: 15px;
+    margin-bottom: 28px;
+    padding: 0 15px;
+  }
+
+  .custom-section-featured-category-slider__mobile-controls {
+    bottom: 8vh;
+  }
+}
+
+/* Mobile - 767px (Additional Mobile Refinements) */
+@media (max-width: 767px) {
+  /* Adjust Mobile Typography for smaller screens */
   .custom-section-featured-category-slider__category-title-mobile {
     font-size: 36px;
     margin-bottom: 15px;
