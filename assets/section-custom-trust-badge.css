@@ -3,6 +3,8 @@
    ============================================ */
 
 /* Font Face Declarations */
+@import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro');
+
 @font-face {
   font-family: 'Neue Haas Display';
   src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
@@ -49,8 +51,8 @@
 }
 
 .custom-section-trust-badge__icon-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,8 +60,8 @@
 }
 
 .custom-section-trust-badge__icon {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   display: block;
 }
@@ -74,7 +76,6 @@
   font-weight: 400;
   line-height: 20px;
   margin: 0;
-  max-width: 100px;
   width: 100%;
   word-break: break-word;
 }
@@ -83,22 +84,6 @@
 @media (min-width: 1441px) {
   .custom-section-trust-badge {
     padding: 160px 150px;
-  }
-}
-
-/* Medium Desktop - 1250px (Reduce Squeeze) */
-@media (max-width: 1250px) {
-  .custom-section-trust-badge {
-    padding: 140px 120px;
-  }
-
-  .custom-section-trust-badge__grid {
-    gap: 50px;
-  }
-
-  .custom-section-trust-badge__label {
-    font-size: 19px;
-    line-height: 19px;
   }
 }
 
@@ -119,8 +104,16 @@
   }
 }
 
-/* Mobile - 767px (Additional Mobile Refinements) */
+/* Mobile - 767px (Keep 2 Column Layout) */
 @media (max-width: 767px) {
+  .custom-section-trust-badge__icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+  .custom-section-trust-badge__icon {
+    width: 60px;
+    height: 60px;
+  }
   .custom-section-trust-badge {
     padding: 60px 40px;
   }
@@ -138,20 +131,6 @@
 /* Small Mobile - 375px */
 @media (max-width: 375px) {
   .custom-section-trust-badge {
-    padding: 50px 20px;
-  }
-
-  .custom-section-trust-badge__grid {
-    gap: 25px;
-  }
-
-  .custom-section-trust-badge__label {
-    font-size: 14px;
-    line-height: 14px;
-    max-width: 80px;
-  }
-
-  .custom-section-trust-badge__icon-wrapper {
-    margin-bottom: 15px;
+    padding: 40px 20px;
   }
 }
