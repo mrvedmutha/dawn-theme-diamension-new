@@ -91,31 +91,31 @@
   }
 }
 
-/* Tablet - 1024px */
-@media (max-width: 1024px) {
+/* Medium Desktop - 1250px (Reduce Squeeze) */
+@media (max-width: 1250px) {
   .custom-section-rich-text-diamension {
-    padding: 156px 80px 140px 80px;
+    padding: 180px 200px 160px 200px;
   }
   
   .custom-section-rich-text-diamension__container {
-    gap: 28px;
+    gap: 30px;
   }
   
   .custom-section-rich-text-diamension__headline {
-    font-size: 32px;
-    line-height: 38px;
+    font-size: 38px;
+    line-height: 43px;
     max-width: 100%;
   }
   
   .custom-section-rich-text-diamension__subtext {
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 19px;
+    line-height: 29px;
     max-width: 100%;
   }
 }
 
-/* Mobile - 767px */
-@media (max-width: 767px) {
+/* Tablet and Below - 1024px (Use Mobile Layout) */
+@media (max-width: 1024px) {
   .custom-section-rich-text-diamension {
     padding: 100px 40px 90px 40px;
   }
@@ -127,12 +127,20 @@
   .custom-section-rich-text-diamension__headline {
     font-size: 28px;
     line-height: 34px;
+    max-width: 100%;
   }
   
   .custom-section-rich-text-diamension__subtext {
     font-size: 16px;
     line-height: 24px;
+    max-width: 100%;
   }
+}
+
+/* Mobile - 767px (Additional Mobile Refinements) */
+@media (max-width: 767px) {
+  /* Mobile layout is now handled by 1024px breakpoint */
+  /* This breakpoint can be used for additional mobile-specific adjustments if needed */
 }
 
 /* Small Mobile - 375px */
