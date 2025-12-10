@@ -1,0 +1,224 @@
+{{ 'section-feature-slider-with-left-image.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-feature-slider-with-left-image-wrapper">
+  <div class="custom-section-feature-slider-with-left-image" data-section-id="{{ section.id }}">
+  <!-- Sidebar Image (Desktop Only) -->
+  {%- if section.settings.sidebar_image -%}
+    <div class="custom-section-feature-slider-with-left-image__sidebar">
+      <div class="custom-section-feature-slider-with-left-image__sidebar-image-wrapper">
+        <img
+          src="{{ section.settings.sidebar_image | image_url: width: 800 }}"
+          alt="{{ section.settings.section_heading | default: 'Featured Collection' }}"
+          class="custom-section-feature-slider-with-left-image__sidebar-image"
+          loading="lazy"
+          width="400"
+          height="400"
+        >
+      </div>
+    </div>
+  {%- endif -%}
+
+  <!-- Main Content Wrapper -->
+  <div class="custom-section-feature-slider-with-left-image__content">
+    <!-- Top Image (Mobile/Tablet Only) -->
+    {%- assign mobile_image = section.settings.mobile_tablet_image | default: section.settings.sidebar_image -%}
+    {%- if mobile_image -%}
+      <div class="custom-section-feature-slider-with-left-image__top-image-wrapper">
+        <img
+          src="{{ mobile_image | image_url: width: 1200 }}"
+          alt="{{ section.settings.section_heading | default: 'Featured Collection' }}"
+          class="custom-section-feature-slider-with-left-image__top-image"
+          loading="lazy"
+          width="800"
+          height="450"
+        >
+      </div>
+    {%- endif -%}
+
+    <!-- Header with Title and Arrow -->
+    <div class="custom-section-feature-slider-with-left-image__header">
+      {%- if section.settings.show_heading -%}
+        <h2
+          class="custom-section-feature-slider-with-left-image__heading"
+          style="text-align: {{ section.settings.heading_alignment }};"
+        >
+          {{ section.settings.section_heading }}
+        </h2>
+      {%- endif -%}
+
+      <button
+        class="custom-section-feature-slider-with-left-image__nav-button"
+        aria-label="Next Products"
+        data-direction="next"
+        type="button"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.103 19.1471C12.9977 19.0417 12.9385 18.8987 12.9385 18.7496C12.9385 18.6006 12.9977 18.4576 13.103 18.3521L18.8921 12.5621L3.7505 12.5621C3.60131 12.5621 3.45824 12.5029 3.35275 12.3974C3.24726 12.2919 3.188 12.1488 3.188 11.9996C3.188 11.8505 3.24726 11.7074 3.35275 11.6019C3.45824 11.4964 3.60131 11.4371 3.7505 11.4371L18.8921 11.4371L13.103 5.64714C13.0036 5.54051 12.9495 5.39948 12.9521 5.25375C12.9547 5.10802 13.0137 4.96898 13.1168 4.86592C13.2198 4.76287 13.3589 4.70383 13.5046 4.70126C13.6503 4.69869 13.7914 4.75278 13.898 4.85214L20.648 11.6021C20.7533 11.7076 20.8125 11.8506 20.8125 11.9996C20.8125 12.1487 20.7533 12.2917 20.648 12.3971L13.898 19.1471C13.7925 19.2525 13.6496 19.3116 13.5005 19.3116C13.3514 19.3116 13.2085 19.2525 13.103 19.1471Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Carousel Container -->
+    <div class="custom-section-feature-slider-with-left-image__carousel-wrapper">
+      <div
+        class="custom-section-feature-slider-with-left-image__carousel-container"
+        data-carousel-container
+      >
+        {%- assign collection = section.settings.collection -%}
+
+        {%- if collection and collection.products.size > 0 -%}
+          {%- for product in collection.products limit: section.settings.products_limit -%}
+            <div class="custom-section-feature-slider-with-left-image__card">
+              <div class="custom-section-feature-slider-with-left-image__card-image-wrapper">
+                {%- if product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 500 }}"
+                    alt="{{ product.title | escape }}"
+                    class="custom-section-feature-slider-with-left-image__card-image"
+                    loading="lazy"
+                    width="225"
+                    height="333"
+                  />
+                {%- else -%}
+                  <div class="custom-section-feature-slider-with-left-image__card-image-placeholder">
+                    <span>No Image</span>
+                  </div>
+                {%- endif -%}
+                <a href="{{ product.url }}" class="custom-section-feature-slider-with-left-image__card-image-link" aria-label="View {{ product.title }}"></a>
+              </div>
+
+              <button
+                class="custom-section-feature-slider-with-left-image__wishlist-button"
+                aria-label="Add to Wishlist"
+                data-product-id="{{ product.id }}"
+                data-product-handle="{{ product.handle }}"
+                data-product-title="{{ product.title | escape }}"
+                data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+                type="button"
+              >
+                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_{{ section.id }}_{{ forloop.index }}">
+                    <mask id="mask0_{{ section.id }}_{{ forloop.index }}" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="19" height="19">
+                      <path d="M18.7554 0H0V18.7554H18.7554V0Z" fill="white"/>
+                    </mask>
+                    <g mask="url(#mask0_{{ section.id }}_{{ forloop.index }})">
+                      <path d="M16.0901 3.88421C16.7778 4.65787 17.192 5.67378 17.192 6.79129C17.192 12.2616 12.128 15.4891 9.86175 16.2706C9.59605 16.3643 9.15842 16.3643 8.89272 16.2706C6.62645 15.4891 1.5625 12.2616 1.5625 6.79129C1.5625 4.37654 3.50837 2.42285 5.90749 2.42285C7.32978 2.42285 8.58795 3.11055 9.37724 4.17335C10.1665 3.11055 11.4325 2.42285 12.847 2.42285" stroke="currentColor" stroke-width="1.25036" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_{{ section.id }}_{{ forloop.index }}">
+                      <rect width="18.7554" height="18.7554" fill="white"/>
+                    </clipPath>
+                  </defs>
+                </svg>
+              </button>
+
+              <div class="custom-section-feature-slider-with-left-image__card-content">
+                <h3 class="custom-section-feature-slider-with-left-image__card-title">
+                  <a href="{{ product.url }}" class="custom-section-feature-slider-with-left-image__card-title-link">
+                    {{ product.title }}
+                  </a>
+                </h3>
+
+                <p class="custom-section-feature-slider-with-left-image__card-price">
+                  <a href="{{ product.url }}" class="custom-section-feature-slider-with-left-image__card-price-link">
+                    {{ product.price | money }}
+                  </a>
+                </p>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="custom-section-feature-slider-with-left-image__empty-state">
+            <p>
+              No products found in the selected collection. Please select a collection with products in the theme
+              settings.
+            </p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="{{ 'section-feature-slider-with-left-image.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Slider with Left Image",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "image_picker",
+      "id": "sidebar_image",
+      "label": "Desktop Sidebar Image",
+      "info": "Square (1:1) aspect ratio recommended. Displays on left sidebar (desktop only)."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_tablet_image",
+      "label": "Mobile/Tablet Top Image",
+      "info": "Landscape aspect ratio recommended (16:9 for tablet, 5:4 for mobile). If not uploaded, desktop image will be used as fallback."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select a collection to display products from."
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "label": "Products to Display",
+      "default": 10,
+      "info": "Maximum number of products to show in the carousel."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading",
+      "label": "Show Section Heading",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature Slider with Left Image",
+      "settings": {
+        "section_heading": "New Arrivals",
+        "products_limit": 10,
+        "show_heading": true,
+        "heading_alignment": "left"
+      }
+    }
+  ]
+}
+{% endschema %}

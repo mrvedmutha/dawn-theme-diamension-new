@@ -1,0 +1,596 @@
+/* ========================================
+   Feature Slider with Left Image Section
+   ======================================== */
+
+/* Background Wrapper - Full Width */
+.custom-section-feature-slider-with-left-image-wrapper {
+  width: 100%;
+  background-color: #FFFAF5;
+  min-height: 744px;
+}
+
+/* Base Layout - Desktop 1440px */
+.custom-section-feature-slider-with-left-image {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  min-height: 744px;
+  position: relative;
+}
+
+/* ========================================
+   Sidebar Image - Desktop Only
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__sidebar {
+  flex: 0 0 auto;
+  width: 706px;
+  display: block;
+  height: 744px;
+}
+
+.custom-section-feature-slider-with-left-image__sidebar-image-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #F0EFEA;
+}
+
+.custom-section-feature-slider-with-left-image__sidebar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ========================================
+   Top Image - Mobile/Tablet Only
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__top-image-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 40px;
+  overflow: hidden;
+  background-color: #F0EFEA;
+  display: none;
+}
+
+.custom-section-feature-slider-with-left-image__top-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ========================================
+   Main Content Area
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__content {
+  flex: 1;
+  min-width: 0;
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ========================================
+   Header Section
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.custom-section-feature-slider-with-left-image__heading {
+  font-family: 'Neue Haas Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 50px;
+  text-transform: uppercase;
+  color: #183754;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ========================================
+   Arrow Navigation Button
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__nav-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  flex-shrink: 0;
+  transition: transform 0.4s ease;
+}
+
+.custom-section-feature-slider-with-left-image__nav-button:hover {
+  opacity: 0.8;
+}
+
+.custom-section-feature-slider-with-left-image__nav-button svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ========================================
+   Carousel Container
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-section-feature-slider-with-left-image__carousel-container {
+  display: flex;
+  gap: 24px;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+/* ========================================
+   Product Card
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__card {
+  flex: 0 0 auto;
+  position: relative;
+  width: 225px;
+}
+
+.custom-section-feature-slider-with-left-image__card-image-wrapper {
+  width: 225px;
+  height: 333px;
+  overflow: hidden;
+  background-color: #F0EFEA;
+  position: relative;
+}
+
+.custom-section-feature-slider-with-left-image__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.custom-section-feature-slider-with-left-image__card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F0EFEA;
+  color: #183754;
+  font-size: 14px;
+}
+
+/* ========================================
+   Card Content (Outside Image Container)
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__card-content {
+  width: 225px;
+  margin-top: 10px;
+}
+
+.custom-section-feature-slider-with-left-image__card-title {
+  font-family: 'Neue Haas Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  margin: 0 0 4px 0;
+  text-align: left;
+  width: 100%;
+}
+
+.custom-section-feature-slider-with-left-image__card-title-link {
+  color: #183754;
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.custom-section-feature-slider-with-left-image__card-title-link:hover {
+  color: #183754;
+  opacity: 0.8;
+}
+
+.custom-section-feature-slider-with-left-image__card-price {
+  font-family: 'Neue Haas Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.custom-section-feature-slider-with-left-image__card-price-link {
+  color: #183754;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+
+.custom-section-feature-slider-with-left-image__card-price-link:hover {
+  color: #183754;
+  opacity: 0.8;
+}
+
+/* ========================================
+   Wishlist Button
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__wishlist-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #183754;
+  transition: all 0.3s ease;
+  padding: 2px;
+  position: absolute;
+  top: 10.87px;
+  right: 10.87px;
+  z-index: 10;
+}
+
+.custom-section-feature-slider-with-left-image__wishlist-button svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+
+.custom-section-feature-slider-with-left-image__wishlist-button--active {
+  background-color: #183754;
+  color: #FFFAF5;
+}
+
+.custom-section-feature-slider-with-left-image__wishlist-button:hover {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   Image Link (for image area only)
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__card-image-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-decoration: none;
+}
+
+/* ========================================
+   Empty State
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #183754;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.custom-section-feature-slider-with-left-image__empty-state p {
+  margin: 0;
+}
+
+/* ========================================
+   Desktop Variant: 1250-1440px
+   ======================================== */
+
+@media (max-width: 1440px) and (min-width: 1250px) {
+  .custom-section-feature-slider-with-left-image__card {
+    width: 225px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-wrapper {
+    width: 225px;
+    height: 333px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-content {
+    width: 225px;
+  }
+}
+
+/* ========================================
+   Tablet: 1025-1249px
+   ======================================== */
+
+@media (max-width: 1249px) and (min-width: 1025px) {
+  .custom-section-feature-slider-with-left-image-wrapper {
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image__content {
+    padding: 60px 30px;
+  }
+
+  .custom-section-feature-slider-with-left-image__sidebar {
+    display: none;
+  }
+
+  .custom-section-feature-slider-with-left-image__top-image-wrapper {
+    display: block;
+  }
+
+  .custom-section-feature-slider-with-left-image__heading {
+    font-size: 26px;
+    line-height: 40px;
+  }
+
+  .custom-section-feature-slider-with-left-image__carousel-container {
+    gap: 20px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card {
+    width: 200px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-wrapper {
+    width: 200px;
+    height: 300px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-content {
+    width: 200px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-title {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ========================================
+   Tablet: max-width 1024px
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .custom-section-feature-slider-with-left-image-wrapper {
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image__content {
+    padding: 60px 30px;
+  }
+
+  .custom-section-feature-slider-with-left-image__sidebar {
+    display: none;
+  }
+
+  .custom-section-feature-slider-with-left-image__top-image-wrapper {
+    display: block;
+  }
+
+  .custom-section-feature-slider-with-left-image__heading {
+    font-size: 26px;
+    line-height: 40px;
+  }
+
+  .custom-section-feature-slider-with-left-image__carousel-container {
+    gap: 20px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card {
+    width: 200px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-wrapper {
+    width: 200px;
+    height: 300px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-content {
+    width: 200px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-title {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* ========================================
+   Mobile: max-width 767px
+   ======================================== */
+
+@media (max-width: 767px) {
+  .custom-section-feature-slider-with-left-image-wrapper {
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    min-height: auto;
+  }
+
+  .custom-section-feature-slider-with-left-image__content {
+    padding: 40px 20px;
+  }
+
+  .custom-section-feature-slider-with-left-image__sidebar {
+    display: none;
+  }
+
+  .custom-section-feature-slider-with-left-image__top-image-wrapper {
+    display: block;
+    margin-bottom: 30px;
+    aspect-ratio: 5 / 4;
+  }
+
+  .custom-section-feature-slider-with-left-image__heading {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .custom-section-feature-slider-with-left-image__header {
+    margin-bottom: 30px;
+  }
+
+  .custom-section-feature-slider-with-left-image__carousel-container {
+    gap: 16px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card {
+    width: 180px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-wrapper {
+    width: 180px;
+    height: 270px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-content {
+    width: 180px;
+    margin-top: 8px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-title {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 0 3px 0;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-price {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .custom-section-feature-slider-with-left-image__wishlist-button {
+    width: 28px;
+    height: 28px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .custom-section-feature-slider-with-left-image__wishlist-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ========================================
+   Small Mobile: max-width 375px
+   ======================================== */
+
+@media (max-width: 375px) {
+  .custom-section-feature-slider-with-left-image__content {
+    padding: 30px 15px;
+  }
+
+  .custom-section-feature-slider-with-left-image__heading {
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-price {
+    font-size: 11px;
+  }
+}
+
+/* ========================================
+   Large Desktop: min-width 1441px
+   ======================================== */
+
+@media (min-width: 1441px) {
+  .custom-section-feature-slider-with-left-image {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* ========================================
+   Animation Support
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__carousel-container.is-animating {
+  transition: none;
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+
+.custom-section-feature-slider-with-left-image__nav-button:focus,
+.custom-section-feature-slider-with-left-image__wishlist-button:focus {
+  outline: none;
+}
+
+.custom-section-feature-slider-with-left-image__card-link:focus {
+  outline: none;
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .custom-section-feature-slider-with-left-image__nav-button {
+    display: none;
+  }
+  
+  .custom-section-feature-slider-with-left-image__carousel-container {
+    display: block;
+  }
+  
+  .custom-section-feature-slider-with-left-image__card {
+    display: inline-block;
+    width: 200px;
+    margin: 10px;
+  }
+}
