@@ -26,25 +26,12 @@
 
           <!-- Left Image -->
           {% if section.settings.left_image != blank %}
-<<<<<<< HEAD
-            <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--left js-parallax-image">
-=======
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--left">
->>>>>>> feature/section/shop-collection-arch
               {% if section.settings.left_image_link != blank %}
                 <a href="{{ section.settings.left_image_link }}" class="custom-section-shop-collection-arch__image-link">
               {% endif %}
                 <img
                   src="{{ section.settings.left_image | image_url: width: 450 }}"
-<<<<<<< HEAD
-                  srcset="{{ section.settings.left_image | image_url: width: 189 }} 189w,
-                          {{ section.settings.left_image | image_url: width: 378 }} 378w,
-                          {{ section.settings.left_image | image_url: width: 450 }} 450w"
-                  sizes="(min-width: 1024px) 189px, 150px"
-                  alt="{{ section.settings.left_image.alt | escape }}"
-                  loading="lazy"
-                  class="custom-section-shop-collection-arch__image-img"
-=======
                   srcset="{{ section.settings.left_image | image_url: width: 222 }} 222w,
                           {{ section.settings.left_image | image_url: width: 444 }} 444w,
                           {{ section.settings.left_image | image_url: width: 450 }} 450w"
@@ -52,7 +39,6 @@
                   alt="{{ section.settings.left_image.alt | escape }}"
                   loading="lazy"
                   class="custom-section-shop-collection-arch__image-img js-parallax-image"
->>>>>>> feature/section/shop-collection-arch
                 />
               {% if section.settings.left_image_link != blank %}
                 </a>
@@ -62,11 +48,7 @@
 
           <!-- Right Image -->
           {% if section.settings.right_image != blank %}
-<<<<<<< HEAD
-            <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--right js-parallax-image">
-=======
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--right">
->>>>>>> feature/section/shop-collection-arch
               {% if section.settings.right_image_link != blank %}
                 <a href="{{ section.settings.right_image_link }}" class="custom-section-shop-collection-arch__image-link">
               {% endif %}
@@ -78,11 +60,7 @@
                   sizes="(min-width: 1024px) 222px, 150px"
                   alt="{{ section.settings.right_image.alt | escape }}"
                   loading="lazy"
-<<<<<<< HEAD
-                  class="custom-section-shop-collection-arch__image-img"
-=======
                   class="custom-section-shop-collection-arch__image-img js-parallax-image"
->>>>>>> feature/section/shop-collection-arch
                 />
               {% if section.settings.right_image_link != blank %}
                 </a>
@@ -92,25 +70,12 @@
 
           <!-- Bottom Image -->
           {% if section.settings.bottom_image != blank %}
-<<<<<<< HEAD
-            <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--bottom js-parallax-image">
-=======
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--bottom">
->>>>>>> feature/section/shop-collection-arch
               {% if section.settings.bottom_image_link != blank %}
                 <a href="{{ section.settings.bottom_image_link }}" class="custom-section-shop-collection-arch__image-link">
               {% endif %}
                 <img
                   src="{{ section.settings.bottom_image | image_url: width: 450 }}"
-<<<<<<< HEAD
-                  srcset="{{ section.settings.bottom_image | image_url: width: 189 }} 189w,
-                          {{ section.settings.bottom_image | image_url: width: 378 }} 378w,
-                          {{ section.settings.bottom_image | image_url: width: 450 }} 450w"
-                  sizes="(min-width: 1024px) 189px, 150px"
-                  alt="{{ section.settings.bottom_image.alt | escape }}"
-                  loading="lazy"
-                  class="custom-section-shop-collection-arch__image-img"
-=======
                   srcset="{{ section.settings.bottom_image | image_url: width: 222 }} 222w,
                           {{ section.settings.bottom_image | image_url: width: 444 }} 444w,
                           {{ section.settings.bottom_image | image_url: width: 450 }} 450w"
@@ -118,7 +83,6 @@
                   alt="{{ section.settings.bottom_image.alt | escape }}"
                   loading="lazy"
                   class="custom-section-shop-collection-arch__image-img js-parallax-image"
->>>>>>> feature/section/shop-collection-arch
                 />
               {% if section.settings.bottom_image_link != blank %}
                 </a>
