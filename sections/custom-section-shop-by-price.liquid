@@ -1,0 +1,106 @@
+{{ 'section-shop-by-price.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-shop-by-price" data-section-id="{{ section.id }}">
+  <div class="custom-section-shop-by-price__container">
+    {%- comment -%} Title and Tagline {%- endcomment -%}
+    <div class="custom-section-shop-by-price__header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="custom-section-shop-by-price__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.tagline != blank -%}
+        <p class="custom-section-shop-by-price__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Price Category Tabs {%- endcomment -%}
+    <div class="custom-section-shop-by-price__tabs">
+      <button
+        class="custom-section-shop-by-price__tab custom-section-shop-by-price__tab--active"
+        data-price-range="0-25000"
+      >
+        BELOW ₹25000
+      </button>
+      <button
+        class="custom-section-shop-by-price__tab"
+        data-price-range="25000-50000"
+      >
+        UNDER ₹50,000
+      </button>
+      <button
+        class="custom-section-shop-by-price__tab"
+        data-price-range="50000-100000"
+      >
+        UNDER ₹1,00,000
+      </button>
+      <button
+        class="custom-section-shop-by-price__tab"
+        data-price-range="100000-200000"
+      >
+        UNDER ₹2,00,000
+      </button>
+      <div class="custom-section-shop-by-price__underline">&nbsp;</div>
+    </div>
+
+    {%- comment -%} Product Carousel {%- endcomment -%}
+    <div class="custom-section-shop-by-price__carousel-wrapper">
+      <button
+        class="custom-section-shop-by-price__arrow custom-section-shop-by-price__arrow--left"
+        aria-label="Previous products"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.103 19.1471C12.9977 19.0417 12.9385 18.8987 12.9385 18.7496C12.9385 18.6006 12.9977 18.4576 13.103 18.3521L18.8921 12.5621L3.7505 12.5621C3.60131 12.5621 3.45824 12.5029 3.35275 12.3974C3.24726 12.2919 3.188 12.1488 3.188 11.9996C3.188 11.8505 3.24726 11.7074 3.35275 11.6019C3.45824 11.4964 3.60131 11.4371 3.7505 11.4371L18.8921 11.4371L13.103 5.64714C13.0036 5.54051 12.9495 5.39948 12.9521 5.25375C12.9547 5.10802 13.0137 4.96898 13.1168 4.86592C13.2198 4.76287 13.3589 4.70383 13.5046 4.70126C13.6503 4.69869 13.7914 4.75278 13.898 4.85214L20.648 11.6021C20.7533 11.7076 20.8125 11.8506 20.8125 11.9996C20.8125 12.1487 20.7533 12.2917 20.648 12.3971L13.898 19.1471C13.7925 19.2525 13.6496 19.3116 13.5005 19.3116C13.3514 19.3116 13.2085 19.2525 13.103 19.1471Z" fill="currentColor" transform="rotate(180 12 12)"/>
+        </svg>
+      </button>
+
+      <div class="custom-section-shop-by-price__carousel">
+        <div class="custom-section-shop-by-price__products" data-products-container>
+          {%- comment -%} Products will be dynamically loaded via JavaScript {%- endcomment -%}
+          <div class="custom-section-shop-by-price__loading">Loading products...</div>
+        </div>
+      </div>
+
+      <button
+        class="custom-section-shop-by-price__arrow custom-section-shop-by-price__arrow--right"
+        aria-label="Next products"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.103 19.1471C12.9977 19.0417 12.9385 18.8987 12.9385 18.7496C12.9385 18.6006 12.9977 18.4576 13.103 18.3521L18.8921 12.5621L3.7505 12.5621C3.60131 12.5621 3.45824 12.5029 3.35275 12.3974C3.24726 12.2919 3.188 12.1488 3.188 11.9996C3.188 11.8505 3.24726 11.7074 3.35275 11.6019C3.45824 11.4964 3.60131 11.4371 3.7505 11.4371L18.8921 11.4371L13.103 5.64714C13.0036 5.54051 12.9495 5.39948 12.9521 5.25375C12.9547 5.10802 13.0137 4.96898 13.1168 4.86592C13.2198 4.76287 13.3589 4.70383 13.5046 4.70126C13.6503 4.69869 13.7914 4.75278 13.898 4.85214L20.648 11.6021C20.7533 11.7076 20.8125 11.8506 20.8125 11.9996C20.8125 12.1487 20.7533 12.2917 20.648 12.3971L13.898 19.1471C13.7925 19.2525 13.6496 19.3116 13.5005 19.3116C13.3514 19.3116 13.2085 19.2525 13.103 19.1471Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+    {%- comment -%} Shop All CTA {%- endcomment -%}
+    <div class="custom-section-shop-by-price__cta" style="display: none;">
+      <a href="#" class="custom-section-shop-by-price__shop-all" data-shop-all-link> Shop All </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="{{ 'section-shop-by-price.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Shop by Price",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "SHOP BY PRICE"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Whatever the budget, we have got a beautiful piece of jewellery for every YOU!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Price"
+    }
+  ]
+}
+{% endschema %}
