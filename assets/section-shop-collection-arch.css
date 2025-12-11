@@ -101,16 +101,25 @@
 
 .custom-section-shop-collection-arch__image {
   flex-shrink: 0;
+<<<<<<< HEAD
   overflow: visible;
   will-change: transform;
+=======
+  overflow: hidden;
+>>>>>>> feature/section/shop-collection-arch
   border-radius: 0;
   position: relative;
   z-index: 3;
 }
 
 .custom-section-shop-collection-arch__image--left {
+<<<<<<< HEAD
   width: 189px;
   height: 257px;
+=======
+  width: 222px;
+  height: 302px;
+>>>>>>> feature/section/shop-collection-arch
   align-self: flex-end;
   order: 1;
 }
@@ -123,8 +132,13 @@
 }
 
 .custom-section-shop-collection-arch__image--bottom {
+<<<<<<< HEAD
   width: 189px;
   height: 257px;
+=======
+  width: 222px;
+  height: 302px;
+>>>>>>> feature/section/shop-collection-arch
   display: none;
 }
 
@@ -139,7 +153,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+<<<<<<< HEAD
   transition: transform var(--sca-transition-default);
+=======
+  will-change: transform;
+>>>>>>> feature/section/shop-collection-arch
 }
 
 .custom-section-shop-collection-arch__image-link:hover .custom-section-shop-collection-arch__image-img {
@@ -309,7 +327,11 @@
   .custom-section-shop-collection-arch__image--right {
     width: 100%;
     height: auto;
+<<<<<<< HEAD
     aspect-ratio: 189 / 257;
+=======
+    aspect-ratio: 222 / 302;
+>>>>>>> feature/section/shop-collection-arch
   }
 
   .custom-section-shop-collection-arch__image--bottom {
