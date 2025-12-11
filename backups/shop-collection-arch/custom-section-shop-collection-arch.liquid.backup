@@ -1,0 +1,255 @@
+{{ 'section-shop-collection-arch.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-shop-collection-arch">
+  <div class="custom-section-shop-collection-arch__container">
+    
+    {%- comment -%} Section Heading {%- endcomment -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="custom-section-shop-collection-arch__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="custom-section-shop-collection-arch__content">
+      
+      {%- comment -%} Background Ellipse Circle (z-index: 1) {%- endcomment -%}
+      <div class="custom-section-shop-collection-arch__background-ellipse">
+        <div>&nbsp;</div>
+      </div>
+
+      {%- comment -%} Rotating Star (z-index: 2) {%- endcomment -%}
+      {%- if section.settings.show_star -%}
+        <div class="custom-section-shop-collection-arch__star" data-star>
+          {%- if section.settings.decorative_star != blank -%}
+            {{ section.settings.decorative_star | image_url: width: 24 | image_tag: class: 'custom-section-shop-collection-arch__star-image', loading: 'lazy', alt: '' }}
+          {%- else -%}
+            <svg class="custom-section-shop-collection-arch__star-default" viewBox="0 0 14.9 14.9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7.45,0c-.78,6.03-1.42,6.67-7.45,7.45,6.03.78,6.67,1.42,7.45,7.45.78-6.03,1.42-6.67,7.45-7.45-6.03-.78-6.67-1.42-7.45-7.45Z"/>
+            </svg>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Left Product Image (z-index: 3) {%- endcomment -%}
+      {%- if section.settings.left_image != blank -%}
+        <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--left">
+          {%- if section.settings.left_image_link != blank -%}
+            <a href="{{ section.settings.left_image_link }}" class="custom-section-shop-collection-arch__image-link">
+              {{ section.settings.left_image | image_url: width: 450 | image_tag: 
+                loading: 'lazy',
+                widths: '224, 300, 450',
+                class: 'custom-section-shop-collection-arch__image-element',
+                alt: section.settings.left_image.alt | default: 'Product image'
+              }}
+            </a>
+          {%- else -%}
+            {{ section.settings.left_image | image_url: width: 450 | image_tag: 
+              loading: 'lazy',
+              widths: '224, 300, 450',
+              class: 'custom-section-shop-collection-arch__image-element',
+              alt: section.settings.left_image.alt | default: 'Product image'
+            }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Right Product Image (z-index: 3) {%- endcomment -%}
+      {%- if section.settings.right_image != blank -%}
+        <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--right">
+          {%- if section.settings.right_image_link != blank -%}
+            <a href="{{ section.settings.right_image_link }}" class="custom-section-shop-collection-arch__image-link">
+              {{ section.settings.right_image | image_url: width: 450 | image_tag: 
+                loading: 'lazy',
+                widths: '224, 300, 450',
+                class: 'custom-section-shop-collection-arch__image-element',
+                alt: section.settings.right_image.alt | default: 'Product image'
+              }}
+            </a>
+          {%- else -%}
+            {{ section.settings.right_image | image_url: width: 450 | image_tag: 
+              loading: 'lazy',
+              widths: '224, 300, 450',
+              class: 'custom-section-shop-collection-arch__image-element',
+              alt: section.settings.right_image.alt | default: 'Product image'
+            }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Video Arch Container (z-index: 4) {%- endcomment -%}
+      <div class="custom-section-shop-collection-arch__video-arch">
+        
+        {%- comment -%} Video Background {%- endcomment -%}
+        <div class="custom-section-shop-collection-arch__video-container">
+          {%- if section.settings.direct_video_url != blank -%}
+            {%- comment -%} Direct Video URL (MP4, WebM, etc.) {%- endcomment -%}
+            <video 
+              class="custom-section-shop-collection-arch__video-element"
+              autoplay 
+              loop 
+              muted 
+              playsinline
+              preload="metadata"
+            >
+              <source src="{{ section.settings.direct_video_url }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {%- elsif section.settings.center_video != blank -%}
+            {%- comment -%} YouTube or Vimeo Video {%- endcomment -%}
+            {%- if section.settings.center_video.type == 'youtube' -%}
+              <iframe
+                src="https://www.youtube.com/embed/{{ section.settings.center_video.id }}?autoplay=1&mute=1&loop=1&playlist={{ section.settings.center_video.id }}&controls=0&showinfo=0&rel=0&modestbranding=1"
+                class="custom-section-shop-collection-arch__video-iframe"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            {%- elsif section.settings.center_video.type == 'vimeo' -%}
+              <iframe
+                src="https://player.vimeo.com/video/{{ section.settings.center_video.id }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
+                class="custom-section-shop-collection-arch__video-iframe"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            {%- endif -%}
+          {%- elsif section.settings.center_image_fallback != blank -%}
+            {%- comment -%} Fallback Image {%- endcomment -%}
+            {{ section.settings.center_image_fallback | image_url: width: 950 | image_tag: 
+              loading: 'lazy',
+              widths: '472, 600, 950',
+              class: 'custom-section-shop-collection-arch__fallback-image',
+              alt: section.settings.center_image_fallback.alt | default: 'Collection showcase'
+            }}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} White Rectangle Container (z-index: 5) {%- endcomment -%}
+        <div class="custom-section-shop-collection-arch__white-rectangle">
+          
+          {%- comment -%} Inner Arch Clip-path Window (z-index: 6) {%- endcomment -%}
+          <div class="custom-section-shop-collection-arch__arch-window">
+            <div>&nbsp;</div>
+          </div>
+
+          {%- comment -%} CTA Button Text (z-index: 7) {%- endcomment -%}
+          {%- if section.settings.center_cta_text != blank -%}
+            <div class="custom-section-shop-collection-arch__cta-wrapper">
+              {%- if section.settings.center_cta_link != blank -%}
+                <a href="{{ section.settings.center_cta_link }}" class="custom-section-shop-collection-arch__cta">
+                  {{ section.settings.center_cta_text }}
+                </a>
+              {%- else -%}
+                <span class="custom-section-shop-collection-arch__cta">{{ section.settings.center_cta_text }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-shop-collection-arch.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Shop Collection Arch",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Radiance Collection"
+    },
+    {
+      "type": "header",
+      "content": "Center Video"
+    },
+    {
+      "type": "url",
+      "id": "direct_video_url",
+      "label": "Direct Video URL",
+      "info": "Enter direct video URL (MP4, WebM, etc. from CDN or hosted). This takes priority over YouTube/Vimeo."
+    },
+    {
+      "type": "video_url",
+      "id": "center_video",
+      "label": "YouTube or Vimeo Video",
+      "info": "YouTube or Vimeo URL. Used if no direct video URL is provided.",
+      "accept": ["youtube", "vimeo"]
+    },
+    {
+      "type": "image_picker",
+      "id": "center_image_fallback",
+      "label": "Fallback Image",
+      "info": "Displays if no video is provided."
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "url",
+      "id": "center_cta_link",
+      "label": "CTA Link"
+    },
+    {
+      "type": "text",
+      "id": "center_cta_text",
+      "label": "CTA Text",
+      "default": "Shop the Collection"
+    },
+    {
+      "type": "header",
+      "content": "Side Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Product Image",
+      "info": "Recommended: 224x304px"
+    },
+    {
+      "type": "url",
+      "id": "left_image_link",
+      "label": "Left Image Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Product Image",
+      "info": "Recommended: 224x304px"
+    },
+    {
+      "type": "url",
+      "id": "right_image_link",
+      "label": "Right Image Link"
+    },
+    {
+      "type": "header",
+      "content": "Decorative Elements"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_star",
+      "label": "Show Rotating Star",
+      "default": true,
+      "info": "Enable or disable the rotating star animation"
+    },
+    {
+      "type": "image_picker",
+      "id": "decorative_star",
+      "label": "Custom Star Icon (Optional)",
+      "info": "Upload custom SVG or PNG. Default star used if empty."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop Collection Arch"
+    }
+  ]
+}
+{% endschema %}
