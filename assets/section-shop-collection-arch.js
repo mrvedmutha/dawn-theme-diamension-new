@@ -19,7 +19,7 @@
       tablet: 1024
     },
     parallax: {
-      movement: 50, // Pixels of vertical movement
+      movement: 80, // Pixels of vertical movement (increased for more dramatic effect)
       ease: 'none'
     }
   };
@@ -172,6 +172,7 @@
       this.images.forEach((image) => {
         // Create parallax effect for each image
         // Animation goes from -movement to +movement for proper parallax effect
+        // Tighter trigger range means animation completes faster (more visible in middle)
         gsap.fromTo(image,
           {
             y: -CONFIG.parallax.movement
@@ -181,8 +182,8 @@
             ease: CONFIG.parallax.ease,
             scrollTrigger: {
               trigger: this.section,
-              start: 'top bottom',
-              end: 'bottom top',
+              start: 'top 80%', // Start animation when section reaches 80% from top
+              end: 'bottom 20%', // End animation when section is 20% from top
               scrub: true
             }
           }
