@@ -1,0 +1,398 @@
+/* ============================================================================
+   Shop Collection Arch Section - Custom Shopify Section
+   ============================================================================ */
+
+/* ============================================================================
+   Root Variables
+   ============================================================================ */
+:root {
+  --sca-color-wrapper-bg: #fffaf5;
+  --sca-color-text-primary: #183754;
+  --sca-color-text-light: #ffffff;
+  --sca-container-max-width: 1440px;
+  --sca-container-padding-desktop: 48px;
+  --sca-container-padding-tablet: 30px;
+  --sca-container-padding-mobile: 20px;
+  --sca-heading-size: 40px;
+  --sca-heading-line-height: 50px;
+  --sca-cta-size: 20px;
+  --sca-cta-line-height: 40px;
+  --sca-spacing-sm: 16px;
+  --sca-transition-default: 0.3s ease;
+}
+
+/* ============================================================================
+   Wrapper & Container
+   ============================================================================ */
+.custom-section-shop-collection-arch {
+  width: 100%;
+  background-color: var(--sca-color-wrapper-bg);
+  overflow: hidden;
+}
+
+.custom-section-shop-collection-arch__wrapper {
+  width: 100%;
+  background-color: var(--sca-color-wrapper-bg);
+}
+
+.custom-section-shop-collection-arch__container {
+  max-width: var(--sca-container-max-width);
+  margin: 0 auto;
+  padding: 152px var(--sca-container-padding-desktop);
+  position: relative;
+}
+
+/* ============================================================================
+   Heading
+   ============================================================================ */
+.custom-section-shop-collection-arch__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: var(--sca-heading-size);
+  line-height: var(--sca-heading-line-height);
+  color: var(--sca-color-text-primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 auto 72px;
+  width: 344px;
+  max-width: 100%;
+}
+
+/* ============================================================================
+   Content Wrapper
+   ============================================================================ */
+.custom-section-shop-collection-arch__content {
+  position: relative;
+  width: 100%;
+  min-height: 712px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0;
+}
+
+/* ============================================================================
+   Decorative Ellipse (Desktop Only)
+   ============================================================================ */
+.custom-section-shop-collection-arch__ellipse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  width: 1219px;
+  height: 544px;
+}
+
+.custom-section-shop-collection-arch__ellipse-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ============================================================================
+   Side Product Images
+   ============================================================================ */
+.custom-section-shop-collection-arch__images {
+  display: contents;
+}
+
+.custom-section-shop-collection-arch__image {
+  flex-shrink: 0;
+  overflow: visible;
+  will-change: transform;
+  border-radius: 0;
+  position: relative;
+  z-index: 3;
+}
+
+.custom-section-shop-collection-arch__image--left {
+  width: 189px;
+  height: 257px;
+  align-self: flex-end;
+  order: 1;
+}
+
+.custom-section-shop-collection-arch__image--right {
+  width: 222px;
+  height: 302px;
+  align-self: flex-start;
+  order: 3;
+}
+
+.custom-section-shop-collection-arch__image--bottom {
+  width: 189px;
+  height: 257px;
+  display: none;
+}
+
+.custom-section-shop-collection-arch__image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-section-shop-collection-arch__image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--sca-transition-default);
+}
+
+.custom-section-shop-collection-arch__image-link:hover .custom-section-shop-collection-arch__image-img {
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   Center Arch Container
+   ============================================================================ */
+.custom-section-shop-collection-arch__center {
+  position: relative;
+  z-index: 4;
+  width: 472px;
+  height: 712px;
+  flex-shrink: 0;
+  order: 2;
+  align-self: center;
+}
+
+.custom-section-shop-collection-arch__arch-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clip-path: url(#arch-clip-path);
+}
+
+/* Create arch clip-path using the SVG shape */
+.custom-section-shop-collection-arch__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+  clip-path: path('M472,712H0V236C0,105.66,105.66,0,236,0h0c130.34,0,236,105.66,236,236v476Z');
+}
+
+.custom-section-shop-collection-arch__media video,
+.custom-section-shop-collection-arch__fallback-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-section-shop-collection-arch__video-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+/* ============================================================================
+   Inner Rectangle with Arch Clip
+   ============================================================================ */
+.custom-section-shop-collection-arch__inner-rectangle {
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 272px;
+  height: 432px;
+  z-index: 5;
+}
+
+.custom-section-shop-collection-arch__inner-rectangle-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ============================================================================
+   CTA Button
+   ============================================================================ */
+.custom-section-shop-collection-arch__cta-wrapper {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  text-align: center;
+}
+
+.custom-section-shop-collection-arch__cta {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: var(--sca-cta-size);
+  line-height: var(--sca-cta-line-height);
+  color: var(--sca-color-text-light);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: opacity var(--sca-transition-default);
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.custom-section-shop-collection-arch__cta:hover {
+  opacity: 0.8;
+}
+
+/* ============================================================================
+   Tablet Breakpoint (≤1024px)
+   ============================================================================ */
+@media screen and (max-width: 1024px) {
+  .custom-section-shop-collection-arch__container {
+    padding: 60px var(--sca-container-padding-tablet);
+  }
+
+  .custom-section-shop-collection-arch__heading {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 40px;
+    width: 100%;
+  }
+
+  .custom-section-shop-collection-arch__content {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
+
+  /* Hide decorative ellipse on tablet/mobile */
+  .custom-section-shop-collection-arch__ellipse {
+    display: none;
+  }
+
+  /* Center arch - full width, order 1 */
+  .custom-section-shop-collection-arch__center {
+    width: 100%;
+    max-width: 472px;
+    height: auto;
+    aspect-ratio: 472 / 712;
+    margin-bottom: var(--sca-spacing-sm);
+    order: 1;
+  }
+
+  /* Reposition side images in 2-column layout BELOW video arch */
+  .custom-section-shop-collection-arch__images {
+    position: relative;
+    display: flex;
+    gap: var(--sca-spacing-sm);
+    width: 100%;
+    max-width: 472px;
+    justify-content: space-between;
+    order: 2;
+  }
+
+  .custom-section-shop-collection-arch__image {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    flex: 1;
+    max-width: calc(50% - 8px);
+    align-self: stretch;
+    order: initial;
+  }
+
+  .custom-section-shop-collection-arch__image--left,
+  .custom-section-shop-collection-arch__image--right {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 189 / 257;
+  }
+
+  .custom-section-shop-collection-arch__image--bottom {
+    display: none;
+  }
+
+  /* Disable parallax on tablet/mobile */
+  .js-parallax-image {
+    transform: none !important;
+  }
+}
+
+/* ============================================================================
+   Mobile Breakpoint (≤767px)
+   ============================================================================ */
+@media screen and (max-width: 767px) {
+  .custom-section-shop-collection-arch__container {
+    padding: 40px var(--sca-container-padding-mobile);
+  }
+
+  .custom-section-shop-collection-arch__heading {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 32px;
+  }
+
+  .custom-section-shop-collection-arch__cta {
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .custom-section-shop-collection-arch__inner-rectangle {
+    bottom: 40px;
+    width: 240px;
+    height: 380px;
+  }
+}
+
+/* ============================================================================
+    Mobile Breakpoint (≤480px)
+   ============================================================================ */
+@media screen and (max-width: 480px) {
+  .custom-section-shop-collection-arch__media {
+    clip-path: none;
+    border-radius: 100% 100% 0 0 / 50% 50% 0 0;
+  }
+}
+
+/* ============================================================================
+   Small Mobile Breakpoint (≤375px)
+   ============================================================================ */
+@media screen and (max-width: 375px) {
+  .custom-section-shop-collection-arch__inner-rectangle {
+    bottom: 32px;
+    width: 200px;
+    height: 320px;
+  }
+  .custom-section-shop-collection-arch__container {
+    padding: 30px 15px;
+  }
+
+  .custom-section-shop-collection-arch__heading {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .custom-section-shop-collection-arch__cta {
+    font-size: 14px;
+    line-height: 28px;
+  }
+}
+
+/* ============================================================================
+   Desktop Large Heading Responsiveness (1250px-1440px)
+   ============================================================================ */
+@media screen and (min-width: 1250px) and (max-width: 1440px) {
+  .custom-section-shop-collection-arch__heading {
+    width: 344px;
+  }
+}
+
+@media screen and (max-width: 1249px) {
+  .custom-section-shop-collection-arch__heading {
+    width: 100%;
+  }
+}
