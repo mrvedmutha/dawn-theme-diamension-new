@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const initFeaturedCategorySlider = () => {
     try {
       const sections = document.querySelectorAll('.custom-section-featured-category-slider');
-      
-      sections.forEach(section => {
+
+      sections.forEach((section) => {
         new FeaturedCategorySlider(section);
       });
     } catch (error) {
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.section = section;
       this.sectionId = section.dataset.sectionId;
       this.enableAnimations = section.dataset.enableAnimations === 'true';
-      
+
       // DOM Elements
       this.video = section.querySelector('.custom-section-featured-category-slider__video');
       this.videoEmbed = section.querySelector('.custom-section-featured-category-slider__video-embed');
@@ -30,19 +30,23 @@ document.addEventListener('DOMContentLoaded', () => {
       this.currentSlideEl = section.querySelector('.custom-section-featured-category-slider__current-slide');
       this.totalSlidesEl = section.querySelector('.custom-section-featured-category-slider__total-slides');
       this.progressBarFill = section.querySelector('.custom-section-featured-category-slider__progress-bar-fill');
-      this.categoryTitleMobile = section.querySelector('.custom-section-featured-category-slider__category-title-mobile');
-      this.categoryDescriptionMobile = section.querySelector('.custom-section-featured-category-slider__category-description-mobile');
+      this.categoryTitleMobile = section.querySelector(
+        '.custom-section-featured-category-slider__category-title-mobile'
+      );
+      this.categoryDescriptionMobile = section.querySelector(
+        '.custom-section-featured-category-slider__category-description-mobile'
+      );
       this.viewCollectionBtn = section.querySelector('.custom-section-featured-category-slider__view-collection-btn');
-      
+
       // Data
       this.categoriesData = this.getCategoriesData();
       this.currentCategoryId = 1;
       this.totalCategories = this.categoriesData.length;
       this.isAnimating = false;
-        this.isMobile = window.innerWidth <= 1024;
+      this.isMobile = window.innerWidth <= 1024;
       this.hoverTimeout = null;
       this.pendingCategoryId = null;
-      
+
       // Initialize
       this.init();
     }
@@ -57,15 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
         this.setupEventListeners();
         this.setupResponsiveHandling();
         this.setActiveCategory(1, false); // Set initial state without animation
-        
+
         // Initialize mobile UI
         if (this.isMobile) {
           this.updateMobileCounter();
           this.updateProgressBar();
         }
-        
+
         // TODO: debugging slider initialization
-        console.log('Featured category slider initialized:', this.sectionId);
+        // console.log('Featured category slider initialized:', this.sectionId);
       } catch (error) {
         console.error('Error in slider initialization:', error);
       }
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const dataScript = this.section.querySelector('[data-categories-data]');
         if (!dataScript) return [];
-        
+
         const jsonData = dataScript.textContent.trim();
         return jsonData ? JSON.parse(jsonData) : [];
       } catch (error) {
@@ -86,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupEventListeners() {
       // Desktop hover events
-      this.categoryNames.forEach(categoryName => {
+      this.categoryNames.forEach((categoryName) => {
         categoryName.addEventListener('mouseenter', (e) => {
           if (!this.isMobile) {
             const categoryId = parseInt(e.target.dataset.categoryId);
@@ -135,12 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupResponsiveHandling() {
       const handleResize = () => {
         const wasMobile = this.isMobile;
-      this.isMobile = window.innerWidth <= 1024;
-        
+        this.isMobile = window.innerWidth <= 1024;
+
         if (wasMobile !== this.isMobile) {
           // Reset to first category when switching between mobile/desktop
           this.setActiveCategory(1, false);
-          
+
           if (this.isMobile) {
             this.updateMobileCounter();
             this.updateProgressBar();
@@ -156,10 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
       }
-      
+
       // Store the pending category
       this.pendingCategoryId = categoryId;
-      
+
       // Set a small delay to prevent rapid switching
       this.hoverTimeout = setTimeout(() => {
         if (this.pendingCategoryId === categoryId && !this.isAnimating) {
@@ -178,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setActiveCategory(categoryId, animate = true) {
       try {
-        const category = this.categoriesData.find(c => c.id === categoryId);
+        const category = this.categoriesData.find((c) => c.id === categoryId);
         if (!category) return;
 
         // If already animating, queue this change
@@ -191,14 +195,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update active category styling immediately
         this.updateCategoryActiveState(categoryId);
-        
+
         // Update video/image with proper animation handling
         this.updateBackgroundMedia(category, animate);
-        
+
         // Update buttons and mobile content
         this.updateButtons(category);
         this.updateMobileContent(category);
-        
+
         // Update mobile UI
         if (this.isMobile) {
           this.updateMobileCounter();
@@ -213,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateCategoryActiveState(categoryId) {
-      this.categoryNames.forEach(name => {
+      this.categoryNames.forEach((name) => {
         const nameId = parseInt(name.dataset.categoryId);
         if (nameId === categoryId) {
           name.classList.add('custom-section-featured-category-slider__category-name--active');
@@ -235,10 +239,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.video && directVideoSrc) {
         // Handle direct video (MP4/WebM)
         this.showVideoElement();
-        
+
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           this.isAnimating = true;
-          
+
           // Create a timeline for smoother transitions
           const tl = gsap.timeline({
             onComplete: () => {
@@ -249,32 +253,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.pendingCategoryId = null;
                 this.setActiveCategory(pendingId, true);
               }
-            }
+            },
           });
-          
+
           tl.to(this.video, {
             opacity: 0,
             duration: 0.2,
-            ease: 'power2.inOut'
+            ease: 'power2.inOut',
           })
-          .call(() => {
-            this.video.src = directVideoSrc;
-            this.video.load();
-            this.video.play().catch(e => {
-              console.warn('Video autoplay failed:', e);
-              this.handleVideoError();
+            .call(() => {
+              this.video.src = directVideoSrc;
+              this.video.load();
+              this.video.play().catch((e) => {
+                console.warn('Video autoplay failed:', e);
+                this.handleVideoError();
+              });
+            })
+            .to(this.video, {
+              opacity: 1,
+              duration: 0.2,
+              ease: 'power2.inOut',
             });
-          })
-          .to(this.video, {
-            opacity: 1,
-            duration: 0.2,
-            ease: 'power2.inOut'
-          });
         } else {
           // No animation or GSAP not available
           this.video.src = directVideoSrc;
           this.video.load();
-          this.video.play().catch(e => {
+          this.video.play().catch((e) => {
             console.warn('Video autoplay failed:', e);
             this.handleVideoError();
           });
@@ -282,10 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (this.videoEmbed && videoYouTubeVimeo) {
         // Handle YouTube/Vimeo embed
         this.showEmbedElement();
-        
+
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           this.isAnimating = true;
-          
+
           const tl = gsap.timeline({
             onComplete: () => {
               this.isAnimating = false;
@@ -295,23 +299,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.pendingCategoryId = null;
                 this.setActiveCategory(pendingId, true);
               }
-            }
+            },
           });
-          
+
           tl.to(this.videoEmbed, {
             opacity: 0,
             duration: 0.3,
-            ease: 'power2.inOut'
+            ease: 'power2.inOut',
           })
-          .call(() => {
-            // Update embed content would require regenerating the video_tag
-            // For now, we'll just fade it back in
-          })
-          .to(this.videoEmbed, {
-            opacity: 1,
-            duration: 0.3,
-            ease: 'power2.inOut'
-          });
+            .call(() => {
+              // Update embed content would require regenerating the video_tag
+              // For now, we'll just fade it back in
+            })
+            .to(this.videoEmbed, {
+              opacity: 1,
+              duration: 0.3,
+              ease: 'power2.inOut',
+            });
         }
       } else if (this.fallbackImage && fallbackSrc) {
         // Show fallback image
@@ -340,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateButtons(category) {
-      this.shopNowBtns.forEach(btn => {
+      this.shopNowBtns.forEach((btn) => {
         btn.href = category.collectionUrl;
         btn.dataset.collectionUrl = category.collectionUrl;
       });
@@ -350,11 +354,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.categoryTitleMobile) {
         this.categoryTitleMobile.textContent = category.name.toUpperCase();
       }
-      
+
       if (this.categoryDescriptionMobile) {
         this.categoryDescriptionMobile.textContent = category.description;
       }
-      
+
       if (this.viewCollectionBtn) {
         this.viewCollectionBtn.href = category.collectionUrl;
       }
@@ -364,25 +368,27 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.isMobile) return;
 
       const categoryElement = this.section.querySelector(`[data-category-id="${categoryId}"]`);
-      const categoryNamesContainer = this.section.querySelector('.custom-section-featured-category-slider__category-names');
-      
+      const categoryNamesContainer = this.section.querySelector(
+        '.custom-section-featured-category-slider__category-names'
+      );
+
       if (!categoryElement || !categoryNamesContainer) return;
 
       // Calculate position relative to the category names container center
       const containerRect = categoryNamesContainer.getBoundingClientRect();
       const categoryRect = categoryElement.getBoundingClientRect();
-      
+
       // Calculate offset from center of category names container
-      const containerCenter = containerRect.top + (containerRect.height / 2);
-      const categoryCenter = categoryRect.top + (categoryRect.height / 2);
+      const containerCenter = containerRect.top + containerRect.height / 2;
+      const categoryCenter = categoryRect.top + categoryRect.height / 2;
       const offsetFromCenter = categoryCenter - containerCenter;
 
-      this.shopNowBtns.forEach(btn => {
+      this.shopNowBtns.forEach((btn) => {
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           gsap.to(btn, {
             y: offsetFromCenter,
             duration: 0.5,
-            ease: 'power2.inOut'
+            ease: 'power2.inOut',
           });
         } else {
           btn.style.transform = `translateY(calc(-50% + ${offsetFromCenter}px))`;
@@ -403,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.currentSlideEl) {
         this.currentSlideEl.textContent = String(this.currentCategoryId).padStart(2, '0');
       }
-      
+
       if (this.totalSlidesEl) {
         this.totalSlidesEl.textContent = String(this.totalCategories).padStart(2, '0');
       }
@@ -416,25 +422,27 @@ document.addEventListener('DOMContentLoaded', () => {
       // Each segment has fixed width, moves by 100% of its own width
       const segmentWidth = 100 / this.totalCategories;
       const translatePosition = (this.currentCategoryId - 1) * 100; // 0%, 100%, 200%, 300%, 400%
-      
+
       if (this.enableAnimations && typeof gsap !== 'undefined') {
         // Set width and animate position
         gsap.set(this.progressBarFill, {
-          width: segmentWidth + '%'
+          width: segmentWidth + '%',
         });
-        
+
         gsap.to(this.progressBarFill, {
           x: translatePosition + '%',
           duration: 0.6,
-          ease: 'power2.inOut'
+          ease: 'power2.inOut',
         });
       } else {
         this.progressBarFill.style.width = segmentWidth + '%';
         this.progressBarFill.style.transform = `translate(${translatePosition}%, 0px)`;
       }
-      
+
       // TODO: debugging progress bar segments
-      console.log(`Segment: ${this.currentCategoryId}/${this.totalCategories} = ${segmentWidth}% width, translate(${translatePosition}%, 0px)`);
+      // console.log(
+      //   `Segment: ${this.currentCategoryId}/${this.totalCategories} = ${segmentWidth}% width, translate(${translatePosition}%, 0px)`
+      // );
     }
 
     handleVideoError() {
@@ -442,11 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.video) {
           this.video.style.display = 'none';
         }
-        
+
         if (this.fallbackImage) {
           this.fallbackImage.style.display = 'block';
         }
-        
+
         console.warn('Video failed to load, showing fallback image');
       } catch (error) {
         console.error('Error handling video error:', error);
