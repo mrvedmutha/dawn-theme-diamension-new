@@ -1,6 +1,5 @@
 // TODO: Initialize Feature Slider with Left Image functionality
 document.addEventListener('DOMContentLoaded', () => {
-  
   class FeatureSliderWithLeftImage {
     constructor(container) {
       this.container = container;
@@ -9,13 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
       this.navButton = container.querySelector('[data-direction="next"]');
       this.wishlistButtons = container.querySelectorAll('[data-product-id]');
       this.cards = container.querySelectorAll('.custom-section-feature-slider-with-left-image__card');
-      
+
       this.currentIndex = 0;
       this.isAnimating = false;
       this.direction = 'next';
       this.visibleCards = 3;
       this.offsetCard = false;
-      
+
       this.init();
     }
 
@@ -30,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.setCardWidths();
         this.bindEvents();
         this.updateNavButton();
-        
+
         // Debounced resize handler
         let resizeTimeout;
         window.addEventListener('resize', () => {
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // TODO: debugging initialization complete
-        console.log('Feature slider initialized with', this.cards.length, 'products');
+        // console.log('Feature slider initialized with', this.cards.length, 'products');
       } catch (error) {
         console.error('Error initializing feature slider:', error);
       }
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.offsetCard = offsetCard;
 
         // TODO: debugging viewport settings
-        console.log('Viewport:', viewportWidth, 'Visible cards:', visibleCards, 'Offset:', offsetCard);
+        // console.log('Viewport:', viewportWidth, 'Visible cards:', visibleCards, 'Offset:', offsetCard);
       } catch (error) {
         console.error('Error setting card widths:', error);
       }
@@ -85,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Wishlist button animation only (functionality to be implemented later)
-        this.wishlistButtons.forEach(button => {
+        this.wishlistButtons.forEach((button) => {
           button.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -102,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.isAnimating || this.cards.length <= this.visibleCards) {
           return;
         }
-        
+
         // Calculate max index to show all slides entirely with space for last one
         let maxIndex;
         if (this.offsetCard) {
@@ -128,7 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
         this.updateNavButton();
 
         // TODO: debugging navigation
-        console.log('Navigate:', this.direction, 'Index:', this.currentIndex, 'Max:', maxIndex, 'Offset:', this.offsetCard, 'Total cards:', this.cards.length);
+        console.log(
+          'Navigate:',
+          this.direction,
+          'Index:',
+          this.currentIndex,
+          'Max:',
+          maxIndex,
+          'Offset:',
+          this.offsetCard,
+          'Total cards:',
+          this.cards.length
+        );
       } catch (error) {
         console.error('Error in navigation:', error);
       }
@@ -140,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.isAnimating = true;
         this.carouselContainer.classList.add('is-animating');
-        
+
         const cardWidth = this.cards[0].offsetWidth;
         const gap = parseInt(window.getComputedStyle(this.carouselContainer).gap) || 24;
         const distance = -(this.currentIndex * (cardWidth + gap));
@@ -154,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             onComplete: () => {
               this.isAnimating = false;
               this.carouselContainer.classList.remove('is-animating');
-            }
+            },
           });
         } else {
           // Fallback to CSS transition
@@ -182,20 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           maxIndex = this.cards.length - this.visibleCards;
         }
-        
+
         const isAtEnd = this.currentIndex >= maxIndex;
         const isAtStart = this.currentIndex <= 0;
-        
+
         if (isAtEnd) {
           // At end - arrow points left, direction becomes 'prev'
           this.direction = 'prev';
           this.navButton.setAttribute('aria-label', 'Previous Products');
-          
+
           if (typeof gsap !== 'undefined') {
             gsap.to(this.navButton, {
               rotation: 180,
               duration: 0.4,
-              ease: 'power2.inOut'
+              ease: 'power2.inOut',
             });
           } else {
             this.navButton.style.transform = 'rotate(180deg)';
@@ -204,20 +214,32 @@ document.addEventListener('DOMContentLoaded', () => {
           // At start after going backwards - arrow points right, direction becomes 'next'
           this.direction = 'next';
           this.navButton.setAttribute('aria-label', 'Next Products');
-          
+
           if (typeof gsap !== 'undefined') {
             gsap.to(this.navButton, {
               rotation: 0,
               duration: 0.4,
-              ease: 'power2.inOut'
+              ease: 'power2.inOut',
             });
           } else {
             this.navButton.style.transform = 'rotate(0deg)';
           }
         }
-        
+
         // TODO: debugging arrow state
-        console.log('Arrow update:', 'Direction:', this.direction, 'AtEnd:', isAtEnd, 'AtStart:', isAtStart, 'Index:', this.currentIndex, 'Max:', maxIndex);
+        // console.log(
+        //   'Arrow update:',
+        //   'Direction:',
+        //   this.direction,
+        //   'AtEnd:',
+        //   isAtEnd,
+        //   'AtStart:',
+        //   isAtStart,
+        //   'Index:',
+        //   this.currentIndex,
+        //   'Max:',
+        //   maxIndex
+        // );
       } catch (error) {
         console.error('Error updating nav button:', error);
       }
@@ -230,9 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Animation - scale effect (as specified in docs)
         if (typeof gsap !== 'undefined') {
-          gsap.timeline()
-            .to(button, { scale: 0.9, duration: 0.15 }, 0)
-            .to(button, { scale: 1, duration: 0.15 }, 0.15);
+          gsap.timeline().to(button, { scale: 0.9, duration: 0.15 }, 0).to(button, { scale: 1, duration: 0.15 }, 0.15);
         } else {
           // Fallback CSS animation
           button.style.transform = 'scale(0.9)';
@@ -253,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const oldIndex = this.currentIndex;
         this.setCardWidths();
-        
+
         // Calculate new max index
         let maxIndex;
         if (this.offsetCard) {
@@ -262,11 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           maxIndex = this.cards.length - this.visibleCards;
         }
-        
+
         // Ensure current index doesn't exceed new max
         this.currentIndex = Math.min(oldIndex, maxIndex);
         this.direction = 'next'; // Reset to next on resize
-        
+
         this.animateCarousel();
         this.updateNavButton();
       } catch (error) {
@@ -279,8 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const initFeatureSliders = () => {
     try {
       const sections = document.querySelectorAll('.custom-section-feature-slider-with-left-image[data-section-id]');
-      
-      sections.forEach(section => {
+
+      sections.forEach((section) => {
         new FeatureSliderWithLeftImage(section);
       });
 
@@ -313,5 +333,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // TODO: Wishlist functionality to be implemented later as per technical specification
   // The documentation states: "JavaScript Functions (To Implement Later)"
   // This includes localStorage integration, state management, and UI updates
-
 });

@@ -159,15 +159,14 @@
 }
 
 .custom-section-shop-by-price__products {
-  display: grid;
-  grid-template-columns: repeat(5, 225px);
+  display: flex;
   gap: 10px;
   transition: transform 0.3s ease-out;
+  flex-wrap: nowrap;
 }
 
 /* Loading state */
 .custom-section-shop-by-price__loading {
-  grid-column: 1 / -1;
   text-align: center;
   padding: 40px;
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
@@ -194,36 +193,49 @@
   position: relative;
   overflow: hidden;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-section-shop-by-price__product-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.35s ease-out;
+  object-position: center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .custom-section-shop-by-price__product-image--primary {
   display: block;
+  position: relative;
+  z-index: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .custom-section-shop-by-price__product-image--hover {
-  display: none;
   position: absolute;
   top: 0;
   left: 0;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 2;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
-  display: none;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.95);
 }
 
 .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
-  display: block;
-}
-
-.custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image {
-  transform: scale(1.05);
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1.08);
 }
 
 /* Wishlist Button */
@@ -361,12 +373,39 @@
     font-size: 18px;
   }
 
-  .custom-section-shop-by-price__products {
-    grid-template-columns: repeat(4, 225px);
-  }
-
   .custom-section-shop-by-price__carousel-wrapper {
     margin-bottom: 60px;
+    gap: 24px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Show 4 cards in tablet - adjust carousel width */
+  .custom-section-shop-by-price__carousel {
+    max-width: calc((225px * 4) + (10px * 3));
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .custom-section-shop-by-price__product-card {
+    width: 225px;
+    flex-shrink: 0;
+  }
+
+  /* Keep arrows visible on tablet */
+  .custom-section-shop-by-price__arrow {
+    display: block;
+  }
+
+  /* Disable hover effect on tablet */
+  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
+    display: block;
+  }
+
+  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
+    display: none;
+    opacity: 0;
+    transform: none;
   }
 }
 
@@ -416,35 +455,102 @@
     bottom: 16px;
   }
 
-  /* Hide arrows on mobile */
+  /* Keep arrows visible on mobile */
   .custom-section-shop-by-price__arrow {
-    display: none;
+    display: block;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .custom-section-shop-by-price__arrow svg {
+    width: 20px;
+    height: 20px;
   }
 
   .custom-section-shop-by-price__carousel-wrapper {
-    gap: 0;
+    gap: 12px;
     margin-bottom: 40px;
+    justify-content: space-between;
+    width: 100%;
   }
 
+  /* Show 2 cards in mobile - use full width */
   .custom-section-shop-by-price__carousel {
-    overflow: visible;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
   }
 
   .custom-section-shop-by-price__products {
     display: flex;
     gap: 10px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 10px;
-  }
-
-  .custom-section-shop-by-price__products::-webkit-scrollbar {
-    display: none;
+    flex-wrap: nowrap;
   }
 
   .custom-section-shop-by-price__product-card {
+    width: calc((100% - 10px) / 2);
+    min-width: 150px;
+    max-width: 180px;
     flex-shrink: 0;
+  }
+
+  .custom-section-shop-by-price__image-container {
+    width: 100%;
+    height: 0;
+    padding-bottom: 148%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-section-shop-by-price__product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .custom-section-shop-by-price__product-image--hover {
+    object-fit: cover;
+  }
+
+  /* Disable hover effect on mobile */
+  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
+    display: block;
+  }
+
+  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
+    display: none;
+    opacity: 0;
+    transform: none;
+  }
+
+  .custom-section-shop-by-price__product-title {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 100%;
+  }
+
+  .custom-section-shop-by-price__product-price {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .custom-section-shop-by-price__wishlist {
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .custom-section-shop-by-price__wishlist svg {
+    width: 16px;
+    height: 16px;
   }
 
   .custom-section-shop-by-price__shop-all {
@@ -473,5 +579,30 @@
 
   .custom-section-shop-by-price__tab {
     font-size: 14px;
+  }
+
+  /* Adjust carousel wrapper gap for smaller screens */
+  .custom-section-shop-by-price__carousel-wrapper {
+    gap: 8px;
+  }
+
+  .custom-section-shop-by-price__arrow {
+    width: 18px;
+    height: 18px;
+  }
+
+  .custom-section-shop-by-price__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .custom-section-shop-by-price__product-card {
+    min-width: 140px;
+    max-width: 160px;
+  }
+
+  .custom-section-shop-by-price__product-title {
+    font-size: 14px;
+    line-height: 20px;
   }
 }

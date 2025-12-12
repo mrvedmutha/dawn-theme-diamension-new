@@ -83,11 +83,11 @@
 
         const data = await response.json();
 
-        // Filter products by price range
+        // Filter products by price range (prices are already in rupees from Shopify API)
         const filtered = data.products.filter((product) => {
           const price = parseFloat(product.variants[0]?.price || 0);
-          const priceInPaise = price * 100; // Convert to paise
-          return priceInPaise >= minPrice && priceInPaise < maxPrice;
+          // Compare prices directly in rupees (API returns prices in rupees, not paise)
+          return price >= minPrice && price < maxPrice;
         });
 
         // Limit to 10 products
@@ -101,8 +101,9 @@
 
   // Product Card Renderer
   const renderProductCard = (product) => {
-    const primaryImage = product.images[0] || '';
-    const hoverImage = product.images[1] || product.images[0] || '';
+    // Handle image URLs - Shopify API returns images as objects with 'src' property
+    const primaryImage = product.images?.[0]?.src || product.images?.[0] || '';
+    const hoverImage = product.images?.[1]?.src || product.images?.[1] || product.images?.[0]?.src || product.images?.[0] || '';
     const price = product.variants[0]?.price || 0;
     const formattedPrice = `₹ ${parseFloat(price).toLocaleString('en-IN')}`;
     const isLiked = WishlistManager.has(product.id.toString());
@@ -192,12 +193,28 @@
       const width = window.innerWidth;
       if (width <= 767) {
         this.visibleCards = 2;
+        // Get actual card width from DOM for mobile
+        this.updateCardWidth();
       } else if (width <= 1024) {
         this.visibleCards = 4;
+        this.cardWidth = 225;
       } else {
         this.visibleCards = 5;
+        this.cardWidth = 225;
       }
       this.updateArrowStates();
+    }
+
+    updateCardWidth() {
+      // Wait a bit for CSS to apply, then get actual card width
+      setTimeout(() => {
+        const firstCard = this.productsContainer.querySelector('.custom-section-shop-by-price__product-card');
+        if (firstCard) {
+          this.cardWidth = firstCard.offsetWidth;
+        } else {
+          this.cardWidth = 165; // fallback
+        }
+      }, 50);
     }
 
     scrollLeft() {
@@ -331,14 +348,14 @@
         // Calculate the position to scroll to center the tab
         const tabRect = tab.getBoundingClientRect();
         const containerRect = tabsContainer.getBoundingClientRect();
-        const tabCenter = tab.offsetLeft + (tabRect.width / 2);
+        const tabCenter = tab.offsetLeft + tabRect.width / 2;
         const containerCenter = containerRect.width / 2;
         const scrollPosition = tabCenter - containerCenter;
 
         // Smooth scroll the container
         tabsContainer.scrollTo({
           left: Math.max(0, scrollPosition),
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     }
@@ -454,8 +471,12 @@
       // Attach wishlist button listeners
       this.attachWishlistListeners();
 
-      // Update carousel arrow states
+      // Update carousel arrow states and card width
       if (this.carousel) {
+        // Update card width on mobile after products render
+        if (window.innerWidth <= 767) {
+          this.carousel.updateCardWidth();
+        }
         this.carousel.updateArrowStates();
       }
     }
