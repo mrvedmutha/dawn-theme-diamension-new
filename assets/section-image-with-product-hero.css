@@ -1,0 +1,224 @@
+/* ============================================
+   IMAGE HERO SECTION - BEM METHODOLOGY
+   Base: 1440px Desktop
+   Responsive: 100vh → 80vh → 65vh
+   Spacing: 8-divisible scaling
+   ============================================ */
+
+/* --------------------------------------------
+   BLOCK: Hero Section Container
+   -------------------------------------------- */
+.image-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  max-height: 1040px;
+  min-height: 600px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* --------------------------------------------
+   ELEMENT: Background Image
+   -------------------------------------------- */
+.image-hero-section__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* --------------------------------------------
+   ELEMENT: Overlay
+   -------------------------------------------- */
+.image-hero-section__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-color, rgba(0, 0, 0, 0));
+  opacity: var(--overlay-opacity, 0);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* --------------------------------------------
+   ELEMENT: Text Container
+   -------------------------------------------- */
+.image-hero-section__text-container {
+  position: absolute;
+  top: 216px;
+  left: 56px;
+  z-index: 2;
+  max-width: 600px;
+  color: var(--text-color, #FFFAF5);
+}
+
+/* --------------------------------------------
+   ELEMENT: Heading
+   -------------------------------------------- */
+.image-hero-section__heading {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: inherit;
+  margin-bottom: 6px;
+}
+
+/* --------------------------------------------
+   ELEMENT: Caption
+   -------------------------------------------- */
+.image-hero-section__caption {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0;
+  color: inherit;
+  margin-bottom: 64px;
+}
+
+/* --------------------------------------------
+   ELEMENT: CTA Link
+   -------------------------------------------- */
+.image-hero-section__cta {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 5px;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.image-hero-section__cta:hover {
+  opacity: 0.8;
+}
+
+.image-hero-section__cta:active {
+  opacity: 0.6;
+}
+
+/* ============================================
+   RESPONSIVE: TABLET (1024px)
+   Container: 80vh
+   Scale Factor: 71.11% (1024 / 1440)
+   ============================================ */
+@media (max-width: 1024px) {
+  .image-hero-section {
+    height: 80vh;
+    min-height: 500px;
+  }
+
+  .image-hero-section__text-container {
+    top: 154px; /* 216 × 0.7111 */
+    left: 40px; /* 56 × 0.7111 */
+  }
+
+  .image-hero-section__heading {
+    font-size: 28px; /* 40 × 0.7111 */
+    line-height: 36px; /* 50 × 0.7111 */
+    margin-bottom: 4px; /* 6 × 0.7111 */
+  }
+
+  .image-hero-section__caption {
+    font-size: 14px; /* 20 × 0.7111 */
+    line-height: 21px; /* 30 × 0.7111 */
+    margin-bottom: 46px; /* 64 × 0.7111 */
+  }
+
+  .image-hero-section__cta {
+    font-size: 14px; /* 20 × 0.7111 */
+    line-height: 28px; /* 40 × 0.7111 */
+    text-underline-offset: 4px; /* 5 × 0.7111 */
+  }
+}
+
+/* ============================================
+   RESPONSIVE: MOBILE (767px)
+   Container: 65vh
+   Increased font sizes for readability
+   ============================================ */
+@media (max-width: 767px) {
+  .image-hero-section {
+    height: 65vh;
+    min-height: 400px;
+  }
+
+  .image-hero-section__text-container {
+    top: 115px; /* 216 × 0.5326 */
+    left: 30px; /* 56 × 0.5326 */
+  }
+
+  .image-hero-section__heading {
+    font-size: 28px;
+    line-height: 35px;
+    margin-bottom: 4px;
+  }
+
+  .image-hero-section__caption {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 34px;
+  }
+
+  .image-hero-section__cta {
+    font-size: 16px;
+    line-height: 24px;
+    text-underline-offset: 3px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE: SMALL MOBILE (375px)
+   Container: 65vh (same as mobile)
+   Minimum font sizes for readability
+   ============================================ */
+@media (max-width: 375px) {
+  .image-hero-section {
+    height: 65vh;
+    min-height: 400px;
+  }
+
+  .image-hero-section__text-container {
+    top: 56px; /* 216 × 0.2604 */
+    left: 15px; /* 56 × 0.2604 */
+  }
+
+  .image-hero-section__heading {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 4px;
+  }
+
+  .image-hero-section__caption {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 17px;
+  }
+
+  .image-hero-section__cta {
+    font-size: 14px;
+    line-height: 20px;
+    text-underline-offset: 2px;
+  }
+}
