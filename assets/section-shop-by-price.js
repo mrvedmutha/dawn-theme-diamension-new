@@ -90,11 +90,17 @@
           return price >= minPrice && price < maxPrice;
         });
 
-        // Limit to 10 products
-        return filtered.slice(0, CONFIG.PRODUCTS_PER_PAGE);
+        // Return both the total count and the sliced products
+        return {
+          products: filtered.slice(0, CONFIG.PRODUCTS_PER_PAGE),
+          totalCount: filtered.length
+        };
       } catch (error) {
         console.error('Error fetching products:', error);
-        return [];
+        return {
+          products: [],
+          totalCount: 0
+        };
       }
     },
   };
@@ -379,11 +385,11 @@
       this.showLoading();
 
       // Fetch and display new products
-      const products = await ProductFetcher.fetchByPriceRange(minPrice, maxPrice);
-      this.renderProducts(products);
+      const result = await ProductFetcher.fetchByPriceRange(minPrice, maxPrice);
+      this.renderProducts(result.products);
 
-      // Update Shop All button
-      this.updateShopAllButton(products.length, minPrice, maxPrice);
+      // Update Shop All button with total count (not just displayed products)
+      this.updateShopAllButton(result.totalCount, minPrice, maxPrice);
 
       // Fade in new products
       this.fadeInProducts();
@@ -505,14 +511,13 @@
       });
     }
 
-    updateShopAllButton(productCount, minPrice, maxPrice) {
+    updateShopAllButton(totalProductCount, minPrice, maxPrice) {
       if (!this.ctaContainer || !this.shopAllLink) return;
 
-      if (productCount > CONFIG.PRODUCTS_PER_PAGE) {
+      if (totalProductCount > CONFIG.PRODUCTS_PER_PAGE) {
         this.ctaContainer.style.display = 'block';
-        this.shopAllLink.href = `/collections/all?filter.v.price.gte=${minPrice / 100}&filter.v.price.lt=${
-          maxPrice / 100
-        }`;
+        // Prices are already in rupees, no need to divide by 100
+        this.shopAllLink.href = `/collections/all?filter.v.price.gte=${minPrice}&filter.v.price.lt=${maxPrice}`;
       } else {
         this.ctaContainer.style.display = 'none';
       }
