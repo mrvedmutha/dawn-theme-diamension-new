@@ -1,0 +1,352 @@
+/* ==========================================================================
+   Headline Ring Collection Section
+   Figma Node: 12:4785
+   ========================================================================== */
+
+.headline-ring-collection {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Wrapper - Background and Height
+   ========================================================================== */
+.headline-ring-collection__wrapper {
+  background-color: #fffaf5;
+  min-height: 1048px;
+  position: relative;
+}
+
+/* Container - Max-width and Centering
+   ========================================================================== */
+.headline-ring-collection__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+  min-height: 1048px;
+}
+
+/* Headlines
+   ========================================================================== */
+.headline-ring-collection__headlines {
+  position: relative;
+  z-index: 1;
+}
+
+.headline-ring-collection__headline {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 100px;
+  line-height: 86.229px;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Headline Line 1 - "BRILLIANCE" */
+.headline-ring-collection__headline--line-1 {
+  position: absolute;
+  top: 184px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Headline Line 2 - "WITHOUT" */
+.headline-ring-collection__headline--line-2 {
+  position: absolute;
+  top: calc(184px + 86.229px);
+  right: 296px;
+  white-space: nowrap;
+}
+
+/* Headline Line 3 - "COMPROMISE" */
+.headline-ring-collection__headline--line-3 {
+  position: absolute;
+  top: calc(184px + 86.229px + 86.229px);
+  left: 352px;
+  white-space: nowrap;
+}
+
+/* CTA Link
+   ========================================================================== */
+.headline-ring-collection__cta {
+  position: absolute;
+  top: calc(184px + 86.229px + 86.229px + 43px);
+  left: 160px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #183754;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 25%;
+  text-decoration-color: #183754;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.headline-ring-collection__cta:hover {
+  opacity: 0.7;
+}
+
+/* Product Image
+   ========================================================================== */
+.headline-ring-collection__image-wrapper {
+  position: absolute;
+  width: 304px;
+  height: 304px;
+  left: 336px;
+  top: calc(184px + 86.229px + 86.229px - 24px);
+  transform: rotate(3deg);
+  z-index: 2;
+}
+
+.headline-ring-collection__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Paragraph Content
+   ========================================================================== */
+.headline-ring-collection__content {
+  position: absolute;
+  top: 536px;
+  right: 240px;
+  max-width: 496px;
+  z-index: 1;
+}
+
+.headline-ring-collection__paragraph {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #183754;
+  margin: 0;
+}
+
+/* Feature Icons
+   ========================================================================== */
+.headline-ring-collection__features {
+  position: absolute;
+  top: calc(536px + 150px + 72px);
+  left: 704px;
+  z-index: 1;
+}
+
+.headline-ring-collection__feature {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.headline-ring-collection__feature:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.headline-ring-collection__feature-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.headline-ring-collection__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.headline-ring-collection__feature-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Certification Badges
+   ========================================================================== */
+.headline-ring-collection__badges {
+  position: absolute;
+  bottom: 176px;
+  left: 56px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  z-index: 1;
+}
+
+.headline-ring-collection__badge {
+  flex-shrink: 0;
+}
+
+.headline-ring-collection__badge-image {
+  max-width: 100px;
+  height: auto;
+  display: block;
+}
+
+/* Responsive Design
+   ========================================================================== */
+
+/* Large Desktop - Center and contain */
+@media (min-width: 1441px) {
+  .headline-ring-collection__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .headline-ring-collection__wrapper {
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  .headline-ring-collection__container {
+    min-height: auto;
+    padding: 0 40px;
+  }
+
+  .headline-ring-collection__headline {
+    font-size: 104px;
+    line-height: calc(104px * 0.86229);
+  }
+
+  .headline-ring-collection__headline--line-1,
+  .headline-ring-collection__headline--line-2,
+  .headline-ring-collection__headline--line-3 {
+    position: static;
+    transform: none;
+    margin-bottom: 0;
+  }
+
+  .headline-ring-collection__headline--line-1 {
+    text-align: center;
+  }
+
+  .headline-ring-collection__headline--line-2 {
+    text-align: right;
+  }
+
+  .headline-ring-collection__cta {
+    position: static;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+
+  .headline-ring-collection__image-wrapper {
+    position: static;
+    width: 250px;
+    height: 250px;
+    margin: 24px auto;
+    transform: rotate(3deg);
+  }
+
+  .headline-ring-collection__content {
+    position: static;
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .headline-ring-collection__features {
+    position: static;
+    margin-bottom: 40px;
+  }
+
+  .headline-ring-collection__badges {
+    position: static;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .headline-ring-collection__wrapper {
+    padding: 40px 0;
+  }
+
+  .headline-ring-collection__container {
+    padding: 0 40px;
+  }
+
+  .headline-ring-collection__headline {
+    font-size: 56px;
+    line-height: calc(56px * 0.86229);
+    text-align: center;
+  }
+
+  .headline-ring-collection__cta {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+
+  .headline-ring-collection__image-wrapper {
+    width: 200px;
+    height: 200px;
+    margin: 16px auto 8px;
+  }
+
+  .headline-ring-collection__content {
+    margin-bottom: 32px;
+  }
+
+  .headline-ring-collection__paragraph {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .headline-ring-collection__features {
+    margin-bottom: 32px;
+  }
+
+  .headline-ring-collection__feature {
+    gap: 16px;
+  }
+
+  .headline-ring-collection__feature:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
+  .headline-ring-collection__feature-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .headline-ring-collection__feature-text {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .headline-ring-collection__badges {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .headline-ring-collection__badge-image {
+    max-width: 80px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .headline-ring-collection__headline {
+    font-size: 48px;
+    line-height: calc(48px * 0.86229);
+  }
+
+  .headline-ring-collection__image-wrapper {
+    width: 180px;
+    height: 180px;
+  }
+}
