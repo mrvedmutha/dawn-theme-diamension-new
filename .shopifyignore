@@ -49,3 +49,4 @@ plans/**
 # template json
 templates/*.json
 config/settings_data.json
+section/*.json
