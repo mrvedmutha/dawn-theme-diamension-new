@@ -1,0 +1,230 @@
+/* =============================================================================
+   Four Collection Arch Section
+   ============================================================================= */
+
+/* Section Container
+   ========================================================================== */
+
+.custom-section-four-collection-arch {
+  height: 640px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #FFFAF5;
+}
+
+/* Section Header
+   ========================================================================== */
+
+.custom-section-four-collection-arch__header {
+  padding: 24px 0;
+  text-align: center;
+}
+
+.custom-section-four-collection-arch__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.125;
+  text-transform: uppercase;
+  color: var(--heading-color, #183754);
+  margin: 0;
+  letter-spacing: normal;
+}
+
+/* Collection Grid
+   ========================================================================== */
+
+.custom-section-four-collection-arch__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  height: calc(640px - 88px); /* Section height minus header (40px + 48px padding) */
+}
+
+/* Collection Card
+   ========================================================================== */
+
+.custom-section-four-collection-arch__card {
+  position: relative;
+  height: 544px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: clip-path 0.2s ease;
+}
+
+.custom-section-four-collection-arch__card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.custom-section-four-collection-arch__card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.custom-section-four-collection-arch__card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  text-decoration: none;
+}
+
+.custom-section-four-collection-arch__card-link .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Card Title
+   ========================================================================== */
+
+.custom-section-four-collection-arch__card-title {
+  position: absolute;
+  bottom: 152px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0 clamp(20px, 3vw, 40px);
+  margin: 0;
+  text-align: center;
+  font-family: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  font-size: clamp(24px, 2.8vw, 40px);
+  line-height: 1.25;
+  text-transform: uppercase;
+  color: var(--card-text-color, #FFFAF5);
+  letter-spacing: normal;
+}
+
+/* Card CTA
+   ========================================================================== */
+
+.custom-section-four-collection-arch__card-cta {
+  position: absolute;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Neue Montreal', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.4vw, 20px);
+  line-height: 2;
+  color: var(--card-text-color, #FFFAF5);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 25%;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Desktop Hover Effects
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .custom-section-four-collection-arch__card:hover {
+    /* Arch effect applied via GSAP */
+  }
+
+  .custom-section-four-collection-arch__card:hover .custom-section-four-collection-arch__card-cta {
+    /* CTA animation applied via GSAP */
+  }
+}
+
+/* =============================================================================
+   Responsive Styles
+   ============================================================================= */
+
+/* Tablet (1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .custom-section-four-collection-arch__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .custom-section-four-collection-arch__card {
+    height: 544px;
+  }
+
+  /* Show CTA on tablet */
+  .custom-section-four-collection-arch__card-cta {
+    opacity: 1;
+  }
+}
+
+/* Mobile (767px and below)
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .custom-section-four-collection-arch {
+    height: auto;
+  }
+
+  .custom-section-four-collection-arch__heading {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .custom-section-four-collection-arch__grid {
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+  }
+
+  .custom-section-four-collection-arch__card {
+    height: auto;
+    aspect-ratio: var(--mobile-aspect-ratio, 1 / 1);
+  }
+
+  .custom-section-four-collection-arch__card-title {
+    bottom: 80px;
+    font-size: 28px;
+    line-height: 32px;
+    padding: 0 20px;
+  }
+
+  .custom-section-four-collection-arch__card-cta {
+    bottom: 30px;
+    font-size: 16px;
+    line-height: 24px;
+    opacity: 1; /* Always visible on mobile */
+  }
+}
+
+/* Small Mobile (375px)
+   ========================================================================== */
+
+@media (max-width: 375px) {
+  .custom-section-four-collection-arch__heading {
+    font-size: 28px;
+    line-height: 32px;
+    padding: 0 16px;
+  }
+
+  .custom-section-four-collection-arch__card-title {
+    bottom: 60px;
+    font-size: 24px;
+    line-height: 28px;
+    padding: 0 16px;
+  }
+
+  .custom-section-four-collection-arch__card-cta {
+    bottom: 24px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}

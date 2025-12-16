@@ -1,0 +1,215 @@
+{{ 'section-four-collection-arch.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign heading = section.settings.heading
+  assign heading_color = section.settings.heading_color
+  assign mobile_aspect_ratio = section.settings.mobile_aspect_ratio
+-%}
+
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <clipPath id="arch-clip-{{ section.id }}" clipPathUnits="objectBoundingBox">
+      <path d="M0.5,0h0c0.276,0,0.5,0.148,0.5,0.331v0.669H0V0.331C0,0.148,0.224,0,0.5,0Z" />
+    </clipPath>
+    <clipPath id="rect-clip-{{ section.id }}" clipPathUnits="objectBoundingBox">
+      <path d="M0,0h1v1H0V0Z" />
+    </clipPath>
+  </defs>
+</svg>
+
+<section
+  class="custom-section-four-collection-arch"
+  style="
+    --heading-color: {{ heading_color }};
+    --mobile-aspect-ratio: {% if mobile_aspect_ratio == '5-4' %}4 / 5{% elsif mobile_aspect_ratio == '9-16' %}9 / 16{% else %}1 / 1{% endif %};
+  "
+  data-section-id="{{ section.id }}"
+>
+  {%- if heading != blank -%}
+    <div class="custom-section-four-collection-arch__header">
+      <h2 class="custom-section-four-collection-arch__heading">
+        {{ heading }}
+      </h2>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="custom-section-four-collection-arch__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign card_image = block.settings.image
+          assign card_title = block.settings.title
+          assign cta_text = block.settings.cta_text
+          assign cta_link = block.settings.cta_link
+          assign text_color = block.settings.text_color
+        -%}
+
+        <div
+          class="custom-section-four-collection-arch__card"
+          data-block-id="{{ block.id }}"
+          style="--card-text-color: {{ text_color }};"
+          {{ block.shopify_attributes }}
+        >
+          {%- if card_image != blank -%}
+            <img
+              src="{{ card_image | image_url: width: 800 }}"
+              srcset="
+                {{ card_image | image_url: width: 400 }} 400w,
+                {{ card_image | image_url: width: 800 }} 800w,
+                {{ card_image | image_url: width: 1200 }} 1200w
+              "
+              sizes="(max-width: 767px) 50vw, 25vw"
+              alt="{{ card_image.alt | escape }}"
+              class="custom-section-four-collection-arch__card-image"
+              loading="lazy"
+            >
+          {%- endif -%}
+
+          <div class="custom-section-four-collection-arch__card-content">
+            {%- if card_title != blank -%}
+              <h3 class="custom-section-four-collection-arch__card-title">
+                {{ card_title }}
+              </h3>
+            {%- endif -%}
+
+            {%- if cta_text != blank -%}
+              <span class="custom-section-four-collection-arch__card-cta">
+                {{ cta_text }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          {%- if cta_link != blank -%}
+            <a
+              href="{{ cta_link }}"
+              class="custom-section-four-collection-arch__card-link"
+              aria-label="{{ card_title | escape }}"
+            >
+              <span class="visually-hidden">{{ card_title }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<script src="{{ 'section-four-collection-arch.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Four Collection Arch",
+  "class": "section-four-collection-arch",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "YOUR STYLE, OUR COLLECTION"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#183754"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile Card Aspect Ratio",
+      "options": [
+        {
+          "value": "1-1",
+          "label": "1:1 (Square)"
+        },
+        {
+          "value": "5-4",
+          "label": "5:4 (Portrait)"
+        },
+        {
+          "value": "9-16",
+          "label": "9:16 (Tall Portrait)"
+        }
+      ],
+      "default": "1-1",
+      "info": "Controls card height on mobile devices"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Collection Image",
+          "info": "Recommended size: 800x1200px"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Collection Title",
+          "default": "Collection Name"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA Text",
+          "default": "View Collection"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Link"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#FFFAF5"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Four Collection Arch",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "Engagement & Bridal",
+            "cta_text": "View Collection"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "Everyday Essentials",
+            "cta_text": "View Collection"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "Statement Jewelry",
+            "cta_text": "View Collection"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "Gifts That Shine",
+            "cta_text": "View Collection"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
