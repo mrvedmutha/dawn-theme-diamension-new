@@ -1,0 +1,275 @@
+{{ 'headline-ring-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign headline_line_1 = section.settings.headline_line_1
+  assign headline_line_2 = section.settings.headline_line_2
+  assign headline_line_3 = section.settings.headline_line_3
+  assign cta_text = section.settings.cta_text
+  assign cta_url = section.settings.cta_url
+  assign product_image = section.settings.product_image
+  assign paragraph_content = section.settings.paragraph_content
+  assign feature_1_icon = section.settings.feature_1_icon
+  assign feature_1_text = section.settings.feature_1_text
+  assign feature_2_icon = section.settings.feature_2_icon
+  assign feature_2_text = section.settings.feature_2_text
+  assign badge_1_image = section.settings.badge_1_image
+  assign badge_2_image = section.settings.badge_2_image
+-%}
+
+<section
+  class="headline-ring-collection"
+  data-section-id="{{ section.id }}"
+  data-section-type="headline-ring-collection"
+>
+  <div class="headline-ring-collection__wrapper">
+    <div class="headline-ring-collection__container">
+
+      {%- comment -%} Headlines {%- endcomment -%}
+      <div class="headline-ring-collection__headlines">
+        {%- if headline_line_1 != blank -%}
+          <h2 class="headline-ring-collection__headline headline-ring-collection__headline--line-1">
+            {{ headline_line_1 }}
+          </h2>
+        {%- endif -%}
+
+        {%- if headline_line_2 != blank -%}
+          <h2 class="headline-ring-collection__headline headline-ring-collection__headline--line-2">
+            {{ headline_line_2 }}
+          </h2>
+        {%- endif -%}
+
+        {%- if headline_line_3 != blank -%}
+          <h2 class="headline-ring-collection__headline headline-ring-collection__headline--line-3">
+            {{ headline_line_3 }}
+          </h2>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} CTA Link {%- endcomment -%}
+      {%- if cta_text != blank and cta_url != blank -%}
+        <a
+          href="{{ cta_url }}"
+          class="headline-ring-collection__cta"
+        >
+          {{ cta_text }}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%} Product Image with Parallax {%- endcomment -%}
+      {%- if product_image != blank -%}
+        <div class="headline-ring-collection__image-wrapper" data-parallax-image>
+          {{- product_image | image_url: width: 608 | image_tag:
+            loading: 'lazy',
+            widths: '304, 456, 608',
+            class: 'headline-ring-collection__image',
+            alt: product_image.alt | default: 'Product image'
+          -}}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Paragraph Content {%- endcomment -%}
+      {%- if paragraph_content != blank -%}
+        <div class="headline-ring-collection__content">
+          <p class="headline-ring-collection__paragraph">
+            {{ paragraph_content }}
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Feature Icons {%- endcomment -%}
+      <div class="headline-ring-collection__features">
+
+        {%- if feature_1_icon != blank or feature_1_text != blank -%}
+          <div class="headline-ring-collection__feature">
+            {%- if feature_1_icon != blank -%}
+              <div class="headline-ring-collection__feature-icon">
+                {{- feature_1_icon | image_url: width: 100 | image_tag:
+                  loading: 'lazy',
+                  class: 'headline-ring-collection__icon',
+                  alt: 'Quality craftmanship icon'
+                -}}
+              </div>
+            {%- endif -%}
+            {%- if feature_1_text != blank -%}
+              <p class="headline-ring-collection__feature-text">
+                {{ feature_1_text }}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if feature_2_icon != blank or feature_2_text != blank -%}
+          <div class="headline-ring-collection__feature">
+            {%- if feature_2_icon != blank -%}
+              <div class="headline-ring-collection__feature-icon">
+                {{- feature_2_icon | image_url: width: 100 | image_tag:
+                  loading: 'lazy',
+                  class: 'headline-ring-collection__icon',
+                  alt: 'Sustainability icon'
+                -}}
+              </div>
+            {%- endif -%}
+            {%- if feature_2_text != blank -%}
+              <p class="headline-ring-collection__feature-text">
+                {{ feature_2_text }}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+
+      {%- comment -%} Certification Badges {%- endcomment -%}
+      <div class="headline-ring-collection__badges">
+        {%- if badge_1_image != blank -%}
+          <div class="headline-ring-collection__badge">
+            {{- badge_1_image | image_url: width: 200 | image_tag:
+              loading: 'lazy',
+              class: 'headline-ring-collection__badge-image',
+              alt: badge_1_image.alt | default: 'Certification badge'
+            -}}
+          </div>
+        {%- endif -%}
+
+        {%- if badge_2_image != blank -%}
+          <div class="headline-ring-collection__badge">
+            {{- badge_2_image | image_url: width: 200 | image_tag:
+              loading: 'lazy',
+              class: 'headline-ring-collection__badge-image',
+              alt: badge_2_image.alt | default: 'Certification badge'
+            -}}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'headline-ring-collection.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Headline Ring Collection",
+  "tag": "section",
+  "class": "section-headline-ring-collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Headlines"
+    },
+    {
+      "type": "text",
+      "id": "headline_line_1",
+      "label": "Headline Line 1",
+      "default": "BRILLIANCE",
+      "info": "First line of the headline (center-aligned)"
+    },
+    {
+      "type": "text",
+      "id": "headline_line_2",
+      "label": "Headline Line 2",
+      "default": "WITHOUT",
+      "info": "Second line of the headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_line_3",
+      "label": "Headline Line 3",
+      "default": "COMPROMISE",
+      "info": "Third line of the headline"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Our story",
+      "info": "Call to action link text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+      "info": "Link destination"
+    },
+    {
+      "type": "header",
+      "content": "Product Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image",
+      "info": "Upload a square image (e.g., 1000×1000px) for best results. Image will rotate 3° and have parallax effect."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_content",
+      "label": "Paragraph Content",
+      "default": "Our diamonds are chemically, physically, and optically identical to mined diamonds — the only difference is the journey. Crafted with cutting-edge technology and ethical values, each stone delivers pure beauty without the environmental and financial cost.",
+      "info": "Main description paragraph"
+    },
+    {
+      "type": "header",
+      "content": "Feature 1 - Quality"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_1_icon",
+      "label": "Feature 1 Icon",
+      "info": "SVG or PNG icon for quality craftmanship"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_text",
+      "label": "Feature 1 Text",
+      "default": "QUALITY CRAFTMANSHIP"
+    },
+    {
+      "type": "header",
+      "content": "Feature 2 - Sustainability"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_2_icon",
+      "label": "Feature 2 Icon",
+      "info": "SVG or PNG icon for sustainability"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_text",
+      "label": "Feature 2 Text",
+      "default": "PLANET FRIENDLY AND SUSTAINABLY MADE"
+    },
+    {
+      "type": "header",
+      "content": "Certification Badges"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_1_image",
+      "label": "Badge 1 (IGI)",
+      "info": "First certification badge image"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_2_image",
+      "label": "Badge 2 (GIA)",
+      "info": "Second certification badge image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Headline Ring Collection"
+    }
+  ]
+}
+{% endschema %}
