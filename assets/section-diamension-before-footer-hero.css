@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Diamension Before Footer Hero Section
+   Figma Node: 12:4897
+   Pattern: custom-[folder-name]
+   ========================================================================== */
+
+/* Font Face - Neue Haas Grotesk Display Pro
+   ========================================================================== */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Section Root
+   ========================================================================== */
+.custom-diamension-before-footer-hero {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Wrapper - Background and Full Width
+   ========================================================================== */
+.custom-diamension-before-footer-hero__wrapper {
+  background-color: #212121;
+  width: 100%;
+  position: relative;
+}
+
+/* Container - Max-width and Height
+   ========================================================================== */
+.custom-diamension-before-footer-hero__container {
+  max-width: 1440px;
+  min-height: 672px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Quote Text Wrapper
+   ========================================================================== */
+.custom-diamension-before-footer-hero__quote-wrapper {
+  margin-top: 104px;
+  width: 704px;
+  max-width: 90%;
+}
+
+/* Quote Text
+   ========================================================================== */
+.custom-diamension-before-footer-hero__quote {
+  color: #fffaf5;
+  text-align: center;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 45px; /* 112.5% */
+  margin: 0;
+}
+
+/* Caption Wrapper
+   ========================================================================== */
+.custom-diamension-before-footer-hero__caption-wrapper {
+  margin-top: 48px;
+}
+
+/* Caption Text
+   ========================================================================== */
+.custom-diamension-before-footer-hero__caption {
+  color: #fffaf5;
+  text-align: center;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 60px; /* 200% */
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Product Image Wrapper
+   ========================================================================== */
+.custom-diamension-before-footer-hero__image-wrapper {
+  position: absolute;
+  bottom: var(--image-offset, -128px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  z-index: 1;
+}
+
+/* Product Image
+   ========================================================================== */
+.custom-diamension-before-footer-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 1 / 1;
+}
+
+/* Quote and Caption - Z-Index Above Image
+   ========================================================================== */
+.custom-diamension-before-footer-hero__quote-wrapper,
+.custom-diamension-before-footer-hero__caption-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Large Desktop - Ensure container doesn't exceed 1440px
+   ========================================================================== */
+@media (min-width: 1441px) {
+  .custom-diamension-before-footer-hero__container {
+    max-width: 1440px;
+  }
+}
+
+/* Desktop - 1200px to 1439px
+   ========================================================================== */
+@media (max-width: 1439px) and (min-width: 1200px) {
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 640px;
+  }
+}
+
+/* Tablet Landscape - 1024px to 1199px
+   ========================================================================== */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 576px;
+  }
+}
+
+/* Tablet - 768px to 1023px
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .custom-diamension-before-footer-hero__container {
+    min-height: 672px;
+    padding: 80px 40px;
+  }
+
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    margin-top: 0;
+    width: 600px;
+  }
+
+  .custom-diamension-before-footer-hero__quote {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .custom-diamension-before-footer-hero__caption-wrapper {
+    margin-top: 32px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 24px;
+    line-height: 40px;
+  }
+
+  .custom-diamension-before-footer-hero__image-wrapper {
+    width: 800px;
+    height: 800px;
+    bottom: var(--image-offset, -128px);
+  }
+}
+
+/* Mobile Large - 576px to 767px
+   ========================================================================== */
+@media (max-width: 767px) {
+  .custom-diamension-before-footer-hero__container {
+    min-height: 672px;
+    padding: 60px 20px;
+  }
+
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 448px;
+  }
+
+  .custom-diamension-before-footer-hero__quote {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .custom-diamension-before-footer-hero__caption-wrapper {
+    margin-top: 24px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .custom-diamension-before-footer-hero__image-wrapper {
+    width: 800px;
+    height: 800px;
+    bottom: var(--image-offset, -128px);
+  }
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 80vw;
+  }
+}
+
+/* Mobile - 480px to 575px
+   ========================================================================== */
+@media (max-width: 575px) {
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 384px;
+  }
+}
+
+/* Mobile Small - Below 480px
+   ========================================================================== */
+@media (max-width: 479px) {
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 320px;
+  }
+
+  .custom-diamension-before-footer-hero__image-wrapper {
+    width: 800px;
+    height: 800px;
+  }
+}
+
+/* Extra Small Screens - Below 375px
+   ========================================================================== */
+@media (max-width: 374px) {
+  .custom-diamension-before-footer-hero__container {
+    min-height: 672px;
+    padding: 40px 15px;
+  }
+
+  .custom-diamension-before-footer-hero__quote {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 24px;
+    line-height: 36px;
+  }
+}

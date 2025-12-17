@@ -1,0 +1,122 @@
+{%- comment -%}
+  Section: Diamension Before Footer Hero
+  Description: Founder quote section with dramatic product image overlay
+  Figma Node: 12:4897
+  File Pattern: custom-[folder-name]
+{%- endcomment -%}
+
+{{ 'section-diamension-before-footer-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  # Assign section settings to variables
+  assign quote_text = section.settings.quote_text
+  assign caption_text = section.settings.caption_text
+  assign product_image = section.settings.product_image
+  assign image_offset = section.settings.image_offset
+-%}
+
+<section
+  class="custom-diamension-before-footer-hero"
+  data-section-id="{{ section.id }}"
+  data-section-type="diamension-before-footer-hero"
+>
+  <div class="custom-diamension-before-footer-hero__wrapper">
+    <div class="custom-diamension-before-footer-hero__container">
+      {%- comment -%} Quote Text {%- endcomment -%}
+      {%- if quote_text != blank -%}
+        <div class="custom-diamension-before-footer-hero__quote-wrapper">
+          <p class="custom-diamension-before-footer-hero__quote">
+            {{ quote_text }}
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Caption Text {%- endcomment -%}
+      {%- if caption_text != blank -%}
+        <div class="custom-diamension-before-footer-hero__caption-wrapper">
+          <p class="custom-diamension-before-footer-hero__caption">
+            {{ caption_text }}
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Product Image with Adjustable Offset {%- endcomment -%}
+      {%- if product_image != blank -%}
+        <div
+          class="custom-diamension-before-footer-hero__image-wrapper"
+          style="--image-offset: {{ image_offset }}px;"
+        >
+          {{-
+            product_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1200, 1600',
+              sizes: '(max-width: 767px) 400px, (max-width: 1024px) 600px, 800px',
+              class: 'custom-diamension-before-footer-hero__image',
+              alt: product_image.alt
+            | default: 'Product image'
+          -}}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before Footer Hero",
+  "tag": "section",
+  "class": "section-diamension-before-footer-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Quote Content"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote Text",
+      "default": "We believe jewelry should be something you never take off. A companion to your memory, made to last a lifetime, the kind you'll invest in and pass down.",
+      "info": "Main founder's quote (fully customizable)"
+    },
+    {
+      "type": "header",
+      "content": "Attribution"
+    },
+    {
+      "type": "text",
+      "id": "caption_text",
+      "label": "Caption Text",
+      "default": "—KARAN, FOUNDER",
+      "info": "Attribution line below the quote (fully customizable, will be uppercase)"
+    },
+    {
+      "type": "header",
+      "content": "Product Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image",
+      "info": "Upload a square image (1:1 ratio, minimum 1200x1200px recommended). Image will be 800x800px on desktop."
+    },
+    {
+      "type": "range",
+      "id": "image_offset",
+      "label": "Image Vertical Position",
+      "min": -800,
+      "max": 0,
+      "step": 8,
+      "unit": "px",
+      "default": -128,
+      "info": "Adjust how much of the image is visible. Negative values move image down (partially hidden). 0 = fully visible at bottom."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before Footer Hero"
+    }
+  ]
+}
+{% endschema %}
