@@ -1,0 +1,41 @@
+{{ 'section-custom-diamension-footer-image.css' | asset_url | stylesheet_tag }}
+
+{% if template.name == 'index' %}
+  {%- comment -%} Only show on homepage {%- endcomment -%}
+  {% if section.settings.footer_image != blank %}
+    <div class="custom-diamension-footer-image">
+      <img
+        src="{{ section.settings.footer_image | image_url: width: 1920 }}"
+        srcset="{{ section.settings.footer_image | image_url: width: 768 }} 768w,
+                {{ section.settings.footer_image | image_url: width: 1440 }} 1440w,
+                {{ section.settings.footer_image | image_url: width: 1920 }} 1920w"
+        sizes="100vw"
+        alt="{{ section.settings.footer_image.alt | escape }}"
+        class="custom-diamension-footer-image__img"
+        loading="lazy"
+      >
+    </div>
+  {% endif %}
+{% else %}
+  {%- comment -%} Add spacing on non-homepage pages {%- endcomment -%}
+  <div class="custom-diamension-footer-image custom-diamension-footer-image--spacer"></div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Diamension Footer Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_image",
+      "label": "Footer Image",
+      "info": "Displays only on homepage. Desktop: 448px height, scales down on mobile."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamension Footer Image"
+    }
+  ]
+}
+{% endschema %}
