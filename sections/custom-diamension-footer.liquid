@@ -2,27 +2,9 @@
 
 <footer class="custom-diamension-footer {% if template.name == 'product' %}custom-diamension-footer--product-page{% endif %}">
   <div class="custom-diamension-footer__container">
-
-    {%- comment -%} Logo - Top Right Desktop, Top Left Mobile {%- endcomment -%}
-    {% if section.settings.logo != blank %}
-      <div class="custom-diamension-footer__logo">
-        <img
-          src="{{ section.settings.logo | image_url: width: 736 }}"
-          srcset="{{ section.settings.logo | image_url: width: 368 }} 368w,
-                  {{ section.settings.logo | image_url: width: 736 }} 736w"
-          sizes="(min-width: 1025px) 368px, 256px"
-          alt="{{ shop.name }}"
-          width="368"
-          height="auto"
-          loading="lazy"
-        >
-      </div>
-    {% endif %}
-
     {%- comment -%} Main Content Grid {%- endcomment -%}
     <div class="custom-diamension-footer__content">
-
-      {%- comment -%} Menu Columns {%- endcomment -%}
+      {%- comment -%} Left Side: Menu Columns {%- endcomment -%}
       <div class="custom-diamension-footer__menus">
         {% for block in section.blocks %}
           {% case block.type %}
@@ -48,72 +30,103 @@
         {% endfor %}
       </div>
 
-      {%- comment -%} Newsletter Section {%- endcomment -%}
-      {% if section.settings.newsletter_enable %}
-        <div class="custom-diamension-footer__newsletter">
-          {%- form 'customer', id: 'ContactFooter', class: 'custom-diamension-footer__newsletter-form' -%}
-            <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- comment -%} Right Side: Logo + Newsletter {%- endcomment -%}
+      <div class="custom-diamension-footer__right-section">
+        {%- comment -%} Logo {%- endcomment -%}
+        {% if section.settings.logo != blank %}
+          <div class="custom-diamension-footer__logo">
+            <img
+              src="{{ section.settings.logo | image_url: width: 736 }}"
+              srcset="
+                {{ section.settings.logo | image_url: width: 368 }} 368w,
+                {{ section.settings.logo | image_url: width: 736 }} 736w
+              "
+              sizes="(min-width: 1025px) 368px, 256px"
+              alt="{{ shop.name }}"
+              width="368"
+              height="auto"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
 
-            {%- comment -%} Newsletter Heading {%- endcomment -%}
-            {% if section.settings.newsletter_heading != blank %}
-              <h3 class="custom-diamension-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h3>
-            {% endif %}
+        {%- comment -%} Newsletter Section {%- endcomment -%}
+        {% if section.settings.newsletter_enable %}
+          <div class="custom-diamension-footer__newsletter">
+            {%- form 'customer', id: 'ContactFooter', class: 'custom-diamension-footer__newsletter-form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
 
-            {%- comment -%} Success/Error Messages - Display at top {%- endcomment -%}
-            {%- if form.posted_successfully? -%}
-              <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--success">
-                Signed Up Successfully!
-              </p>
-            {%- elsif form.errors -%}
-              <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--error">
-                Signed Up Failed!
-              </p>
-            {%- endif -%}
+              {%- comment -%} Newsletter Heading {%- endcomment -%}
+              {% if section.settings.newsletter_heading != blank %}
+                <h3 class="custom-diamension-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h3>
+              {% endif %}
 
-            {%- comment -%} Newsletter Description {%- endcomment -%}
-            {% if section.settings.newsletter_description != blank %}
-              <p class="custom-diamension-footer__newsletter-description">{{ section.settings.newsletter_description }}</p>
-            {% endif %}
+              {%- comment -%} Success/Error Messages - Display at top {%- endcomment -%}
+              {%- if form.posted_successfully? -%}
+                <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--success">
+                  Signed Up Successfully!
+                </p>
+              {%- elsif form.errors -%}
+                <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--error">
+                  Signed Up Failed!
+                </p>
+              {%- endif -%}
 
-            {%- comment -%} Email Input with Arrow Button {%- endcomment -%}
-            <div class="custom-diamension-footer__newsletter-input-wrapper">
-              <label for="NewsletterFooter" class="custom-diamension-footer__newsletter-label">EMAIL</label>
-              <div class="custom-diamension-footer__newsletter-input-group">
-                <input
-                  id="NewsletterFooter"
-                  type="email"
-                  name="contact[email]"
-                  class="custom-diamension-footer__newsletter-input"
-                  value="{{ form.email }}"
-                  aria-required="true"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  autocomplete="email"
-                  {% if form.errors %}
-                    aria-invalid="true"
-                  {% endif %}
-                  required
-                >
-                <button
-                  type="submit"
-                  class="custom-diamension-footer__newsletter-submit"
-                  aria-label="Subscribe to newsletter"
-                >
-                  <img src="{{ 'custom-diamension-footer/newsletter-arrow.svg' | asset_url }}" alt="" class="custom-diamension-footer__newsletter-arrow">
-                </button>
+              {%- comment -%} Newsletter Description {%- endcomment -%}
+              {% if section.settings.newsletter_description != blank %}
+                <p class="custom-diamension-footer__newsletter-description">
+                  {{ section.settings.newsletter_description }}
+                </p>
+              {% endif %}
+
+              {%- comment -%} Email Input with Arrow Button {%- endcomment -%}
+              <div class="custom-diamension-footer__newsletter-input-wrapper">
+                <div class="custom-diamension-footer__newsletter-input-group">
+                  <input
+                    id="NewsletterFooter"
+                    type="email"
+                    name="contact[email]"
+                    class="custom-diamension-footer__newsletter-input"
+                    placeholder="EMAIL"
+                    value="{{ form.email }}"
+                    aria-label="Email address"
+                    aria-required="true"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="email"
+                    {% if form.errors %}
+                      aria-invalid="true"
+                    {% endif %}
+                    required
+                  >
+                  <button
+                    type="submit"
+                    class="custom-diamension-footer__newsletter-submit"
+                    aria-label="Subscribe to newsletter"
+                  >
+                    <img
+                      src="{{ 'custom-diamension-footer/newsletter-arrow.svg' | asset_url }}"
+                      alt=""
+                      class="custom-diamension-footer__newsletter-arrow"
+                    >
+                  </button>
+                </div>
+                <div class="custom-diamension-footer__newsletter-underline">&nbsp;</div>
               </div>
-              <div class="custom-diamension-footer__newsletter-underline"></div>
-            </div>
-          {%- endform -%}
-        </div>
-      {% endif %}
+            {%- endform -%}
+          </div>
+        {% endif %}
+      </div>
     </div>
 
     {%- comment -%} Bottom Bar {%- endcomment -%}
     <div class="custom-diamension-footer__bottom">
       {%- comment -%} Designed by Wings - HARDCODED {%- endcomment -%}
       <p class="custom-diamension-footer__bottom-credit">
-        Designed by <a href="https://wings.design" target="_blank" rel="noopener" class="custom-diamension-footer__bottom-link">Wings</a>
+        Designed by
+        <a href="https://wings.design" target="_blank" rel="noopener" class="custom-diamension-footer__bottom-link"
+          >Wings</a
+        >
       </p>
 
       {%- comment -%} Copyright - HARDCODED with auto year {%- endcomment -%}
@@ -136,7 +149,6 @@
         </nav>
       {% endif %}
     </div>
-
   </div>
 </footer>
 

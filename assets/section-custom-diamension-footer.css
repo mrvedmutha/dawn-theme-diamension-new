@@ -5,7 +5,7 @@
 @font-face {
   font-family: 'Neue Montreal';
   src: url('fonts/neue-montreal/NeueMontreal-Regular.woff2') format('woff2'),
-       url('fonts/neue-montreal/NeueMontreal-Regular.woff') format('woff');
+    url('fonts/neue-montreal/NeueMontreal-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -57,14 +57,42 @@
 }
 
 /* ============================================
-   Logo - Top Right Desktop, Top Left Mobile
+   Main Content Grid - Desktop
+   Two sections: Menus (left) and Logo+Newsletter (right)
    ============================================ */
 
+.custom-diamension-footer__content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ============================================
+   Left Side: Menu Columns
+   ============================================ */
+
+.custom-diamension-footer__menus {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 48px;
+  justify-content: start;
+}
+
+/* ============================================
+   Right Side: Logo + Newsletter Section
+   ============================================ */
+
+.custom-diamension-footer__right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+}
+
 .custom-diamension-footer__logo {
-  position: absolute;
-  top: var(--footer-padding-top);
-  right: var(--footer-padding-right);
   text-align: right;
+  margin-bottom: 80px;
 }
 
 .custom-diamension-footer__logo img {
@@ -72,24 +100,6 @@
   height: auto;
   display: block;
   margin-left: auto;
-}
-
-/* ============================================
-   Main Content Grid - Desktop
-   ============================================ */
-
-.custom-diamension-footer__content {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 48px;
-  margin-top: 165px;
-}
-
-.custom-diamension-footer__menus {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  gap: 48px;
-  justify-content: start;
 }
 
 /* ============================================
@@ -148,14 +158,14 @@
 .custom-diamension-footer__newsletter {
   display: flex;
   flex-direction: column;
-  gap: 47px;
-  max-width: 300px;
+  gap: 0;
+  max-width: 348px;
 }
 
 .custom-diamension-footer__newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
 }
 
 .custom-diamension-footer__newsletter-heading {
@@ -164,7 +174,7 @@
   font-weight: 400;
   text-transform: uppercase;
   color: var(--footer-text-secondary);
-  margin: 0;
+  margin: 0 0 24px 0;
   line-height: normal;
 }
 
@@ -193,7 +203,7 @@
   font-weight: 400;
   text-transform: capitalize;
   color: var(--footer-text-primary);
-  margin: 0;
+  margin: 0 0 48px 0;
   line-height: 1.6;
 }
 
@@ -201,48 +211,49 @@
 .custom-diamension-footer__newsletter-input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.custom-diamension-footer__newsletter-label {
-  font-family: 'Neue Montreal', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--footer-text-primary);
-  line-height: normal;
+  gap: 0;
 }
 
 .custom-diamension-footer__newsletter-input-group {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .custom-diamension-footer__newsletter-input {
   font-family: 'Neue Montreal', sans-serif;
   font-size: 16px;
   font-weight: 400;
+  text-transform: uppercase;
   color: var(--footer-text-primary);
   background: transparent;
   border: none;
-  outline: none;
+  outline: none !important;
   padding: 8px 40px 8px 0;
   width: 100%;
 }
 
 .custom-diamension-footer__newsletter-input::placeholder {
   color: var(--footer-text-primary);
-  opacity: 0.5;
+  text-transform: uppercase;
+  opacity: 1;
 }
 
 .custom-diamension-footer__newsletter-input:focus {
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.custom-diamension-footer__newsletter-input:focus-visible {
+  outline: none !important;
 }
 
 .custom-diamension-footer__newsletter-underline {
   width: 100%;
   height: 1px;
-  background-color: var(--footer-text-primary);
-  margin-top: -1px;
+  background-color: #8aa8c4;
+  margin-top: 4px;
 }
 
 /* Submit Arrow Button */
@@ -388,12 +399,27 @@
   }
 
   .custom-diamension-footer__container {
-    padding: var(--footer-padding-top-mobile) var(--footer-padding-right-mobile) var(--footer-padding-bottom-mobile) var(--footer-padding-left-mobile);
+    padding: var(--footer-padding-top-mobile) var(--footer-padding-right-mobile) var(--footer-padding-bottom-mobile)
+      var(--footer-padding-left-mobile);
+  }
+
+  /* Content - Stacked Vertically, Left Aligned */
+  .custom-diamension-footer__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  /* Right Section (Logo + Newsletter) - First on Mobile */
+  .custom-diamension-footer__right-section {
+    order: -1;
+    width: 100%;
+    align-items: flex-start;
   }
 
   /* Logo - Top, Left Aligned */
   .custom-diamension-footer__logo {
-    position: static;
     text-align: left;
     margin-bottom: 48px;
   }
@@ -403,18 +429,8 @@
     margin-left: 0;
   }
 
-  /* Content - Stacked Vertically, Left Aligned */
-  .custom-diamension-footer__content {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    margin-top: 0;
-    align-items: flex-start;
-  }
-
-  /* Newsletter First on Mobile, Left Aligned */
+  /* Newsletter - Left Aligned, Full Width */
   .custom-diamension-footer__newsletter {
-    order: -1;
     max-width: 100%;
     align-self: flex-start;
   }
