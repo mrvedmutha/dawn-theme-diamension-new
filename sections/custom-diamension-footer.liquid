@@ -1,0 +1,244 @@
+{{ 'section-custom-diamension-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="custom-diamension-footer {% if template.name == 'product' %}custom-diamension-footer--product-page{% endif %}">
+  <div class="custom-diamension-footer__container">
+
+    {%- comment -%} Logo - Top Right Desktop, Top Left Mobile {%- endcomment -%}
+    {% if section.settings.logo != blank %}
+      <div class="custom-diamension-footer__logo">
+        <img
+          src="{{ section.settings.logo | image_url: width: 736 }}"
+          srcset="{{ section.settings.logo | image_url: width: 368 }} 368w,
+                  {{ section.settings.logo | image_url: width: 736 }} 736w"
+          sizes="(min-width: 1025px) 368px, 256px"
+          alt="{{ shop.name }}"
+          width="368"
+          height="auto"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
+
+    {%- comment -%} Main Content Grid {%- endcomment -%}
+    <div class="custom-diamension-footer__content">
+
+      {%- comment -%} Menu Columns {%- endcomment -%}
+      <div class="custom-diamension-footer__menus">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'menu_column' %}
+              <div class="custom-diamension-footer__menu" {{ block.shopify_attributes }}>
+                {% if block.settings.heading != blank %}
+                  <h3 class="custom-diamension-footer__menu-title">{{ block.settings.heading }}</h3>
+                {% endif %}
+
+                {% if block.settings.menu != blank %}
+                  <ul class="custom-diamension-footer__menu-list">
+                    {% for link in block.settings.menu.links %}
+                      <li class="custom-diamension-footer__menu-item">
+                        <a href="{{ link.url }}" class="custom-diamension-footer__menu-link">
+                          {{ link.title }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+      {%- comment -%} Newsletter Section {%- endcomment -%}
+      {% if section.settings.newsletter_enable %}
+        <div class="custom-diamension-footer__newsletter">
+          {%- form 'customer', id: 'ContactFooter', class: 'custom-diamension-footer__newsletter-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+
+            {%- comment -%} Newsletter Heading {%- endcomment -%}
+            {% if section.settings.newsletter_heading != blank %}
+              <h3 class="custom-diamension-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h3>
+            {% endif %}
+
+            {%- comment -%} Success/Error Messages - Display at top {%- endcomment -%}
+            {%- if form.posted_successfully? -%}
+              <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--success">
+                Signed Up Successfully!
+              </p>
+            {%- elsif form.errors -%}
+              <p class="custom-diamension-footer__newsletter-message custom-diamension-footer__newsletter-message--error">
+                Signed Up Failed!
+              </p>
+            {%- endif -%}
+
+            {%- comment -%} Newsletter Description {%- endcomment -%}
+            {% if section.settings.newsletter_description != blank %}
+              <p class="custom-diamension-footer__newsletter-description">{{ section.settings.newsletter_description }}</p>
+            {% endif %}
+
+            {%- comment -%} Email Input with Arrow Button {%- endcomment -%}
+            <div class="custom-diamension-footer__newsletter-input-wrapper">
+              <label for="NewsletterFooter" class="custom-diamension-footer__newsletter-label">EMAIL</label>
+              <div class="custom-diamension-footer__newsletter-input-group">
+                <input
+                  id="NewsletterFooter"
+                  type="email"
+                  name="contact[email]"
+                  class="custom-diamension-footer__newsletter-input"
+                  value="{{ form.email }}"
+                  aria-required="true"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    aria-invalid="true"
+                  {% endif %}
+                  required
+                >
+                <button
+                  type="submit"
+                  class="custom-diamension-footer__newsletter-submit"
+                  aria-label="Subscribe to newsletter"
+                >
+                  <img src="{{ 'custom-diamension-footer/newsletter-arrow.svg' | asset_url }}" alt="" class="custom-diamension-footer__newsletter-arrow">
+                </button>
+              </div>
+              <div class="custom-diamension-footer__newsletter-underline"></div>
+            </div>
+          {%- endform -%}
+        </div>
+      {% endif %}
+    </div>
+
+    {%- comment -%} Bottom Bar {%- endcomment -%}
+    <div class="custom-diamension-footer__bottom">
+      {%- comment -%} Designed by Wings - HARDCODED {%- endcomment -%}
+      <p class="custom-diamension-footer__bottom-credit">
+        Designed by <a href="https://wings.design" target="_blank" rel="noopener" class="custom-diamension-footer__bottom-link">Wings</a>
+      </p>
+
+      {%- comment -%} Copyright - HARDCODED with auto year {%- endcomment -%}
+      <p class="custom-diamension-footer__bottom-copyright">
+        © {{ 'now' | date: '%Y' }}, DIAMENSIONS. All rights reserved.
+      </p>
+
+      {%- comment -%} Legal Links Menu {%- endcomment -%}
+      {% if section.settings.legal_menu != blank %}
+        <nav class="custom-diamension-footer__bottom-legal">
+          <ul class="custom-diamension-footer__bottom-legal-list">
+            {% for link in section.settings.legal_menu.links %}
+              <li class="custom-diamension-footer__bottom-legal-item">
+                <a href="{{ link.url }}" class="custom-diamension-footer__bottom-legal-link">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      {% endif %}
+    </div>
+
+  </div>
+</footer>
+
+<script src="{{ 'section-custom-diamension-footer.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Diamension Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo",
+      "info": "Upload DIAMENSION logo (includes JEWELLERY text). Desktop: 368px, Mobile: 256px"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "label": "Enable Newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "NEWSLETTER"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_description",
+      "label": "Newsletter Description",
+      "default": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories."
+    },
+    {
+      "type": "header",
+      "content": "Legal Links"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal Links Menu",
+      "info": "Select menu for Terms & Conditions, Privacy Policy, etc."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Menu"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Select menu to display in this column"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamension Footer",
+      "blocks": [
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "SHOP"
+          }
+        },
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "SUPPORT"
+          }
+        },
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "DIAMENSIONS"
+          }
+        },
+        {
+          "type": "menu_column",
+          "settings": {
+            "heading": "CONNECT"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

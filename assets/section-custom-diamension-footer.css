@@ -1,0 +1,486 @@
+/* ============================================
+   Font Imports
+   ============================================ */
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('fonts/neue-montreal/NeueMontreal-Regular.woff2') format('woff2'),
+       url('fonts/neue-montreal/NeueMontreal-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   CSS Variables
+   ============================================ */
+
+:root {
+  --footer-bg: #fffaf5;
+  --footer-text-primary: #183754;
+  --footer-text-secondary: #3e6282;
+
+  /* Desktop Spacing */
+  --footer-padding-top: 152px;
+  --footer-padding-right: 48px;
+  --footer-padding-bottom: 24px;
+  --footer-padding-left: 48px;
+  --footer-height-desktop: 656px;
+
+  /* Mobile Spacing */
+  --footer-padding-top-mobile: 48px;
+  --footer-padding-right-mobile: 24px;
+  --footer-padding-bottom-mobile: 32px;
+  --footer-padding-left-mobile: 24px;
+}
+
+/* ============================================
+   Footer Wrapper - Desktop Base (≥1025px)
+   ============================================ */
+
+.custom-diamension-footer {
+  background-color: var(--footer-bg);
+  min-height: var(--footer-height-desktop);
+  position: relative;
+}
+
+.custom-diamension-footer__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--footer-padding-top) var(--footer-padding-right) var(--footer-padding-bottom) var(--footer-padding-left);
+  position: relative;
+}
+
+/* Product Page Modifier - Extra bottom spacing for sticky CTA */
+.custom-diamension-footer--product-page {
+  margin-bottom: 100px;
+}
+
+/* ============================================
+   Logo - Top Right Desktop, Top Left Mobile
+   ============================================ */
+
+.custom-diamension-footer__logo {
+  position: absolute;
+  top: var(--footer-padding-top);
+  right: var(--footer-padding-right);
+  text-align: right;
+}
+
+.custom-diamension-footer__logo img {
+  width: 368px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+}
+
+/* ============================================
+   Main Content Grid - Desktop
+   ============================================ */
+
+.custom-diamension-footer__content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  margin-top: 165px;
+}
+
+.custom-diamension-footer__menus {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 48px;
+  justify-content: start;
+}
+
+/* ============================================
+   Menu Columns
+   ============================================ */
+
+.custom-diamension-footer__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.custom-diamension-footer__menu-title {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--footer-text-secondary);
+  margin: 0;
+  line-height: normal;
+}
+
+.custom-diamension-footer__menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-diamension-footer__menu-item {
+  margin: 0;
+}
+
+.custom-diamension-footer__menu-link {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--footer-text-primary);
+  text-decoration: none;
+  line-height: normal;
+  transition: opacity 0.3s ease;
+}
+
+.custom-diamension-footer__menu-link:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   Newsletter Section
+   ============================================ */
+
+.custom-diamension-footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 47px;
+  max-width: 300px;
+}
+
+.custom-diamension-footer__newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.custom-diamension-footer__newsletter-heading {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--footer-text-secondary);
+  margin: 0;
+  line-height: normal;
+}
+
+/* Success/Error Messages */
+.custom-diamension-footer__newsletter-message {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--footer-text-primary);
+  margin: 0 0 20px 0;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+
+.custom-diamension-footer__newsletter-message--success {
+  background-color: rgba(62, 98, 130, 0.1);
+}
+
+.custom-diamension-footer__newsletter-message--error {
+  background-color: rgba(183, 117, 84, 0.1);
+}
+
+.custom-diamension-footer__newsletter-description {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: var(--footer-text-primary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Email Input */
+.custom-diamension-footer__newsletter-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-diamension-footer__newsletter-label {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--footer-text-primary);
+  line-height: normal;
+}
+
+.custom-diamension-footer__newsletter-input-group {
+  position: relative;
+}
+
+.custom-diamension-footer__newsletter-input {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--footer-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 8px 40px 8px 0;
+  width: 100%;
+}
+
+.custom-diamension-footer__newsletter-input::placeholder {
+  color: var(--footer-text-primary);
+  opacity: 0.5;
+}
+
+.custom-diamension-footer__newsletter-input:focus {
+  outline: none;
+}
+
+.custom-diamension-footer__newsletter-underline {
+  width: 100%;
+  height: 1px;
+  background-color: var(--footer-text-primary);
+  margin-top: -1px;
+}
+
+/* Submit Arrow Button */
+.custom-diamension-footer__newsletter-submit {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-diamension-footer__newsletter-submit:hover {
+  opacity: 0.7;
+}
+
+.custom-diamension-footer__newsletter-arrow {
+  width: 10px;
+  height: 10px;
+  display: block;
+}
+
+/* ============================================
+   Bottom Bar - Desktop
+   ============================================ */
+
+.custom-diamension-footer__bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  margin-top: 100px;
+}
+
+.custom-diamension-footer__bottom-credit {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: var(--footer-text-secondary);
+  margin: 0;
+  justify-self: start;
+}
+
+.custom-diamension-footer__bottom-link {
+  color: var(--footer-text-secondary);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  transition: opacity 0.3s ease;
+}
+
+.custom-diamension-footer__bottom-link:hover {
+  opacity: 0.7;
+}
+
+.custom-diamension-footer__bottom-copyright {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: var(--footer-text-secondary);
+  margin: 0;
+  justify-self: center;
+}
+
+.custom-diamension-footer__bottom-legal {
+  justify-self: end;
+}
+
+.custom-diamension-footer__bottom-legal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.custom-diamension-footer__bottom-legal-item {
+  margin: 0;
+}
+
+.custom-diamension-footer__bottom-legal-link {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: var(--footer-text-secondary);
+  text-decoration: none;
+  line-height: normal;
+  transition: opacity 0.3s ease;
+}
+
+.custom-diamension-footer__bottom-legal-link:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   Responsive Breakpoints
+   ============================================ */
+
+/* Large Desktop - Center container beyond 1440px */
+@media (min-width: 1441px) {
+  .custom-diamension-footer__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Small Desktop: 1024px - 900px */
+@media (max-width: 1024px) and (min-width: 900px) {
+  .custom-diamension-footer__container {
+    padding: 120px 40px 24px 40px;
+  }
+
+  .custom-diamension-footer__logo {
+    top: 120px;
+    right: 40px;
+  }
+
+  .custom-diamension-footer__content {
+    margin-top: 140px;
+    gap: 32px;
+  }
+
+  .custom-diamension-footer__menus {
+    gap: 32px;
+  }
+}
+
+/* Tablet & Below: <1025px - SWITCH TO MOBILE LAYOUT */
+@media (max-width: 1024px) {
+  .custom-diamension-footer {
+    min-height: auto;
+  }
+
+  .custom-diamension-footer__container {
+    padding: var(--footer-padding-top-mobile) var(--footer-padding-right-mobile) var(--footer-padding-bottom-mobile) var(--footer-padding-left-mobile);
+  }
+
+  /* Logo - Top, Left Aligned */
+  .custom-diamension-footer__logo {
+    position: static;
+    text-align: left;
+    margin-bottom: 48px;
+  }
+
+  .custom-diamension-footer__logo img {
+    width: 256px;
+    margin-left: 0;
+  }
+
+  /* Content - Stacked Vertically, Left Aligned */
+  .custom-diamension-footer__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-top: 0;
+    align-items: flex-start;
+  }
+
+  /* Newsletter First on Mobile, Left Aligned */
+  .custom-diamension-footer__newsletter {
+    order: -1;
+    max-width: 100%;
+    align-self: flex-start;
+  }
+
+  /* Menus - Two Column Grid, Left Aligned */
+  .custom-diamension-footer__menus {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 24px;
+    width: 100%;
+    justify-items: start;
+  }
+
+  /* Bottom Bar - Centered and Stacked (ONLY SECTION THAT'S CENTERED) */
+  .custom-diamension-footer__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    margin-top: 48px;
+    width: 100%;
+  }
+
+  .custom-diamension-footer__bottom-credit,
+  .custom-diamension-footer__bottom-copyright {
+    justify-self: center;
+  }
+
+  .custom-diamension-footer__bottom-legal {
+    justify-self: center;
+  }
+
+  .custom-diamension-footer__bottom-legal-list {
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+/* Mid Mobile: 767px - 480px */
+@media (max-width: 767px) {
+  .custom-diamension-footer__bottom-copyright,
+  .custom-diamension-footer__bottom-credit {
+    font-size: 12px;
+  }
+}
+
+/* Small Mobile: 479px - 376px */
+@media (max-width: 479px) {
+  .custom-diamension-footer__container {
+    padding: 40px 20px 28px 20px;
+  }
+
+  .custom-diamension-footer__menus {
+    gap: 32px 16px;
+  }
+}
+
+/* XS Mobile: ≤375px */
+@media (max-width: 375px) {
+  .custom-diamension-footer__menus {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .custom-diamension-footer__bottom-legal-list {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
