@@ -75,7 +75,7 @@
 .custom-diamension-footer__menus {
   display: grid;
   grid-template-columns: repeat(4, auto);
-  gap: 48px;
+  gap: 80px;
   justify-content: start;
 }
 
