@@ -4,6 +4,17 @@
    Pattern: custom-[folder-name]
    ========================================================================== */
 
+/* Font Face - Neue Haas Grotesk Display Pro
+   ========================================================================== */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Section Root
    ========================================================================== */
 .custom-diamension-before-footer-hero {
@@ -42,9 +53,9 @@
 /* Quote Text
    ========================================================================== */
 .custom-diamension-before-footer-hero__quote {
-  color: #FFFAF5;
+  color: #fffaf5;
   text-align: center;
-  font-family: "Neue Haas Grotesk Display Pro", sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -61,9 +72,9 @@
 /* Caption Text
    ========================================================================== */
 .custom-diamension-before-footer-hero__caption {
-  color: #FFFAF5;
+  color: #fffaf5;
   text-align: center;
-  font-family: "Neue Haas Grotesk Display Pro", sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 400;
@@ -134,33 +145,33 @@
    ========================================================================== */
 @media (max-width: 1023px) {
   .custom-diamension-before-footer-hero__container {
-    min-height: auto;
+    min-height: 672px;
     padding: 80px 40px;
   }
 
   .custom-diamension-before-footer-hero__quote-wrapper {
     margin-top: 0;
-    width: 512px;
+    width: 600px;
   }
 
   .custom-diamension-before-footer-hero__quote {
     font-size: 32px;
-    line-height: 40px;
+    line-height: 36px;
   }
 
   .custom-diamension-before-footer-hero__caption-wrapper {
-    margin-top: 40px;
+    margin-top: 32px;
   }
 
   .custom-diamension-before-footer-hero__caption {
     font-size: 24px;
-    line-height: 48px;
+    line-height: 40px;
   }
 
   .custom-diamension-before-footer-hero__image-wrapper {
-    width: 600px;
-    height: 600px;
-    bottom: calc(var(--image-offset, -128px) * 0.75);
+    width: 800px;
+    height: 800px;
+    bottom: var(--image-offset, -128px);
   }
 }
 
@@ -168,6 +179,7 @@
    ========================================================================== */
 @media (max-width: 767px) {
   .custom-diamension-before-footer-hero__container {
+    min-height: 672px;
     padding: 60px 20px;
   }
 
@@ -176,23 +188,26 @@
   }
 
   .custom-diamension-before-footer-hero__quote {
-    font-size: 24px;
-    line-height: 30px;
-  }
-
-  .custom-diamension-before-footer-hero__caption-wrapper {
-    margin-top: 32px;
-  }
-
-  .custom-diamension-before-footer-hero__caption {
-    font-size: 20px;
+    font-size: 32px;
     line-height: 36px;
   }
 
+  .custom-diamension-before-footer-hero__caption-wrapper {
+    margin-top: 24px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
   .custom-diamension-before-footer-hero__image-wrapper {
-    width: 400px;
-    height: 400px;
-    bottom: calc(var(--image-offset, -128px) * 0.625);
+    width: 800px;
+    height: 800px;
+    bottom: var(--image-offset, -128px);
+  }
+  .custom-diamension-before-footer-hero__quote-wrapper {
+    width: 80vw;
   }
 }
 
@@ -212,8 +227,8 @@
   }
 
   .custom-diamension-before-footer-hero__image-wrapper {
-    width: 320px;
-    height: 320px;
+    width: 800px;
+    height: 800px;
   }
 }
 
@@ -221,16 +236,17 @@
    ========================================================================== */
 @media (max-width: 374px) {
   .custom-diamension-before-footer-hero__container {
+    min-height: 672px;
     padding: 40px 15px;
   }
 
   .custom-diamension-before-footer-hero__quote {
-    font-size: 20px;
-    line-height: 26px;
+    font-size: 28px;
+    line-height: 36px;
   }
 
   .custom-diamension-before-footer-hero__caption {
-    font-size: 18px;
-    line-height: 32px;
+    font-size: 24px;
+    line-height: 36px;
   }
 }

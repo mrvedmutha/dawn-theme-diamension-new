@@ -22,7 +22,6 @@
 >
   <div class="custom-diamension-before-footer-hero__wrapper">
     <div class="custom-diamension-before-footer-hero__container">
-
       {%- comment -%} Quote Text {%- endcomment -%}
       {%- if quote_text != blank -%}
         <div class="custom-diamension-before-footer-hero__quote-wrapper">
@@ -47,16 +46,19 @@
           class="custom-diamension-before-footer-hero__image-wrapper"
           style="--image-offset: {{ image_offset }}px;"
         >
-          {{- product_image | image_url: width: 1600 | image_tag:
-            loading: 'lazy',
-            widths: '400, 600, 800, 1200, 1600',
-            sizes: '(max-width: 767px) 400px, (max-width: 1024px) 600px, 800px',
-            class: 'custom-diamension-before-footer-hero__image',
-            alt: product_image.alt | default: 'Product image'
+          {{-
+            product_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1200, 1600',
+              sizes: '(max-width: 767px) 400px, (max-width: 1024px) 600px, 800px',
+              class: 'custom-diamension-before-footer-hero__image',
+              alt: product_image.alt
+            | default: 'Product image'
           -}}
         </div>
       {%- endif -%}
-
     </div>
   </div>
 </section>
@@ -103,7 +105,7 @@
       "type": "range",
       "id": "image_offset",
       "label": "Image Vertical Position",
-      "min": -200,
+      "min": -800,
       "max": 0,
       "step": 8,
       "unit": "px",
