@@ -6,9 +6,11 @@
     <div class="custom-diamension-footer-image">
       <img
         src="{{ section.settings.footer_image | image_url: width: 1920 }}"
-        srcset="{{ section.settings.footer_image | image_url: width: 768 }} 768w,
-                {{ section.settings.footer_image | image_url: width: 1440 }} 1440w,
-                {{ section.settings.footer_image | image_url: width: 1920 }} 1920w"
+        srcset="
+          {{ section.settings.footer_image | image_url: width: 768 }} 768w,
+          {{ section.settings.footer_image | image_url: width: 1440 }} 1440w,
+          {{ section.settings.footer_image | image_url: width: 1920 }} 1920w
+        "
         sizes="100vw"
         alt="{{ section.settings.footer_image.alt | escape }}"
         class="custom-diamension-footer-image__img"
@@ -18,7 +20,7 @@
   {% endif %}
 {% else %}
   {%- comment -%} Add spacing on non-homepage pages {%- endcomment -%}
-  <div class="custom-diamension-footer-image custom-diamension-footer-image--spacer"></div>
+  <div class="custom-diamension-footer-image custom-diamension-footer-image--spacer">&nbsp;</div>
 {% endif %}
 
 {% schema %}

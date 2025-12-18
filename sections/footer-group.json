@@ -1,57 +1,61 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "custom-diamension-footer-image": {
-      "type": "custom-diamension-footer-image",
-      "settings": {
-        "footer_image": ""
-      }
-    },
     "custom-diamension-footer": {
       "type": "custom-diamension-footer",
       "blocks": {
         "menu-1": {
           "type": "menu_column",
           "settings": {
-            "heading": "SHOP"
+            "heading": "SHOP",
+            "menu": "footer-menu-shop"
           }
         },
         "menu-2": {
           "type": "menu_column",
           "settings": {
-            "heading": "SUPPORT"
+            "heading": "SUPPORT",
+            "menu": "footer-menu-support"
           }
         },
         "menu-3": {
           "type": "menu_column",
           "settings": {
-            "heading": "DIAMENSIONS"
+            "heading": "DIAMENSIONS",
+            "menu": "footer-menu-diamension"
           }
         },
         "menu-4": {
           "type": "menu_column",
           "settings": {
-            "heading": "CONNECT"
+            "heading": "CONNECT",
+            "menu": "footer-menu-connect"
           }
         }
       },
-      "block_order": [
-        "menu-1",
-        "menu-2",
-        "menu-3",
-        "menu-4"
-      ],
+      "block_order": ["menu-1", "menu-2", "menu-3", "menu-4"],
       "settings": {
-        "logo": "",
+        "logo": "shopify://shop_images/diamension-logo-dark.svg",
         "newsletter_enable": true,
         "newsletter_heading": "NEWSLETTER",
-        "newsletter_description": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories."
+        "newsletter_description": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories.",
+        "legal_menu": "footer-menu-legal"
       }
+    },
+    "custom-diamension-footer-image": {
+      "type": "custom-diamension-footer-image",
+      "settings": {}
     }
   },
-  "order": [
-    "custom-diamension-footer-image",
-    "custom-diamension-footer"
-  ]
+  "order": ["custom-diamension-footer", "custom-diamension-footer-image"]
 }
