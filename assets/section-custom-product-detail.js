@@ -35,6 +35,7 @@
       initAddToCart(section, productData, sectionId);
       initBuyNow(section, productData);
       initSizeGuide();
+      formatInitialPrice(section);
     });
   }
 
@@ -288,6 +289,9 @@
       // Update price breakup
       updatePriceBreakup(section, variant);
 
+      // Update product details cards
+      updateProductDetailsCards(section, variant);
+
       // Update availability
       updateAvailability(section, variant);
 
@@ -417,6 +421,33 @@
     }
 
     console.log('✅ PRICE BREAKUP UPDATE COMPLETE');
+  }
+
+  // Update product details cards
+  function updateProductDetailsCards(section, variant) {
+    // Update gross weight
+    const grossWeightEl = section.querySelector('[data-gross-weight]');
+    if (grossWeightEl && variant.metafields && variant.metafields.gross_weight) {
+      grossWeightEl.textContent = `${variant.metafields.gross_weight} Grams`;
+    }
+
+    // Update metal type label
+    const metalTypeLabelEl = section.querySelector('[data-metal-type-label]');
+    if (metalTypeLabelEl && variant.option1 && variant.option2) {
+      metalTypeLabelEl.textContent = `${variant.option1} ${variant.option2}`;
+    }
+
+    // Update metal weight
+    const metalWeightEl = section.querySelector('[data-metal-weight]');
+    if (metalWeightEl && variant.metafields && variant.metafields.metal_weight) {
+      metalWeightEl.textContent = `${variant.metafields.metal_weight} Grams`;
+    }
+
+    // Update diamond weight
+    const diamondWeightEl = section.querySelector('[data-diamond-weight]');
+    if (diamondWeightEl && variant.metafields && variant.metafields.diamond_in_ct) {
+      diamondWeightEl.textContent = `${variant.metafields.diamond_in_ct} Ct.`;
+    }
   }
 
   // Update availability
@@ -663,10 +694,32 @@
     }
   }
 
-  // Format money (Shopify money format)
+  // Format money (Indian rupee format)
   function formatMoney(cents) {
-    const dollars = (cents / 100).toFixed(2);
-    return `₹${dollars}`;
+    const amount = (cents / 100).toFixed(2);
+    const [rupees, paise] = amount.split('.');
+
+    // Indian number format: last 3 digits, then groups of 2
+    let lastThree = rupees.slice(-3);
+    let remaining = rupees.slice(0, -3);
+
+    if (remaining) {
+      lastThree = ',' + lastThree;
+      remaining = remaining.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    }
+
+    return `₹${remaining}${lastThree}.${paise}`;
+  }
+
+  // Format initial price on page load
+  function formatInitialPrice(section) {
+    const priceElement = section.querySelector('[data-product-price]');
+    if (priceElement) {
+      const cents = priceElement.dataset.priceCents;
+      if (cents) {
+        priceElement.textContent = formatMoney(parseInt(cents));
+      }
+    }
   }
 
   // Build trust badges sentence for mobile

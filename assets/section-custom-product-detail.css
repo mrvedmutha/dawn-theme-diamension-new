@@ -2,26 +2,32 @@
    CUSTOM FONTS - Neue Haas Display
    =================================== */
 
+/* Light (300) */
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('NeueHaasDisplay-Roman.woff2') format('woff2');
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Roman (400) */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
+/* Medium (500) - Using Bold as Medium equivalent */
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('NeueHaasDisplay-Mediu.woff2') format('woff2');
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
   font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('NeueHaasDisplay-Bold.woff2') format('woff2');
-  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -195,10 +201,11 @@
 .custom-product-detail__header {
   display: flex;
   flex-direction: column;
-  gap: var(--cpd-spacing-xs);
+  gap: 20px;
 }
 
 .custom-product-detail__title {
+  font-family: var(--cpd-font-primary);
   font-size: 32px;
   font-weight: 400;
   color: var(--cpd-color-primary);
@@ -206,22 +213,37 @@
   margin: 0;
 }
 
-.custom-product-detail__subtitle {
-  font-size: 14px;
-  color: var(--cpd-color-secondary);
-  line-height: normal;
-  margin: 0;
-}
-
-.custom-product-detail__rating {
-  padding: 10px 0 20px;
+.custom-product-detail__price-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .custom-product-detail__price {
+  font-family: var(--cpd-font-primary);
   font-size: 24px;
   color: var(--cpd-color-primary);
   font-weight: 400;
   margin: 0;
+}
+
+.custom-product-detail__tax-info {
+  font-family: var(--cpd-font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  line-height: normal;
+  margin: 0;
+}
+
+.custom-product-detail__short-description {
+  font-family: var(--cpd-font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  line-height: normal;
+  margin: 0;
+  width: 480px;
+  max-width: 100%;
 }
 
 /* ===================================
@@ -280,20 +302,21 @@
 /* Metal Type Color Swatches */
 .custom-product-detail__metal-options {
   display: flex;
-  gap: var(--cpd-spacing-sm);
+  gap: 8px;
 }
 
 .custom-product-detail__metal-option {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: none;
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
 }
 
 .custom-product-detail__metal-option:hover {
@@ -301,15 +324,19 @@
 }
 
 .custom-product-detail__metal-option--selected {
-  border: 0.8px solid var(--cpd-color-primary);
+  width: 32px;
+  height: 32px;
+  border: 0.8px solid #183754;
+  border-radius: 32px;
   padding: 3.2px;
 }
 
-.custom-product-detail__metal-option img {
+.custom-product-detail__metal-swatch {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  display: block;
 }
 
 .custom-product-detail__metal-option-text {
@@ -461,13 +488,6 @@
   padding: var(--cpd-spacing-lg) 0;
 }
 
-.custom-product-detail__info-title {
-  font-size: 24px;
-  color: var(--cpd-color-primary);
-  font-weight: 400;
-  margin: 0;
-}
-
 .custom-product-detail__accordion {
   display: flex;
   flex-direction: column;
@@ -524,10 +544,72 @@
   padding: 16px 0;
 }
 
+.custom-product-detail__accordion-body--cards {
+  padding: 24px 0;
+}
+
 .custom-product-detail__accordion-body--rich-text {
   font-size: 16px;
   color: var(--cpd-color-secondary);
   line-height: 1.5;
+}
+
+/* Product Detail Cards (Three-Column Layout) */
+.custom-product-detail__detail-cards {
+  display: flex;
+  width: 100%;
+}
+
+.custom-product-detail__detail-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 0;
+  border-right: 1px solid #cbcbcb;
+}
+
+.custom-product-detail__detail-card:last-child {
+  border-right: none;
+}
+
+.custom-product-detail__detail-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.custom-product-detail__detail-label-top {
+  font-family: var(--cpd-font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  line-height: 1.2;
+  text-align: center;
+  margin: 0;
+  min-width: 100%;
+}
+
+.custom-product-detail__detail-value {
+  font-family: var(--cpd-font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-product-detail__detail-label-bottom {
+  font-family: var(--cpd-font-primary);
+  font-size: 12px;
+  font-weight: 400;
+  color: #3e6282;
+  line-height: normal;
+  text-align: center;
+  margin: 0;
 }
 
 .custom-product-detail__spec-row {

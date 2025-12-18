@@ -57,29 +57,19 @@
       <div class="custom-product-detail__header">
         <h1 class="custom-product-detail__title">{{ product.title }}</h1>
 
-        <p class="custom-product-detail__subtitle">
-          {%- comment -%}
-            TODO: This area requires coding - placeholder from design,
-            needs to be determined what data should populate here
-          {%- endcomment -%}
-          {% if product.metafields.custom.subtitle != blank %}
-            {{ product.metafields.custom.subtitle }}
-          {% endif %}
-        </p>
+        <div class="custom-product-detail__price-container">
+          <p class="custom-product-detail__price" data-product-price data-price-cents="{{ current_variant.price }}">
+            {{ current_variant.price | money }}
+          </p>
 
-        {%- comment -%} Judge.me Rating Widget {%- endcomment -%}
-        <div class="custom-product-detail__rating" data-product-rating>
-          {% render 'judgeme_widgets',
-            widget_type: 'judgeme_preview_badge',
-            jm_style: '',
-            concierge_install: false,
-            product: product
-          %}
+          <p class="custom-product-detail__tax-info">(Inclusive of all taxes)</p>
         </div>
 
-        <p class="custom-product-detail__price" data-product-price>
-          {{ current_variant.price | money }}
-        </p>
+        {% if product.metafields.custom.short_description != blank %}
+          <p class="custom-product-detail__short-description">
+            {{ product.metafields.custom.short_description }}
+          </p>
+        {% endif %}
       </div>
 
       <!-- Product Form -->
@@ -120,7 +110,7 @@
                 </div>
               </div>
 
-              <div class="custom-product-detail__divider"></div>
+              <div class="custom-product-detail__divider">&nbsp;</div>
             {% endif %}
 
             {%- comment -%} Option 2: Metal Type with Color Swatches {%- endcomment -%}
@@ -132,8 +122,16 @@
                 </p>
                 <div class="custom-product-detail__metal-options" data-option-index="2">
                   {% for value in product.options_with_values[1].values %}
-                    {%- comment -%} Find a variant with this metal type to get swatch {%- endcomment -%}
-                    {% assign sample_variant = product.variants | where: 'option2', value | first %}
+                    {%- comment -%} Map metal type to hardcoded image {%- endcomment -%}
+                    {% assign metal_image = '' %}
+                    {% case value %}
+                      {% when 'Yellow Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-yellow-gold.png' %}
+                      {% when 'Rose Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-rose-gold.png' %}
+                      {% when 'White Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-white-gold.png' %}
+                    {% endcase %}
 
                     <div
                       class="custom-product-detail__metal-option {% if value == current_variant.option2 %}custom-product-detail__metal-option--selected{% endif %}"
@@ -141,12 +139,8 @@
                       role="button"
                       tabindex="0"
                     >
-                      {% if sample_variant.metafields.custom.color_swatch != blank %}
-                        {{
-                          sample_variant.metafields.custom.color_swatch
-                          | image_url: width: 64
-                          | image_tag: alt: value, loading: 'lazy'
-                        }}
+                      {% if metal_image != blank %}
+                        <img src="{{ metal_image | asset_url }}" alt="{{ value }}" class="custom-product-detail__metal-swatch">
                       {% else %}
                         <span class="custom-product-detail__metal-option-text">{{ value }}</span>
                       {% endif %}
@@ -155,7 +149,7 @@
                 </div>
               </div>
 
-              <div class="custom-product-detail__divider"></div>
+              <div class="custom-product-detail__divider">&nbsp;</div>
             {% endif %}
 
             {%- comment -%} Option 3: Size (with Size Guide) {%- endcomment -%}
@@ -182,7 +176,7 @@
                 <a href="#" class="custom-product-detail__size-guide-link" data-size-guide-trigger>Size Guide</a>
               </div>
 
-              <div class="custom-product-detail__divider"></div>
+              <div class="custom-product-detail__divider">&nbsp;</div>
             {% endif %}
           {% endif %}
         </div>
@@ -240,11 +234,85 @@
 
       <!-- Product Information Accordion -->
       <div class="custom-product-detail__information">
-        <h2 class="custom-product-detail__info-title">Product Information</h2>
-
         <div class="custom-product-detail__accordion">
-          {%- comment -%} 1. HARDCODED: Price Breakup {%- endcomment -%}
+          {%- comment -%} 0. HARDCODED: Product Details (Three Cards) {%- endcomment -%}
           <div class="custom-product-detail__accordion-item custom-product-detail__accordion-item--active">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Product Details</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--cards">
+                <div class="custom-product-detail__detail-cards">
+                  {%- comment -%} Card 1: Total Weight {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-star-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top">Total Weight</p>
+                    <p class="custom-product-detail__detail-value" data-gross-weight>
+                      {% if current_variant.metafields.custom.gross_weight != blank %}
+                        {{ current_variant.metafields.custom.gross_weight }} Grams
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Gross Weight</p>
+                  </div>
+
+                  {%- comment -%} Card 2: Metal Details {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-pen-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top" data-metal-type-label>
+                      {% if current_variant.option1 and current_variant.option2 %}
+                        {{ current_variant.option1 }}
+                        {{ current_variant.option2 }}
+                      {% else %}
+                        Metal Details
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-value" data-metal-weight>
+                      {% if current_variant.metafields.custom.metal_weight != blank %}
+                        {{ current_variant.metafields.custom.metal_weight }} Grams
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Metal Weight</p>
+                  </div>
+
+                  {%- comment -%} Card 3: Diamond Details {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-hammer-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top">LAB GROWN DIAMONDS - EF/ VVS,VVS</p>
+                    <p class="custom-product-detail__detail-value" data-diamond-weight>
+                      {% if current_variant.metafields.custom.diamond_in_ct != blank %}
+                        {{ current_variant.metafields.custom.diamond_in_ct }} Ct.
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Diamond Weight</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 1. HARDCODED: Price Breakup {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
             <div class="custom-product-detail__accordion-header">
               <h3 class="custom-product-detail__accordion-title">Price Breakup</h3>
               <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
