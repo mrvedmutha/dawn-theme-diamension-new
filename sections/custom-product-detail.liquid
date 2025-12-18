@@ -13,21 +13,23 @@
 
 <section class="custom-product-detail" id="custom-product-detail-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="custom-product-detail__wrapper">
-    <!-- Left Column: Thumbnail Gallery -->
-    <div class="custom-product-detail__thumbnails">
-      {% for image in product.images %}
-        <div
-          class="custom-product-detail__thumbnail {% if forloop.first %}custom-product-detail__thumbnail--active{% endif %}"
-          data-image-index="{{ forloop.index0 }}"
-          data-image-id="{{ image.id }}"
-        >
-          {{ image | image_url: width: 100 | image_tag: loading: 'lazy', alt: image.alt | escape }}
-        </div>
-      {% endfor %}
-    </div>
+    <!-- Gallery Wrapper: Thumbnails + Image (Sticky as one unit) -->
+    <div class="custom-product-detail__gallery-wrapper">
+      <!-- Left Column: Thumbnail Gallery -->
+      <div class="custom-product-detail__thumbnails">
+        {% for image in product.images %}
+          <div
+            class="custom-product-detail__thumbnail {% if forloop.first %}custom-product-detail__thumbnail--active{% endif %}"
+            data-image-index="{{ forloop.index0 }}"
+            data-image-id="{{ image.id }}"
+          >
+            {{ image | image_url: width: 100 | image_tag: loading: 'lazy', alt: image.alt | escape }}
+          </div>
+        {% endfor %}
+      </div>
 
-    <!-- Middle Column: Main Product Image (Sticky) -->
-    <div class="custom-product-detail__main-image">
+      <!-- Middle Column: Main Product Image -->
+      <div class="custom-product-detail__main-image">
       <div class="custom-product-detail__image-wrapper">
         <img
           id="mainImage-{{ section.id }}"
@@ -43,12 +45,17 @@
           type="button"
           aria-label="Add to wishlist"
           data-product-id="{{ product.id }}"
+          data-wishlist-btn
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="2" fill="none"/>
-          </svg>
+          <img
+            src="{{ 'custom-product-detail/icons/heart-icon-diamension.svg' | asset_url }}"
+            alt=""
+            width="18"
+            height="18"
+          >
         </button>
       </div>
+    </div>
     </div>
 
     <!-- Right Column: Product Information -->
@@ -140,7 +147,11 @@
                       tabindex="0"
                     >
                       {% if metal_image != blank %}
-                        <img src="{{ metal_image | asset_url }}" alt="{{ value }}" class="custom-product-detail__metal-swatch">
+                        <img
+                          src="{{ metal_image | asset_url }}"
+                          alt="{{ value }}"
+                          class="custom-product-detail__metal-swatch"
+                        >
                       {% else %}
                         <span class="custom-product-detail__metal-option-text">{{ value }}</span>
                       {% endif %}
@@ -152,7 +163,7 @@
               <div class="custom-product-detail__divider">&nbsp;</div>
             {% endif %}
 
-            {%- comment -%} Option 3: Size (with Size Guide) {%- endcomment -%}
+            {%- comment -%} Option 3: Size (with Size Guide) - Dropdown {%- endcomment -%}
             {% if product.options_with_values[2] %}
               {% assign option3_name = product.options_with_values[2].name %}
               <div class="custom-product-detail__size-selection">
@@ -160,17 +171,27 @@
                   <p class="custom-product-detail__option-label" data-option-label="3">
                     {{ option3_name }} : <span data-selected-value="3">{{ current_variant.option3 }}</span>
                   </p>
-                  <div class="custom-product-detail__size-options" data-option-index="3">
-                    {% for value in product.options_with_values[2].values %}
-                      <div
-                        class="custom-product-detail__size-option {% if value == current_variant.option3 %}custom-product-detail__size-option--selected{% endif %}"
-                        data-value="{{ value | escape }}"
-                        role="button"
-                        tabindex="0"
-                      >
-                        {{ value }}
-                      </div>
-                    {% endfor %}
+                  <div class="custom-product-detail__size-dropdown" data-option-index="3">
+                    <button
+                      type="button"
+                      class="custom-product-detail__size-dropdown-btn"
+                      data-size-dropdown-btn
+                    >
+                      <span data-size-dropdown-value>{{ current_variant.option3 }}</span>
+                      <span class="custom-product-detail__size-dropdown-arrow"></span>
+                    </button>
+                    <div class="custom-product-detail__size-dropdown-menu" data-size-dropdown-menu>
+                      {% for value in product.options_with_values[2].values %}
+                        <div
+                          class="custom-product-detail__size-option {% if value == current_variant.option3 %}custom-product-detail__size-option--selected{% endif %}"
+                          data-value="{{ value | escape }}"
+                          role="button"
+                          tabindex="0"
+                        >
+                          {{ value }}
+                        </div>
+                      {% endfor %}
+                    </div>
                   </div>
                 </div>
                 <a href="#" class="custom-product-detail__size-guide-link" data-size-guide-trigger>Size Guide</a>
@@ -178,6 +199,39 @@
 
               <div class="custom-product-detail__divider">&nbsp;</div>
             {% endif %}
+
+            {%- comment -%} Quantity Selector {%- endcomment -%}
+            <div class="custom-product-detail__quantity-group">
+              <p class="custom-product-detail__option-label">Quantity</p>
+              <div class="custom-product-detail__quantity-selector">
+                <button
+                  type="button"
+                  class="custom-product-detail__quantity-btn custom-product-detail__quantity-btn--minus"
+                  data-quantity-decrease
+                  aria-label="Decrease quantity"
+                >
+                  -
+                </button>
+                <input
+                  type="text"
+                  class="custom-product-detail__quantity-display"
+                  value="1"
+                  data-quantity-display
+                  readonly
+                  aria-label="Quantity"
+                >
+                <button
+                  type="button"
+                  class="custom-product-detail__quantity-btn custom-product-detail__quantity-btn--plus"
+                  data-quantity-increase
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div class="custom-product-detail__divider">&nbsp;</div>
           {% endif %}
         </div>
 
@@ -191,51 +245,10 @@
         </div>
       </form>
 
-      <!-- Product Description -->
-      <div class="custom-product-detail__description">
-        <h2 class="custom-product-detail__description-title">Product Description</h2>
-        <div class="custom-product-detail__description-text">
-          {{ product.description }}
-        </div>
-
-        <!-- Feature Cards (Blocks) -->
-        {% if section.blocks.size > 0 %}
-          <div class="custom-product-detail__features">
-            {% for block in section.blocks %}
-              {% if block.type == 'feature' %}
-                <div class="custom-product-detail__feature" {{ block.shopify_attributes }}>
-                  {% if block.settings.icon != blank %}
-                    <img
-                      class="custom-product-detail__feature-icon"
-                      src="{{ block.settings.icon | image_url: width: 56 }}"
-                      alt="{{ block.settings.title | escape }}"
-                      loading="lazy"
-                    >
-                  {% endif %}
-
-                  <h3 class="custom-product-detail__feature-title">
-                    {{ block.settings.title }}
-                  </h3>
-
-                  <p class="custom-product-detail__feature-text">
-                    {{ block.settings.description }}
-                    {% if block.settings.link != blank and block.settings.link_text != blank %}
-                      <a href="{{ block.settings.link }}" class="custom-product-detail__feature-link">
-                        {{ block.settings.link_text }}
-                      </a>
-                    {% endif %}
-                  </p>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-
       <!-- Product Information Accordion -->
       <div class="custom-product-detail__information">
         <div class="custom-product-detail__accordion">
-          {%- comment -%} 0. HARDCODED: Product Details (Three Cards) {%- endcomment -%}
+          {%- comment -%} 1. HARDCODED: Product Details (Three Cards) {%- endcomment -%}
           <div class="custom-product-detail__accordion-item custom-product-detail__accordion-item--active">
             <div class="custom-product-detail__accordion-header">
               <h3 class="custom-product-detail__accordion-title">Product Details</h3>
@@ -327,7 +340,7 @@
                       {{ current_variant.option1 }}
                       {{ current_variant.option2 }}
                       {% if current_variant.metafields.custom.metal_weight %}
-                        ({{ current_variant.metafields.custom.metal_weight }})
+                        ({{ current_variant.metafields.custom.metal_weight }}g)
                       {% endif %}
                     {% endif %}
                   </span>
@@ -341,7 +354,7 @@
                 <div class="custom-product-detail__spec-row" data-price-row="diamond">
                   <span class="custom-product-detail__spec-label" data-diamond-label>
                     {% if current_variant.metafields.custom.diamond_in_ct %}
-                      Diamonds ({{ current_variant.metafields.custom.diamond_in_ct }})
+                      Diamonds ({{ current_variant.metafields.custom.diamond_in_ct }}ct)
                     {% else %}
                       Diamonds
                     {% endif %}
@@ -390,7 +403,65 @@
             </div>
           </div>
 
-          {%- comment -%} 2. HARDCODED: Item Details and Specifications {%- endcomment -%}
+          {%- comment -%} 2. Product Description Accordion {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Product Description</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
+                {{ product.description }}
+
+                <!-- Feature Cards (Hardcoded with Icons) -->
+                <div class="custom-product-detail__features">
+                  {%- comment -%} Card 1: Sparkle That Lasts {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-star-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Sparkle That Lasts</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Brilliance that never fades crafted with sourced diamonds designed to shine for a lifetime.
+                    </p>
+                  </div>
+
+                  {%- comment -%} Card 2: Crafted With Care {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-pen-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Crafted With Care</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Every stone is carefully selected and set by skilled artisans to highlight its natural beauty.
+                    </p>
+                  </div>
+
+                  {%- comment -%} Card 3: Make It Yours {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-hammer-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Make It Yours</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Choose your diamond shape, setting, and metal to create a one-of-a-kind jewel.
+                      <a href="#" class="custom-product-detail__feature-link">Start Customising</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 3. HARDCODED: Item Details and Specifications {%- endcomment -%}
           <div class="custom-product-detail__accordion-item">
             <div class="custom-product-detail__accordion-header">
               <h3 class="custom-product-detail__accordion-title">Item Details and Specifications</h3>
@@ -430,30 +501,7 @@
             </div>
           </div>
 
-          {%- comment -%} 3. PRODUCT METAFIELDS: Diamond Details {%- endcomment -%}
-          {% if product.metafields.custom.diamond_details != blank %}
-            <div class="custom-product-detail__accordion-item">
-              <div class="custom-product-detail__accordion-header">
-                <h3 class="custom-product-detail__accordion-title">Diamond Details</h3>
-                <svg
-                  class="custom-product-detail__accordion-icon"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="custom-product-detail__accordion-content">
-                <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
-                  {{ product.metafields.custom.diamond_details }}
-                </div>
-              </div>
-            </div>
-          {% endif %}
-
-          {%- comment -%} 4. THEME BLOCKS: Custom Accordions {%- endcomment -%}
+          {%- comment -%} 3. THEME BLOCKS: Custom Accordions {%- endcomment -%}
           {% for block in section.blocks %}
             {% if block.type == 'accordion' %}
               <div class="custom-product-detail__accordion-item" {{ block.shopify_attributes }}>
@@ -477,6 +525,80 @@
               </div>
             {% endif %}
           {% endfor %}
+
+          {%- comment -%} 4. Certification of Authenticity {%- endcomment -%}
+          {% if product.metafields.custom.certifications_of_authenticity != blank %}
+            <div class="custom-product-detail__accordion-item">
+              <div class="custom-product-detail__accordion-header">
+                <h3 class="custom-product-detail__accordion-title">Certification of Authenticity</h3>
+                <svg
+                  class="custom-product-detail__accordion-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="custom-product-detail__accordion-content">
+                <div class="custom-product-detail__accordion-body">
+                  <p style="margin: 0;">{{ product.metafields.custom.certifications_of_authenticity }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {%- comment -%} 5. Book your Appointment {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Book your Appointment</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--appointment">
+                <h4 class="custom-product-detail__appointment-heading">Book an Appointment Today</h4>
+                <p class="custom-product-detail__appointment-text">
+                  Discover a design you love? Schedule a visit to our boutique and experience the brilliance of our
+                  jewellery firsthand. Simply fill out a quick form, and we'll be delighted to welcome you in-store for
+                  a personalized viewing. Let your online inspiration turn into a sparkling, real-life moment – book
+                  your appointment today.
+                </p>
+                {% if section.settings.appointment_url != blank %}
+                  <a href="{{ section.settings.appointment_url }}" class="custom-product-detail__appointment-btn">
+                    Book Now
+                  </a>
+                {% else %}
+                  <button type="button" class="custom-product-detail__appointment-btn" disabled>Book Now</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 6. Craft and Care Instructions {%- endcomment -%}
+          {% if product.metafields.custom.craft_and_care_instructions != blank %}
+            <div class="custom-product-detail__accordion-item">
+              <div class="custom-product-detail__accordion-header">
+                <h3 class="custom-product-detail__accordion-title">Craft and Care Instructions</h3>
+                <svg
+                  class="custom-product-detail__accordion-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="custom-product-detail__accordion-content">
+                <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
+                  {{ product.metafields.custom.craft_and_care_instructions | metafield_tag }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -621,6 +743,12 @@
       "id": "footer_legal_text",
       "label": "Footer Legal Text",
       "default": "*Seamless delivery across India and the US, bringing luxury to your doorstep."
+    },
+    {
+      "type": "url",
+      "id": "appointment_url",
+      "label": "Appointment Booking URL",
+      "info": "URL for the Book your Appointment button"
     }
   ],
   "blocks": [

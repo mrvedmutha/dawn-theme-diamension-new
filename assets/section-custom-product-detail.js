@@ -32,6 +32,7 @@
       initWishlist(section, productData);
       initVariantSelection(section, productData, sectionId);
       initAccordion(section);
+      initQuantitySelector(section);
       initAddToCart(section, productData, sectionId);
       initBuyNow(section, productData);
       initSizeGuide();
@@ -138,6 +139,74 @@
   }
 
   // ===== 4. WISHLIST =====
+
+  // Storage Manager for wishlist
+  const WishlistStorage = {
+    STORAGE_KEY: 'project_wishlist_items',
+
+    get() {
+      try {
+        const data = localStorage.getItem(this.STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+      } catch (error) {
+        console.error('Error reading wishlist storage:', error);
+        return [];
+      }
+    },
+
+    add(itemId) {
+      const wishlist = this.get();
+      if (!wishlist.includes(itemId)) {
+        wishlist.push(itemId);
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(wishlist));
+      }
+    },
+
+    remove(itemId) {
+      const wishlist = this.get();
+      const filtered = wishlist.filter(id => id !== itemId);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtered));
+    },
+
+    has(itemId) {
+      return this.get().includes(itemId);
+    },
+
+    toggle(itemId) {
+      if (this.has(itemId)) {
+        this.remove(itemId);
+        return false; // Not liked anymore
+      } else {
+        this.add(itemId);
+        return true; // Now liked
+      }
+    }
+  };
+
+  // GSAP animation for wishlist button
+  function animateWishlistButton(button) {
+    if (!window.gsap) {
+      console.warn('GSAP not loaded, skipping animation');
+      return;
+    }
+
+    const timeline = gsap.timeline();
+
+    // Step 1: Scale down (press effect)
+    timeline.to(button, {
+      scale: 0.85,
+      duration: 0.1,
+      ease: 'power2.in'
+    });
+
+    // Step 2: Spring back with bounce
+    timeline.to(button, {
+      scale: 1,
+      duration: 0.15,
+      ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)'
+    });
+  }
+
   function initWishlist(section, productData) {
     const wishlistBtn = section.querySelector('.custom-product-detail__wishlist-btn');
 
@@ -146,40 +215,36 @@
     const productId = productData.id;
 
     // Check if already in wishlist
-    let wishlist = JSON.parse(localStorage.getItem('diamension_wishlist') || '[]');
-    if (wishlist.includes(productId)) {
+    if (WishlistStorage.has(productId)) {
       wishlistBtn.classList.add('custom-product-detail__wishlist-btn--active');
     }
 
     wishlistBtn.addEventListener('click', function (e) {
       e.preventDefault();
 
-      wishlist = JSON.parse(localStorage.getItem('diamension_wishlist') || '[]');
+      // Toggle wishlist state
+      const isNowLiked = WishlistStorage.toggle(productId);
 
-      if (wishlist.includes(productId)) {
-        // Remove from wishlist
-        wishlist = wishlist.filter((id) => id !== productId);
-        this.classList.remove('custom-product-detail__wishlist-btn--active');
-      } else {
-        // Add to wishlist
-        wishlist.push(productId);
+      // Trigger animation
+      animateWishlistButton(this);
+
+      // Update button visual state
+      if (isNowLiked) {
         this.classList.add('custom-product-detail__wishlist-btn--active');
+      } else {
+        this.classList.remove('custom-product-detail__wishlist-btn--active');
       }
-
-      localStorage.setItem('diamension_wishlist', JSON.stringify(wishlist));
 
       // Dispatch custom event for other parts of theme
       document.dispatchEvent(
         new CustomEvent('wishlist:updated', {
-          detail: { wishlist: wishlist, productId: productId },
+          detail: {
+            wishlist: WishlistStorage.get(),
+            productId: productId,
+            isLiked: isNowLiked
+          },
         })
       );
-
-      // Animation
-      this.style.transform = 'scale(1.2)';
-      setTimeout(() => {
-        this.style.transform = 'scale(1)';
-      }, 200);
     });
   }
 
@@ -188,6 +253,8 @@
     // Get all option selectors
     const purityOptions = section.querySelectorAll('.custom-product-detail__purity-option');
     const metalOptions = section.querySelectorAll('.custom-product-detail__metal-option');
+    const sizeDropdownBtn = section.querySelector('[data-size-dropdown-btn]');
+    const sizeDropdownMenu = section.querySelector('[data-size-dropdown-menu]');
     const sizeOptions = section.querySelectorAll('.custom-product-detail__size-option');
 
     // Purity selection
@@ -224,17 +291,47 @@
       });
     });
 
-    // Size selection
+    // Size dropdown toggle
+    if (sizeDropdownBtn && sizeDropdownMenu) {
+      sizeDropdownBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        sizeDropdownBtn.classList.toggle('active');
+        sizeDropdownMenu.classList.toggle('active');
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!sizeDropdownBtn.contains(e.target) && !sizeDropdownMenu.contains(e.target)) {
+          sizeDropdownBtn.classList.remove('active');
+          sizeDropdownMenu.classList.remove('active');
+        }
+      });
+    }
+
+    // Size selection from dropdown
     sizeOptions.forEach((option) => {
       option.addEventListener('click', function () {
         console.log('🔧 SIZE CLICKED:', this.dataset.value);
         sizeOptions.forEach((opt) => opt.classList.remove('custom-product-detail__size-option--selected'));
         this.classList.add('custom-product-detail__size-option--selected');
 
+        // Update dropdown button text
+        const dropdownValue = section.querySelector('[data-size-dropdown-value]');
+        if (dropdownValue) {
+          dropdownValue.textContent = this.dataset.value;
+        }
+
         // Update label
         const label = section.querySelector('[data-selected-value="3"]');
         if (label) {
           label.textContent = this.dataset.value;
+        }
+
+        // Close dropdown
+        if (sizeDropdownBtn && sizeDropdownMenu) {
+          sizeDropdownBtn.classList.remove('active');
+          sizeDropdownMenu.classList.remove('active');
         }
 
         updateSelectedVariant(section, productData, sectionId);
@@ -513,6 +610,39 @@
     });
   }
 
+  // ===== 6.5. QUANTITY SELECTOR =====
+  function initQuantitySelector(section) {
+    const decreaseBtn = section.querySelector('[data-quantity-decrease]');
+    const increaseBtn = section.querySelector('[data-quantity-increase]');
+    const display = section.querySelector('[data-quantity-display]');
+    const hiddenInput = section.querySelector('input[name="quantity"]');
+
+    if (!decreaseBtn || !increaseBtn || !display || !hiddenInput) return;
+
+    // Decrease quantity
+    decreaseBtn.addEventListener('click', function () {
+      let currentValue = parseInt(display.value) || 1;
+      if (currentValue > 1) {
+        currentValue--;
+        display.value = currentValue;
+        hiddenInput.value = currentValue;
+        decreaseBtn.disabled = currentValue <= 1;
+      }
+    });
+
+    // Increase quantity
+    increaseBtn.addEventListener('click', function () {
+      let currentValue = parseInt(display.value) || 1;
+      currentValue++;
+      display.value = currentValue;
+      hiddenInput.value = currentValue;
+      decreaseBtn.disabled = false;
+    });
+
+    // Initial state
+    decreaseBtn.disabled = parseInt(display.value) <= 1;
+  }
+
   // ===== 7. ADD TO CART =====
   function initAddToCart(section, productData, sectionId) {
     const form = section.querySelector('[data-product-form]');
@@ -525,6 +655,7 @@
 
       const formData = new FormData(form);
       const variantId = formData.get('id');
+      const quantity = parseInt(formData.get('quantity')) || 1;
 
       if (!variantId) {
         showError(section, 'Please select all options');
@@ -544,7 +675,7 @@
           },
           body: JSON.stringify({
             id: variantId,
-            quantity: 1,
+            quantity: quantity,
           }),
         });
 

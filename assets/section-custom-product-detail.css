@@ -45,6 +45,12 @@
   --cpd-color-white: #ffffff;
   --cpd-color-cta-primary: #183754;
 
+  /* Option Selector States (Purity, Size, etc.) */
+  --cpd-option-bg-unselected: #f1f1f1;
+  --cpd-option-text-unselected: #3e6282;
+  --cpd-option-bg-selected: #183754;
+  --cpd-option-text-selected: #fffaf5;
+
   /* Typography */
   --cpd-font-primary: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
@@ -66,7 +72,6 @@
   font-family: var(--cpd-font-primary);
   color: var(--cpd-color-primary);
   background-color: var(--cpd-color-bg-light);
-  overflow-x: hidden;
 }
 
 /* ===================================
@@ -75,12 +80,25 @@
 
 .custom-product-detail__wrapper {
   display: flex;
-  gap: var(--cpd-spacing-lg);
+  gap: 34px;
   padding: var(--cpd-spacing-lg) var(--cpd-container-padding) var(--cpd-spacing-3xl);
   min-height: 100vh;
   position: relative;
   max-width: 1440px;
   margin: 0 auto;
+}
+
+/* ===================================
+   GALLERY WRAPPER (THUMBNAILS + IMAGE STICKY UNIT)
+   =================================== */
+
+.custom-product-detail__gallery-wrapper {
+  display: flex;
+  gap: 34px;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  max-height: 100vh;
 }
 
 /* ===================================
@@ -127,8 +145,6 @@
 
 .custom-product-detail__main-image {
   flex-shrink: 0;
-  position: sticky;
-  top: 0;
   height: 800px;
   width: var(--cpd-main-image-size);
 }
@@ -156,33 +172,34 @@
 
 .custom-product-detail__wishlist-btn {
   position: absolute;
-  top: var(--cpd-spacing-lg);
-  right: var(--cpd-spacing-lg);
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
-  background-color: rgba(255, 255, 255, 0.9);
+  top: 16px;
+  right: 16px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  padding: 2px;
-  border: none;
-  color: var(--cpd-color-primary);
+  z-index: 10;
+  transition: background-color 0.3s ease;
+  padding: 0;
 }
 
 .custom-product-detail__wishlist-btn:hover {
-  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .custom-product-detail__wishlist-btn--active {
-  background-color: var(--cpd-color-primary);
-  color: var(--cpd-color-white);
+  background-color: #FFFCF9;
 }
 
-.custom-product-detail__wishlist-btn--active svg path {
-  fill: currentColor;
+.custom-product-detail__wishlist-btn img {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 /* ===================================
@@ -275,34 +292,40 @@
 /* Purity Options */
 .custom-product-detail__purity-options {
   display: flex;
-  gap: var(--cpd-spacing-sm);
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .custom-product-detail__purity-option {
   padding: 10px 20px;
   cursor: pointer;
-  border: 0.5px solid var(--cpd-color-border);
-  transition: border-color 0.2s ease;
+  background-color: var(--cpd-option-bg-unselected);
+  border: none;
+  transition: all 0.2s ease;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
-  color: var(--cpd-color-secondary);
-  min-width: 50px;
+  font-weight: 400;
+  color: var(--cpd-option-text-unselected);
+  min-width: 60px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-product-detail__purity-option:hover {
-  border-color: var(--cpd-color-secondary);
+  opacity: 0.8;
 }
 
 .custom-product-detail__purity-option--selected {
-  border-color: var(--cpd-color-primary);
-  color: var(--cpd-color-primary);
+  background-color: var(--cpd-option-bg-selected);
+  color: var(--cpd-option-text-selected);
 }
 
 /* Metal Type Color Swatches */
 .custom-product-detail__metal-options {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 
 .custom-product-detail__metal-option {
@@ -324,11 +347,11 @@
 }
 
 .custom-product-detail__metal-option--selected {
-  width: 32px;
-  height: 32px;
-  border: 0.8px solid #183754;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #183754;
   border-radius: 32px;
-  padding: 3.2px;
+  padding: 0;
 }
 
 .custom-product-detail__metal-swatch {
@@ -337,6 +360,11 @@
   object-fit: cover;
   border-radius: 50%;
   display: block;
+  transition: transform 0.2s ease;
+}
+
+.custom-product-detail__metal-option--selected .custom-product-detail__metal-swatch {
+  transform: scale(0.857);
 }
 
 .custom-product-detail__metal-option-text {
@@ -361,32 +389,113 @@
 .custom-product-detail__size-group {
   display: flex;
   flex-direction: column;
-  gap: var(--cpd-spacing-lg);
+  gap: var(--cpd-spacing-md);
+  flex: 1;
 }
 
-.custom-product-detail__size-options {
-  display: flex;
-  gap: var(--cpd-spacing-sm);
+/* Size Dropdown Container */
+.custom-product-detail__size-dropdown {
+  position: relative;
+  width: 100%;
+  max-width: 85px;
 }
 
-.custom-product-detail__size-option {
-  padding: 10px;
+/* Size Dropdown Button */
+.custom-product-detail__size-dropdown-btn {
+  width: 100%;
+  background-color: var(--cpd-option-bg-unselected);
+  border: 1px solid var(--cpd-option-bg-unselected);
+  padding: 10px 15px 10px 25px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--cpd-option-text-unselected);
   cursor: pointer;
-  border: 0.5px solid transparent;
-  transition: border-color 0.2s ease;
-  font-size: 16px;
-  color: var(--cpd-color-secondary);
-  min-width: 30px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.custom-product-detail__size-dropdown-btn:hover {
+  opacity: 0.8;
+}
+
+/* Dropdown Arrow */
+.custom-product-detail__size-dropdown-arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--cpd-option-text-unselected);
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.custom-product-detail__size-dropdown-btn.active .custom-product-detail__size-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.custom-product-detail__size-dropdown-menu {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  width: 100%;
+  background-color: var(--cpd-option-bg-unselected);
+  border: 1px solid var(--cpd-option-bg-unselected);
+  border-top: 1px solid var(--cpd-color-border);
+  max-height: 156px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+/* Webkit browsers scrollbar styling */
+.custom-product-detail__size-dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-product-detail__size-dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-product-detail__size-dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(203, 203, 203, 0.5);
+  border-radius: 3px;
+}
+
+.custom-product-detail__size-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background-color: var(--cpd-color-border);
+}
+
+.custom-product-detail__size-dropdown-menu.active {
+  display: block;
+}
+
+/* Dropdown Options */
+.custom-product-detail__size-option {
+  padding: 10px 25px;
+  cursor: pointer;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--cpd-option-text-unselected);
+  background-color: var(--cpd-option-bg-unselected);
+  transition: all 0.2s ease;
+  border: none;
+  width: 100%;
+  text-align: left;
 }
 
 .custom-product-detail__size-option:hover {
-  border-color: var(--cpd-color-secondary);
+  opacity: 0.8;
 }
 
 .custom-product-detail__size-option--selected {
-  border-color: var(--cpd-color-primary);
-  color: var(--cpd-color-primary);
+  background-color: var(--cpd-option-bg-selected);
+  color: var(--cpd-option-text-selected);
 }
 
 .custom-product-detail__size-guide-link {
@@ -399,6 +508,76 @@
 
 .custom-product-detail__size-guide-link:hover {
   color: var(--cpd-color-primary);
+}
+
+/* Quantity Selector */
+.custom-product-detail__quantity-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cpd-spacing-md);
+}
+
+.custom-product-detail__quantity-selector {
+  display: flex;
+  align-items: center;
+}
+
+.custom-product-detail__quantity-btn {
+  width: 42px;
+  height: 42px;
+  background-color: #f1f1f1;
+  border: none;
+  font-family: var(--cpd-font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  color: #183754;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 0;
+}
+
+.custom-product-detail__quantity-btn:hover {
+  opacity: 0.8;
+}
+
+.custom-product-detail__quantity-btn:disabled {
+  cursor: not-allowed;
+}
+
+.custom-product-detail__quantity-btn--minus {
+  border-radius: 4px 0 0 4px;
+}
+
+.custom-product-detail__quantity-btn--plus {
+  border-radius: 0 4px 4px 0;
+}
+
+.custom-product-detail__quantity-display {
+  width: 42px;
+  height: 42px;
+  background-color: #f1f1f1;
+  border: none;
+  font-family: var(--cpd-font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  color: #183754;
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.custom-product-detail__quantity-display:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* Availability Message */
@@ -554,6 +733,56 @@
   line-height: 1.5;
 }
 
+/* Appointment Booking Section */
+.custom-product-detail__accordion-body--appointment {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-product-detail__appointment-heading {
+  font-family: var(--cpd-font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--cpd-color-primary);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.custom-product-detail__appointment-text {
+  font-family: var(--cpd-font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--cpd-color-secondary);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.custom-product-detail__appointment-btn {
+  background-color: var(--cpd-color-primary);
+  color: #fffaf5;
+  font-family: var(--cpd-font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: fit-content;
+  transition: opacity 0.2s ease;
+}
+
+.custom-product-detail__appointment-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.custom-product-detail__appointment-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Product Detail Cards (Three-Column Layout) */
 .custom-product-detail__detail-cards {
   display: flex;
@@ -615,29 +844,45 @@
 .custom-product-detail__spec-row {
   display: flex;
   justify-content: space-between;
-  padding: 16px 24px;
-  font-size: 16px;
-  color: var(--cpd-color-secondary);
-  border-top: 1px solid var(--cpd-color-border);
+  font-family: var(--cpd-font-primary);
+  font-size: 14px;
+  line-height: 1.2;
+  border: 1px solid #cbcbcb;
+  border-top: none;
 }
 
 .custom-product-detail__spec-row:first-child {
-  border-top: 1px solid var(--cpd-color-border);
+  border-top: 1px solid #cbcbcb;
 }
 
 .custom-product-detail__spec-row--total {
-  font-weight: 700;
-  border-top: 2px solid var(--cpd-color-primary);
-  color: var(--cpd-color-primary);
+  border-top: 1px solid #cbcbcb;
 }
 
 .custom-product-detail__spec-label {
   flex: 1;
+  font-weight: 400;
+  color: #3e6282;
+  text-align: left;
+  border-right: 1px solid #cbcbcb;
+  padding: 10px;
+}
+
+.custom-product-detail__spec-row--total .custom-product-detail__spec-label {
+  font-weight: 500;
 }
 
 .custom-product-detail__spec-value {
   flex: 1;
+  font-weight: 500;
+  color: #3e6282;
   text-align: right;
+  padding: 10px;
+}
+
+.custom-product-detail__spec-row--total .custom-product-detail__spec-value {
+  font-weight: 600;
+  color: #183754;
 }
 
 /* ===================================
@@ -870,6 +1115,15 @@
     gap: 24px;
   }
 
+  /* Gallery wrapper: break sticky, stack vertically */
+  .custom-product-detail__gallery-wrapper {
+    position: static;
+    flex-direction: column;
+    gap: 24px;
+    max-height: none;
+    width: 100%;
+  }
+
   /* Main image at top - maintain aspect ratio */
   .custom-product-detail__main-image {
     position: static;
@@ -969,6 +1223,15 @@
     flex-direction: column;
     padding: 24px 16px 0;
     gap: 20px;
+  }
+
+  /* Gallery wrapper: break sticky, stack vertically */
+  .custom-product-detail__gallery-wrapper {
+    position: static;
+    flex-direction: column;
+    gap: 20px;
+    max-height: none;
+    width: 100%;
   }
 
   /* Main image at top */
@@ -1109,6 +1372,15 @@
   .custom-product-detail__wrapper {
     padding: 20px 12px 0;
     gap: 16px;
+  }
+
+  /* Gallery wrapper: break sticky, stack vertically */
+  .custom-product-detail__gallery-wrapper {
+    position: static;
+    flex-direction: column;
+    gap: 16px;
+    max-height: none;
+    width: 100%;
   }
 
   .custom-product-detail__main-image {
