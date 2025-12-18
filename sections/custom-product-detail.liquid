@@ -1,0 +1,879 @@
+{% comment %}
+  Section: Custom Product Detail
+  Description: Complete product detail page for jewelry products with variant selection,
+               price breakup, accordions, and customizable blocks
+{% endcomment %}
+
+{{ 'section-custom-product-detail.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+<section class="custom-product-detail" id="custom-product-detail-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="custom-product-detail__wrapper">
+    <!-- Gallery Wrapper: Thumbnails + Image (Sticky as one unit) -->
+    <div class="custom-product-detail__gallery-wrapper">
+      <!-- Left Column: Thumbnail Gallery -->
+      <div class="custom-product-detail__thumbnails">
+        {% for image in product.images %}
+          <div
+            class="custom-product-detail__thumbnail {% if forloop.first %}custom-product-detail__thumbnail--active{% endif %}"
+            data-image-index="{{ forloop.index0 }}"
+            data-image-id="{{ image.id }}"
+          >
+            {{ image | image_url: width: 100 | image_tag: loading: 'lazy', alt: image.alt | escape }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Middle Column: Main Product Image -->
+      <div class="custom-product-detail__main-image">
+      <div class="custom-product-detail__image-wrapper">
+        <img
+          id="mainImage-{{ section.id }}"
+          class="custom-product-detail__image"
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          alt="{{ product.title | escape }}"
+          data-main-image
+        >
+
+        <button
+          class="custom-product-detail__wishlist-btn"
+          id="wishlistBtn-{{ section.id }}"
+          type="button"
+          aria-label="Add to wishlist"
+          data-product-id="{{ product.id }}"
+          data-wishlist-btn
+        >
+          <img
+            src="{{ 'custom-product-detail/icons/heart-icon-diamension.svg' | asset_url }}"
+            alt=""
+            width="18"
+            height="18"
+          >
+        </button>
+      </div>
+    </div>
+    </div>
+
+    <!-- Right Column: Product Information -->
+    <div class="custom-product-detail__info">
+      <!-- Product Header -->
+      <div class="custom-product-detail__header">
+        <h1 class="custom-product-detail__title">{{ product.title }}</h1>
+
+        <div class="custom-product-detail__price-container">
+          <p class="custom-product-detail__price" data-product-price data-price-cents="{{ current_variant.price }}">
+            {{ current_variant.price | money }}
+          </p>
+
+          <p class="custom-product-detail__tax-info">(Inclusive of all taxes)</p>
+        </div>
+
+        {% if product.metafields.custom.short_description != blank %}
+          <p class="custom-product-detail__short-description">
+            {{ product.metafields.custom.short_description }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Product Form -->
+      <form
+        method="post"
+        action="/cart/add"
+        id="{{ product_form_id }}"
+        accept-charset="UTF-8"
+        class="custom-product-detail__form"
+        enctype="multipart/form-data"
+        novalidate="novalidate"
+        data-product-form
+      >
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+        <input type="hidden" name="quantity" value="1">
+
+        <!-- Product Options -->
+        <div class="custom-product-detail__options">
+          {% if product.has_only_default_variant == false %}
+            {%- comment -%} Option 1: Purity {%- endcomment -%}
+            {% if product.options_with_values[0] %}
+              {% assign option1_name = product.options_with_values[0].name %}
+              <div class="custom-product-detail__option-group">
+                <p class="custom-product-detail__option-label" data-option-label="1">
+                  {{ option1_name }} : <span data-selected-value="1">{{ current_variant.option1 }}</span>
+                </p>
+                <div class="custom-product-detail__purity-options" data-option-index="1">
+                  {% for value in product.options_with_values[0].values %}
+                    <div
+                      class="custom-product-detail__purity-option {% if value == current_variant.option1 %}custom-product-detail__purity-option--selected{% endif %}"
+                      data-value="{{ value | escape }}"
+                      role="button"
+                      tabindex="0"
+                    >
+                      {{ value }}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="custom-product-detail__divider">&nbsp;</div>
+            {% endif %}
+
+            {%- comment -%} Option 2: Metal Type with Color Swatches {%- endcomment -%}
+            {% if product.options_with_values[1] %}
+              {% assign option2_name = product.options_with_values[1].name %}
+              <div class="custom-product-detail__option-group">
+                <p class="custom-product-detail__option-label" data-option-label="2">
+                  {{ option2_name }} : <span data-selected-value="2">{{ current_variant.option2 }}</span>
+                </p>
+                <div class="custom-product-detail__metal-options" data-option-index="2">
+                  {% for value in product.options_with_values[1].values %}
+                    {%- comment -%} Map metal type to hardcoded image {%- endcomment -%}
+                    {% assign metal_image = '' %}
+                    {% case value %}
+                      {% when 'Yellow Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-yellow-gold.png' %}
+                      {% when 'Rose Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-rose-gold.png' %}
+                      {% when 'White Gold' %}
+                        {% assign metal_image = 'custom-product-detail/image/image-white-gold.png' %}
+                    {% endcase %}
+
+                    <div
+                      class="custom-product-detail__metal-option {% if value == current_variant.option2 %}custom-product-detail__metal-option--selected{% endif %}"
+                      data-value="{{ value | escape }}"
+                      role="button"
+                      tabindex="0"
+                    >
+                      {% if metal_image != blank %}
+                        <img
+                          src="{{ metal_image | asset_url }}"
+                          alt="{{ value }}"
+                          class="custom-product-detail__metal-swatch"
+                        >
+                      {% else %}
+                        <span class="custom-product-detail__metal-option-text">{{ value }}</span>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="custom-product-detail__divider">&nbsp;</div>
+            {% endif %}
+
+            {%- comment -%} Option 3: Size (with Size Guide) - Dropdown {%- endcomment -%}
+            {% if product.options_with_values[2] %}
+              {% assign option3_name = product.options_with_values[2].name %}
+              <div class="custom-product-detail__size-selection">
+                <div class="custom-product-detail__size-group">
+                  <p class="custom-product-detail__option-label" data-option-label="3">
+                    {{ option3_name }} : <span data-selected-value="3">{{ current_variant.option3 }}</span>
+                  </p>
+                  <div class="custom-product-detail__size-dropdown" data-option-index="3">
+                    <button
+                      type="button"
+                      class="custom-product-detail__size-dropdown-btn"
+                      data-size-dropdown-btn
+                    >
+                      <span data-size-dropdown-value>{{ current_variant.option3 }}</span>
+                      <span class="custom-product-detail__size-dropdown-arrow"></span>
+                    </button>
+                    <div class="custom-product-detail__size-dropdown-menu" data-size-dropdown-menu>
+                      {% for value in product.options_with_values[2].values %}
+                        <div
+                          class="custom-product-detail__size-option {% if value == current_variant.option3 %}custom-product-detail__size-option--selected{% endif %}"
+                          data-value="{{ value | escape }}"
+                          role="button"
+                          tabindex="0"
+                        >
+                          {{ value }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="custom-product-detail__size-guide-link" data-size-guide-trigger>Size Guide</a>
+              </div>
+
+              <div class="custom-product-detail__divider">&nbsp;</div>
+            {% endif %}
+
+            {%- comment -%} Quantity Selector {%- endcomment -%}
+            <div class="custom-product-detail__quantity-group">
+              <p class="custom-product-detail__option-label">Quantity</p>
+              <div class="custom-product-detail__quantity-selector">
+                <button
+                  type="button"
+                  class="custom-product-detail__quantity-btn custom-product-detail__quantity-btn--minus"
+                  data-quantity-decrease
+                  aria-label="Decrease quantity"
+                >
+                  -
+                </button>
+                <input
+                  type="text"
+                  class="custom-product-detail__quantity-display"
+                  value="1"
+                  data-quantity-display
+                  readonly
+                  aria-label="Quantity"
+                >
+                <button
+                  type="button"
+                  class="custom-product-detail__quantity-btn custom-product-detail__quantity-btn--plus"
+                  data-quantity-increase
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div class="custom-product-detail__divider">&nbsp;</div>
+          {% endif %}
+        </div>
+
+        {%- comment -%} Variant availability message {%- endcomment -%}
+        <div class="custom-product-detail__availability" data-availability-message>
+          {% unless current_variant.available %}
+            <p class="custom-product-detail__availability-text custom-product-detail__availability-text--unavailable">
+              This variant is currently unavailable
+            </p>
+          {% endunless %}
+        </div>
+      </form>
+
+      <!-- Product Information Accordion -->
+      <div class="custom-product-detail__information">
+        <div class="custom-product-detail__accordion">
+          {%- comment -%} 1. HARDCODED: Product Details (Three Cards) {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item custom-product-detail__accordion-item--active">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Product Details</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--cards">
+                <div class="custom-product-detail__detail-cards">
+                  {%- comment -%} Card 1: Total Weight {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-star-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top">Total Weight</p>
+                    <p class="custom-product-detail__detail-value" data-gross-weight>
+                      {% if current_variant.metafields.custom.gross_weight != blank %}
+                        {{ current_variant.metafields.custom.gross_weight }} Grams
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Gross Weight</p>
+                  </div>
+
+                  {%- comment -%} Card 2: Metal Details {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-pen-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top" data-metal-type-label>
+                      {% if current_variant.option1 and current_variant.option2 %}
+                        {{ current_variant.option1 }}
+                        {{ current_variant.option2 }}
+                      {% else %}
+                        Metal Details
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-value" data-metal-weight>
+                      {% if current_variant.metafields.custom.metal_weight != blank %}
+                        {{ current_variant.metafields.custom.metal_weight }} Grams
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Metal Weight</p>
+                  </div>
+
+                  {%- comment -%} Card 3: Diamond Details {%- endcomment -%}
+                  <div class="custom-product-detail__detail-card">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-hammer-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__detail-icon"
+                    >
+                    <p class="custom-product-detail__detail-label-top">LAB GROWN DIAMONDS - EF/ VVS,VVS</p>
+                    <p class="custom-product-detail__detail-value" data-diamond-weight>
+                      {% if current_variant.metafields.custom.diamond_in_ct != blank %}
+                        {{ current_variant.metafields.custom.diamond_in_ct }} Ct.
+                      {% else %}
+                        -
+                      {% endif %}
+                    </p>
+                    <p class="custom-product-detail__detail-label-bottom">Approx. Diamond Weight</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 1. HARDCODED: Price Breakup {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Price Breakup</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body">
+                <div class="custom-product-detail__spec-row" data-price-row="metal">
+                  <span class="custom-product-detail__spec-label" data-metal-label>
+                    {% if current_variant.option1 and current_variant.option2 %}
+                      {{ current_variant.option1 }}
+                      {{ current_variant.option2 }}
+                      {% if current_variant.metafields.custom.metal_weight %}
+                        ({{ current_variant.metafields.custom.metal_weight }}g)
+                      {% endif %}
+                    {% endif %}
+                  </span>
+                  <span class="custom-product-detail__spec-value" data-metal-charges>
+                    {% if current_variant.metafields.custom.metal_charges %}
+                      ₹{{ current_variant.metafields.custom.metal_charges }}
+                    {% endif %}
+                  </span>
+                </div>
+
+                <div class="custom-product-detail__spec-row" data-price-row="diamond">
+                  <span class="custom-product-detail__spec-label" data-diamond-label>
+                    {% if current_variant.metafields.custom.diamond_in_ct %}
+                      Diamonds ({{ current_variant.metafields.custom.diamond_in_ct }}ct)
+                    {% else %}
+                      Diamonds
+                    {% endif %}
+                  </span>
+                  <span class="custom-product-detail__spec-value" data-diamond-charges>
+                    {% if current_variant.metafields.custom.diamond_charges %}
+                      ₹{{ current_variant.metafields.custom.diamond_charges }}
+                    {% endif %}
+                  </span>
+                </div>
+
+                <div class="custom-product-detail__spec-row" data-price-row="making">
+                  <span class="custom-product-detail__spec-label">Making Charges</span>
+                  <span class="custom-product-detail__spec-value" data-making-charges>
+                    {% if current_variant.metafields.custom.making_charges %}
+                      ₹{{ current_variant.metafields.custom.making_charges }}
+                    {% endif %}
+                  </span>
+                </div>
+
+                <div class="custom-product-detail__spec-row" data-price-row="gst">
+                  <span class="custom-product-detail__spec-label" data-gst-label>
+                    {% if current_variant.metafields.custom.gst_rate %}
+                      GST ({{ current_variant.metafields.custom.gst_rate }}%)
+                    {% else %}
+                      GST
+                    {% endif %}
+                  </span>
+                  <span class="custom-product-detail__spec-value" data-gst-charges>
+                    {% if current_variant.metafields.custom.gst_charges %}
+                      ₹{{ current_variant.metafields.custom.gst_charges }}
+                    {% endif %}
+                  </span>
+                </div>
+
+                <div
+                  class="custom-product-detail__spec-row custom-product-detail__spec-row--total"
+                  data-price-row="total"
+                >
+                  <span class="custom-product-detail__spec-label">Total</span>
+                  <span class="custom-product-detail__spec-value" data-total-price>
+                    ₹{{ current_variant.price | money_without_currency }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 2. Product Description Accordion {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Product Description</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
+                {{ product.description }}
+
+                <!-- Feature Cards (Hardcoded with Icons) -->
+                <div class="custom-product-detail__features">
+                  {%- comment -%} Card 1: Sparkle That Lasts {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-star-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Sparkle That Lasts</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Brilliance that never fades crafted with sourced diamonds designed to shine for a lifetime.
+                    </p>
+                  </div>
+
+                  {%- comment -%} Card 2: Crafted With Care {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-pen-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Crafted With Care</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Every stone is carefully selected and set by skilled artisans to highlight its natural beauty.
+                    </p>
+                  </div>
+
+                  {%- comment -%} Card 3: Make It Yours {%- endcomment -%}
+                  <div class="custom-product-detail__feature">
+                    <img
+                      src="{{ 'custom-product-detail/icons/magic-hammer-icon.svg' | asset_url }}"
+                      alt=""
+                      class="custom-product-detail__feature-icon"
+                    >
+                    <h3 class="custom-product-detail__feature-title">Make It Yours</h3>
+                    <p class="custom-product-detail__feature-text">
+                      Choose your diamond shape, setting, and metal to create a one-of-a-kind jewel.
+                      <a href="#" class="custom-product-detail__feature-link">Start Customising</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 3. HARDCODED: Item Details and Specifications {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Item Details and Specifications</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body">
+                {% if product.metafields.custom.sku != blank %}
+                  <div class="custom-product-detail__spec-row">
+                    <span class="custom-product-detail__spec-label">SKU</span>
+                    <span class="custom-product-detail__spec-value">
+                      {{ product.metafields.custom.sku }}
+                    </span>
+                  </div>
+                {% endif %}
+
+                {% if product.metafields.custom.style != blank %}
+                  <div class="custom-product-detail__spec-row">
+                    <span class="custom-product-detail__spec-label">Style</span>
+                    <span class="custom-product-detail__spec-value">
+                      {{ product.metafields.custom.style }}
+                    </span>
+                  </div>
+                {% endif %}
+
+                {% if product.metafields.custom.metal_type != blank %}
+                  <div class="custom-product-detail__spec-row">
+                    <span class="custom-product-detail__spec-label">Metal Type</span>
+                    <span class="custom-product-detail__spec-value">
+                      {{ product.metafields.custom.metal_type }}
+                    </span>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 3. THEME BLOCKS: Custom Accordions {%- endcomment -%}
+          {% for block in section.blocks %}
+            {% if block.type == 'accordion' %}
+              <div class="custom-product-detail__accordion-item" {{ block.shopify_attributes }}>
+                <div class="custom-product-detail__accordion-header">
+                  <h3 class="custom-product-detail__accordion-title">{{ block.settings.title }}</h3>
+                  <svg
+                    class="custom-product-detail__accordion-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="custom-product-detail__accordion-content">
+                  <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
+                    {{ block.settings.content }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {%- comment -%} 4. Certification of Authenticity {%- endcomment -%}
+          {% if product.metafields.custom.certifications_of_authenticity != blank %}
+            <div class="custom-product-detail__accordion-item">
+              <div class="custom-product-detail__accordion-header">
+                <h3 class="custom-product-detail__accordion-title">Certification of Authenticity</h3>
+                <svg
+                  class="custom-product-detail__accordion-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="custom-product-detail__accordion-content">
+                <div class="custom-product-detail__accordion-body">
+                  <p style="margin: 0;">{{ product.metafields.custom.certifications_of_authenticity }}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {%- comment -%} 5. Book your Appointment {%- endcomment -%}
+          <div class="custom-product-detail__accordion-item">
+            <div class="custom-product-detail__accordion-header">
+              <h3 class="custom-product-detail__accordion-title">Book your Appointment</h3>
+              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="custom-product-detail__accordion-content">
+              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--appointment">
+                <h4 class="custom-product-detail__appointment-heading">Book an Appointment Today</h4>
+                <p class="custom-product-detail__appointment-text">
+                  Discover a design you love? Schedule a visit to our boutique and experience the brilliance of our
+                  jewellery firsthand. Simply fill out a quick form, and we'll be delighted to welcome you in-store for
+                  a personalized viewing. Let your online inspiration turn into a sparkling, real-life moment – book
+                  your appointment today.
+                </p>
+                {% if section.settings.appointment_url != blank %}
+                  <a href="{{ section.settings.appointment_url }}" class="custom-product-detail__appointment-btn">
+                    Book Now
+                  </a>
+                {% else %}
+                  <button type="button" class="custom-product-detail__appointment-btn" disabled>Book Now</button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          {%- comment -%} 6. Craft and Care Instructions {%- endcomment -%}
+          {% if product.metafields.custom.craft_and_care_instructions != blank %}
+            <div class="custom-product-detail__accordion-item">
+              <div class="custom-product-detail__accordion-header">
+                <h3 class="custom-product-detail__accordion-title">Craft and Care Instructions</h3>
+                <svg
+                  class="custom-product-detail__accordion-icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="custom-product-detail__accordion-content">
+                <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--rich-text">
+                  {{ product.metafields.custom.craft_and_care_instructions | metafield_tag }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Footer with Trust Badges and CTA -->
+  {% if section.settings.enable_sticky_footer %}
+    <div class="custom-product-detail__footer">
+      <div class="custom-product-detail__footer-content">
+        <!-- Trust Badges -->
+        <div class="custom-product-detail__trust-badges">
+          {% for block in section.blocks %}
+            {% if block.type == 'trust_badge' %}
+              <div class="custom-product-detail__trust-badge" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != blank %}
+                  <img
+                    class="custom-product-detail__trust-icon"
+                    src="{{ block.settings.icon | image_url: width: 48 }}"
+                    alt="{{ block.settings.text | escape }}"
+                    loading="lazy"
+                  >
+                {% endif %}
+                <span class="custom-product-detail__trust-text">
+                  {{ block.settings.text }}
+                </span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- CTA Section -->
+        <div class="custom-product-detail__cta-section">
+          <div class="custom-product-detail__cta-buttons">
+            <button
+              type="submit"
+              form="{{ product_form_id }}"
+              class="custom-product-detail__cta-btn custom-product-detail__cta-btn--secondary"
+              data-add-to-cart
+              {% unless current_variant.available %}
+                disabled
+              {% endunless %}
+            >
+              {% if current_variant.available %}
+                Add to Bag
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+            <button
+              type="button"
+              class="custom-product-detail__cta-btn custom-product-detail__cta-btn--primary"
+              data-buy-now
+              {% unless current_variant.available %}
+                disabled
+              {% endunless %}
+            >
+              Buy Now
+            </button>
+          </div>
+          {% if section.settings.footer_legal_text != blank %}
+            <p class="custom-product-detail__footer-legal">
+              {{ section.settings.footer_legal_text }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Image Modal -->
+  <div class="custom-product-detail__modal" id="imageModal-{{ section.id }}">
+    <span class="custom-product-detail__modal-close">&times;</span>
+    <img class="custom-product-detail__modal-image" id="modalImage-{{ section.id }}" src="" alt="Product image">
+  </div>
+</section>
+
+{%- comment -%} Size Guide Modal {%- endcomment -%}
+{%- comment -%} {% render 'size-guide-modal' %} {%- endcomment -%}
+
+{%- comment -%} Product JSON Data for JavaScript {%- endcomment -%}
+<script>
+  try {
+    window.productData = window.productData || {};
+    window.productData['product-{{ section.id }}'] = {
+      id: {{ product.id | json }},
+      title: {{ product.title | json }},
+      handle: {{ product.handle | json }},
+      variants: [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id | json }},
+            "title": {{ variant.title | json }},
+            "option1": {{ variant.option1 | default: null | json }},
+            "option2": {{ variant.option2 | default: null | json }},
+            "option3": {{ variant.option3 | default: null | json }},
+            "price": {{ variant.price | default: 0 | json }},
+            "available": {{ variant.available | default: false | json }},
+            "featured_image": {{ variant.featured_image | json }},
+            "metafields": {
+              "metal_weight": {{ variant.metafields.custom.metal_weight | default: null | json }},
+              "metal_charges": {{ variant.metafields.custom.metal_charges | default: null | json }},
+              "diamond_in_ct": {{ variant.metafields.custom.diamond_in_ct | default: null | json }},
+              "diamond_charges": {{ variant.metafields.custom.diamond_charges | default: null | json }},
+              "making_charges": {{ variant.metafields.custom.making_charges | default: null | json }},
+              "gst_rate": {{ variant.metafields.custom.gst_rate | default: null | json }},
+              "gst_charges": {{ variant.metafields.custom.gst_charges | default: null | json }},
+              "color_swatch": {{ variant.metafields.custom.color_swatch | default: null | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+      options: {{ product.options_with_values | json }},
+      available: {{ product.available | json }},
+      images: {{ product.images | json }},
+      featured_image: {{ product.featured_image | json }},
+      selected_variant_id: {{ current_variant.id | json }}
+    };
+    console.log('✅ Product data loaded successfully:', window.productData['product-{{ section.id }}']);
+  } catch (error) {
+    console.error('❌ Error loading product data:', error);
+    console.error('  Section ID: {{ section.id }}');
+    console.error('  Product ID: {{ product.id }}');
+  }
+</script>
+
+<script src="{{ 'section-custom-product-detail.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Product Detail Page",
+  "class": "section-product-detail",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_footer",
+      "label": "Enable Sticky Footer",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "footer_legal_text",
+      "label": "Footer Legal Text",
+      "default": "*Seamless delivery across India and the US, bringing luxury to your doorstep."
+    },
+    {
+      "type": "url",
+      "id": "appointment_url",
+      "label": "Appointment Booking URL",
+      "info": "URL for the Book your Appointment button"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Feature Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Feature Description",
+          "default": "Feature description text goes here."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link Text (optional)",
+          "default": "Learn More"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Badge Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "Trust Badge"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion Title",
+          "default": "Accordion Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion Content",
+          "default": "<p>Accordion content goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Detail Page",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Sparkle That Lasts",
+            "description": "Brilliance that never fades crafted with sourced diamonds designed to shine for a lifetime."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Crafted With Care",
+            "description": "Every stone is carefully selected and set by skilled artisans to highlight its natural beauty."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Make It Yours",
+            "description": "Choose your diamond shape, setting, and metal to create a one-of-a-kind jewel.",
+            "link_text": "Start Customising"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Certified Brilliance"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Free Shipping"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Free Return"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "Timeless Assurance"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
