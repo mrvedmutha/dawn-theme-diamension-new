@@ -1,0 +1,615 @@
+/* =============================================================================
+   Product Collection Diamension - Base Styles
+   Desktop-first approach (1440px base)
+   ============================================================================= */
+
+/* =============================================================================
+   Wrapper (Full-width background)
+   ============================================================================= */
+.custom-section-product-collection-diamension {
+  background-color: #fffaf5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+/* =============================================================================
+   Header Section (Breadcrumb + Title + Hero)
+   ============================================================================= */
+.custom-section-product-collection-diamension__header-section {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+/* =============================================================================
+   Breadcrumb
+   ============================================================================= */
+.custom-section-product-collection-diamension__breadcrumb {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 0 50px;
+}
+
+.custom-section-product-collection-diamension__breadcrumb-link,
+.custom-section-product-collection-diamension__breadcrumb-current {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.custom-section-product-collection-diamension__breadcrumb-link:hover {
+  opacity: 0.8;
+}
+
+.custom-section-product-collection-diamension__breadcrumb-separator {
+  display: flex;
+  align-items: center;
+  height: 19px;
+  transform: rotate(90deg);
+}
+
+/* =============================================================================
+   Title Row (Title + Filter/Sort)
+   ============================================================================= */
+.custom-section-product-collection-diamension__title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.custom-section-product-collection-diamension__title-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 392px;
+}
+
+.custom-section-product-collection-diamension__title {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+}
+
+.custom-section-product-collection-diamension__description {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  color: #183754;
+  line-height: 120%;
+  margin: 0;
+}
+
+.custom-section-product-collection-diamension__controls {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.custom-section-product-collection-diamension__filter-btn,
+.custom-section-product-collection-diamension__sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+}
+
+.custom-section-product-collection-diamension__filter-btn:hover,
+.custom-section-product-collection-diamension__sort-btn:hover {
+  opacity: 0.8;
+}
+
+/* =============================================================================
+   Hero Section (Full-width)
+   ============================================================================= */
+.custom-section-product-collection-diamension__hero {
+  width: 100%;
+  height: 640px;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-section-product-collection-diamension__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* =============================================================================
+   Products Section
+   ============================================================================= */
+.custom-section-product-collection-diamension__products-section {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* =============================================================================
+   Product Grid
+   ============================================================================= */
+.custom-section-product-collection-diamension__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 0 10px;
+}
+
+/* =============================================================================
+   Product Card
+   ============================================================================= */
+.product-card-collection-diamension {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: clip;
+  min-width: 0;
+}
+
+.product-card-collection-diamension__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card-collection-diamension__image-wrapper {
+  width: 100%;
+  height: 500px;
+  background: #f0efea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: clip;
+  position: relative;
+}
+
+.product-card-collection-diamension__image {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.product-card-collection-diamension__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #f0efea;
+}
+
+.product-card-collection-diamension__info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-card-collection-diamension__title {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card-collection-diamension__price {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #3e6282;
+  line-height: normal;
+  margin: 0;
+}
+
+/* Wishlist Button */
+.product-card-collection-diamension__wishlist {
+  position: absolute;
+  top: 24px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.product-card-collection-diamension__wishlist:hover {
+  opacity: 0.8;
+}
+
+.product-card-collection-diamension__wishlist.is-active {
+  background: #fffaf5;
+}
+
+.product-card-collection-diamension__wishlist-path {
+  fill: none;
+  stroke: #183754;
+}
+
+/* New Arrival Badge */
+.product-card-collection-diamension__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #fffaf5;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.product-card-collection-diamension__badge p {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* =============================================================================
+   Image Card (Promotional)
+   ============================================================================= */
+.image-card-collection-diamension {
+  grid-column: span 2;
+  height: 560px;
+  position: relative;
+  overflow: clip;
+}
+
+/* Show/hide image cards based on screen size */
+.image-card-desktop-only {
+  display: block;
+}
+
+.image-card-mobile-only {
+  display: none;
+}
+
+.image-card-collection-diamension__media {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.image-card-collection-diamension__image,
+.image-card-collection-diamension__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.image-card-collection-diamension__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding: 24px 146px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(to bottom, rgba(197, 188, 160, 0) 12.016%, rgba(0, 0, 0, 0.3) 61.954%);
+}
+
+.image-card-collection-diamension__caption {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  line-height: normal;
+  color: #e7e6d4;
+  text-align: center;
+  min-width: 100%;
+  width: min-content;
+}
+
+.image-card-collection-diamension__cta {
+  border: 1px solid #e7e6d4;
+  padding: 10px 60px;
+  background: transparent;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #e7e6d4;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: normal;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.image-card-collection-diamension__cta:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* =============================================================================
+   Load More Section
+   ============================================================================= */
+.custom-section-product-collection-diamension__load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 60px 50px;
+}
+
+.custom-section-product-collection-diamension__progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.custom-section-product-collection-diamension__progress-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  text-align: center;
+  margin: 0;
+}
+
+.custom-section-product-collection-diamension__load-more-btn {
+  padding: 16px 120px;
+  border: 1px solid #183754;
+  background: transparent;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-section-product-collection-diamension__load-more-btn:hover {
+  background: #183754;
+  color: #fffaf5;
+}
+
+.custom-section-product-collection-diamension__load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* =============================================================================
+   Responsive Styles
+   ============================================================================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-section-product-collection-diamension__breadcrumb,
+  .custom-section-product-collection-diamension__title-row {
+    padding: 0 30px;
+  }
+
+  .custom-section-product-collection-diamension__hero {
+    height: 480px;
+  }
+
+  .product-card-collection-diamension__image-wrapper {
+    height: 360px;
+  }
+
+  .product-card-collection-diamension__image {
+    max-width: 280px;
+    max-height: 280px;
+  }
+
+  .product-card-collection-diamension__title {
+    font-size: 16px;
+  }
+
+  .product-card-collection-diamension__price {
+    font-size: 15px;
+  }
+
+  .product-card-collection-diamension__wishlist {
+    width: 36px;
+    height: 36px;
+    top: 16px;
+    right: 10px;
+  }
+
+  .product-card-collection-diamension__badge {
+    top: 10px;
+    left: 10px;
+    padding: 8px;
+  }
+
+  .product-card-collection-diamension__badge p {
+    font-size: 13px;
+  }
+
+  .image-card-collection-diamension {
+    height: 410px;
+  }
+
+  .image-card-collection-diamension__overlay {
+    padding: 20px 60px;
+    gap: 20px;
+  }
+
+  .image-card-collection-diamension__caption {
+    font-size: 15px;
+  }
+
+  .image-card-collection-diamension__cta {
+    padding: 10px 50px;
+    font-size: 15px;
+  }
+
+  .custom-section-product-collection-diamension__load-more {
+    padding: 50px 30px;
+  }
+
+  .custom-section-product-collection-diamension__load-more-btn {
+    padding: 14px 100px;
+    font-size: 15px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .custom-section-product-collection-diamension__breadcrumb,
+  .custom-section-product-collection-diamension__title-row {
+    padding: 0 20px;
+  }
+
+  .custom-section-product-collection-diamension__breadcrumb {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .custom-section-product-collection-diamension__breadcrumb-link,
+  .custom-section-product-collection-diamension__breadcrumb-current {
+    font-size: 14px;
+  }
+
+  .custom-section-product-collection-diamension__title-row {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .custom-section-product-collection-diamension__title {
+    font-size: 24px;
+  }
+
+  .custom-section-product-collection-diamension__description {
+    font-size: 14px;
+  }
+
+  .custom-section-product-collection-diamension__controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .custom-section-product-collection-diamension__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 8px;
+    padding: 0 8px;
+  }
+
+  .product-card-collection-diamension__image-wrapper {
+    height: 350px;
+  }
+
+  .product-card-collection-diamension__image {
+    width: 300px;
+    height: 300px;
+  }
+
+  .product-card-collection-diamension__title {
+    font-size: 16px;
+  }
+
+  .product-card-collection-diamension__price {
+    font-size: 14px;
+  }
+
+  .image-card-collection-diamension {
+    height: 400px;
+  }
+
+  .image-card-collection-diamension__overlay {
+    padding: 16px 40px;
+    gap: 16px;
+  }
+
+  .image-card-collection-diamension__caption {
+    font-size: 14px;
+  }
+
+  .image-card-collection-diamension__cta {
+    padding: 8px 40px;
+    font-size: 14px;
+  }
+
+  .custom-section-product-collection-diamension__load-more {
+    padding: 40px 20px;
+  }
+
+  .custom-section-product-collection-diamension__load-more-btn {
+    padding: 12px 60px;
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 479px) {
+  .custom-section-product-collection-diamension__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .custom-section-product-collection-diamension__title {
+    font-size: 20px;
+  }
+
+  .product-card-collection-diamension__image-wrapper {
+    height: 280px;
+  }
+
+  .product-card-collection-diamension__image {
+    width: 250px;
+    height: 250px;
+  }
+
+  .image-card-collection-diamension {
+    height: 330px;
+  }
+
+  .image-card-collection-diamension__overlay {
+    padding: 12px 20px;
+  }
+
+  .image-card-collection-diamension__caption {
+    font-size: 12px;
+  }
+
+  .image-card-collection-diamension__cta {
+    padding: 8px 30px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,219 @@
+{% comment %}
+  Section: Product Collection Diamension
+  Purpose: Custom collection page with progressive loading and promotional image cards
+  Author: Wings Design Team
+  Version: 1.0
+{% endcomment %}
+
+{{ 'section-product-collection-diamension.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign breadcrumb_menu = section.settings.breadcrumb_menu
+  assign products_per_page = section.settings.products_per_page | default: 20
+  assign show_filter = section.settings.show_filter_button
+  assign show_sort = section.settings.show_sort_button
+  assign enable_ajax = section.settings.enable_ajax_loading
+
+  assign hero_image = collection.metafields.custom.collection_hero_image
+  assign hero_caption = collection.metafields.custom.collection_caption
+  assign first_image_card = collection.metafields.custom.collection_first_image.value
+  assign second_image_card = collection.metafields.custom.collection_second_image.value
+
+  assign total_products = collection.products_count
+  assign has_enough_for_images = false
+  if total_products >= 10
+    assign has_enough_for_images = true
+  endif
+%}
+
+<div class="custom-section-product-collection-diamension" data-section-id="{{ section.id }}">
+  {% comment %} Header section with breadcrumb, title, and hero {% endcomment %}
+  <div class="custom-section-product-collection-diamension__header-section">
+    {% comment %} Breadcrumb {% endcomment %}
+    <nav class="custom-section-product-collection-diamension__breadcrumb" aria-label="Breadcrumb">
+      {% if breadcrumb_menu and linklists[breadcrumb_menu] %}
+        {% for link in linklists[breadcrumb_menu].links %}
+          <a href="{{ link.url }}" class="custom-section-product-collection-diamension__breadcrumb-link">
+            {{ link.title }}
+          </a>
+          {% unless forloop.last %}
+            <span class="custom-section-product-collection-diamension__breadcrumb-separator">
+              <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
+              </svg>
+            </span>
+          {% endunless %}
+        {% endfor %}
+        <span class="custom-section-product-collection-diamension__breadcrumb-separator">
+          <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
+          </svg>
+        </span>
+      {% endif %}
+      <span class="custom-section-product-collection-diamension__breadcrumb-current">
+        {{ collection.title }}
+      </span>
+    </nav>
+
+    {% comment %} Title + Filter/Sort {% endcomment %}
+    <div class="custom-section-product-collection-diamension__title-row">
+      <div class="custom-section-product-collection-diamension__title-wrapper">
+        <h1 class="custom-section-product-collection-diamension__title">{{ collection.title | upcase }}</h1>
+        {% if hero_caption != blank %}
+          <div class="custom-section-product-collection-diamension__description">
+            {{ hero_caption }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="custom-section-product-collection-diamension__controls">
+        {% if show_filter %}
+          <button
+            class="custom-section-product-collection-diamension__filter-btn"
+            type="button"
+            aria-label="Filter products"
+          >
+            <img
+              src="{{ 'custom-product-collection/icons/filter-icon.svg' | asset_url }}"
+              alt=""
+              width="24"
+              height="24"
+            >
+            <span>Filter</span>
+          </button>
+        {% endif %}
+
+        {% if show_sort %}
+          <button
+            class="custom-section-product-collection-diamension__sort-btn"
+            type="button"
+            aria-label="Sort products"
+          >
+            <img src="{{ 'custom-product-collection/icons/sort-icon.svg' | asset_url }}" alt="" width="24" height="24">
+            <span>Sort</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    {% comment %} Hero image (full-width) {% endcomment %}
+    {% if hero_image != blank %}
+      <div class="custom-section-product-collection-diamension__hero">
+        <img
+          src="{{ hero_image | image_url: width: 1440 }}"
+          srcset="
+            {{ hero_image | image_url: width: 768 }} 768w,
+            {{ hero_image | image_url: width: 1024 }} 1024w,
+            {{ hero_image | image_url: width: 1440 }} 1440w,
+            {{ hero_image | image_url: width: 1920 }} 1920w
+          "
+          sizes="100vw"
+          alt="{{ collection.title | escape }}"
+          loading="eager"
+          class="custom-section-product-collection-diamension__hero-image"
+        >
+      </div>
+    {% endif %}
+  </div>
+
+  {% comment %} Products section {% endcomment %}
+  <div class="custom-section-product-collection-diamension__products-section">
+    {% paginate collection.products by products_per_page %}
+      <div class="custom-section-product-collection-diamension__grid" data-product-grid>
+        {% for product in collection.products %}
+          {% assign index = forloop.index %}
+
+          {% comment %} Render product card {% endcomment %}
+          {% render 'product-card-collection-diamension', product: product %}
+
+          {% comment %} First image card after product 10 {% endcomment %}
+          {% if index == 10 and has_enough_for_images and first_image_card %}
+            {% render 'image-card-collection-diamension', image_card: first_image_card %}
+          {% endif %}
+
+          {% comment %} Second image card after product 18 {% endcomment %}
+          {% if index == 18 and has_enough_for_images and second_image_card %}
+            {% render 'image-card-collection-diamension', image_card: second_image_card %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% comment %} Load more section {% endcomment %}
+      {% if paginate.pages > 1 %}
+        <div class="custom-section-product-collection-diamension__load-more">
+          <div class="custom-section-product-collection-diamension__progress">
+            <p class="custom-section-product-collection-diamension__progress-text" data-progress-text>
+              Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of
+              {{ paginate.items }} products
+            </p>
+            <div class="custom-section-product-collection-diamension__progress-line">
+              <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="0.5" x2="110" y2="0.5" stroke="#183754"/>
+              </svg>
+            </div>
+          </div>
+
+          {% unless paginate.next == null %}
+            <button
+              class="custom-section-product-collection-diamension__load-more-btn"
+              data-load-more
+              data-next-url="{{ paginate.next.url }}"
+            >
+              LOAD MORE
+            </button>
+          {% endunless %}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>
+
+<script src="{{ 'section-product-collection-diamension.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Product Collection Custom",
+  "class": "section-collection-diamension",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "breadcrumb_menu",
+      "label": "Breadcrumb Menu",
+      "info": "Select menu for breadcrumb navigation"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products Per Page",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_button",
+      "label": "Show Filter Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_button",
+      "label": "Show Sort Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ajax_loading",
+      "label": "Enable AJAX Loading",
+      "default": true,
+      "info": "Load more products without page refresh"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Collection Diamension"
+    }
+  ]
+}
+{% endschema %}
