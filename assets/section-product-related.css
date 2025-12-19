@@ -261,7 +261,7 @@
   top: 50%;
   transform: translateY(-50%);
   height: 100vh;
-  max-height: 500px;
+  max-height: 428px;
   background: linear-gradient(90deg, rgba(128, 128, 128, 0.15) 0%, rgba(128, 128, 128, 0) 100%);
   opacity: 0;
   transition: opacity var(--related-transition-default);
@@ -344,7 +344,7 @@
 
   .custom-section-related-products__arrow::before {
     width: 120px;
-    max-height: 400px;
+    max-height: 375px;
   }
 
   .custom-section-related-products__arrow svg {
