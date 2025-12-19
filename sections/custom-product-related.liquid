@@ -1,0 +1,185 @@
+{{ 'section-product-related.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} Replicate Shopify's related-products structure with custom styling {%- endcomment -%}
+
+<div class="custom-section-related-products-wrapper">
+  <product-recommendations
+    class="custom-section-related-products-container"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+  >
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      {%- comment -%} Container - Max-width 1440px, centered {%- endcomment -%}
+      <div class="custom-section-related-products">
+        {%- comment -%} Section Heading {%- endcomment -%}
+        {% if section.settings.heading != blank %}
+          <h2 class="custom-section-related-products__title">
+            {{ section.settings.heading }}
+          </h2>
+        {% endif %}
+
+        {%- comment -%} Carousel Container {%- endcomment -%}
+        <div class="custom-section-related-products__carousel-container">
+          {%- comment -%} Left Arrow {%- endcomment -%}
+          <button
+            class="custom-section-related-products__arrow custom-section-related-products__arrow--left is-hidden"
+            data-carousel-arrow="left"
+            aria-label="Previous products"
+          >
+            {%- comment -%} Left pointing arrow {%- endcomment -%}
+            <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.20039 19.9995C7.20039 19.2995 7.47039 18.5995 8.00039 18.0695L14.5204 11.5495C14.8104 11.2595 15.2904 11.2595 15.5804 11.5495C15.8704 11.8395 15.8704 12.3195 15.5804 12.6095L9.06039 19.1295C8.58039 19.6095 8.58039 20.3895 9.06039 20.8695L15.5804 27.3895C15.8704 27.6795 15.8704 28.1595 15.5804 28.4495C15.2904 28.7395 14.8104 28.7395 14.5204 28.4495L8.00039 21.9295C7.47039 21.3995 7.20039 20.6995 7.20039 19.9995Z" fill="#183754"/>
+            </svg>
+          </button>
+
+          {%- comment -%} Product Cards Wrapper {%- endcomment -%}
+          <div
+            class="custom-section-related-products__cards-wrapper"
+            data-carousel-wrapper
+          >
+            {%- comment -%} Loop through recommendations.products (same as Shopify) {%- endcomment -%}
+            {%- for product in recommendations.products -%}
+              <div class="custom-section-related-products__card">
+                {%- comment -%} Product Link {%- endcomment -%}
+                <a href="{{ product.url }}" class="custom-section-related-products__card-link">
+                  {%- comment -%} Image Wrapper {%- endcomment -%}
+                  <div class="custom-section-related-products__image-wrapper">
+                    {%- comment -%} Product Image {%- endcomment -%}
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 500 }}"
+                        srcset="
+                          {{ product.featured_image | image_url: width: 250 }} 250w,
+                          {{ product.featured_image | image_url: width: 500 }} 500w
+                        "
+                        sizes="260px"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        class="custom-section-related-products__image"
+                        loading="lazy"
+                        width="250"
+                        height="250"
+                      >
+                    {% else %}
+                      {%- comment -%} Placeholder image {%- endcomment -%}
+                      {{
+                        'product-1'
+                        | placeholder_svg_tag: 'custom-section-related-products__image custom-section-related-products__image--placeholder'
+                      }}
+                    {% endif %}
+
+                    {%- comment -%} Gradient Overlay (for hover effect) {%- endcomment -%}
+                    <div class="custom-section-related-products__gradient-overlay"></div>
+                  </div>
+
+                  {%- comment -%} Product Info {%- endcomment -%}
+                  <div class="custom-section-related-products__info">
+                    {%- comment -%} Product Name {%- endcomment -%}
+                    <h3 class="custom-section-related-products__product-name">
+                      {{ product.title }}
+                    </h3>
+
+                    {%- comment -%} Product Price {%- endcomment -%}
+                    <div class="custom-section-related-products__product-price">
+                      {%- liquid
+                        # Check if product has price range
+                        assign has_price_range = false
+                        if product.price_varies
+                          assign has_price_range = true
+                        endif
+                      -%}
+
+                      {% if has_price_range %}
+                        From {{ product.price_min | money }}
+                      {% else %}
+                        {{ product.price | money }}
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+
+                {%- comment -%} Wishlist Button {%- endcomment -%}
+                {% if section.settings.enable_wishlist %}
+                  <button
+                    class="custom-section-related-products__wishlist-btn"
+                    data-wishlist-button
+                    data-product-id="{{ product.id }}"
+                    aria-label="Add {{ product.title | escape }} to wishlist"
+                    type="button"
+                  >
+                    {%- comment -%} Heart SVG - 24x24px {%- endcomment -%}
+                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clip-path="url(#clip0_related_{{ product.id }})">
+                        <mask id="mask0_related_{{ product.id }}" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="19" height="19">
+                          <path d="M18.7554 0H0V18.7554H18.7554V0Z" fill="white"/>
+                        </mask>
+                        <g mask="url(#mask0_related_{{ product.id }})">
+                          <path d="M16.0901 3.88421C16.7778 4.65787 17.192 5.67378 17.192 6.79129C17.192 12.2616 12.128 15.4891 9.86175 16.2706C9.59605 16.3643 9.15842 16.3643 8.89272 16.2706C6.62645 15.4891 1.5625 12.2616 1.5625 6.79129C1.5625 4.37654 3.50837 2.42285 5.90749 2.42285C7.32978 2.42285 8.58795 3.11055 9.37724 4.17335C10.1665 3.11055 11.4325 2.42285 12.847 2.42285" stroke="#183754" stroke-width="1.25036" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_related_{{ product.id }}">
+                          <rect width="18.7554" height="18.7554" fill="white"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                {% endif %}
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- comment -%} Right Arrow {%- endcomment -%}
+          <button
+            class="custom-section-related-products__arrow custom-section-related-products__arrow--right"
+            data-carousel-arrow="right"
+            aria-label="Next products"
+          >
+            {%- comment -%} Right pointing arrow {%- endcomment -%}
+            <svg width="24" height="40" viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.7996 20.0005C16.7996 20.7005 16.5296 21.4005 15.9996 21.9305L9.47965 28.4505C9.18965 28.7405 8.70965 28.7405 8.41965 28.4505C8.12965 28.1605 8.12965 27.6805 8.41965 27.3905L14.9396 20.8705C15.4196 20.3905 15.4196 19.6105 14.9396 19.1305L8.41965 12.6105C8.12965 12.3205 8.12965 11.8405 8.41965 11.5505C8.70965 11.2605 9.18965 11.2605 9.47965 11.5505L15.9996 18.0705C16.5296 18.6005 16.7996 19.3005 16.7996 20.0005Z" fill="#183754"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </product-recommendations>
+</div>
+
+<script src="{{ 'section-product-related.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Related Products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Similar Products"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "label": "Number of Products",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_wishlist",
+      "label": "Enable Wishlist Button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related Products"
+    }
+  ]
+}
+{% endschema %}

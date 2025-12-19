@@ -16,46 +16,72 @@
     <!-- Gallery Wrapper: Thumbnails + Image (Sticky as one unit) -->
     <div class="custom-product-detail__gallery-wrapper">
       <!-- Left Column: Thumbnail Gallery -->
-      <div class="custom-product-detail__thumbnails">
-        {% for image in product.images %}
-          <div
-            class="custom-product-detail__thumbnail {% if forloop.first %}custom-product-detail__thumbnail--active{% endif %}"
-            data-image-index="{{ forloop.index0 }}"
-            data-image-id="{{ image.id }}"
-          >
-            {{ image | image_url: width: 100 | image_tag: loading: 'lazy', alt: image.alt | escape }}
+      <div class="custom-product-detail__thumbnails-container">
+        <!-- Up Arrow -->
+        <button
+          class="custom-product-detail__thumbnail-arrow custom-product-detail__thumbnail-arrow--up"
+          data-thumbnail-arrow="up"
+          aria-label="Scroll thumbnails up"
+          type="button"
+        >
+          <img src="{{ 'custom-product-detail/icons/arrow-down.svg' | asset_url }}" alt="">
+        </button>
+
+        <!-- Viewport (clips overflow) -->
+        <div class="custom-product-detail__thumbnails-viewport">
+          <!-- Thumbnails Wrapper (transforms) -->
+          <div class="custom-product-detail__thumbnails" data-thumbnails-wrapper>
+            {% for image in product.images %}
+              <div
+                class="custom-product-detail__thumbnail {% if forloop.first %}custom-product-detail__thumbnail--active{% endif %}"
+                data-image-index="{{ forloop.index0 }}"
+                data-image-id="{{ image.id }}"
+              >
+                {{ image | image_url: width: 100 | image_tag: loading: 'lazy', alt: image.alt | escape }}
+              </div>
+            {% endfor %}
           </div>
-        {% endfor %}
+        </div>
+
+        <!-- Down Arrow -->
+        <button
+          class="custom-product-detail__thumbnail-arrow custom-product-detail__thumbnail-arrow--down"
+          data-thumbnail-arrow="down"
+          aria-label="Scroll thumbnails down"
+          type="button"
+        >
+          <img src="{{ 'custom-product-detail/icons/arrow-down.svg' | asset_url }}" alt="">
+        </button>
       </div>
 
       <!-- Middle Column: Main Product Image -->
       <div class="custom-product-detail__main-image">
-      <div class="custom-product-detail__image-wrapper">
-        <img
-          id="mainImage-{{ section.id }}"
-          class="custom-product-detail__image"
-          src="{{ product.featured_image | image_url: width: 800 }}"
-          alt="{{ product.title | escape }}"
-          data-main-image
-        >
-
-        <button
-          class="custom-product-detail__wishlist-btn"
-          id="wishlistBtn-{{ section.id }}"
-          type="button"
-          aria-label="Add to wishlist"
-          data-product-id="{{ product.id }}"
-          data-wishlist-btn
-        >
+        <div class="custom-product-detail__image-wrapper">
           <img
-            src="{{ 'custom-product-detail/icons/heart-icon-diamension.svg' | asset_url }}"
-            alt=""
-            width="18"
-            height="18"
+            id="mainImage-{{ section.id }}"
+            class="custom-product-detail__image"
+            src="{{ product.featured_image | image_url: width: 800 }}"
+            alt="{{ product.title | escape }}"
+            data-main-image
           >
-        </button>
+
+          <button
+            class="custom-product-detail__wishlist-btn"
+            id="wishlistBtn-{{ section.id }}"
+            type="button"
+            aria-label="Add to wishlist"
+            data-product-id="{{ product.id }}"
+            data-wishlist-btn
+          >
+            <img
+              src="{{ 'custom-product-detail/icons/heart-icon-diamension.svg' | asset_url }}"
+              alt=""
+              width="18"
+              height="18"
+            >
+          </button>
+        </div>
       </div>
-    </div>
     </div>
 
     <!-- Right Column: Product Information -->

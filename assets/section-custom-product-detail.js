@@ -44,9 +44,13 @@
   function initThumbnailGallery(section, sectionId) {
     const thumbnails = section.querySelectorAll('.custom-product-detail__thumbnail');
     const mainImage = section.querySelector(`#mainImage-${sectionId}`);
+    const thumbnailsWrapper = section.querySelector('[data-thumbnails-wrapper]');
+    const arrowUp = section.querySelector('[data-thumbnail-arrow="up"]');
+    const arrowDown = section.querySelector('[data-thumbnail-arrow="down"]');
 
     if (!thumbnails.length || !mainImage) return;
 
+    // Thumbnail click handler
     thumbnails.forEach((thumbnail, index) => {
       thumbnail.addEventListener('click', function () {
         // Remove active class from all
@@ -69,6 +73,71 @@
         }
       });
     });
+
+    // Initialize thumbnail navigation if more than 6 images
+    if (thumbnails.length > 6 && thumbnailsWrapper && arrowUp && arrowDown) {
+      let currentScrollIndex = 0;
+      const maxVisibleThumbnails = 6;
+      const thumbnailHeight = 40; // Based on Figma: 40px
+      const thumbnailGap = 16; // Based on CSS: var(--cpd-spacing-md)
+      const scrollStep = thumbnailHeight + thumbnailGap;
+
+      // Initially hide arrows or show based on position
+      const updateArrowStates = () => {
+        // Disable up arrow at start
+        if (currentScrollIndex === 0) {
+          arrowUp.disabled = true;
+          arrowUp.style.opacity = '0.3';
+        } else {
+          arrowUp.disabled = false;
+          arrowUp.style.opacity = '1';
+        }
+
+        // Disable down arrow at end
+        const maxScroll = thumbnails.length - maxVisibleThumbnails;
+        if (currentScrollIndex >= maxScroll) {
+          arrowDown.disabled = true;
+          arrowDown.style.opacity = '0.3';
+        } else {
+          arrowDown.disabled = false;
+          arrowDown.style.opacity = '1';
+        }
+      };
+
+      // Scroll up handler
+      arrowUp.addEventListener('click', () => {
+        if (currentScrollIndex > 0) {
+          currentScrollIndex--;
+          const scrollAmount = currentScrollIndex * scrollStep;
+          thumbnailsWrapper.style.transform = `translateY(-${scrollAmount}px)`;
+          thumbnailsWrapper.style.transition = 'transform 0.3s ease';
+          updateArrowStates();
+        }
+      });
+
+      // Scroll down handler
+      arrowDown.addEventListener('click', () => {
+        const maxScroll = thumbnails.length - maxVisibleThumbnails;
+        if (currentScrollIndex < maxScroll) {
+          currentScrollIndex++;
+          const scrollAmount = currentScrollIndex * scrollStep;
+          thumbnailsWrapper.style.transform = `translateY(-${scrollAmount}px)`;
+          thumbnailsWrapper.style.transition = 'transform 0.3s ease';
+          updateArrowStates();
+        }
+      });
+
+      // Initial arrow state
+      updateArrowStates();
+
+      // Show arrows only when needed
+      arrowUp.style.display = 'flex';
+      arrowDown.style.display = 'flex';
+    } else if (arrowUp && arrowDown) {
+      // Hide arrows if 6 or fewer images
+      arrowUp.style.display = 'none';
+      arrowDown.style.display = 'none';
+    }
   }
 
   // ===== 2. IMAGE ZOOM ON HOVER =====
@@ -164,7 +233,7 @@
 
     remove(itemId) {
       const wishlist = this.get();
-      const filtered = wishlist.filter(id => id !== itemId);
+      const filtered = wishlist.filter((id) => id !== itemId);
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtered));
     },
 
@@ -180,7 +249,7 @@
         this.add(itemId);
         return true; // Now liked
       }
-    }
+    },
   };
 
   // GSAP animation for wishlist button
@@ -196,14 +265,14 @@
     timeline.to(button, {
       scale: 0.85,
       duration: 0.1,
-      ease: 'power2.in'
+      ease: 'power2.in',
     });
 
     // Step 2: Spring back with bounce
     timeline.to(button, {
       scale: 1,
       duration: 0.15,
-      ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)'
+      ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
     });
   }
 
@@ -241,7 +310,7 @@
           detail: {
             wishlist: WishlistStorage.get(),
             productId: productId,
-            isLiked: isNowLiked
+            isLiked: isNowLiked,
           },
         })
       );
