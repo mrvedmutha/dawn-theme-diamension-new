@@ -1,0 +1,29 @@
+{{ 'section-diamension-quote.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-diamension-quote">
+  <div class="custom-section-diamension-quote__container">
+    <div class="custom-section-diamension-quote__text">{{ section.settings.quote_text }}</div>
+    <div class="custom-section-diamension-quote__logo">
+      <img src="{{ 'custom-section-diamension-quote/logo/diamension-logo.svg' | asset_url }}" alt="Diamension Logo">
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Diamension Quote",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "quote_text",
+      "label": "Quote Text",
+      "default": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance — a quiet power that speaks volumes.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diamension Quote"
+    }
+  ]
+}
+{% endschema %}
