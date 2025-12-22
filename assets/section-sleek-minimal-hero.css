@@ -1,0 +1,302 @@
+/* =============================================================================
+   Sleek Minimal Hero Section
+   Figma Node: 218:194
+   ============================================================================= */
+
+/* =============================================================================
+   Font Face Declarations
+   ============================================================================= */
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('fonts/Bickham Script Pro/Bickham Script Pro Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================================================
+   Wrapper (Full-width fluid container with background)
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero {
+  width: 100%;
+  background-color: #fffaf5;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   Container (Max-width container with padding)
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =============================================================================
+   Quote Section
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__quote {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  color: #183754;
+  text-align: center;
+  margin: 0 0 100px 0;
+  max-width: 800px;
+}
+
+/* =============================================================================
+   Image Wrapper (Centers the image card)
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* =============================================================================
+   Image Container (Fixed aspect ratio container)
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__image-container {
+  position: relative;
+  width: 706px;
+  max-width: 100%;
+}
+
+/* =============================================================================
+   Hero Image
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 0.786;
+  object-fit: cover;
+}
+
+/* =============================================================================
+   Content Overlay
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__content-overlay {
+  position: absolute;
+  left: 70px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 140px);
+}
+
+/* =============================================================================
+   Heading (Sleek Minimal)
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__heading {
+  font-family: 'Bickham Script Pro', cursive;
+  font-weight: 400;
+  font-size: 100px;
+  line-height: 85.896px;
+  color: #fffaf5;
+  margin: 0 0 10px 0;
+}
+
+/* =============================================================================
+   Description
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  margin: 0 0 32px 0;
+  max-width: 424px;
+}
+
+/* =============================================================================
+   CTA Button
+   ============================================================================= */
+
+.custom-section-sleek-minimal-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 25px;
+  height: 49px;
+  background-color: #ffffff;
+  color: #183754;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  align-self: flex-start;
+}
+
+.custom-section-sleek-minimal-hero__button:hover {
+  opacity: 0.9;
+}
+
+/* =============================================================================
+   Responsive Breakpoints
+   ============================================================================= */
+
+/* Large Desktop (1441px+) - Center content, don't stretch */
+@media (min-width: 1441px) {
+  .custom-section-sleek-minimal-hero__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablet (1024px) */
+@media (max-width: 1024px) {
+  .custom-section-sleek-minimal-hero__container {
+    padding: 80px 30px;
+  }
+
+  .custom-section-sleek-minimal-hero__quote {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 80px;
+  }
+
+  .custom-section-sleek-minimal-hero__image-container {
+    width: 600px;
+  }
+
+  .custom-section-sleek-minimal-hero__content-overlay {
+    left: 60px;
+    bottom: 50px;
+    max-width: calc(100% - 120px);
+  }
+
+  .custom-section-sleek-minimal-hero__heading {
+    font-size: 80px;
+    line-height: 68px;
+  }
+
+  .custom-section-sleek-minimal-hero__description {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 28px;
+  }
+
+  .custom-section-sleek-minimal-hero__button {
+    font-size: 18px;
+    line-height: 1;
+    padding: 8px 20px;
+    height: 44px;
+  }
+}
+
+/* Mobile (767px) */
+@media (max-width: 767px) {
+  .custom-section-sleek-minimal-hero__container {
+    padding: 60px 20px;
+  }
+
+  .custom-section-sleek-minimal-hero__quote {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 60px;
+  }
+
+  .custom-section-sleek-minimal-hero__image-container {
+    width: 100%;
+  }
+
+  .custom-section-sleek-minimal-hero__content-overlay {
+    left: 40px;
+    bottom: 40px;
+    max-width: calc(100% - 80px);
+  }
+
+  .custom-section-sleek-minimal-hero__heading {
+    font-size: 60px;
+    line-height: 52px;
+  }
+
+  .custom-section-sleek-minimal-hero__description {
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+
+  .custom-section-sleek-minimal-hero__button {
+    font-size: 16px;
+    line-height: 1;
+    padding: 8px 18px;
+    height: 40px;
+  }
+}
+
+/* Small Mobile (375px) */
+@media (max-width: 375px) {
+  .custom-section-sleek-minimal-hero__container {
+    padding: 50px 15px;
+  }
+
+  .custom-section-sleek-minimal-hero__quote {
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 50px;
+  }
+
+  .custom-section-sleek-minimal-hero__content-overlay {
+    left: 30px;
+    bottom: 30px;
+    max-width: calc(100% - 60px);
+  }
+
+  .custom-section-sleek-minimal-hero__heading {
+    font-size: 48px;
+    line-height: 42px;
+  }
+
+  .custom-section-sleek-minimal-hero__description {
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 20px;
+  }
+
+  .custom-section-sleek-minimal-hero__button {
+    font-size: 14px;
+    line-height: 1;
+    padding: 6px 16px;
+    height: 36px;
+  }
+}
