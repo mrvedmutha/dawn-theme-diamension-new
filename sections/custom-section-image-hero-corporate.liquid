@@ -1,0 +1,131 @@
+{% comment %}
+  Section: Image Hero - Corporate Comeback
+  Purpose: Full-width hero section with background image and left-aligned overlay content
+  Author: Wings Design Team
+  Version: 1.0
+  Figma Node: 12-9084
+{% endcomment %}
+
+{{ 'section-image-hero-corporate.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.id
+  assign hero_image = section.settings.hero_image
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign button_text = section.settings.button_text
+  assign button_link = section.settings.button_link
+%}
+
+<div class="custom-section-image-hero-corporate" data-section-id="{{ section_id }}">
+  <div class="custom-section-image-hero-corporate__wrapper">
+    {% comment %} Background Image {% endcomment %}
+    {% if hero_image != blank %}
+      <img
+        src="{{ hero_image | image_url: width: 1920 }}"
+        srcset="
+          {{ hero_image | image_url: width: 768 }} 768w,
+          {{ hero_image | image_url: width: 1024 }} 1024w,
+          {{ hero_image | image_url: width: 1440 }} 1440w,
+          {{ hero_image | image_url: width: 1920 }} 1920w
+        "
+        sizes="100vw"
+        alt="{{ heading | default: 'Corporate Comeback' | escape }}"
+        loading="eager"
+        fetchpriority="high"
+        class="custom-section-image-hero-corporate__image"
+      >
+    {% else %}
+      {% comment %} Fallback placeholder if no image {% endcomment %}
+      <div class="custom-section-image-hero-corporate__placeholder"></div>
+    {% endif %}
+
+    {% comment %} Content Overlay {% endcomment %}
+    <div class="custom-section-image-hero-corporate__content">
+      {% comment %} Heading {% endcomment %}
+      {% if heading != blank %}
+        <h1 class="custom-section-image-hero-corporate__heading">
+          {{ heading | escape }}
+        </h1>
+      {% endif %}
+
+      {% comment %} Description {% endcomment %}
+      {% if description != blank %}
+        <div class="custom-section-image-hero-corporate__description">
+          {{ description }}
+        </div>
+      {% endif %}
+
+      {% comment %} CTA Button {% endcomment %}
+      {% if button_text != blank %}
+        <a
+          href="{{ button_link | default: '#' }}"
+          class="custom-section-image-hero-corporate__button"
+          {% if button_link == blank %}
+            aria-disabled="true"
+            tabindex="-1"
+          {% endif %}
+          {% if heading != blank %}
+            aria-label="{{ button_text }}: {{ heading | strip_html }}"
+          {% endif %}
+        >
+          <span class="custom-section-image-hero-corporate__button-text">
+            {{ button_text | escape }}
+          </span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Hero - Corporate",
+  "class": "section-image-hero-corporate",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image",
+      "info": "Recommended size: 1920px × 895px"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Corporate Comeback",
+      "info": "Decorative script heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
+      "info": "Main content text"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "EXPLORE",
+      "info": "CTA button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "info": "Where the button should link to"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Hero - Corporate",
+      "settings": {
+        "heading": "Corporate Comeback",
+        "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
+        "button_text": "EXPLORE"
+      }
+    }
+  ]
+}
+{% endschema %}
