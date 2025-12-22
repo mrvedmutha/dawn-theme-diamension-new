@@ -1,0 +1,158 @@
+{% comment %}
+  Section: Two-Column Hero Diamension
+  Purpose: Split-screen hero section with lifestyle imagery and text overlay
+  Author: Wings Design Team
+  Version: 1.0
+  Figma Node: 12-9097
+{% endcomment %}
+
+{{ 'section-two-column-hero-diamension.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.id
+  assign blocks = section.blocks
+%}
+
+<div class="custom-section-two-column-hero" data-section-id="{{ section_id }}">
+  <div class="custom-section-two-column-hero__wrapper">
+    {% for block in blocks limit: 2 %}
+      {% liquid
+        assign block_image = block.settings.image
+        assign block_heading = block.settings.heading
+        assign block_description = block.settings.description
+        assign block_button_text = block.settings.button_text
+        assign block_button_link = block.settings.button_link
+
+        # Check if this block has any content to display
+        assign has_content = false
+        if block_heading != blank or block_description != blank or block_button_text != blank
+          assign has_content = true
+        endif
+      %}
+
+      <div class="custom-section-two-column-hero__block" {{ block.shopify_attributes }}>
+        {% comment %} Background Image {% endcomment %}
+        {% if block_image != blank %}
+          <img
+            src="{{ block_image | image_url: width: 1920 }}"
+            srcset="
+              {{ block_image | image_url: width: 768 }} 768w,
+              {{ block_image | image_url: width: 1024 }} 1024w,
+              {{ block_image | image_url: width: 1440 }} 1440w,
+              {{ block_image | image_url: width: 1920 }} 1920w
+            "
+            sizes="(min-width: 768px) 50vw, 100vw"
+            alt="{{ block_heading | default: 'The Studio Collection' | escape }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+            class="custom-section-two-column-hero__image"
+          >
+        {% else %}
+          {% comment %} Fallback placeholder if no image {% endcomment %}
+          <div class="custom-section-two-column-hero__placeholder"></div>
+        {% endif %}
+
+        {% comment %} Content Overlay (only show if content exists) {% endcomment %}
+        {% if has_content %}
+          <div class="custom-section-two-column-hero__overlay">
+            {% comment %} Heading {% endcomment %}
+            {% if block_heading != blank %}
+              <h2 class="custom-section-two-column-hero__heading">
+                {{ block_heading | escape }}
+              </h2>
+            {% endif %}
+
+            {% comment %} Description {% endcomment %}
+            {% if block_description != blank %}
+              <div class="custom-section-two-column-hero__description">
+                {{ block_description }}
+              </div>
+            {% endif %}
+
+            {% comment %} CTA Button {% endcomment %}
+            {% if block_button_text != blank %}
+              <a
+                href="{{ block_button_link | default: '#' }}"
+                class="custom-section-two-column-hero__button"
+                {% if block_button_link == blank %}
+                  aria-disabled="true"
+                  tabindex="-1"
+                {% endif %}
+                {% if block_heading != blank %}
+                  aria-label="{{ block_button_text }}: {{ block_heading | strip_html }}"
+                {% endif %}
+              >
+                <span class="custom-section-two-column-hero__button-text">
+                  {{ block_button_text | escape }}
+                </span>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Two Column One Img Hero",
+  "class": "section-two-column-hero-diamension",
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image",
+          "info": "Recommended size: 1920px × 800px"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Leave empty to hide"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "info": "Leave empty to hide"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "info": "Leave empty to hide button"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Column Hero - The Studio",
+      "blocks": [
+        {
+          "type": "image_block",
+          "settings": {
+            "heading": "METROPOLITAN VIBES",
+            "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
+            "button_text": "EXPLORE"
+          }
+        },
+        {
+          "type": "image_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,285 @@
+/* =============================================================================
+   Two-Column Hero Section - The Studio
+   Figma Node: 12-9097
+   ============================================================================= */
+
+/* =============================================================================
+   Font Face Declarations
+   ============================================================================= */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================================================
+   Wrapper (Full-width background)
+   ============================================================================= */
+
+.custom-section-two-column-hero {
+  background-color: #fffaf5;
+  width: 100%;
+  overflow: hidden;
+}
+
+.custom-section-two-column-hero__wrapper {
+  width: 100%;
+  height: 800px;
+  display: flex;
+  position: relative;
+}
+
+/* =============================================================================
+   Image Block
+   ============================================================================= */
+
+.custom-section-two-column-hero__block {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image */
+.custom-section-two-column-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Placeholder (fallback if no image) */
+.custom-section-two-column-hero__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #f0efea;
+}
+
+/* =============================================================================
+   Gradient Overlay (for better text contrast)
+   ============================================================================= */
+
+.custom-section-two-column-hero__block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(197, 188, 160, 0) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Only show gradient when there's content */
+.custom-section-two-column-hero__block:has(.custom-section-two-column-hero__overlay)::before {
+  opacity: 1;
+}
+
+/* =============================================================================
+   Content Overlay
+   ============================================================================= */
+
+.custom-section-two-column-hero__overlay {
+  position: absolute;
+  bottom: 64px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 10;
+}
+
+/* =============================================================================
+   Heading
+   ============================================================================= */
+
+.custom-section-two-column-hero__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 60px;
+  line-height: 50px;
+  color: #fffaf5;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0 0 32px 0;
+  white-space: nowrap;
+}
+
+/* =============================================================================
+   Description
+   ============================================================================= */
+
+.custom-section-two-column-hero__description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fffaf5;
+  text-align: left;
+  max-width: 423px;
+  margin: 0 0 42px 0;
+}
+
+.custom-section-two-column-hero__description p {
+  margin: 0;
+}
+
+/* =============================================================================
+   CTA Button
+   ============================================================================= */
+
+.custom-section-two-column-hero__button {
+  background: #ffffff;
+  padding: 10px 25px;
+  min-width: 171px;
+  height: 49px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.custom-section-two-column-hero__button[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.custom-section-two-column-hero__button-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 50px;
+  color: #183754;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.custom-section-two-column-hero__button:hover:not([aria-disabled="true"]) {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.custom-section-two-column-hero__button:active:not([aria-disabled="true"]) {
+  transform: translateY(0);
+}
+
+/* Focus state for accessibility */
+.custom-section-two-column-hero__button:focus,
+.custom-section-two-column-hero__button:focus-visible {
+  outline: 2px solid #183754;
+  outline-offset: 2px;
+}
+
+/* =============================================================================
+   Responsive Styles
+   ============================================================================= */
+
+/* Tablet (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  .custom-section-two-column-hero__heading {
+    font-size: 50px;
+    line-height: 42px;
+  }
+
+  .custom-section-two-column-hero__description {
+    font-size: 15px;
+    line-height: 19px;
+    max-width: 360px;
+  }
+
+  .custom-section-two-column-hero__button-text {
+    font-size: 19px;
+  }
+
+  .custom-section-two-column-hero__overlay {
+    bottom: 48px;
+    left: 30px;
+    right: 30px;
+  }
+}
+
+/* Mobile (<768px) */
+@media screen and (max-width: 767px) {
+  .custom-section-two-column-hero__wrapper {
+    height: 800px;
+    flex-direction: column;
+  }
+
+  .custom-section-two-column-hero__block {
+    width: 100%;
+    height: 400px;
+  }
+
+  .custom-section-two-column-hero__heading {
+    font-size: 40px;
+    line-height: 36px;
+    white-space: normal;
+    margin: 0 0 20px 0;
+  }
+
+  .custom-section-two-column-hero__description {
+    font-size: 14px;
+    line-height: 18px;
+    max-width: 90%;
+    margin: 0 0 32px 0;
+    text-align: left;
+  }
+
+  .custom-section-two-column-hero__button {
+    min-width: 140px;
+    height: 44px;
+    padding: 8px 20px;
+  }
+
+  .custom-section-two-column-hero__button-text {
+    font-size: 18px;
+  }
+
+  .custom-section-two-column-hero__overlay {
+    bottom: 32px;
+    left: 20px;
+    right: 20px;
+  }
+}
+
+/* Small mobile adjustments */
+@media screen and (max-width: 479px) {
+  .custom-section-two-column-hero__heading {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  .custom-section-two-column-hero__description {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  .custom-section-two-column-hero__button-text {
+    font-size: 16px;
+  }
+}
