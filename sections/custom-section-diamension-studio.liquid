@@ -1,0 +1,53 @@
+{{ 'section-diamension-studio.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-diamension-studio" style="background-color: {{ section.settings.background_color }};">
+  <div class="custom-section-diamension-studio__container">
+    {% if section.settings.heading != blank %}
+      <h1 class="custom-section-diamension-studio__heading" style="color: {{ section.settings.text_color }};">
+        {{ section.settings.heading }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="custom-section-diamension-studio__description" style="color: {{ section.settings.text_color }};">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "The Studio Rich Text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THE STUDIO"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fffaf5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#183754"
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Studio Rich Text"
+    }
+  ]
+}
+{% endschema %}
