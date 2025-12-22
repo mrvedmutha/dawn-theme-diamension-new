@@ -1,0 +1,62 @@
+{{ 'section-custom-gap.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --gap-top: {{ section.settings.gap_top }}px;
+    --gap-bottom: {{ section.settings.gap_bottom }}px;
+    --gap-background: {{ section.settings.background_color }};
+  }
+</style>
+
+<section class="custom-section-gap">
+  <div class="custom-section-gap__spacer"></div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Section Gap",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Gap Settings"
+    },
+    {
+      "type": "range",
+      "id": "gap_top",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Top Gap",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "gap_bottom",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom Gap",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFAF5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Section Gap"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+.custom-section-gap {
+  background-color: var(--gap-background, #FFFAF5);
+  width: 100%;
+}
+
+.custom-section-gap__spacer {
+  padding-top: var(--gap-top, 50px);
+  padding-bottom: var(--gap-bottom, 50px);
+}
