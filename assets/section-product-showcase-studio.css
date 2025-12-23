@@ -20,15 +20,16 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 0; /* Space-between handles gap */
+  gap: 20px;
 }
 
 /* Image Card - 600×800px wrapper */
 .custom-section-product-showcase-studio__image-card {
   position: relative;
-  width: 600px;
-  height: 800px;
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 3 / 4; /* 600:800 = 3:4 */
+  flex-shrink: 1;
 }
 
 /* Image - Fill wrapper with object-fit cover */
@@ -110,6 +111,32 @@
   }
 }
 
+/* Medium screens (768px - 1024px) - Scale images proportionally */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .custom-section-product-showcase-studio__container {
+    padding: 40px 40px;
+  }
+
+  /* Image cards scale to fit container */
+  .custom-section-product-showcase-studio__image-card {
+    max-width: calc(50% - 10px); /* 50% minus half the gap */
+  }
+
+  /* Heading - Adjust position and font size for better spacing */
+  .custom-section-product-showcase-studio__heading {
+    top: 60px; /* Reduced from 112px */
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  /* CTA - Adjust position and font size for better spacing */
+  .custom-section-product-showcase-studio__cta {
+    bottom: 80px; /* Reduced from 144px */
+    font-size: 18px;
+    line-height: 36px;
+  }
+}
+
 /* Tablet (1024px) - Adjust padding */
 @media (max-width: 1024px) {
   .custom-section-product-showcase-studio__container {
@@ -169,5 +196,18 @@
 @media (max-width: 375px) {
   .custom-section-product-showcase-studio__container {
     padding: 40px 15px;
+  }
+
+  /* Heading - Use full width of image wrapper and adjust spacing */
+  .custom-section-product-showcase-studio__heading {
+    top: 40px; /* Reduced from 112px for better spacing */
+    max-width: 100%;
+    width: 100%;
+    padding: 0 15px; /* Add horizontal padding for text spacing */
+  }
+
+  /* CTA - Adjust spacing */
+  .custom-section-product-showcase-studio__cta {
+    bottom: 60px; /* Reduced from 144px for better spacing */
   }
 }
