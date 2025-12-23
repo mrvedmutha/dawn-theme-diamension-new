@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Custom Image Hero - Diamension The Studio
+   ========================================================================== */
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('fonts/Bickham Script Pro/Bickham Script Pro Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Block */
+.custom-section-image-hero-diamension-the-studio {
+  width: 100%;
+}
+
+/* Container - Fixed 800px height */
+.custom-section-image-hero-diamension-the-studio__container {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Content Wrapper */
+.custom-section-image-hero-diamension-the-studio__content {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 40px;
+}
+
+/* Content positioning - Without CTA (64px from bottom) */
+.custom-section-image-hero-diamension-the-studio__content {
+  bottom: 64px;
+}
+
+/* Content positioning - With CTA (32px from bottom) */
+.custom-section-image-hero-diamension-the-studio__content--with-cta {
+  bottom: 32px;
+}
+
+/* Heading */
+.custom-section-image-hero-diamension-the-studio__heading {
+  margin: 0;
+  padding: 0;
+  color: #FFFAF5;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Heading - Neue Haas Display (default) */
+.custom-section-image-hero-diamension-the-studio--neue-haas .custom-section-image-hero-diamension-the-studio__heading {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* Heading - Bickham Script Pro */
+.custom-section-image-hero-diamension-the-studio--bickham-script .custom-section-image-hero-diamension-the-studio__heading {
+  font-family: 'Bickham Script Pro', cursive;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Gap between heading and CTA when button exists */
+.custom-section-image-hero-diamension-the-studio__content--with-cta .custom-section-image-hero-diamension-the-studio__heading {
+  margin-bottom: 32px;
+}
+
+/* CTA Link */
+.custom-section-image-hero-diamension-the-studio__cta {
+  display: inline-block;
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 25%;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-image-hero-diamension-the-studio__cta:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Large Desktop - Full width fluid */
+@media (min-width: 1441px) {
+  .custom-section-image-hero-diamension-the-studio {
+    width: 100%;
+  }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+  .custom-section-image-hero-diamension-the-studio__container {
+    height: 700px;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__content {
+    padding: 0 30px;
+  }
+
+  /* Use tablet font size from schema */
+  .custom-section-image-hero-diamension-the-studio__heading {
+    font-size: var(--heading-size-tablet, 48px) !important;
+    line-height: 1.15;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__cta {
+    font-size: 18px;
+    line-height: 36px;
+  }
+}
+
+/* Mobile - 767px */
+@media (max-width: 767px) {
+  .custom-section-image-hero-diamension-the-studio__container {
+    height: 600px;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__content {
+    padding: 0 20px;
+    bottom: 40px;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__content--with-cta {
+    bottom: 24px;
+  }
+
+  /* Use mobile font size from schema */
+  .custom-section-image-hero-diamension-the-studio__heading {
+    font-size: var(--heading-size-mobile, 36px) !important;
+    line-height: 1.2;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__content--with-cta .custom-section-image-hero-diamension-the-studio__heading {
+    margin-bottom: 20px;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__cta {
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .custom-section-image-hero-diamension-the-studio__container {
+    height: 500px;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__content {
+    padding: 0 15px;
+  }
+
+  /* Use mobile font size (same as mobile breakpoint) */
+  .custom-section-image-hero-diamension-the-studio__heading {
+    font-size: var(--heading-size-mobile, 36px) !important;
+    line-height: 1.25;
+  }
+
+  .custom-section-image-hero-diamension-the-studio__cta {
+    font-size: 14px;
+    line-height: 28px;
+  }
+}

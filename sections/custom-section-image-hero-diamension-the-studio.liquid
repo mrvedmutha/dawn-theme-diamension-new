@@ -1,0 +1,108 @@
+{{ 'section-image-hero-diamension-the-studio.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-image-hero-diamension-the-studio{% if section.settings.font_family == 'bickham-script' %} custom-section-image-hero-diamension-the-studio--bickham-script{% else %} custom-section-image-hero-diamension-the-studio--neue-haas{% endif %}">
+  <div
+    class="custom-section-image-hero-diamension-the-studio__container"
+    {% if section.settings.image %}
+      style="background-image: url('{{ section.settings.image | image_url: width: 1920 }}');"
+    {% endif %}
+  >
+    <div class="custom-section-image-hero-diamension-the-studio__content{% if section.settings.cta_text != blank and section.settings.cta_link != blank %} custom-section-image-hero-diamension-the-studio__content--with-cta{% endif %}">
+      {% if section.settings.heading != blank %}
+        <h1
+          class="custom-section-image-hero-diamension-the-studio__heading"
+          style="--heading-size-desktop: {{ section.settings.heading_size }}px; --heading-size-tablet: {{ section.settings.heading_size_tablet }}px; --heading-size-mobile: {{ section.settings.heading_size_mobile }}px; font-size: {{ section.settings.heading_size }}px;"
+        >
+          {{ section.settings.heading }}
+        </h1>
+      {% endif %}
+
+      {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+        <a href="{{ section.settings.cta_link }}" class="custom-section-image-hero-diamension-the-studio__cta">
+          {{ section.settings.cta_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image Hero - The Studio",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text",
+      "default": "Metropolitan Vibes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Font Size (Desktop)",
+      "min": 20,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "heading_size_tablet",
+      "label": "Heading Font Size (Tablet)",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font Family",
+      "options": [
+        {
+          "value": "neue-haas",
+          "label": "Neue Haas Display"
+        },
+        {
+          "value": "bickham-script",
+          "label": "Bickham Script Pro"
+        }
+      ],
+      "default": "neue-haas"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text (Optional)",
+      "info": "Leave blank to hide button"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Image Hero - The Studio"
+    }
+  ]
+}
+{% endschema %}
