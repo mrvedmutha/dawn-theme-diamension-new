@@ -1,0 +1,227 @@
+{{ 'section-dynamic-hero-studio.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign has_image_1 = false
+  assign has_image_2 = false
+  assign has_tagline = false
+  assign has_description = false
+
+  if section.settings.image_1 != blank
+    assign has_image_1 = true
+  endif
+
+  if section.settings.image_2 != blank
+    assign has_image_2 = true
+  endif
+
+  if section.settings.tagline != blank
+    assign has_tagline = true
+  endif
+
+  if section.settings.description != blank
+    assign has_description = true
+  endif
+
+  assign layout_class = 'single-image'
+  if has_image_2
+    assign layout_class = 'two-images'
+  endif
+-%}
+
+<div class="custom-section-dynamic-hero-studio custom-section-dynamic-hero-studio--{{ layout_class }}">
+  <div class="custom-section-dynamic-hero-studio__wrapper">
+    <div class="custom-section-dynamic-hero-studio__container">
+
+      {%- if has_image_1 or has_image_2 -%}
+        <div class="custom-section-dynamic-hero-studio__images">
+
+          {%- if has_image_1 -%}
+            <div class="custom-section-dynamic-hero-studio__image-wrapper">
+              <img
+                class="custom-section-dynamic-hero-studio__image"
+                src="{{ section.settings.image_1 | image_url: width: 1376 }}"
+                alt="{{ section.settings.image_1.alt | escape }}"
+                loading="lazy"
+              >
+              {%- if section.settings.image_1_overlay_text != blank -%}
+                <p
+                  class="custom-section-dynamic-hero-studio__image-overlay-text custom-section-dynamic-hero-studio__image-overlay-text--image-1"
+                  style="
+                    --overlay-size-desktop: {{ section.settings.image_1_overlay_text_size_desktop }}px;
+                    --overlay-size-tablet: {{ section.settings.image_1_overlay_text_size_tablet }}px;
+                    --overlay-size-mobile: {{ section.settings.image_1_overlay_text_size_mobile }}px;
+                  "
+                >
+                  {{ section.settings.image_1_overlay_text }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if has_image_2 -%}
+            <div class="custom-section-dynamic-hero-studio__image-wrapper">
+              <img
+                class="custom-section-dynamic-hero-studio__image"
+                src="{{ section.settings.image_2 | image_url: width: 1376 }}"
+                alt="{{ section.settings.image_2.alt | escape }}"
+                loading="lazy"
+              >
+              {%- if section.settings.image_2_overlay_text != blank -%}
+                <p
+                  class="custom-section-dynamic-hero-studio__image-overlay-text custom-section-dynamic-hero-studio__image-overlay-text--image-2"
+                  style="
+                    --overlay-size-desktop: {{ section.settings.image_2_overlay_text_size_desktop }}px;
+                    --overlay-size-tablet: {{ section.settings.image_2_overlay_text_size_tablet }}px;
+                    --overlay-size-mobile: {{ section.settings.image_2_overlay_text_size_mobile }}px;
+                  "
+                >
+                  {{ section.settings.image_2_overlay_text }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+        </div>
+      {%- endif -%}
+
+      {%- if has_tagline or has_description -%}
+        <div class="custom-section-dynamic-hero-studio__content">
+          {%- if has_tagline -%}
+            <p class="custom-section-dynamic-hero-studio__tagline">
+              {{ section.settings.tagline }}
+            </p>
+          {%- endif -%}
+
+          {%- if has_description -%}
+            <div class="custom-section-dynamic-hero-studio__description">
+              {{ section.settings.description }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Dynamic Hero - Studio",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "text",
+      "id": "image_1_overlay_text",
+      "label": "Image 1 - Overlay Text",
+      "default": "Beauty",
+      "info": "Decorative script text shown on image"
+    },
+    {
+      "type": "range",
+      "id": "image_1_overlay_text_size_desktop",
+      "label": "Image 1 - Overlay Text Size (Desktop)",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "image_1_overlay_text_size_tablet",
+      "label": "Image 1 - Overlay Text Size (Tablet)",
+      "min": 60,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_1_overlay_text_size_mobile",
+      "label": "Image 1 - Overlay Text Size (Mobile)",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Image 2 (Optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2",
+      "info": "Leave empty for single image layout"
+    },
+    {
+      "type": "text",
+      "id": "image_2_overlay_text",
+      "label": "Image 2 - Overlay Text",
+      "default": "Beauty"
+    },
+    {
+      "type": "range",
+      "id": "image_2_overlay_text_size_desktop",
+      "label": "Image 2 - Overlay Text Size (Desktop)",
+      "min": 80,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "image_2_overlay_text_size_tablet",
+      "label": "Image 2 - Overlay Text Size (Tablet)",
+      "min": 60,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_2_overlay_text_size_mobile",
+      "label": "Image 2 - Overlay Text Size (Mobile)",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Sleek. Minimal. Commanding.",
+      "info": "Displayed above description (leave empty to hide)"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic Hero - Studio"
+    }
+  ]
+}
+{% endschema %}

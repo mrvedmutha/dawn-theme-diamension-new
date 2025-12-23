@@ -1,0 +1,251 @@
+/* ============================================
+   Dynamic Hero Studio Section
+   ============================================ */
+
+:root {
+  /* Colors */
+  --hero-studio-bg: #FFFAF5;
+  --hero-studio-text: #183754;
+  --hero-studio-overlay-text: #FFF5F6;
+
+  /* Dimensions */
+  --hero-studio-max-width: 1440px;
+  --hero-studio-height: 1040px;
+  --hero-studio-image-gap: 32px;
+
+  /* Spacing */
+  --hero-studio-padding-bottom-desktop: 128px;
+  --hero-studio-content-gap-lg: 32px;
+  --hero-studio-content-gap-sm: 16px;
+  --hero-studio-overlay-bottom: 64px;
+
+  /* Typography */
+  --hero-studio-tagline-size: 30px;
+  --hero-studio-tagline-height: 50px;
+  --hero-studio-description-size: 20px;
+  --hero-studio-description-height: 28px;
+}
+
+/* ============================================
+   Block
+   ============================================ */
+
+.custom-section-dynamic-hero-studio {
+  width: 100%;
+}
+
+/* ============================================
+   Wrapper
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__wrapper {
+  background-color: var(--hero-studio-bg);
+  width: 100%;
+}
+
+/* ============================================
+   Container
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__container {
+  max-width: var(--hero-studio-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: var(--hero-studio-padding-bottom-desktop);
+}
+
+/* ============================================
+   Images Container
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__images {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--hero-studio-image-gap);
+}
+
+/* ============================================
+   Image Wrapper
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__image-wrapper {
+  position: relative;
+  flex: 0 0 536px;
+  width: 536px;
+  height: 736px;
+  overflow: hidden;
+}
+
+/* ============================================
+   Image
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ============================================
+   Image Overlay Text
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__image-overlay-text {
+  position: absolute;
+  bottom: var(--hero-studio-overlay-bottom);
+  left: 108.96px;
+  font-family: 'Bickham Script Pro', cursive;
+  font-size: var(--overlay-size-desktop);
+  line-height: 1;
+  letter-spacing: 3.2px;
+  color: var(--hero-studio-overlay-text);
+  white-space: nowrap;
+  pointer-events: none;
+  margin: 0;
+}
+
+/* ============================================
+   Content
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__content {
+  text-align: center;
+  margin-top: var(--hero-studio-content-gap-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ============================================
+   Tagline
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__tagline {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: var(--hero-studio-tagline-size);
+  line-height: var(--hero-studio-tagline-height);
+  color: var(--hero-studio-text);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ============================================
+   Description
+   ============================================ */
+
+.custom-section-dynamic-hero-studio__description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: var(--hero-studio-description-size);
+  line-height: var(--hero-studio-description-height);
+  color: var(--hero-studio-text);
+  max-width: 553.77px;
+  margin: var(--hero-studio-content-gap-sm) auto 0;
+}
+
+.custom-section-dynamic-hero-studio__description p {
+  margin: 0;
+}
+
+/* ============================================
+   Responsive: Large Desktop (1441px+)
+   Center content, don't stretch
+   ============================================ */
+
+@media (min-width: 1441px) {
+  .custom-section-dynamic-hero-studio__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   Responsive: Tablet (1024px)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  :root {
+    --hero-studio-padding-bottom-desktop: 100px;
+    --hero-studio-tagline-size: 26px;
+    --hero-studio-tagline-height: 42px;
+    --hero-studio-description-size: 18px;
+    --hero-studio-description-height: 26px;
+  }
+
+  .custom-section-dynamic-hero-studio__image-wrapper {
+    flex: 0 0 450px;
+    width: 450px;
+    height: 600px;
+  }
+
+  .custom-section-dynamic-hero-studio__image-overlay-text {
+    font-size: var(--overlay-size-tablet);
+    left: 90px;
+  }
+}
+
+/* ============================================
+   Responsive: Mobile (767px)
+   ============================================ */
+
+@media (max-width: 767px) {
+  :root {
+    --hero-studio-padding-bottom-desktop: 80px;
+    --hero-studio-tagline-size: 22px;
+    --hero-studio-tagline-height: 36px;
+    --hero-studio-description-size: 16px;
+    --hero-studio-description-height: 24px;
+    --hero-studio-image-gap: 16px;
+    --hero-studio-content-gap-lg: 24px;
+    --hero-studio-content-gap-sm: 12px;
+  }
+
+  .custom-section-dynamic-hero-studio__container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .custom-section-dynamic-hero-studio__images {
+    flex-direction: column;
+  }
+
+  .custom-section-dynamic-hero-studio__image-wrapper {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 412px;
+  }
+
+  .custom-section-dynamic-hero-studio__image-overlay-text {
+    font-size: var(--overlay-size-mobile);
+    left: 60px;
+    bottom: 40px;
+  }
+
+  .custom-section-dynamic-hero-studio__description {
+    max-width: 90%;
+  }
+}
+
+/* ============================================
+   Responsive: Small Mobile (375px)
+   ============================================ */
+
+@media (max-width: 375px) {
+  .custom-section-dynamic-hero-studio__image-wrapper {
+    flex: 0 0 auto;
+    width: 250px;
+    height: 343px;
+  }
+
+  .custom-section-dynamic-hero-studio__image-overlay-text {
+    left: 50px;
+    bottom: 30px;
+  }
+}
