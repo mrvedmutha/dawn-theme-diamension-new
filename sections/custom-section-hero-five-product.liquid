@@ -1,0 +1,154 @@
+{{ 'section-hero-five-product.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-hero-five-product">
+  {%- comment -%} Hero Image {%- endcomment -%}
+  {% if section.settings.hero_image != blank %}
+    <div class="custom-section-hero-five-product__hero">
+      <img
+        src="{{ section.settings.hero_image | image_url: width: 1920 }}"
+        srcset="
+          {{ section.settings.hero_image | image_url: width: 768 }} 768w,
+          {{ section.settings.hero_image | image_url: width: 1024 }} 1024w,
+          {{ section.settings.hero_image | image_url: width: 1440 }} 1440w,
+          {{ section.settings.hero_image | image_url: width: 1920 }} 1920w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.hero_image.alt | escape }}"
+        class="custom-section-hero-five-product__hero-image"
+        loading="eager"
+      >
+
+      {%- comment -%} Logo Overlay {%- endcomment -%}
+      {% if section.settings.show_logo %}
+        <div class="custom-section-hero-five-product__hero-logo">
+          <svg width="46" height="74" viewBox="0 0 46 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M45.6851 30.3104C45.3849 29.7577 44.8971 29.3927 44.3035 29.287C43.2153 29.0891 42.0077 29.0686 40.8376 29.0516C39.9404 29.0345 39.0159 29.0209 38.1801 28.9254C31.5109 28.1578 26.8577 25.8074 23.9478 21.741C21.3893 18.1659 20.0316 13.1273 19.6734 5.89175C19.6529 5.46874 19.6768 4.92975 19.7041 4.36346C19.7484 3.40146 19.7962 2.40874 19.6291 1.68212C19.3971 0.662118 18.5067 -0.0167427 17.4014 0.000314203C16.2552 0.0139597 15.3341 0.761051 15.109 1.86634C14.9111 2.84881 14.9248 4.29523 14.935 5.6939C14.9452 6.67637 14.9521 7.60427 14.8941 8.34113C14.7576 10.0263 14.2971 14.3827 13.0076 18.3979C11.6669 22.5631 9.87935 25.0876 7.69607 25.8995C6.61125 26.302 5.47526 26.302 4.45526 25.9404V5.50968H0V57.4205H4.45526V37.0103C6.17119 36.4201 8.05085 36.9762 9.34717 38.1088C14.7235 42.7994 15.01 56.2607 15.1806 64.3047C15.1977 65.0996 15.2147 65.8364 15.2318 66.5119C15.2454 66.986 15.2181 67.6069 15.1909 68.2653C15.1363 69.5412 15.0817 70.8614 15.2761 71.7244C15.5252 72.8263 16.5997 73.3687 17.5856 73.3687C17.6777 73.3687 17.7664 73.3653 17.8586 73.3551C20.267 73.1026 19.9463 69.8925 19.7553 67.9787C19.7143 67.5762 19.6802 67.2317 19.6768 66.9929L19.67 66.4539C19.5677 58.8431 19.4278 48.4214 23.3168 42.0148C26.9533 36.0244 34.2809 34.2948 39.7903 33.9025C40.07 33.8821 40.4964 33.8957 40.9467 33.9094C42.7172 33.9639 45.1461 34.0356 45.7909 32.5073C46.0843 31.8182 46.0433 30.979 45.6885 30.324L45.6851 30.3104ZM17.4014 43.7239C17.2854 43.3759 17.1763 43.0382 17.0671 42.7005C16.3337 40.4319 15.6991 38.4738 13.9252 36.2086C12.3014 34.1379 10.2478 32.7836 7.98603 32.3026C6.82957 32.057 5.62878 32.0502 4.45526 32.2617V30.6822C7.18095 31.1768 9.97145 30.4093 12.2741 28.4546C15.1772 25.9882 16.1222 23.1942 17.1251 20.2298C17.2206 19.9432 17.3195 19.6532 17.4219 19.3633C19.3288 24.5861 23.2178 28.6456 28.7613 31.1666C28.9864 31.269 29.2253 31.3542 29.4572 31.4361C23.8796 33.4352 19.3698 38.0337 17.4048 43.7239H17.4014Z" fill="#FFFAF5"/>
+            <path d="M22.6723 11.4039C23.1192 11.5199 23.6274 11.6495 23.8287 11.7246C29.5087 13.8771 33.558 18.5917 34.9396 24.6571C35.018 25.0084 35.0692 25.3598 35.1169 25.718L35.192 26.2911H39.9099L39.811 25.544C38.5624 16.1866 31.402 8.378 22.4028 6.55291L21.6113 6.39258V11.1242L22.1026 11.2538C22.2834 11.3015 22.4812 11.3527 22.6791 11.4039H22.6723Z" fill="#FFFAF5"/>
+            <path d="M35.1467 36.8187C35.1262 36.9927 35.1057 37.1735 35.0852 37.3441C35.0443 37.692 35.0034 38.0536 34.9693 38.2071C33.4955 44.7433 28.9721 49.6557 22.5621 51.6855L22.1016 51.8321V56.533L22.9135 56.342C31.8444 54.2338 38.8105 46.2682 39.8543 36.9756L39.9362 36.2422H35.2183L35.1467 36.8187Z" fill="#FFFAF5"/>
+          </svg>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Quote Overlay {%- endcomment -%}
+      {% if section.settings.hero_quote != blank %}
+        <div class="custom-section-hero-five-product__hero-quote">
+          <p>{{ section.settings.hero_quote }}</p>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {%- comment -%} Product Carousel {%- endcomment -%}
+  {% if section.settings.collection != blank %}
+    <div class="custom-section-hero-five-product__carousel-wrapper">
+      {%- comment -%} Left Arrow {%- endcomment -%}
+      <button
+        class="custom-section-hero-five-product__arrow custom-section-hero-five-product__arrow--left"
+        aria-label="Previous product"
+        data-carousel-prev
+      >
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.9995 16.7996C19.2995 16.7996 18.5995 16.5296 18.0695 15.9996L11.5495 9.47965C11.2595 9.18965 11.2595 8.70965 11.5495 8.41965C11.8395 8.12965 12.3195 8.12965 12.6095 8.41965L19.1295 14.9396C19.6095 15.4196 20.3895 15.4196 20.8695 14.9396L27.3895 8.41965C27.6795 8.12965 28.1595 8.12965 28.4495 8.41965C28.7395 8.70965 28.7395 9.18965 28.4495 9.47965L21.9295 15.9996C21.3995 16.5296 20.6995 16.7996 19.9995 16.7996Z" fill="#183754"/>
+        </svg>
+      </button>
+
+      {%- comment -%} Product Cards Container {%- endcomment -%}
+      <div class="custom-section-hero-five-product__carousel" data-carousel>
+        <div class="custom-section-hero-five-product__track" data-carousel-track>
+          {% assign product_count = 0 %}
+          {% for product in section.settings.collection.products limit: 5 %}
+            {% assign product_count = product_count | plus: 1 %}
+            {% assign is_tall = false %}
+            {% if product_count == 1 or product_count == 3 or product_count == 5 %}
+              {% assign is_tall = true %}
+            {% endif %}
+
+            <a
+              href="{{ product.url }}"
+              class="custom-section-hero-five-product__card {% if is_tall %}custom-section-hero-five-product__card--tall{% else %}custom-section-hero-five-product__card--short{% endif %}"
+              data-product-card
+            >
+              {%- comment -%} Product Image {%- endcomment -%}
+              {% if product.featured_image %}
+                <div class="custom-section-hero-five-product__card-image-wrapper">
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    srcset="
+                      {{ product.featured_image | image_url: width: 280 }} 280w,
+                      {{ product.featured_image | image_url: width: 560 }} 560w
+                    "
+                    sizes="280px"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="custom-section-hero-five-product__card-image"
+                    loading="lazy"
+                  >
+                </div>
+              {% endif %}
+
+              {%- comment -%} Product Title {%- endcomment -%}
+              <h3 class="custom-section-hero-five-product__card-title">
+                {{ product.title }}
+              </h3>
+
+              {%- comment -%} View Button {%- endcomment -%}
+              <div class="custom-section-hero-five-product__card-button-wrapper">
+                <span class="custom-section-hero-five-product__card-button"> VIEW </span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      {%- comment -%} Right Arrow {%- endcomment -%}
+      <button
+        class="custom-section-hero-five-product__arrow custom-section-hero-five-product__arrow--right"
+        aria-label="Next product"
+        data-carousel-next
+      >
+        <svg width="40" height="24" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.9995 16.7996C19.2995 16.7996 18.5995 16.5296 18.0695 15.9996L11.5495 9.47965C11.2595 9.18965 11.2595 8.70965 11.5495 8.41965C11.8395 8.12965 12.3195 8.12965 12.6095 8.41965L19.1295 14.9396C19.6095 15.4196 20.3895 15.4196 20.8695 14.9396L27.3895 8.41965C27.6795 8.12965 28.1595 8.12965 28.4495 8.41965C28.7395 8.70965 28.7395 9.18965 28.4495 9.47965L21.9295 15.9996C21.3995 16.5296 20.6995 16.7996 19.9995 16.7996Z" fill="#183754"/>
+        </svg>
+      </button>
+    </div>
+  {% endif %}
+</div>
+
+<script src="{{ 'section-hero-five-product.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Hero Image Five Products",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image",
+      "info": "Recommended size: 1440px × 800px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show Logo",
+      "default": false,
+      "info": "Display Diamension logo at the top of hero image"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_quote",
+      "label": "Hero Quote",
+      "info": "Quote text displayed at the bottom of hero image. Leave empty to hide."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product Collection",
+      "info": "Only the first 5 products will be displayed"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero + 5 Products"
+    }
+  ]
+}
+{% endschema %}

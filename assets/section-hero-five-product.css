@@ -1,0 +1,400 @@
+/* ================================================================
+   Hero Image + Five Product Carousel
+   ================================================================ */
+
+/* CSS Variables */
+:root {
+  --hero-five-product-wrapper-bg: #FFFAF5;
+  --hero-five-product-card-bg: #EFE9E4;
+  --hero-five-product-text-primary: #183754;
+  --hero-five-product-button-bg: #FFFFFF;
+  --hero-five-product-button-text: #000000;
+  --hero-five-product-gap-hero: 60px;
+  --hero-five-product-gap-cards: 10px;
+  --hero-five-product-container-max: 1440px;
+  --hero-five-product-card-width: 280px;
+  --hero-five-product-card-tall: 380px;
+  --hero-five-product-card-short: 288px;
+}
+
+/* ================================================================
+   Section Wrapper
+   ================================================================ */
+
+.custom-section-hero-five-product {
+  background-color: var(--hero-five-product-wrapper-bg);
+  width: 100%;
+}
+
+/* ================================================================
+   Hero Image
+   ================================================================ */
+
+.custom-section-hero-five-product__hero {
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-section-hero-five-product__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ================================================================
+   Hero Logo Overlay
+   ================================================================ */
+
+.custom-section-hero-five-product__hero-logo {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.custom-section-hero-five-product__hero-logo svg {
+  display: block;
+  width: 46px;
+  height: 74px;
+}
+
+/* ================================================================
+   Hero Quote Overlay
+   ================================================================ */
+
+.custom-section-hero-five-product__hero-quote {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: 676px;
+  width: 90%;
+  text-align: center;
+}
+
+.custom-section-hero-five-product__hero-quote p {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 45px;
+  color: #FFFAF5;
+  margin: 0;
+}
+
+/* ================================================================
+   Carousel Wrapper (Max Width Container)
+   ================================================================ */
+
+.custom-section-hero-five-product__carousel-wrapper {
+  max-width: var(--hero-five-product-container-max);
+  margin: 0 auto;
+  margin-top: var(--hero-five-product-gap-hero);
+  padding: 0 0 80px 0;
+  position: relative;
+}
+
+/* Desktop: No horizontal padding to fit all 5 cards */
+@media (min-width: 1440px) {
+  .custom-section-hero-five-product__carousel-wrapper {
+    padding: 0 0 80px 0;
+  }
+}
+
+/* ================================================================
+   Carousel Container
+   ================================================================ */
+
+.custom-section-hero-five-product__carousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+.custom-section-hero-five-product__track {
+  display: flex;
+  gap: var(--hero-five-product-gap-cards);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.custom-section-hero-five-product__track::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* ================================================================
+   Product Card
+   ================================================================ */
+
+.custom-section-hero-five-product__card {
+  flex: 0 0 var(--hero-five-product-card-width);
+  width: var(--hero-five-product-card-width);
+  background-color: var(--hero-five-product-card-bg);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.custom-section-hero-five-product__card--tall {
+  height: var(--hero-five-product-card-tall);
+}
+
+.custom-section-hero-five-product__card--short {
+  height: var(--hero-five-product-card-short);
+}
+
+/* ================================================================
+   Product Image
+   ================================================================ */
+
+.custom-section-hero-five-product__card-image-wrapper {
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.custom-section-hero-five-product__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ================================================================
+   Product Title
+   ================================================================ */
+
+.custom-section-hero-five-product__card-title {
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  right: 24px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--hero-five-product-text-primary);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ================================================================
+   View Button
+   ================================================================ */
+
+.custom-section-hero-five-product__card-button-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.custom-section-hero-five-product__card-button {
+  width: 240px;
+  height: 42px;
+  background-color: var(--hero-five-product-button-bg);
+  color: var(--hero-five-product-button-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Desktop: Show button on card hover */
+@media (min-width: 1440px) {
+  .custom-section-hero-five-product__card:hover .custom-section-hero-five-product__card-button {
+    opacity: 1;
+  }
+}
+
+/* ================================================================
+   Navigation Arrows (Hidden on Desktop)
+   ================================================================ */
+
+.custom-section-hero-five-product__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 10px;
+  display: none; /* Hidden on desktop */
+}
+
+.custom-section-hero-five-product__arrow svg {
+  display: block;
+}
+
+.custom-section-hero-five-product__arrow--left {
+  left: 10px;
+}
+
+.custom-section-hero-five-product__arrow--left svg {
+  transform: rotate(90deg);
+}
+
+.custom-section-hero-five-product__arrow--right {
+  right: 10px;
+}
+
+.custom-section-hero-five-product__arrow--right svg {
+  transform: rotate(-90deg);
+}
+
+.custom-section-hero-five-product__arrow:hover {
+  opacity: 0.7;
+}
+
+.custom-section-hero-five-product__arrow[disabled] {
+  display: none;
+}
+
+/* ================================================================
+   Responsive - Tablet (768px - 1439px)
+   ================================================================ */
+
+@media (max-width: 1439px) {
+  .custom-section-hero-five-product__hero {
+    height: 600px;
+  }
+
+  .custom-section-hero-five-product__carousel-wrapper {
+    padding: 0 30px 60px 30px;
+  }
+
+  /* Show arrows on tablet */
+  .custom-section-hero-five-product__arrow {
+    display: block;
+  }
+
+  /* Button always visible on tablet/mobile */
+  .custom-section-hero-five-product__card-button {
+    opacity: 1;
+  }
+
+  /* Hero logo - smaller on tablet */
+  .custom-section-hero-five-product__hero-logo {
+    top: 50px;
+  }
+
+  .custom-section-hero-five-product__hero-logo svg {
+    width: 40px;
+    height: 64px;
+  }
+
+  /* Hero quote - smaller on tablet */
+  .custom-section-hero-five-product__hero-quote {
+    bottom: 60px;
+    max-width: 550px;
+  }
+
+  .custom-section-hero-five-product__hero-quote p {
+    font-size: 26px;
+    line-height: 38px;
+  }
+}
+
+/* ================================================================
+   Responsive - Mobile Large (480px - 767px)
+   ================================================================ */
+
+@media (max-width: 767px) {
+  .custom-section-hero-five-product__hero {
+    height: 400px;
+  }
+
+  .custom-section-hero-five-product__carousel-wrapper {
+    padding: 0 20px 40px 20px;
+    margin-top: 40px;
+  }
+
+  /* Hero logo - smaller on mobile */
+  .custom-section-hero-five-product__hero-logo {
+    top: 30px;
+  }
+
+  .custom-section-hero-five-product__hero-logo svg {
+    width: 32px;
+    height: 52px;
+  }
+
+  /* Hero quote - smaller on mobile */
+  .custom-section-hero-five-product__hero-quote {
+    bottom: 40px;
+    max-width: 400px;
+  }
+
+  .custom-section-hero-five-product__hero-quote p {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+/* ================================================================
+   Responsive - Mobile (< 480px)
+   ================================================================ */
+
+@media (max-width: 479px) {
+  .custom-section-hero-five-product__hero {
+    height: 300px;
+  }
+
+  .custom-section-hero-five-product__carousel-wrapper {
+    padding: 0 15px 30px 15px;
+    margin-top: 30px;
+  }
+
+  .custom-section-hero-five-product__card-title {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .custom-section-hero-five-product__card-button {
+    width: 200px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  /* Hero logo - smallest on mobile */
+  .custom-section-hero-five-product__hero-logo {
+    top: 20px;
+  }
+
+  .custom-section-hero-five-product__hero-logo svg {
+    width: 28px;
+    height: 45px;
+  }
+
+  /* Hero quote - smallest on mobile */
+  .custom-section-hero-five-product__hero-quote {
+    bottom: 30px;
+    max-width: 300px;
+  }
+
+  .custom-section-hero-five-product__hero-quote p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
