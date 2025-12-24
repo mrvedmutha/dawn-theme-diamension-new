@@ -1,0 +1,357 @@
+/* ============================================================================
+   Custom Section - Diamension Quote Gallery
+   ============================================================================ */
+
+/* CSS Variables */
+:root {
+  --quote-gallery-bg: #fffaf5;
+  --quote-gallery-image-bg: #ffffff;
+  --quote-gallery-text: #183754;
+  --quote-gallery-font-family: 'Neue Haas Grotesk Display Pro', 'Neue Haas Display', sans-serif;
+  --quote-gallery-font-size: 30px;
+  --quote-gallery-line-height: 45px;
+  --quote-gallery-max-width: 1440px;
+}
+
+/* ============================================================================
+   Block - Section Container
+   ============================================================================ */
+
+.custom-section-diamension-quote-gallery {
+  background-color: var(--quote-gallery-bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+.custom-section-diamension-quote-gallery__container {
+  max-width: var(--quote-gallery-max-width);
+  margin: 0 auto;
+  position: relative;
+  min-height: 1101px;
+}
+
+/* ============================================================================
+   Element - Image Wrappers
+   ============================================================================ */
+
+.custom-section-diamension-quote-gallery__image-wrapper {
+  position: absolute;
+  background-color: var(--quote-gallery-image-bg);
+  overflow: hidden;
+}
+
+.custom-section-diamension-quote-gallery__image {
+  width: 100%;
+  height: calc(100% + 80px);
+  object-fit: cover;
+  display: block;
+  object-position: center center;
+  will-change: transform;
+}
+
+/* Image 1 - Top Center */
+.custom-section-diamension-quote-gallery__image-wrapper--1 {
+  width: 327px;
+  height: 427px;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Image 2 - Left Top */
+.custom-section-diamension-quote-gallery__image-wrapper--2 {
+  width: 327px;
+  height: 320px;
+  left: 0;
+  top: 213px;
+  z-index: 2;
+}
+
+/* Image 3 - Left Middle */
+.custom-section-diamension-quote-gallery__image-wrapper--3 {
+  width: 289px;
+  height: 378px;
+  left: 128px;
+  top: 342px;
+  z-index: 4;
+}
+
+/* Image 4 - Right Top */
+.custom-section-diamension-quote-gallery__image-wrapper--4 {
+  width: 327px;
+  height: 427px;
+  right: 0;
+  top: 536px;
+  z-index: 2;
+}
+
+/* Image 5 - Right Bottom */
+.custom-section-diamension-quote-gallery__image-wrapper--5 {
+  width: 327px;
+  height: 226px;
+  right: 164px;
+  top: 876px;
+  z-index: 2;
+}
+
+/* ============================================================================
+   Element - Center Content
+   ============================================================================ */
+
+.custom-section-diamension-quote-gallery__content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+  max-width: 676px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.custom-section-diamension-quote-gallery__logo {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-section-diamension-quote-gallery__logo img {
+  width: 46px;
+  height: 74px;
+  display: block;
+}
+
+.custom-section-diamension-quote-gallery__quote {
+  font-family: var(--quote-gallery-font-family);
+  font-size: var(--quote-gallery-font-size);
+  font-weight: 300;
+  line-height: var(--quote-gallery-line-height);
+  color: var(--quote-gallery-text);
+  margin: 0;
+  text-align: center;
+}
+
+/* ============================================================================
+   Responsive - Tablet (768px - 1024px)
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .custom-section-diamension-quote-gallery__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    min-height: auto;
+  }
+
+  /* Reset absolute positioning for tablet */
+  .custom-section-diamension-quote-gallery__image-wrapper {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+  }
+
+  /* Image 1 - Full width landscape at top */
+  .custom-section-diamension-quote-gallery__image-wrapper--1 {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    order: 1;
+  }
+
+  /* Content block - Below image 1, full width */
+  .custom-section-diamension-quote-gallery__content {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    grid-column: 1 / -1;
+    order: 2;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  /* Four images in horizontal row - each takes 1 column */
+  .custom-section-diamension-quote-gallery__image-wrapper--2 {
+    grid-column: 1 / 2;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    order: 3;
+  }
+
+  .custom-section-diamension-quote-gallery__image-wrapper--3 {
+    grid-column: 2 / 3;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    order: 4;
+  }
+
+  .custom-section-diamension-quote-gallery__image-wrapper--4 {
+    grid-column: 3 / 4;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    order: 5;
+  }
+
+  .custom-section-diamension-quote-gallery__image-wrapper--5 {
+    grid-column: 4 / 5;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    order: 6;
+  }
+
+  .custom-section-diamension-quote-gallery__quote {
+    font-size: 26px;
+    line-height: 39px;
+    text-align: center;
+  }
+
+  .custom-section-diamension-quote-gallery__logo {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .custom-section-diamension-quote-gallery__logo svg {
+    width: 36px;
+    height: 58px;
+  }
+}
+
+/* ============================================================================
+   Responsive - Mobile (< 768px)
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  .custom-section-diamension-quote-gallery__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    min-height: auto;
+    position: relative;
+    padding: 0;
+  }
+
+  /* Reset absolute positioning for mobile */
+  .custom-section-diamension-quote-gallery__image-wrapper {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
+  }
+
+  /* Image 1 - Full width at top */
+  .custom-section-diamension-quote-gallery__image-wrapper--1 {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 327 / 427;
+    order: 1;
+  }
+
+  /* Images 2 & 3 - Side by side in row */
+  .custom-section-diamension-quote-gallery__image-wrapper--2 {
+    grid-column: 1 / 2;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    order: 2;
+  }
+
+  .custom-section-diamension-quote-gallery__image-wrapper--3 {
+    grid-column: 2 / 3;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    order: 3;
+  }
+
+  /* Content block - Middle, full width */
+  .custom-section-diamension-quote-gallery__content {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    grid-column: 1 / -1;
+    order: 4;
+    padding: 20px;
+    max-width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Images 4 & 5 - Side by side in row */
+  .custom-section-diamension-quote-gallery__image-wrapper--4 {
+    grid-column: 1 / 2;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    order: 5;
+  }
+
+  .custom-section-diamension-quote-gallery__image-wrapper--5 {
+    grid-column: 2 / 3;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    order: 6;
+  }
+
+  .custom-section-diamension-quote-gallery__quote {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .custom-section-diamension-quote-gallery__logo {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .custom-section-diamension-quote-gallery__logo svg {
+    width: 28px;
+    height: 45px;
+  }
+}
+
+/* ============================================================================
+   Responsive - Small Mobile (< 375px)
+   ============================================================================ */
+
+@media (max-width: 375px) {
+  .custom-section-diamension-quote-gallery__quote {
+    font-size: 18px;
+    line-height: 27px;
+    text-align: center;
+  }
+
+  .custom-section-diamension-quote-gallery__logo svg {
+    width: 24px;
+    height: 38px;
+  }
+}
+
+/* ============================================================================
+   Accessibility
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-section-diamension-quote-gallery__image-wrapper {
+    transform: none !important;
+  }
+}
