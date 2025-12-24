@@ -1,0 +1,165 @@
+{{ 'section-collection-image-overlay.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-collection-image-overlay">
+  {%- comment -%} Background Image with Overlay {%- endcomment -%}
+  {%- if section.settings.background_image != blank -%}
+    <div class="custom-section-collection-image-overlay__background">
+      {{
+        section.settings.background_image
+        | image_url: width: 1920
+        | image_tag: loading: 'lazy', class: 'custom-section-collection-image-overlay__background-image'
+      }}
+      <div
+        class="custom-section-collection-image-overlay__background-overlay"
+        style="background-color: {{ section.settings.overlay_color }};"
+      >
+        &nbsp;
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="custom-section-collection-image-overlay__container page-width">
+    {%- comment -%} Left Image {%- endcomment -%}
+    <div class="custom-section-collection-image-overlay__left">
+      <div class="custom-section-collection-image-overlay__left-wrapper">
+        {%- if section.settings.left_image != blank -%}
+          {{
+            section.settings.left_image
+            | image_url: width: 1200
+            | image_tag: loading: 'lazy', class: 'custom-section-collection-image-overlay__left-image'
+          }}
+        {%- else -%}
+          <div class="custom-section-collection-image-overlay__left-placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Collection Text - Centered on Left Image {%- endcomment -%}
+        {%- if section.settings.collection_text != blank -%}
+          <div class="custom-section-collection-image-overlay__left-text">
+            <h2 class="custom-section-collection-image-overlay__text">
+              {{ section.settings.collection_text }}
+            </h2>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Explore Link - Shows on Hover {%- endcomment -%}
+        {%- if section.settings.explore_link != blank -%}
+          <a href="{{ section.settings.explore_link }}" class="custom-section-collection-image-overlay__explore">
+            {{ section.settings.explore_text }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Right Image {%- endcomment -%}
+    <div class="custom-section-collection-image-overlay__right">
+      <div class="custom-section-collection-image-overlay__right-container">
+        {%- if section.settings.right_image != blank -%}
+          {{
+            section.settings.right_image
+            | image_url: width: 800
+            | image_tag: loading: 'lazy', class: 'custom-section-collection-image-overlay__right-image'
+          }}
+        {%- else -%}
+          <div class="custom-section-collection-image-overlay__right-placeholder">
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Logo Overlay {%- endcomment -%}
+        {%- if section.settings.logo_image != blank -%}
+          <div class="custom-section-collection-image-overlay__logo">
+            {{
+              section.settings.logo_image
+              | image_url: width: 400
+              | image_tag: loading: 'lazy', class: 'custom-section-collection-image-overlay__logo-image', alt: 'Logo'
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Divider Line Wrapper {%- endcomment -%}
+    <div class="custom-section-collection-image-overlay__divider-wrapper">
+      <div class="custom-section-collection-image-overlay__divider">&nbsp;</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Image Overlay",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "rgba(112, 63, 20, 0.78)"
+    },
+    {
+      "type": "header",
+      "content": "Left Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Image",
+      "info": "Recommended size: 706px × 916px"
+    },
+    {
+      "type": "text",
+      "id": "explore_text",
+      "label": "Explore Text",
+      "default": "Explore"
+    },
+    {
+      "type": "url",
+      "id": "explore_link",
+      "label": "Explore Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Right Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Image",
+      "info": "Image will be displayed with padding"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image",
+      "info": "Overlays on the right image"
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "collection_text",
+      "label": "Collection Text",
+      "default": "CORPORATE COLLECTION"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Image Overlay"
+    }
+  ]
+}
+{% endschema %}
