@@ -1,0 +1,319 @@
+/* Collection Image Overlay Section */
+
+/* Block */
+.custom-section-collection-image-overlay {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Background Elements */
+.custom-section-collection-image-overlay__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.custom-section-collection-image-overlay__background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.custom-section-collection-image-overlay__background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(112, 63, 20, 0.78);
+}
+
+/* Container */
+.custom-section-collection-image-overlay__container {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  min-height: 916px;
+}
+
+/* Left Image Section */
+.custom-section-collection-image-overlay__left {
+  flex: 0 0 706px;
+  max-width: 706px;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-section-collection-image-overlay__left-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-section-collection-image-overlay__left-image,
+.custom-section-collection-image-overlay__left-placeholder {
+  width: 100%;
+  height: 916px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.custom-section-collection-image-overlay__left-placeholder {
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Explore Link */
+.custom-section-collection-image-overlay__explore {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 40px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: 5px;
+  text-underline-position: from-font;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.custom-section-collection-image-overlay__left:hover .custom-section-collection-image-overlay__explore {
+  opacity: 1;
+}
+
+/* Right Image Section */
+.custom-section-collection-image-overlay__right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.custom-section-collection-image-overlay__right-container {
+  position: relative;
+  padding: 136px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-collection-image-overlay__right-image,
+.custom-section-collection-image-overlay__right-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.custom-section-collection-image-overlay__right-placeholder {
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo Overlay */
+.custom-section-collection-image-overlay__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  max-width: 200px;
+}
+
+.custom-section-collection-image-overlay__logo-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Collection Text - Inside Left Image Wrapper */
+.custom-section-collection-image-overlay__left-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.custom-section-collection-image-overlay__text {
+  color: #fff;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 50px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Divider Line Wrapper */
+.custom-section-collection-image-overlay__divider-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 610px;
+  transform: translateY(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.custom-section-collection-image-overlay__divider {
+  width: 323px;
+  height: 1px;
+  background-color: #fff;
+}
+
+/* Responsive Breakpoints - Desktop First */
+
+/* Large Desktop - Center content above 1440px */
+@media (min-width: 1441px) {
+  .custom-section-collection-image-overlay__container {
+    margin: 0 auto;
+  }
+}
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+  .custom-section-collection-image-overlay__left {
+    flex: 0 0 55%;
+    max-width: 55%;
+  }
+
+  .custom-section-collection-image-overlay__container {
+    min-height: 700px;
+  }
+
+  .custom-section-collection-image-overlay__left-image,
+  .custom-section-collection-image-overlay__left-placeholder {
+    height: 700px;
+  }
+
+  .custom-section-collection-image-overlay__right-container {
+    padding: 80px;
+  }
+
+  .custom-section-collection-image-overlay__text {
+    font-size: 26px;
+    line-height: 40px;
+  }
+
+  .custom-section-collection-image-overlay__divider-wrapper {
+    left: 52%;
+  }
+
+  .custom-section-collection-image-overlay__divider {
+    width: 200px;
+  }
+
+  .custom-section-collection-image-overlay__logo {
+    max-width: 170px;
+  }
+
+  .custom-section-collection-image-overlay__explore {
+    font-size: 18px;
+    line-height: 36px;
+    bottom: 28px;
+  }
+}
+
+/* Mobile - 767px */
+@media (max-width: 767px) {
+  .custom-section-collection-image-overlay__container {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .custom-section-collection-image-overlay__left {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .custom-section-collection-image-overlay__left-image,
+  .custom-section-collection-image-overlay__left-placeholder {
+    height: 500px;
+  }
+
+  .custom-section-collection-image-overlay__right {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .custom-section-collection-image-overlay__right-container {
+    padding: 60px;
+  }
+
+  .custom-section-collection-image-overlay__text {
+    font-size: 22px;
+    line-height: 36px;
+  }
+
+  .custom-section-collection-image-overlay__logo {
+    max-width: 140px;
+  }
+
+  .custom-section-collection-image-overlay__explore {
+    font-size: 16px;
+    line-height: 32px;
+    bottom: 24px;
+    opacity: 1;
+  }
+
+  /* Hide divider on mobile */
+  .custom-section-collection-image-overlay__divider-wrapper {
+    display: none;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .custom-section-collection-image-overlay__left-image,
+  .custom-section-collection-image-overlay__left-placeholder {
+    height: 400px;
+  }
+
+  .custom-section-collection-image-overlay__right-container {
+    padding: 40px;
+  }
+
+  .custom-section-collection-image-overlay__text {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .custom-section-collection-image-overlay__logo {
+    max-width: 110px;
+  }
+
+  .custom-section-collection-image-overlay__explore {
+    font-size: 14px;
+    line-height: 28px;
+    bottom: 20px;
+  }
+}
