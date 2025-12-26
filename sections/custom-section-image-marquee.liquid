@@ -1,0 +1,102 @@
+{{ 'section-image-marquee.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-image-marquee"
+     style="background-color: {{ section.settings.background_color }};"
+     data-speed="{{ section.settings.marquee_speed }}"
+     data-pause-on-hover="{{ section.settings.pause_on_hover }}">
+
+  <div class="custom-section-image-marquee__wrapper">
+    <div class="custom-section-image-marquee__track">
+      {% for block in section.blocks %}
+        <div class="custom-section-image-marquee__item" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 682 }}"
+              srcset="{{ block.settings.image | image_url: width: 341 }} 341w,
+                      {{ block.settings.image | image_url: width: 682 }} 682w,
+                      {{ block.settings.image | image_url: width: 1024 }} 1024w"
+              sizes="(max-width: 767px) 50vw, 341px"
+              alt="{{ block.settings.image.alt | escape }}"
+              class="custom-section-image-marquee__image"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="custom-section-image-marquee__placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="{{ 'section-image-marquee.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Image Marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fffaf5"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Marquee Speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "default": 40,
+      "info": "Time in seconds for one complete loop (higher = slower)"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Marquee",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
