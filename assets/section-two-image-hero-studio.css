@@ -1,0 +1,290 @@
+/* =============================================================================
+   Two Image Hero - The Studio Section
+   Figma Node: 12:8787
+   ============================================================================= */
+
+/* =============================================================================
+   Font Face Declarations
+   ============================================================================= */
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('fonts/Bickham Script Pro/Bickham Script Pro Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================================================
+   Wrapper (Full-width fluid container)
+   ============================================================================= */
+
+.custom-section-two-image-hero-studio {
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   Container (Flex container for two panels)
+   ============================================================================= */
+
+.custom-section-two-image-hero-studio__container {
+  display: flex;
+  width: 100%;
+  min-height: 800px;
+}
+
+/* =============================================================================
+   Left Panel (Lifestyle Image) - 45% width
+   ============================================================================= */
+
+.custom-section-two-image-hero-studio__left {
+  width: 45%;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-section-two-image-hero-studio__left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-section-two-image-hero-studio__left-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================================================
+   Right Panel (Product + Content) - 55% width
+   ============================================================================= */
+
+.custom-section-two-image-hero-studio__right {
+  width: 55%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Image/Color */
+.custom-section-two-image-hero-studio__right-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-section-two-image-hero-studio__right-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Product Image Layer */
+.custom-section-two-image-hero-studio__product-image-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.custom-section-two-image-hero-studio__product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =============================================================================
+   Content Overlay (Tagline, CTA, Heading)
+   ============================================================================= */
+
+.custom-section-two-image-hero-studio__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.custom-section-two-image-hero-studio__content > * {
+  pointer-events: auto;
+}
+
+/* Tagline - Top: 136px, Left: 64px */
+.custom-section-two-image-hero-studio__tagline {
+  position: absolute;
+  top: 136px;
+  left: 64px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  max-width: 210px;
+  margin: 0;
+}
+
+/* CTA - 48px below tagline */
+.custom-section-two-image-hero-studio__cta {
+  position: absolute;
+  top: calc(136px + 60px + 48px);
+  /* 136px (top) + ~60px (tagline height) + 48px (gap) */
+  left: 64px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  text-decoration: underline;
+  text-underline-offset: 25%;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-two-image-hero-studio__cta:hover {
+  opacity: 0.8;
+}
+
+/* Heading - Centered, Bottom: 56px */
+.custom-section-two-image-hero-studio__heading {
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Bickham Script Pro', serif;
+  font-weight: 400;
+  font-size: 100px;
+  line-height: 85.896px;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+}
+
+/* =============================================================================
+   Tablet Breakpoint (50/50 split)
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .custom-section-two-image-hero-studio__container {
+    min-height: 700px;
+  }
+
+  /* 50/50 split */
+  .custom-section-two-image-hero-studio__left {
+    width: 50%;
+  }
+
+  .custom-section-two-image-hero-studio__right {
+    width: 50%;
+  }
+
+  /* Scale content proportionally */
+  .custom-section-two-image-hero-studio__tagline {
+    top: 100px;
+    left: 48px;
+    font-size: 18px;
+    line-height: 27px;
+    max-width: 180px;
+  }
+
+  .custom-section-two-image-hero-studio__cta {
+    top: calc(100px + 54px + 36px);
+    left: 48px;
+    font-size: 18px;
+    line-height: 36px;
+  }
+
+  .custom-section-two-image-hero-studio__heading {
+    bottom: 42px;
+    font-size: 80px;
+    line-height: 68.717px;
+  }
+}
+
+/* =============================================================================
+   Mobile Breakpoint (Vertical stack, 1:1 aspect ratio)
+   ============================================================================= */
+
+@media (max-width: 767px) {
+  .custom-section-two-image-hero-studio__container {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  /* Both panels full width, 1:1 aspect ratio */
+  .custom-section-two-image-hero-studio__left,
+  .custom-section-two-image-hero-studio__right {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Scale content proportionally */
+  .custom-section-two-image-hero-studio__tagline {
+    top: 68px;
+    left: 32px;
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 160px;
+  }
+
+  .custom-section-two-image-hero-studio__cta {
+    top: calc(68px + 48px + 24px);
+    left: 32px;
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .custom-section-two-image-hero-studio__heading {
+    bottom: 28px;
+    font-size: 60px;
+    line-height: 51.538px;
+  }
+}
+
+/* =============================================================================
+   Small Mobile Breakpoint (Fine-tuning)
+   ============================================================================= */
+
+@media (max-width: 375px) {
+  .custom-section-two-image-hero-studio__tagline {
+    top: 56px;
+    left: 24px;
+    font-size: 14px;
+    line-height: 21px;
+    max-width: 140px;
+  }
+
+  .custom-section-two-image-hero-studio__cta {
+    top: calc(56px + 42px + 20px);
+    left: 24px;
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .custom-section-two-image-hero-studio__heading {
+    bottom: 24px;
+    font-size: 48px;
+    line-height: 41.23px;
+  }
+}
