@@ -212,7 +212,7 @@
 
   .custom-section-collection-image-overlay__left-image,
   .custom-section-collection-image-overlay__left-placeholder {
-    height: 700px;
+    height: 100%;
   }
 
   .custom-section-collection-image-overlay__right-container {
@@ -247,7 +247,7 @@
 @media (max-width: 767px) {
   .custom-section-collection-image-overlay__container {
     flex-direction: column;
-    min-height: auto;
+    height: 100%;
   }
 
   .custom-section-collection-image-overlay__left {
