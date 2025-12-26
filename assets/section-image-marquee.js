@@ -20,7 +20,6 @@
     if (items.length === 0) return;
 
     // Get settings from data attributes
-    const speed = parseFloat(section.dataset.speed) || 40;
     const pauseOnHover = section.dataset.pauseOnHover === 'true';
 
     // Clone items for seamless infinite loop
@@ -40,10 +39,14 @@
     const gap = 60; // Match CSS gap value
     const totalWidth = (itemWidth + gap) * items.length;
 
+    // Snail speed: 30 pixels per second (subtle, slow movement)
+    const pixelsPerSecond = 30;
+    const duration = totalWidth / pixelsPerSecond;
+
     // Set up GSAP animation
     const animation = gsap.to(track, {
       x: -totalWidth,
-      duration: speed,
+      duration: duration,
       ease: 'none',
       repeat: -1,
       modifiers: {

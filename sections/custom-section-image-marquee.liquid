@@ -2,7 +2,6 @@
 
 <div class="custom-section-image-marquee"
      style="background-color: {{ section.settings.background_color }};"
-     data-speed="{{ section.settings.marquee_speed }}"
      data-pause-on-hover="{{ section.settings.pause_on_hover }}">
 
   <div class="custom-section-image-marquee__wrapper">
@@ -44,17 +43,6 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#fffaf5"
-    },
-    {
-      "type": "range",
-      "id": "marquee_speed",
-      "label": "Marquee Speed",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "s",
-      "default": 40,
-      "info": "Time in seconds for one complete loop (higher = slower)"
     },
     {
       "type": "checkbox",
