@@ -1,0 +1,163 @@
+/* ============================================
+   Rich Text Content Diamension The Studio Section Styles
+   ============================================ */
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables */
+:root {
+  --rich-text-content-studio-text-color: #183754;
+  --rich-text-content-studio-bg-color: #ffffff;
+}
+
+/* Desktop Base - 1440px */
+.custom-rich-text-content-diamension-the-studio {
+  display: flex;
+  padding: 100px 200px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--rich-text-content-studio-bg-color);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-rich-text-content-diamension-the-studio__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.custom-rich-text-content-diamension-the-studio__heading {
+  color: var(--rich-text-content-studio-text-color);
+  text-align: center;
+  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 50px;
+  text-transform: uppercase;
+  margin: 0;
+  width: 100%;
+}
+
+.custom-rich-text-content-diamension-the-studio__description {
+  color: var(--rich-text-content-studio-text-color);
+  text-align: center;
+  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  margin: 0;
+  width: 100%;
+}
+
+/* Large Desktop - 1441px+ */
+@media (min-width: 1441px) {
+  .custom-rich-text-content-diamension-the-studio {
+    padding: 120px 250px;
+  }
+}
+
+/* Medium Desktop - 1250px */
+@media (max-width: 1250px) {
+  .custom-rich-text-content-diamension-the-studio {
+    padding: 80px 150px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__heading {
+    font-size: 28px;
+    line-height: 46px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__description {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
+
+/* Tablet and Below - 1024px */
+@media (max-width: 1024px) {
+  .custom-rich-text-content-diamension-the-studio {
+    padding: 60px 100px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__container {
+    gap: 14px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__heading {
+    font-size: 26px;
+    line-height: 42px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__description {
+    font-size: 17px;
+    line-height: 25px;
+  }
+}
+
+/* Mobile - 767px */
+@media (max-width: 767px) {
+  .custom-rich-text-content-diamension-the-studio {
+    padding: 50px 40px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__container {
+    gap: 12px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__heading {
+    font-size: 24px;
+    line-height: 38px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__description {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .custom-rich-text-content-diamension-the-studio {
+    padding: 40px 24px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__container {
+    gap: 10px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__heading {
+    font-size: 20px;
+    line-height: 34px;
+  }
+
+  .custom-rich-text-content-diamension-the-studio__description {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

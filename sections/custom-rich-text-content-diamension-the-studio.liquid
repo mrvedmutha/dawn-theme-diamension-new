@@ -1,0 +1,78 @@
+{{ 'section-custom-rich-text-content-diamension-the-studio.css' | asset_url | stylesheet_tag }}
+
+<style>
+  {%- if section.settings.text_color != blank -%}
+    #shopify-section-{{ section.id }} {
+      --rich-text-content-studio-text-color: {{ section.settings.text_color }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.background_color != blank -%}
+    #shopify-section-{{ section.id }} {
+      --rich-text-content-studio-bg-color: {{ section.settings.background_color }};
+    }
+  {%- endif -%}
+</style>
+
+<section class="custom-rich-text-content-diamension-the-studio">
+  <div class="custom-rich-text-content-diamension-the-studio__container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="custom-rich-text-content-diamension-the-studio__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="custom-rich-text-content-diamension-the-studio__description">
+        {{ section.settings.description }}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text - The Studio",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Elevated for the Boardroom"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Crafted for professionals who value precision, presence, and quiet confidence."
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#183754"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text Content - The Studio"
+    }
+  ]
+}
+{% endschema %}
