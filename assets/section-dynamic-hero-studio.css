@@ -155,6 +155,53 @@
 }
 
 /* ============================================
+   Animations (Desktop Only)
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Set initial state - hidden before scroll */
+@media (min-width: 1025px) {
+  .custom-section-dynamic-hero-studio__image-overlay-text,
+  .custom-section-dynamic-hero-studio__tagline,
+  .custom-section-dynamic-hero-studio__description {
+    opacity: 0;
+  }
+
+  /* Apply animations only when section is visible */
+  .custom-section-dynamic-hero-studio.is-visible .custom-section-dynamic-hero-studio__image-overlay-text {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .custom-section-dynamic-hero-studio.is-visible .custom-section-dynamic-hero-studio__image-overlay-text--image-1 {
+    animation-delay: 0.2s;
+  }
+
+  .custom-section-dynamic-hero-studio.is-visible .custom-section-dynamic-hero-studio__image-overlay-text--image-2 {
+    animation-delay: 0.4s;
+  }
+
+  .custom-section-dynamic-hero-studio.is-visible .custom-section-dynamic-hero-studio__tagline {
+    animation: fadeInUp 0.8s ease-out forwards;
+    animation-delay: 0.6s;
+  }
+
+  .custom-section-dynamic-hero-studio.is-visible .custom-section-dynamic-hero-studio__description {
+    animation: fadeInUp 0.8s ease-out forwards;
+    animation-delay: 0.8s;
+  }
+}
+
+/* ============================================
    Responsive: Large Desktop (1441px+)
    Center content, don't stretch
    ============================================ */
