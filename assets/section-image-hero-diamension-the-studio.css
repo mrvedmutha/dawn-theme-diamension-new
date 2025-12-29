@@ -38,6 +38,18 @@
   font-display: swap;
 }
 
+/* Keyframe Animation - Fade in from bottom */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Block */
 .custom-section-image-hero-diamension-the-studio {
   width: 100%;
@@ -82,6 +94,8 @@
   line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
 }
 
 /* Heading - Neue Haas Display (default) */
@@ -115,6 +129,8 @@
   text-decoration: underline;
   text-underline-offset: 25%;
   transition: opacity 0.3s ease;
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  opacity: 0;
 }
 
 .custom-section-image-hero-diamension-the-studio__cta:hover {
@@ -134,6 +150,13 @@
 
 /* Tablet - 1024px */
 @media (max-width: 1024px) {
+  /* Disable animations on tablet and mobile */
+  .custom-section-image-hero-diamension-the-studio__heading,
+  .custom-section-image-hero-diamension-the-studio__cta {
+    animation: none;
+    opacity: 1;
+  }
+
   .custom-section-image-hero-diamension-the-studio__container {
     height: 700px;
   }
@@ -144,7 +167,7 @@
 
   /* Use tablet font size from schema */
   .custom-section-image-hero-diamension-the-studio__heading {
-    font-size: var(--heading-size-tablet, 48px) !important;
+    font-size: var(--heading-size-tablet, 64px) !important;
     line-height: 1.15;
   }
 
@@ -171,7 +194,7 @@
 
   /* Use mobile font size from schema */
   .custom-section-image-hero-diamension-the-studio__heading {
-    font-size: var(--heading-size-mobile, 36px) !important;
+    font-size: var(--heading-size-mobile, 48px) !important;
     line-height: 1.2;
     white-space: normal;
     max-width: 100%;
@@ -199,7 +222,7 @@
 
   /* Use mobile font size (same as mobile breakpoint) */
   .custom-section-image-hero-diamension-the-studio__heading {
-    font-size: var(--heading-size-mobile, 36px) !important;
+    font-size: var(--heading-size-mobile, 44px) !important;
     line-height: 1.25;
   }
 
