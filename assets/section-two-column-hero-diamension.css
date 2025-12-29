@@ -108,6 +108,42 @@
 }
 
 /* =============================================================================
+   Scroll Animation (Desktop Only)
+   ============================================================================= */
+
+/* Initial state - hidden and translated down (desktop only) */
+@media screen and (min-width: 768px) {
+  .custom-section-two-column-hero__heading,
+  .custom-section-two-column-hero__description,
+  .custom-section-two-column-hero__button {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  /* Stagger delays for cascading effect - bottom to top */
+  .custom-section-two-column-hero__button {
+    transition-delay: 0.5s;
+  }
+
+  .custom-section-two-column-hero__description {
+    transition-delay: 0.8s;
+  }
+
+  .custom-section-two-column-hero__heading {
+    transition-delay: 1.1s;
+  }
+
+  /* Animated state - visible and in position */
+  .custom-section-two-column-hero--animated .custom-section-two-column-hero__heading,
+  .custom-section-two-column-hero--animated .custom-section-two-column-hero__description,
+  .custom-section-two-column-hero--animated .custom-section-two-column-hero__button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================================================================
    Heading
    ============================================================================= */
 
