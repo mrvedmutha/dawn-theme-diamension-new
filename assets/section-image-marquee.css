@@ -17,6 +17,23 @@
   position: relative;
 }
 
+/* Enable horizontal scroll on tablet and mobile */
+@media (max-width: 1024px) {
+  .custom-section-image-marquee__wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scroll-behavior: smooth;
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .custom-section-image-marquee__wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
 /* Track - Animated container for images */
 .custom-section-image-marquee__track {
   display: flex;

@@ -13,6 +13,11 @@
   const initMarquee = (section) => {
     if (!section || typeof gsap === 'undefined') return;
 
+    // Only enable animation on desktop (> 1024px)
+    if (window.innerWidth <= 1024) {
+      return; // Exit early on tablet/mobile - let CSS handle scrolling
+    }
+
     const track = section.querySelector('.custom-section-image-marquee__track');
     if (!track) return;
 
@@ -78,17 +83,30 @@
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        // Kill existing animation
-        animation.kill();
-        // Remove clones
-        const allItems = Array.from(track.children);
-        allItems.forEach((item, index) => {
-          if (index >= items.length) {
-            item.remove();
-          }
-        });
-        // Reinitialize
-        initMarquee(section);
+        // Check if we've crossed the desktop/mobile threshold
+        const shouldAnimate = window.innerWidth > 1024;
+        const hasAnimation = animation && animation.isActive !== undefined;
+
+        if (!shouldAnimate && hasAnimation) {
+          // Kill animation and remove clones when switching to mobile
+          animation.kill();
+          const allItems = Array.from(track.children);
+          allItems.forEach((item, index) => {
+            if (index >= items.length) {
+              item.remove();
+            }
+          });
+        } else if (shouldAnimate) {
+          // Reinitialize animation on desktop
+          animation.kill();
+          const allItems = Array.from(track.children);
+          allItems.forEach((item, index) => {
+            if (index >= items.length) {
+              item.remove();
+            }
+          });
+          initMarquee(section);
+        }
       }, 250);
     });
   };
