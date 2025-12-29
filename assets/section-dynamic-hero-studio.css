@@ -177,17 +177,39 @@
     --hero-studio-tagline-height: 42px;
     --hero-studio-description-size: 18px;
     --hero-studio-description-height: 26px;
+    --hero-studio-image-gap: 24px;
+  }
+
+  .custom-section-dynamic-hero-studio__container {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
   .custom-section-dynamic-hero-studio__image-wrapper {
-    flex: 0 0 450px;
-    width: 450px;
+    flex: 1 1 auto;
+    max-width: 450px;
+    width: 100%;
     height: 600px;
   }
 
   .custom-section-dynamic-hero-studio__image-overlay-text {
     font-size: var(--overlay-size-tablet);
     left: 90px;
+  }
+}
+
+/* ============================================
+   Responsive: Small Tablet (900px)
+   ============================================ */
+
+@media (max-width: 900px) {
+  .custom-section-dynamic-hero-studio__image-wrapper {
+    max-width: 380px;
+    height: 520px;
+  }
+
+  .custom-section-dynamic-hero-studio__image-overlay-text {
+    left: 70px;
   }
 }
 
