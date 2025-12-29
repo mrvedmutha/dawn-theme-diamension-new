@@ -62,6 +62,20 @@
   height: 74px;
 }
 
+/* Desktop: Animation initial state */
+@media (min-width: 1250px) {
+  .custom-section-hero-five-product__hero-logo {
+    opacity: 0;
+    transform: translate(-50%, 40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__hero-logo {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 /* ================================================================
    Hero Quote Overlay
    ================================================================ */
@@ -84,6 +98,20 @@
   line-height: 45px;
   color: #FFFAF5;
   margin: 0;
+}
+
+/* Desktop: Animation initial state */
+@media (min-width: 1250px) {
+  .custom-section-hero-five-product__hero-quote {
+    opacity: 0;
+    transform: translate(-50%, 40px);
+    transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__hero-quote {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 /* ================================================================
@@ -149,6 +177,41 @@
 
 .custom-section-hero-five-product__card--short {
   height: var(--hero-five-product-card-short);
+}
+
+/* Desktop: Animation initial state */
+@media (min-width: 1250px) {
+  .custom-section-hero-five-product__card {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  /* Staggered animation delays for each card */
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(1) {
+    transition-delay: 0.7s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(2) {
+    transition-delay: 0.85s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(3) {
+    transition-delay: 1.0s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(4) {
+    transition-delay: 1.15s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(5) {
+    transition-delay: 1.3s;
+  }
+
+  .custom-section-hero-five-product--animate .custom-section-hero-five-product__card {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ================================================================
@@ -312,6 +375,20 @@
     font-size: 26px;
     line-height: 38px;
   }
+
+  /* Product cards - slightly smaller on tablet */
+  .custom-section-hero-five-product__card {
+    flex: 0 0 240px;
+    width: 240px;
+  }
+
+  .custom-section-hero-five-product__card--tall {
+    height: 320px;
+  }
+
+  .custom-section-hero-five-product__card--short {
+    height: 240px;
+  }
 }
 
 /* ================================================================
@@ -353,6 +430,27 @@
     font-size: 20px;
     line-height: 30px;
   }
+
+  /* Product cards - smaller on mobile */
+  .custom-section-hero-five-product__card {
+    flex: 0 0 200px;
+    width: 200px;
+  }
+
+  .custom-section-hero-five-product__card--tall {
+    height: 280px;
+  }
+
+  .custom-section-hero-five-product__card--short {
+    height: 210px;
+  }
+
+  .custom-section-hero-five-product__card-title {
+    font-size: 18px;
+    line-height: 24px;
+    left: 16px;
+    right: 16px;
+  }
 }
 
 /* ================================================================
@@ -369,15 +467,32 @@
     margin-top: 30px;
   }
 
+  /* Product cards - smallest on very small screens */
+  .custom-section-hero-five-product__card {
+    flex: 0 0 180px;
+    width: 180px;
+  }
+
+  .custom-section-hero-five-product__card--tall {
+    height: 250px;
+  }
+
+  .custom-section-hero-five-product__card--short {
+    height: 190px;
+  }
+
   .custom-section-hero-five-product__card-title {
-    font-size: 20px;
-    line-height: 26px;
+    font-size: 16px;
+    line-height: 22px;
+    left: 12px;
+    right: 12px;
+    top: 12px;
   }
 
   .custom-section-hero-five-product__card-button {
-    width: 200px;
+    width: 156px;
     height: 36px;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   /* Hero logo - smallest on mobile */
