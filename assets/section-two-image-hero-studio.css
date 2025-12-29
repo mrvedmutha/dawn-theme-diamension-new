@@ -182,6 +182,17 @@
 }
 
 /* =============================================================================
+   Desktop Breakpoint (Fixed height at 1440px and above)
+   ============================================================================= */
+
+@media (min-width: 1440px) {
+  .custom-section-two-image-hero-studio__container {
+    height: 800px;
+    min-height: auto;
+  }
+}
+
+/* =============================================================================
    Tablet Breakpoint (50/50 split)
    ============================================================================= */
 
@@ -286,5 +297,44 @@
     bottom: 24px;
     font-size: 48px;
     line-height: 41.23px;
+  }
+}
+
+/* =============================================================================
+   Scroll Animations (Desktop Only)
+   ============================================================================= */
+
+@media (min-width: 768px) {
+  /* Initial state - hidden and positioned below */
+  .custom-section-two-image-hero-studio__tagline,
+  .custom-section-two-image-hero-studio__cta,
+  .custom-section-two-image-hero-studio__heading {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  /* Heading needs special transform handling due to existing translateX */
+  .custom-section-two-image-hero-studio__heading {
+    transform: translateX(-50%) translateY(30px);
+  }
+
+  /* Animated state - visible and in position */
+  .custom-section-two-image-hero-studio__tagline.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+
+  .custom-section-two-image-hero-studio__cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+  }
+
+  .custom-section-two-image-hero-studio__heading.animate-in {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0.7s;
   }
 }
