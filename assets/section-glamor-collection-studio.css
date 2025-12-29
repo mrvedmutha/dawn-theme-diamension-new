@@ -442,16 +442,16 @@
    -------------------------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-  /* Switch to 100vh height */
+  /* Switch to viewport height - using svh for stable height during scroll */
   .custom-section-glamor-collection__wrapper {
-    height: 100vh;
-    /* Mobile Safari fix - use CSS custom property */
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100vh; /* Fallback for older browsers */
+    height: 100svh; /* Small viewport height - stable during address bar show/hide */
     display: flex;
     flex-direction: column;
   }
 
-  @supports (-webkit-touch-callout: none) {
+  /* Fallback for browsers that don't support svh (older iOS Safari) */
+  @supports not (height: 100svh) {
     .custom-section-glamor-collection__wrapper {
       height: -webkit-fill-available;
     }

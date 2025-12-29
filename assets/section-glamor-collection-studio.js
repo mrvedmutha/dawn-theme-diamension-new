@@ -8,13 +8,16 @@
 
   /**
    * Set CSS custom property for accurate viewport height
-   * This fixes the 100vh issue on mobile Safari where the viewport height
-   * includes the browser chrome (address bar, toolbar, etc.)
+   * NOTE: This is now only used as a fallback for older browsers that don't support svh
+   * Modern browsers use 100svh which is stable during scrolling
    * Reference: https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
    */
   const setViewportHeight = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // Only set for browsers that don't support svh
+    if (!CSS.supports('height', '100svh')) {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
   };
 
   /**
@@ -113,16 +116,27 @@
   }
 
   // Update viewport height on resize (debounced)
+  // Only trigger on actual width changes, not height changes from address bar
   let resizeTimeout;
+  let lastWidth = window.innerWidth;
+
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      // Update viewport height for mobile Safari
-      setViewportHeight();
+      const currentWidth = window.innerWidth;
 
-      // Refresh ScrollTrigger on resize
-      if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh();
+      // Only update if width changed (actual resize/orientation change)
+      // Ignore height-only changes from mobile address bar
+      if (currentWidth !== lastWidth) {
+        lastWidth = currentWidth;
+
+        // Update viewport height for mobile Safari (only for older browsers)
+        setViewportHeight();
+
+        // Refresh ScrollTrigger on resize
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh();
+        }
       }
     }, 250);
   });
