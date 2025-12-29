@@ -1,0 +1,610 @@
+/* ==========================================================================
+   Glamor Collection - The Studio Section
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Font Face Declarations
+   -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('../assets/fonts/Bickham Script Pro/Bickham Script Pro Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   Base Section Styles - Full Width Breakout
+   Forces section to be full viewport width even when inside page container
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Wrapper - Full Width Background Container
+   Desktop: 1528px fixed height
+   Tablet/Mobile: 100vh
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__wrapper {
+  position: relative;
+  width: 100vw;
+  height: 1528px; /* Desktop fixed height */
+  overflow: hidden;
+  background-color: #beb6a9;
+}
+
+/* --------------------------------------------------------------------------
+   Content Container - Max Width 1440px Centered
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__content {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Background Image
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.custom-section-glamor-collection__background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Background Placeholder */
+.custom-section-glamor-collection__background--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #beb6a9;
+}
+
+.custom-section-glamor-collection__placeholder-content {
+  text-align: center;
+  color: #fffaf5;
+  font-family: 'Neue Haas Display', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   Headline Content
+   Positioned absolutely within the content container (1440px max-width)
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__headline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allow clicks to pass through to cards */
+}
+
+.custom-section-glamor-collection__headline * {
+  pointer-events: auto; /* Re-enable clicks on text elements */
+}
+
+.custom-section-glamor-collection__headline-text {
+  font-family: 'Bickham Script Pro', serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 160px;
+  line-height: 45px;
+  color: #fffaf5;
+  margin: 0;
+  position: absolute;
+  left: calc(50% - 629.6px);
+  top: 178px; /* From design tokens: top position in 1528px wrapper */
+  width: 372px;
+  height: 71.872px;
+}
+
+.custom-section-glamor-collection__subtitle {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 45px;
+  color: #fffaf5;
+  margin: 0;
+  position: absolute;
+  left: calc(50% - 596.4px);
+  top: 256px; /* From design tokens: top position in 1528px wrapper */
+  width: 506.799px;
+}
+
+/* --------------------------------------------------------------------------
+   Product Cards - Desktop (Absolute Positioning)
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__cards--desktop {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.custom-section-glamor-collection__cards--responsive {
+  display: none;
+}
+
+.custom-section-glamor-collection__card {
+  position: absolute;
+  overflow: hidden;
+}
+
+.custom-section-glamor-collection__card-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(27, 27, 27, 0.19);
+}
+
+/* Card Position 1 - Top Right */
+.custom-section-glamor-collection__card--1 {
+  left: 975.11px;
+  top: 606.5px;
+  width: 269px;
+  height: 314px;
+}
+
+.custom-section-glamor-collection__card--1 .custom-section-glamor-collection__card-name {
+  position: absolute;
+  left: 20px;
+  top: 24px; /* More breathing space from top */
+}
+
+.custom-section-glamor-collection__card--1 .custom-section-glamor-collection__card-cta {
+  position: absolute;
+  left: 20px;
+  bottom: 24px; /* More breathing space from bottom */
+}
+
+/* Card Position 2 - Bottom Left */
+.custom-section-glamor-collection__card--2 {
+  left: 377px;
+  top: 1205.57px;
+  width: 340px;
+  height: 265px;
+}
+
+.custom-section-glamor-collection__card--2 .custom-section-glamor-collection__card-name {
+  position: absolute;
+  left: 20px;
+  top: 24px; /* More breathing space from top */
+}
+
+.custom-section-glamor-collection__card--2 .custom-section-glamor-collection__card-cta {
+  position: absolute;
+  left: 20px;
+  bottom: 24px; /* More breathing space from bottom */
+}
+
+/* Card Position 3 - Bottom Right */
+.custom-section-glamor-collection__card--3 {
+  left: 1047.88px;
+  top: 1167px;
+  width: 275px;
+  height: 288px;
+}
+
+.custom-section-glamor-collection__card--3 .custom-section-glamor-collection__card-name {
+  position: absolute;
+  left: 20px;
+  top: 24px; /* More breathing space from top */
+}
+
+.custom-section-glamor-collection__card--3 .custom-section-glamor-collection__card-cta {
+  position: absolute;
+  left: 20px;
+  bottom: 24px; /* More breathing space from bottom */
+}
+
+/* Card Position 4 - Center Bottom */
+.custom-section-glamor-collection__card--4 {
+  left: 780px;
+  top: 1027px;
+  width: 214px;
+  height: 212px;
+}
+
+.custom-section-glamor-collection__card--4 .custom-section-glamor-collection__card-name {
+  position: absolute;
+  left: 20px;
+  top: 24px; /* More breathing space from top */
+}
+
+.custom-section-glamor-collection__card--4 .custom-section-glamor-collection__card-cta {
+  position: absolute;
+  left: 20px;
+  bottom: 24px; /* More breathing space from bottom */
+}
+
+/* --------------------------------------------------------------------------
+   Product Card Content
+   -------------------------------------------------------------------------- */
+
+.custom-section-glamor-collection__card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+}
+
+.custom-section-glamor-collection__card-name {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 30px;
+  color: #fffaf5;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  z-index: 15;
+  max-width: calc(100% - 40px);
+}
+
+.custom-section-glamor-collection__card-cta {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  color: #fffaf5;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 25%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease;
+  z-index: 15;
+  display: inline-block;
+}
+
+.custom-section-glamor-collection__card-cta:hover {
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------------------
+   GSAP Animation Initial States (Desktop Only)
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1025px) {
+  .custom-section-glamor-collection__headline,
+  .custom-section-glamor-collection__card {
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Proportional Scaling (1440px - 1025px)
+   Ensures cards don't float out of viewport on intermediate screen sizes
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1250px) and (max-width: 1439px) {
+  /* Scale factor: ~0.87 for 1250px viewport */
+  .custom-section-glamor-collection__wrapper {
+    height: 1330px;
+  }
+
+  .custom-section-glamor-collection__headline-text {
+    font-size: 139px;
+    left: calc(50% - 547px);
+    top: calc(50% - 508px);
+  }
+
+  .custom-section-glamor-collection__subtitle {
+    font-size: 26px;
+    left: calc(50% - 518px);
+    top: calc(50% - 441px);
+  }
+
+  /* Card 1 */
+  .custom-section-glamor-collection__card--1 {
+    left: 848px;
+    top: 527px;
+    width: 234px;
+    height: 273px;
+  }
+
+  /* Card 2 */
+  .custom-section-glamor-collection__card--2 {
+    left: 328px;
+    top: 1048px;
+    width: 296px;
+    height: 230px;
+  }
+
+  /* Card 3 */
+  .custom-section-glamor-collection__card--3 {
+    left: 912px;
+    top: 1015px;
+    width: 239px;
+    height: 251px;
+  }
+
+  /* Card 4 */
+  .custom-section-glamor-collection__card--4 {
+    left: 679px;
+    top: 893px;
+    width: 186px;
+    height: 184px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1249px) {
+  /* Scale factor: ~0.76 for 1100px viewport */
+  .custom-section-glamor-collection__wrapper {
+    height: 1161px;
+  }
+
+  .custom-section-glamor-collection__headline-text {
+    font-size: 122px;
+    left: calc(50% - 478px);
+    top: calc(50% - 444px);
+  }
+
+  .custom-section-glamor-collection__subtitle {
+    font-size: 23px;
+    left: calc(50% - 453px);
+    top: calc(50% - 385px);
+  }
+
+  /* Card 1 */
+  .custom-section-glamor-collection__card--1 {
+    left: 741px;
+    top: 461px;
+    width: 204px;
+    height: 239px;
+  }
+
+  /* Card 2 */
+  .custom-section-glamor-collection__card--2 {
+    left: 286px;
+    top: 916px;
+    width: 258px;
+    height: 201px;
+  }
+
+  /* Card 3 */
+  .custom-section-glamor-collection__card--3 {
+    left: 796px;
+    top: 887px;
+    width: 209px;
+    height: 219px;
+  }
+
+  /* Card 4 */
+  .custom-section-glamor-collection__card--4 {
+    left: 593px;
+    top: 780px;
+    width: 163px;
+    height: 161px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Tablet (768px - 1024px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  /* Switch to 100vh height */
+  .custom-section-glamor-collection__wrapper {
+    height: 100vh;
+    /* Mobile Safari fix - use CSS custom property */
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .custom-section-glamor-collection__wrapper {
+      height: -webkit-fill-available;
+    }
+  }
+
+  .custom-section-glamor-collection__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .custom-section-glamor-collection__content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Hide desktop absolute positioned cards */
+  .custom-section-glamor-collection__cards--desktop {
+    display: none;
+  }
+
+  /* Show responsive grid */
+  .custom-section-glamor-collection__cards--responsive {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 0 20px 20px 20px; /* No top padding, 20px bottom */
+    z-index: 5;
+    /* max-height: 50vh; Reduced to prevent overflow */
+    margin-top: auto; /* Push cards to bottom */
+  }
+
+  /* Reset card positioning for grid */
+  .custom-section-glamor-collection__card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Instagram portrait ratio */
+  }
+
+  /* Left-align card content for tablet/mobile with better spacing */
+  .custom-section-glamor-collection__card-name {
+    position: absolute;
+    top: 24px; /* Fixed padding from top for consistent spacing */
+    left: 20px;
+    right: 20px;
+    text-align: left;
+  }
+
+  .custom-section-glamor-collection__card-cta {
+    position: absolute;
+    bottom: 24px; /* Fixed padding from bottom for consistent spacing */
+    left: 20px;
+    text-align: left;
+  }
+
+  /* Scale down headline */
+  .custom-section-glamor-collection__headline-text {
+    font-size: 120px;
+    left: 40px;
+    top: 40px;
+    width: auto;
+  }
+
+  .custom-section-glamor-collection__subtitle {
+    font-size: 24px;
+    left: 8%;
+    top: 108px;
+    width: auto;
+    max-width: 400px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Mobile (< 768px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  /* 2-column grid */
+  .custom-section-glamor-collection__cards--responsive {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+    max-height: 90vh;
+  }
+
+  /* Further scale down headline */
+  .custom-section-glamor-collection__headline-text {
+    font-size: 100px;
+    line-height: 1;
+    left: 32px;
+    top: 32px;
+  }
+
+  .custom-section-glamor-collection__subtitle {
+    font-size: 18px;
+    line-height: 1.4;
+    left: 56px;
+    top: 112px;
+    max-width: calc(100% - 32px);
+  }
+
+  /* Adjust card font sizes */
+  .custom-section-glamor-collection__card-name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .custom-section-glamor-collection__card-cta {
+    font-size: 16px;
+    line-height: 32px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Small Mobile (< 576px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 575px) {
+  .custom-section-glamor-collection__cards--responsive {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .custom-section-glamor-collection__headline-text {
+    font-size: 100px;
+  }
+
+  .custom-section-glamor-collection__subtitle {
+    top: 120px;
+    left: 40px;
+    font-size: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Aspect Ratio Fallback for Older Browsers
+   -------------------------------------------------------------------------- */
+
+@supports not (aspect-ratio: 1 / 1) {
+  .custom-section-glamor-collection__card::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+
+  .custom-section-glamor-collection__card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
