@@ -1,0 +1,90 @@
+{{ 'section-image-hero.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign has_image = false
+  if section.settings.background_image != blank
+    assign has_image = true
+  endif
+
+  assign bg_color = '#FFFAF5'
+  assign text_color = '#183754'
+
+  if has_image
+    assign text_color = section.settings.text_color
+  endif
+%}
+
+<div class="custom-section-image-hero{% if has_image %} custom-section-image-hero--with-image{% endif %}"
+     {% if has_image == false %}style="background-color: {{ bg_color }};"{% endif %}>
+
+  {% if has_image %}
+    <div class="custom-section-image-hero__background">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 1920 }}"
+        srcset="{{ section.settings.background_image | image_url: width: 600 }} 600w,
+                {{ section.settings.background_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.background_image | image_url: width: 1920 }} 1920w"
+        sizes="100vw"
+        alt="{{ section.settings.background_image.alt | escape }}"
+        loading="lazy"
+        class="custom-section-image-hero__background-image"
+      >
+    </div>
+
+    {% if section.settings.overlay_opacity > 0 %}
+      <div class="custom-section-image-hero__overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+    {% endif %}
+  {% endif %}
+
+  <div class="custom-section-image-hero__content">
+    {% if section.settings.heading != blank %}
+      <h2 class="custom-section-image-hero__heading" style="color: {{ text_color }};">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Image Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Recommended size: 1920x800px. If no image is uploaded, a fallback background color will be used."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Innovation and artistry, perfected by Diamension."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFAF5",
+      "info": "This color is used when a background image is uploaded."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Background Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "Add a dark overlay on top of the background image. 0% = no overlay (default)."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Hero"
+    }
+  ]
+}
+{% endschema %}
