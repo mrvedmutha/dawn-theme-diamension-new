@@ -92,6 +92,42 @@
 }
 
 /* =============================================================================
+   Scroll Animation (Desktop Only)
+   ============================================================================= */
+
+/* Initial state - hidden and translated down (desktop only) */
+@media screen and (min-width: 768px) {
+  .custom-section-image-hero-corporate__heading,
+  .custom-section-image-hero-corporate__description,
+  .custom-section-image-hero-corporate__button {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  /* Stagger delays for cascading effect - bottom to top */
+  .custom-section-image-hero-corporate__button {
+    transition-delay: 0.5s;
+  }
+
+  .custom-section-image-hero-corporate__description {
+    transition-delay: 0.8s;
+  }
+
+  .custom-section-image-hero-corporate__heading {
+    transition-delay: 1.1s;
+  }
+
+  /* Animated state - visible and in position */
+  .custom-section-image-hero-corporate--animated .custom-section-image-hero-corporate__heading,
+  .custom-section-image-hero-corporate--animated .custom-section-image-hero-corporate__description,
+  .custom-section-image-hero-corporate--animated .custom-section-image-hero-corporate__button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================================================================
    Heading (Bickham Script Pro)
    ============================================================================= */
 
