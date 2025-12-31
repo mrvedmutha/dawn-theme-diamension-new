@@ -9,10 +9,10 @@ When user provides a Figma node/URL, you delegate to the appropriate agent.
 
 ## Critical Rule: Agent Existence Check
 
-**Before running ANY agent, check if it exists in `.agents/` folder:**
+**Before running ANY agent, check if it exists in `.claude/agents/` folder:**
 
 ```
-.agents/
+.claude/agents/
 ├── analyzer.md
 ├── planner.md
 ├── developer.md
@@ -25,7 +25,7 @@ When user provides a Figma node/URL, you delegate to the appropriate agent.
 ```
 ❌ Cannot proceed - Agent not found
 
-Missing: .agents/analyzer.md
+Missing: .claude/agents/analyzer.md
 The Analyzer agent has not been created yet.
 
 To create agents, use: /agents command in Claude Code
@@ -39,7 +39,7 @@ Cannot continue pipeline without required agents.
 
 ## Trigger Detection
 
-**First: Check `.agents/` folder exists and has required agent files.**
+**First: Check `.claude/agents/` folder exists and has required agent files.**
 
 | User Says | Required Agent | Action |
 |-----------|----------------|--------|
@@ -97,7 +97,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: ANALYZER
 
-**File:** `.agents/analyzer.md`  
+**File:** `.claude/agents/analyzer.md`  
 **Trigger:** User provides Figma node/URL  
 **Input:** Figma node reference  
 **Output:** `figma-analysis.json`, screenshots  
@@ -107,7 +107,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: PLANNER
 
-**File:** `.agents/planner.md`  
+**File:** `.claude/agents/planner.md`  
 **Trigger:** Analyzer complete + user confirmed  
 **Input:** `figma-analysis.json`  
 **Output:** `01-overview.md`, `02-design-tokens.md`, `03-implementation.md`  
@@ -117,7 +117,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: DEVELOPER
 
-**File:** `.agents/developer.md`  
+**File:** `.claude/agents/developer.md`  
 **Trigger:** Planner complete + user confirmed  
 **Input:** Planning docs  
 **Output:** `.liquid`, `.css`, `.js` files  
@@ -127,7 +127,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: VALIDATOR
 
-**File:** `.agents/validator.md`  
+**File:** `.claude/agents/validator.md`  
 **Trigger:** Developer complete  
 **Input:** Created files  
 **Output:** `validation-report.json`  
@@ -137,7 +137,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: TESTER
 
-**File:** `.agents/tester.md`  
+**File:** `.claude/agents/tester.md`  
 **Trigger:** Validator passed  
 **Input:** Live theme at localhost:9292  
 **Output:** `test-results.json`  
@@ -147,7 +147,7 @@ USER: "Create this section [Figma node]"
 
 ## Agent: FIXER
 
-**File:** `.agents/fixer.md`  
+**File:** `.claude/agents/fixer.md`  
 **Trigger:** Tests failed  
 **Input:** `test-results.json`  
 **Output:** Fixed files or escalation  

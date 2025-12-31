@@ -50,3 +50,7 @@ plans/**
 templates/*.json
 config/settings_data.json
 section/*.json
+
+# Claude Files
+claude.md
+./claude/**
