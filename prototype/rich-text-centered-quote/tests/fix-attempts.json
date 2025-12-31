@@ -1,0 +1,26 @@
+{
+  "section_name": "rich-text-centered-quote",
+  "issue": "Small mobile (375px) font size is 24px instead of 20px",
+  "element": ".custom-section-rtc-quote__text",
+  "breakpoint": "375px",
+  "test_type": "visual_regression",
+  "attempts": [
+    {
+      "attempt": 1,
+      "timestamp": "2025-12-31T14:40:00.000Z",
+      "action": "Added 'screen' media type and !important declarations to small mobile media query to ensure font-size: 20px and line-height: 26px override the mobile breakpoint styles",
+      "file_changed": "assets/section-rtc-quote.css",
+      "lines_changed": "72-82",
+      "changes_made": [
+        "Changed @media (max-width: 375px) to @media screen and (max-width: 375px)",
+        "Added !important to font-size: 20px",
+        "Added !important to line-height: 26px"
+      ],
+      "reasoning": "The media query existed but may not have been applying correctly due to specificity issues or inline styles. Using !important ensures the small mobile styles override any conflicting rules.",
+      "result": "pending"
+    }
+  ],
+  "max_attempts": 3,
+  "current_attempt": 1,
+  "escalated": false
+}

@@ -1,0 +1,160 @@
+{
+  "section_name": "rich-text-centered-quote",
+  "design_source": "figma",
+  "design_source_details": "https://www.figma.com/design/xGtEw0s7Uqxnux92qSegX8/Diamension---Dev--FINAL-?node-id=12-5036&m=dev",
+  "figma_node_id": "12:5036",
+  "component_type": "Centered text content section / Brand statement block",
+  "description": "Static centered text block displaying brand mission statement with warm background",
+
+  "elements": [
+    {
+      "type": "section_container",
+      "editable": false,
+      "properties": {
+        "background_color": "#FFFAF5",
+        "height": "605px",
+        "max_width": "1440px",
+        "display": "flex",
+        "align_items": "center",
+        "justify_content": "center",
+        "margin": "0 auto"
+      }
+    },
+    {
+      "type": "text_content",
+      "editable": true,
+      "properties": {
+        "content": "We believe diamonds should not only shine but also stand for something greater. With Diamensions, you don't just wear jewelry—you wear authenticity, innovation, and a vision for the future.",
+        "text_align": "center",
+        "color": "#183754",
+        "max_width": "675px"
+      }
+    }
+  ],
+
+  "design_tokens": {
+    "colors": {
+      "background": "#FFFAF5",
+      "text": "#183754"
+    },
+    "typography": {
+      "font_family": "Neue Haas Grotesk Display Pro, sans-serif",
+      "font_weight": "400",
+      "font_path": "assets/fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2",
+      "desktop_1440": {
+        "font_size": "40px",
+        "line_height": "45px"
+      },
+      "tablet_1024": {
+        "font_size": "32px",
+        "line_height": "38px"
+      },
+      "mobile_767": {
+        "font_size": "24px",
+        "line_height": "30px"
+      },
+      "small_mobile_375": {
+        "font_size": "20px",
+        "line_height": "26px"
+      }
+    },
+    "spacing": {
+      "section_height": "605px",
+      "content_max_width": "675px",
+      "section_max_width": "1440px",
+      "text_alignment": "center"
+    }
+  },
+
+  "responsive": {
+    "tablet_1024": {
+      "font_size": "32px",
+      "line_height": "38px",
+      "width": "80vw",
+      "notes": "Scaled down ~20% from desktop"
+    },
+    "mobile_767": {
+      "font_size": "24px",
+      "line_height": "30px",
+      "width": "90vw",
+      "constraint": "Content must fit in 5 lines maximum"
+    },
+    "small_mobile_375": {
+      "font_size": "20px",
+      "line_height": "26px",
+      "width": "95vw",
+      "constraint": "Content must fit in 5 lines maximum"
+    },
+    "large_desktop_1441": {
+      "max_width": "1440px",
+      "margin": "0 auto",
+      "notes": "Prevent stretch beyond 1440px"
+    },
+    "height_behavior": "FIXED at 605px for all breakpoints"
+  },
+
+  "assets": {
+    "fonts": {
+      "status": "ready",
+      "note": "Using existing Neue Haas Grotesk Display Pro Roman (400) from assets/fonts/neue-haas-display/"
+    },
+    "images": {
+      "status": "not_applicable",
+      "note": "Text-only section, no images required"
+    }
+  },
+
+  "schema_settings": [
+    {
+      "type": "textarea",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "We believe diamonds should not only shine but also stand for something greater. With Diamensions, you don't just wear jewelry—you wear authenticity, innovation, and a vision for the future."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFAF5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#183754"
+    }
+  ],
+
+  "interactions": {
+    "animations": "none",
+    "hover_effects": "none",
+    "scroll_effects": "none",
+    "behavior": "Static text display only"
+  },
+
+  "special_requirements": [
+    "Section height FIXED at 605px for all devices",
+    "Container max-width: 1440px (no expansion beyond)",
+    "Text alignment: CENTER ONLY (hardcoded, not customizable)",
+    "Padding/Margin: margin 0 auto for centering, no padding controls",
+    "Font: Use existing font from assets/fonts/neue-haas-display/",
+    "NO font size override - use defined responsive sizes",
+    "CSS naming convention: custom-section- prefix",
+    "Mobile constraint: Content must fit in 5 lines maximum",
+    "No z-index or special positioning considerations"
+  ],
+
+  "technical_notes": {
+    "file_structure": [
+      "sections/custom-section-rich-text-centered-quote.liquid",
+      "assets/section-rich-text-centered-quote.css"
+    ],
+    "css_class_prefix": "custom-section-rich-text-centered-quote",
+    "liquid_object_access": "section.settings",
+    "responsive_pattern": "Based on existing section-diamension-quote.css pattern"
+  },
+
+  "human_confirmed": true,
+  "created_at": "2025-12-31",
+  "status": "complete"
+}
