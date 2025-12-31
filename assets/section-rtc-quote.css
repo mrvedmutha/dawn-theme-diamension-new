@@ -1,0 +1,82 @@
+/* =============================================================================
+   Rich Text Centered Quote Section
+   Fixed-height centered text block with responsive typography
+   ============================================================================= */
+
+/* Base styles for 1440px Desktop */
+.custom-section-rtc-quote {
+  background-color: #FFFAF5; /* Default - overridden by inline style */
+  width: 100%;
+  height: 605px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-rtc-quote__container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-rtc-quote__text {
+  max-width: 675px;
+  width: 100%;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754; /* Default - overridden by inline style */
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Large Desktop - Prevent stretch beyond 1440px */
+@media (min-width: 1441px) {
+  .custom-section-rtc-quote__container {
+    max-width: 1440px;
+  }
+}
+
+/* Tablet - 1024px and below */
+@media (max-width: 1024px) {
+  .custom-section-rtc-quote {
+    height: 605px; /* Maintain fixed height */
+  }
+
+  .custom-section-rtc-quote__text {
+    max-width: 80vw;
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+/* Mobile - 767px and below */
+@media (max-width: 767px) {
+  .custom-section-rtc-quote {
+    height: 605px; /* Maintain fixed height */
+  }
+
+  .custom-section-rtc-quote__text {
+    max-width: 90vw;
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+/* Small Mobile - 375px and below */
+@media screen and (max-width: 375px) {
+  .custom-section-rtc-quote {
+    height: 605px; /* Maintain fixed height */
+  }
+
+  .custom-section-rtc-quote__text {
+    max-width: 95vw;
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+}

@@ -1,0 +1,49 @@
+{{ 'section-rtc-quote.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="custom-section-rtc-quote"
+  style="background-color: {{ section.settings.background_color }};"
+>
+  <div class="custom-section-rtc-quote__container">
+    <p
+      class="custom-section-rtc-quote__text"
+      style="color: {{ section.settings.text_color }};"
+    >
+      {{ section.settings.text_content }}
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text Centered Quote",
+  "tag": "section",
+  "class": "custom-section-rtc-quote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "We believe diamonds should not only shine but also stand for something greater. With Diamensions, you don't just wear jewelry—you wear authenticity, innovation, and a vision for the future.",
+      "info": "Keep content concise. Mobile devices limit text to 5 lines maximum."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFAF5"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#183754"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text Centered Quote"
+    }
+  ]
+}
+{% endschema %}
