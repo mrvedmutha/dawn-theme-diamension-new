@@ -43,9 +43,9 @@ Cannot continue pipeline without required agents.
 
 | User Says | Required Agent | Action |
 |-----------|----------------|--------|
-| Figma node/URL + "create section" | analyzer.md | Delegate to Analyzer |
-| "continue" / "resume" | [depends on state] | Check state.json → Delegate to current phase agent |
-| "status" | none | Read `state.json` → Report current state |
+| Figma node/URL + "create section" | analyzer.md | Check agents exist → Delegate to Analyzer (do NOT read state.json) |
+| "continue" / "resume" | [depends on state] | Read `prototype/[section-name]/state.json` → Delegate to current phase agent |
+| "status" | none | Read `prototype/[section-name]/state.json` → Report current state |
 | "test" / "run tests" | tester.md | Delegate to Tester |
 
 **If required agent missing → Stop and report. Do not proceed.**
@@ -157,7 +157,7 @@ USER: "Create this section [Figma node]"
 
 ## State Management
 
-**After each phase, update `.automation/state.json`:**
+**After each phase, update `prototype/[section-name]/state.json`:**
 ```json
 {
   "section_name": "hero-video",
@@ -171,7 +171,7 @@ USER: "Create this section [Figma node]"
 }
 ```
 
-**On session start:** Read state.json, announce status, offer to resume.
+**On resume/status request:** Read `prototype/[section-name]/state.json`, announce status, offer to continue.
 
 ---
 
@@ -199,21 +199,23 @@ USER: "Create this section [Figma node]"
 ## File Structure
 
 ```
-.automation/
-├── state.json
-├── current-section/
-│   ├── figma-analysis.json
-│   ├── figma-desktop.png
-│   ├── 01-overview.md
-│   ├── 02-design-tokens.md
-│   ├── 03-implementation.md
-│   ├── validation-report.json
-│   ├── test-results.json
-│   └── fix-attempts.json
-├── component-templates/
-│   └── [saved patterns]
-└── escalation-log.md
+prototype/
+└── [section-name]/
+    ├── state.json
+    ├── design-analysis.json
+    ├── figma-screenshots/
+    │   ├── desktop.png
+    │   ├── tablet.png
+    │   └── mobile.png
+    ├── 01-overview.md
+    ├── 02-design-tokens.md
+    ├── 03-implementation.md
+    ├── validation-report.json
+    ├── test-results.json
+    └── fix-attempts.json
 ```
+
+**Note:** Each section gets its own folder in `prototype/[section-name]/` with all planning, analysis, and test results.
 
 ---
 
