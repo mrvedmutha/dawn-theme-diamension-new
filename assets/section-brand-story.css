@@ -1,0 +1,331 @@
+/* =============================================
+   BRAND STORY ABOUT US SECTION
+   ============================================= */
+
+/* Font-face declarations */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplay-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplay-Roman.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Section Container */
+.custom-section-brand-story {
+  background-color: #FFFAF5;
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Flexbox Container */
+.custom-section-brand-story__container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Left Column - Content */
+.custom-section-brand-story__content {
+  flex: 0 0 50vw;
+  width: 50vw;
+  display: flex;
+  align-items: flex-start;
+  padding: 192px 0 0 56px;
+  position: relative;
+  z-index: 4;
+}
+
+.custom-section-brand-story__content-inner {
+  max-width: 498px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Heading */
+.custom-section-brand-story__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rich Text Content */
+.custom-section-brand-story__text {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3E6282;
+}
+
+.custom-section-brand-story__text p {
+  margin: 0 0 20px 0;
+}
+
+.custom-section-brand-story__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Right Column - Image Wrapper */
+.custom-section-brand-story__image-wrapper {
+  flex: 0 0 50vw;
+  width: 50vw;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Background Image */
+.custom-section-brand-story__image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Image Placeholder */
+.custom-section-brand-story__image--placeholder {
+  background-color: #E5E5E5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-brand-story__placeholder-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 18px;
+  color: #999999;
+}
+
+/* Logo Overlay */
+.custom-section-brand-story__logo-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  max-width: 200px;
+  width: 100%;
+}
+
+.custom-section-brand-story__logo-overlay img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =============================================
+   ANIMATIONS - DESKTOP ONLY
+   ============================================= */
+
+/* Initial state for animated elements */
+.custom-section-brand-story .animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Active state when in view */
+.custom-section-brand-story .animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sequential animation delays */
+.custom-section-brand-story__heading.animate-on-scroll {
+  transition-delay: 0ms;
+}
+
+.custom-section-brand-story__text.animate-on-scroll {
+  transition-delay: 200ms;
+}
+
+.custom-section-brand-story__logo-overlay.animate-on-scroll {
+  transition-delay: 400ms;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .custom-section-brand-story .animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}
+
+/* =============================================
+   LARGE DESKTOP (1441px+)
+   ============================================= */
+
+@media (min-width: 1441px) {
+  .custom-section-brand-story__container {
+    max-width: 1440px;
+  }
+
+  .custom-section-brand-story__content,
+  .custom-section-brand-story__image-wrapper {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+}
+
+/* =============================================
+   TABLET (1024px and below)
+   ============================================= */
+
+@media (max-width: 1024px) {
+  .custom-section-brand-story {
+    height: 800px;
+  }
+
+  .custom-section-brand-story__content {
+    padding: 140px 0 0 40px;
+  }
+
+  .custom-section-brand-story__content-inner {
+    max-width: 420px;
+    gap: 20px;
+  }
+
+  .custom-section-brand-story__heading {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .custom-section-brand-story__text {
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .custom-section-brand-story__text p {
+    margin-bottom: 18px;
+  }
+
+  .custom-section-brand-story__logo-overlay {
+    max-width: 180px;
+  }
+
+  /* DISABLE ANIMATIONS ON TABLET */
+  .custom-section-brand-story .animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =============================================
+   MOBILE (767px and below)
+   ============================================= */
+
+@media (max-width: 767px) {
+  .custom-section-brand-story {
+    height: 75vh;
+  }
+
+  .custom-section-brand-story__container {
+    flex-direction: column;
+  }
+
+  /* Image first - takes 60% of 75vh */
+  .custom-section-brand-story__image-wrapper {
+    flex: 0 0 60%;
+    width: 100%;
+    order: 1;
+  }
+
+  /* Content below - takes 40% of 75vh */
+  .custom-section-brand-story__content {
+    flex: 0 0 40%;
+    width: 100%;
+    padding: 40px 20px;
+    order: 2;
+    overflow-y: auto;
+  }
+
+  .custom-section-brand-story__content-inner {
+    max-width: 90%;
+    margin: 0 auto;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .custom-section-brand-story__heading {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .custom-section-brand-story__text {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .custom-section-brand-story__text p {
+    margin-bottom: 16px;
+  }
+
+  .custom-section-brand-story__logo-overlay {
+    max-width: 150px;
+  }
+
+  /* DISABLE ANIMATIONS ON MOBILE */
+  .custom-section-brand-story .animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =============================================
+   SMALL MOBILE (375px and below)
+   ============================================= */
+
+@media (max-width: 375px) {
+  .custom-section-brand-story {
+    height: 75vh;
+  }
+
+  .custom-section-brand-story__content {
+    padding: 32px 16px;
+  }
+
+  .custom-section-brand-story__heading {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .custom-section-brand-story__text {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .custom-section-brand-story__text p {
+    margin-bottom: 14px;
+  }
+
+  .custom-section-brand-story__logo-overlay {
+    max-width: 120px;
+  }
+}
