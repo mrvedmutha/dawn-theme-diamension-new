@@ -1,0 +1,172 @@
+/* Font-face declarations */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.sustainability-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sustainability-hero__wrapper {
+  position: relative;
+  width: 100%;
+  height: 800px;
+}
+
+.sustainability-hero__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sustainability-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sustainability-hero__image--placeholder {
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sustainability-hero__image--placeholder svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sustainability-hero__content {
+  position: absolute;
+  top: 80px;
+  left: 48px;
+  max-width: 554px;
+  z-index: 10;
+}
+
+.sustainability-hero__heading {
+  margin: 0 0 1.5rem 0;
+  font-size: 50px;
+  line-height: 45px;
+  font-weight: 300;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.sustainability-hero__text {
+  font-size: 16px;
+  line-height: 21.429px;
+  font-weight: 400;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #ffffff;
+  max-width: 510px;
+}
+
+.sustainability-hero__text p {
+  margin: 0;
+}
+
+/* Animation styles - Desktop only */
+@media screen and (min-width: 1025px) {
+  .sustainability-hero .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .sustainability-hero .animate-on-scroll:nth-child(2) {
+    transition-delay: 0.3s;
+  }
+
+  .sustainability-hero .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure content is visible on tablet and mobile */
+@media screen and (max-width: 1024px) {
+  .sustainability-hero .animate-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Tablet styles */
+@media screen and (max-width: 1024px) and (min-width: 750px) {
+  .sustainability-hero__content {
+    top: 60px;
+    left: 40px;
+  }
+
+  .sustainability-hero__heading {
+    font-size: 42px;
+    line-height: 38px;
+    max-width: 450px;
+  }
+
+  .sustainability-hero__text {
+    font-size: 15px;
+    line-height: 20px;
+    max-width: 420px;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 749px) {
+  .sustainability-hero__wrapper {
+    height: 600px;
+  }
+
+  .sustainability-hero__content {
+    top: 40px;
+    left: 20px;
+    right: 20px;
+    max-width: calc(100% - 40px);
+  }
+
+  .sustainability-hero__heading {
+    font-size: 32px;
+    line-height: 30px;
+    margin-bottom: 1rem;
+  }
+
+  .sustainability-hero__text {
+    font-size: 14px;
+    line-height: 18px;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sustainability-hero__wrapper {
+    height: 500px;
+  }
+
+  .sustainability-hero__heading {
+    font-size: 28px;
+    line-height: 26px;
+  }
+}

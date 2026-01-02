@@ -1,0 +1,119 @@
+{{ 'component-sustainability-hero.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div
+  class="sustainability-hero section-{{ section.id }}-padding color-{{ section.settings.section_color_scheme }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="sustainability-hero__wrapper">
+    {%- if section.settings.image != blank -%}
+      <div class="sustainability-hero__image">
+        {{
+          section.settings.image
+          | image_url: width: 2880
+          | image_tag: loading: 'lazy', widths: '375, 750, 1100, 1500, 1780, 2000, 2880', sizes: '100vw'
+        }}
+      </div>
+    {%- else -%}
+      <div class="sustainability-hero__image sustainability-hero__image--placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="sustainability-hero__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="sustainability-hero__heading animate-on-scroll" style="color: {{ section.settings.text_color }};">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="sustainability-hero__text animate-on-scroll" style="color: {{ section.settings.text_color }};">
+          {{ section.settings.text }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-sustainability-hero.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Sustainability Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Sustainability at the Heart of Brilliance",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>At Diamensions, sustainability isn't an afterthought—it's at the core of how we create brilliance. Our lab-grown diamonds are powered by solar energy, ensuring every stone shines with a smaller footprint and a greater purpose. By harnessing the power of the sun, we redefine luxury for a conscious world—proving that beauty and responsibility can truly go hand in hand.</p>",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sustainability Hero"
+    }
+  ]
+}
+{% endschema %}
