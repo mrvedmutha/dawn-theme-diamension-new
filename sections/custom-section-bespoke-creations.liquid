@@ -1,0 +1,219 @@
+{{ 'section-bespoke-creations.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-bespoke-creations" id="bespokeCreations-{{ section.id }}">
+  <div class="custom-section-bespoke-creations__wrapper">
+    <div class="custom-section-bespoke-creations__container">
+      {% if section.settings.heading != blank %}
+        <h2 class="custom-section-bespoke-creations__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      <div class="custom-section-bespoke-creations__content">
+        <!-- Video Content Wrapper -->
+        <div class="custom-section-bespoke-creations__videos">
+          <!-- Left Video -->
+          {% if section.settings.left_video != blank or section.settings.left_image != blank %}
+            <div class="custom-section-bespoke-creations__video custom-section-bespoke-creations__video--left">
+              <div
+                class="custom-section-bespoke-creations__media js-video-container"
+                data-video-url="{{ section.settings.left_video }}"
+              >
+                {% if section.settings.left_video != blank %}
+                  <!-- Video will be injected by JavaScript -->
+                  <div class="custom-section-bespoke-creations__video-placeholder"></div>
+                {% elsif section.settings.left_image != blank %}
+                  <img
+                    src="{{ section.settings.left_image | image_url: width: 530 }}"
+                    srcset="
+                      {{ section.settings.left_image | image_url: width: 264 }} 264w,
+                      {{ section.settings.left_image | image_url: width: 528 }} 528w,
+                      {{ section.settings.left_image | image_url: width: 530 }} 530w
+                    "
+                    sizes="(min-width: 1024px) 264px, 150px"
+                    alt="{{ section.settings.left_image.alt | escape }}"
+                    loading="lazy"
+                    class="custom-section-bespoke-creations__fallback-image js-parallax-image"
+                  >
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Center Video (Arch) -->
+          {% if section.settings.center_video != blank or section.settings.center_image != blank %}
+            <div class="custom-section-bespoke-creations__video custom-section-bespoke-creations__video--center">
+              <div class="custom-section-bespoke-creations__arch-container">
+                <div
+                  class="custom-section-bespoke-creations__media js-video-container"
+                  data-video-url="{{ section.settings.center_video }}"
+                >
+                  {% if section.settings.center_video != blank %}
+                    <!-- Video will be injected by JavaScript -->
+                    <div class="custom-section-bespoke-creations__video-placeholder">&nbsp;</div>
+                  {% elsif section.settings.center_image != blank %}
+                    <img
+                      src="{{ section.settings.center_image | image_url: width: 830 }}"
+                      srcset="
+                        {{ section.settings.center_image | image_url: width: 416 }} 416w,
+                        {{ section.settings.center_image | image_url: width: 832 }} 832w,
+                        {{ section.settings.center_image | image_url: width: 830 }} 830w
+                      "
+                      sizes="(min-width: 1024px) 416px, 100vw"
+                      alt="{{ section.settings.center_image.alt | escape }}"
+                      loading="lazy"
+                      class="custom-section-bespoke-creations__fallback-image"
+                    >
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Right Video -->
+          {% if section.settings.right_video != blank or section.settings.right_image != blank %}
+            <div class="custom-section-bespoke-creations__video custom-section-bespoke-creations__video--right">
+              <div
+                class="custom-section-bespoke-creations__media js-video-container"
+                data-video-url="{{ section.settings.right_video }}"
+              >
+                {% if section.settings.right_video != blank %}
+                  <!-- Video will be injected by JavaScript -->
+                  <div class="custom-section-bespoke-creations__video-placeholder">&nbsp;</div>
+                {% elsif section.settings.right_image != blank %}
+                  <img
+                    src="{{ section.settings.right_image | image_url: width: 530 }}"
+                    srcset="
+                      {{ section.settings.right_image | image_url: width: 264 }} 264w,
+                      {{ section.settings.right_image | image_url: width: 528 }} 528w,
+                      {{ section.settings.right_image | image_url: width: 530 }} 530w
+                    "
+                    sizes="(min-width: 1024px) 264px, 150px"
+                    alt="{{ section.settings.right_image.alt | escape }}"
+                    loading="lazy"
+                    class="custom-section-bespoke-creations__fallback-image js-parallax-image"
+                  >
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Description Content -->
+        <div class="custom-section-bespoke-creations__description">
+          {% if section.settings.description != blank %}
+            <div class="custom-section-bespoke-creations__description-text">
+              {{ section.settings.description }}
+            </div>
+          {% endif %}
+
+          <!-- CTA -->
+          {% if section.settings.cta_text != blank %}
+            <div class="custom-section-bespoke-creations__cta-wrapper">
+              {% if section.settings.cta_link != blank %}
+                <a href="{{ section.settings.cta_link }}" class="custom-section-bespoke-creations__cta">
+                  {{ section.settings.cta_text }}
+                </a>
+              {% else %}
+                <span class="custom-section-bespoke-creations__cta">
+                  {{ section.settings.cta_text }}
+                </span>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-bespoke-creations.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Bespoke Creations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "bespoke creATIONS"
+    },
+    {
+      "type": "header",
+      "content": "Left Video/Image"
+    },
+    {
+      "type": "text",
+      "id": "left_video",
+      "label": "Left Video URL",
+      "info": "Direct video link (.mp4, .webm) or Shopify CDN URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Fallback Image"
+    },
+    {
+      "type": "header",
+      "content": "Center Video/Image (Arch)"
+    },
+    {
+      "type": "text",
+      "id": "center_video",
+      "label": "Center Video URL",
+      "info": "Direct video link (.mp4, .webm) or Shopify CDN URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "center_image",
+      "label": "Center Fallback Image"
+    },
+    {
+      "type": "header",
+      "content": "Right Video/Image"
+    },
+    {
+      "type": "text",
+      "id": "right_video",
+      "label": "Right Video URL",
+      "info": "Direct video link (.mp4, .webm) or Shopify CDN URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Fallback Image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description Text",
+      "default": "<p>At Diamensions, every diamond is more than a gem, it's a journey of innovation, ethics, and artistry. Our craft transforms light into timeless beauty, ensuring every sparkle reflects responsibility and vision.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "Know our Process"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bespoke Creations"
+    }
+  ]
+}
+{% endschema %}
