@@ -1,0 +1,196 @@
+{
+  "section_name": "brand-story-about-us",
+  "design_source": "figma",
+  "design_source_details": "https://www.figma.com/design/xGtEw0s7Uqxnux92qSegX8/Diamension---Dev--FINAL-?node-id=381-83&m=dev",
+  "component_type": "Brand Story / About Us section with two-column layout - text content on left, decorative image with logo overlay on right",
+  "elements": [
+    {
+      "type": "heading",
+      "content": "OUR STORY",
+      "editable": true,
+      "properties": {
+        "font_family": "Neue Haas Grotesk Display Pro",
+        "font_weight": "Light",
+        "font_size_desktop": "40px",
+        "line_height": "45px",
+        "color": "#183754",
+        "text_transform": "uppercase",
+        "position_left": "56px",
+        "position_top": "192px",
+        "default_value": "OUR STORY"
+      }
+    },
+    {
+      "type": "rich_text_content",
+      "content": "Combined paragraph content in rich text editor",
+      "editable": true,
+      "properties": {
+        "font_family": "Neue Haas Grotesk Display Pro",
+        "font_weight": "Roman",
+        "font_size_desktop": "20px",
+        "line_height": "30px",
+        "color": "#3E6282",
+        "max_width": "498px",
+        "default_value": "Diamensions was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.\n\nFrom manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition."
+      }
+    },
+    {
+      "type": "background_image",
+      "editable": true,
+      "properties": {
+        "width_desktop": "711px",
+        "height": "800px",
+        "position_left": "729px",
+        "object_fit": "cover",
+        "upload_required": true,
+        "placeholder_if_empty": true
+      }
+    },
+    {
+      "type": "logo_overlay",
+      "editable": true,
+      "properties": {
+        "asset_path": "assets/custom-section-diamension-quote/logo/diamension-logo.svg",
+        "position": "centered on image",
+        "show_hide_toggle": true,
+        "default_visible": true
+      }
+    }
+  ],
+  "design_tokens": {
+    "colors": {
+      "background": "#FFFAF5",
+      "heading_text": "#183754",
+      "body_text": "#3E6282",
+      "note": "These colors are HARDCODED - not editable in schema settings"
+    },
+    "typography": {
+      "font_family": "Neue Haas Grotesk Display Pro",
+      "font_path": "assets/fonts/neue-haas-display/",
+      "available_weights": ["Light", "Roman", "Bold"],
+      "heading": {
+        "weight": "Light",
+        "size": "40px",
+        "line_height": "45px",
+        "transform": "uppercase"
+      },
+      "body": {
+        "weight": "Roman",
+        "size": "20px",
+        "line_height": "30px"
+      }
+    },
+    "spacing": {
+      "section_height": "800px",
+      "left_margin": "56px",
+      "heading_top": "192px",
+      "content_max_width": "498px",
+      "note": "Spacing is hardcoded, not editable in settings"
+    }
+  },
+  "responsive": {
+    "desktop_1440": {
+      "layout": "Two-column flexbox with 50-50vw split",
+      "wrapper": "Holds background",
+      "container": "1440px max-width",
+      "content": "Left column, aligned from middle of container with 56px margin/padding from edge",
+      "image": "Right column, takes full width of its 50vw container, stays within flexbox column, object-fit: cover",
+      "logo_overlay": "Centered on image",
+      "height": "800px frame height",
+      "animations": "Scroll-triggered fade-in from bottom: heading first, content second, logo overlay third"
+    },
+    "tablet_1024": {
+      "layout": "Keep same two-column layout",
+      "height": "800px frame height maintained",
+      "font_scaling": "Gradually scale down to prevent overflow",
+      "animations": "NONE - no animations on tablet"
+    },
+    "mobile_767": {
+      "layout": "Stack vertically - image first (with overlay logo), content below",
+      "content_alignment": "Content block centered (margin: 0 auto), text LEFT ALIGNED within block",
+      "height": "800px frame height maintained",
+      "font_scaling": "Gradually scale down to prevent overflow",
+      "animations": "NONE - no animations on mobile"
+    },
+    "small_375": {
+      "layout": "Same as mobile_767",
+      "height": "800px frame height maintained",
+      "font_scaling": "Continue gradual scaling",
+      "animations": "NONE"
+    }
+  },
+  "assets": {
+    "background_image": {
+      "status": "merchant_upload",
+      "note": "Configurable via section settings, placeholder if none uploaded"
+    },
+    "logo_overlay_svg": {
+      "status": "ready",
+      "path": "assets/custom-section-diamension-quote/logo/diamension-logo.svg",
+      "note": "Existing asset, reused from quote section"
+    }
+  },
+  "schema_settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<p>Diamensions was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo_overlay",
+      "label": "Show Logo Overlay",
+      "default": true
+    }
+  ],
+  "interactions": {
+    "animations": {
+      "enabled_on": "desktop_only",
+      "trigger": "scroll (not page load)",
+      "type": "fade_in_from_bottom",
+      "sequence": [
+        {
+          "element": "heading",
+          "order": 1
+        },
+        {
+          "element": "content",
+          "order": 2
+        },
+        {
+          "element": "logo_overlay",
+          "order": 3
+        }
+      ],
+      "disabled_on": ["tablet", "mobile"]
+    },
+    "hover_effects": "none",
+    "other_interactions": "none"
+  },
+  "special_requirements": [
+    "Desktop layout: 50-50vw flexbox split - image stays within its 50vw column (NOT breaking out to full viewport width)",
+    "Image takes full width of its 50vw container, stays within flexbox column",
+    "Maintain 800px frame height across ALL breakpoints (desktop, tablet, mobile)",
+    "Font sizes scale down gradually on smaller screens to prevent content overflow",
+    "Animations ONLY on desktop, triggered by scroll (not on page load)",
+    "NO animations on tablet or mobile devices",
+    "Mobile layout: image first, content below (NOT content first)",
+    "Mobile text alignment: content block is centered, but text is LEFT ALIGNED within that block",
+    "Colors are hardcoded (not editable in settings): background #FFFAF5, heading #183754, body #3E6282",
+    "Reuse existing logo SVG from custom-section-diamension-quote section",
+    "Rich text field for content (not separate paragraph fields)"
+  ],
+  "human_confirmed": false
+}
