@@ -1,0 +1,357 @@
+/* ============================================================================
+   Bespoke Creations Section - Custom Shopify Section
+   ============================================================================ */
+
+/* ============================================================================
+   Root Variables
+   ============================================================================ */
+:root {
+  --bc-color-wrapper-bg: #fffaf5;
+  --bc-color-text-primary: #183754;
+  --bc-container-max-width: 1440px;
+  --bc-container-padding-desktop: 56px;
+  --bc-container-padding-tablet: 30px;
+  --bc-container-padding-mobile: 20px;
+  --bc-heading-size: 40px;
+  --bc-heading-line-height: 86.229px;
+  --bc-description-size: 20px;
+  --bc-description-line-height: 30px;
+  --bc-cta-size: 20px;
+  --bc-cta-line-height: 40px;
+  --bc-spacing-content: 32px;
+  --bc-spacing-cta: 40px;
+  --bc-transition-default: 0.3s ease;
+}
+
+/* ============================================================================
+   Wrapper & Container
+   ============================================================================ */
+.custom-section-bespoke-creations {
+  width: 100%;
+  background-color: var(--bc-color-wrapper-bg);
+  overflow: hidden;
+}
+
+.custom-section-bespoke-creations__wrapper {
+  width: 100%;
+  background-color: var(--bc-color-wrapper-bg);
+}
+
+.custom-section-bespoke-creations__container {
+  max-width: var(--bc-container-max-width);
+  margin: 0 auto;
+  padding: 120px var(--bc-container-padding-desktop) 80px;
+  position: relative;
+}
+
+/* ============================================================================
+   Heading
+   ============================================================================ */
+.custom-section-bespoke-creations__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: var(--bc-heading-size);
+  line-height: var(--bc-heading-line-height);
+  color: var(--bc-color-text-primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 auto 72px;
+  max-width: 100%;
+}
+
+/* ============================================================================
+   Content Wrapper
+   ============================================================================ */
+.custom-section-bespoke-creations__content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ============================================================================
+   Videos Wrapper
+   ============================================================================ */
+.custom-section-bespoke-creations__videos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  position: relative;
+  margin-bottom: var(--bc-spacing-content);
+}
+
+/* Desktop only - horizontal layout */
+@media screen and (min-width: 1025px) {
+  .custom-section-bespoke-creations__videos {
+    flex-direction: row;
+  }
+}
+
+/* ============================================================================
+   Individual Video Containers
+   ============================================================================ */
+.custom-section-bespoke-creations__video {
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-section-bespoke-creations__video--left {
+  width: 264px;
+  height: 376px;
+  order: 1;
+}
+
+.custom-section-bespoke-creations__video--center {
+  width: 416px;
+  height: 584px;
+  order: 2;
+  margin: 0 calc((100% - 264px - 416px - 264px) / 2);
+}
+
+.custom-section-bespoke-creations__video--right {
+  width: 264px;
+  height: 376px;
+  order: 3;
+}
+
+/* ============================================================================
+   Center Arch Container
+   ============================================================================ */
+.custom-section-bespoke-creations__arch-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================================================
+   Media Container (Video/Image)
+   ============================================================================ */
+.custom-section-bespoke-creations__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Center video gets arch clip-path */
+.custom-section-bespoke-creations__video--center .custom-section-bespoke-creations__media {
+  clip-path: path('M416,584H0V193.57C0,86.66,93.12,0,208,0h0c114.88,0,208,86.66,208,193.57v390.43Z');
+}
+
+.custom-section-bespoke-creations__media video,
+.custom-section-bespoke-creations__fallback-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.custom-section-bespoke-creations__video-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================================================
+   Description Content
+   ============================================================================ */
+.custom-section-bespoke-creations__description {
+  width: 416px;
+  max-width: 100%;
+  text-align: left;
+}
+
+.custom-section-bespoke-creations__description-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: var(--bc-description-size);
+  line-height: var(--bc-description-line-height);
+  color: var(--bc-color-text-primary);
+  margin: 0;
+}
+
+.custom-section-bespoke-creations__description-text p {
+  margin: 0 0 1em;
+}
+
+.custom-section-bespoke-creations__description-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================================
+   CTA
+   ============================================================================ */
+.custom-section-bespoke-creations__cta-wrapper {
+  margin-top: var(--bc-spacing-cta);
+  text-align: center;
+}
+
+.custom-section-bespoke-creations__cta {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: var(--bc-cta-size);
+  line-height: var(--bc-cta-line-height);
+  color: var(--bc-color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: opacity var(--bc-transition-default);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.custom-section-bespoke-creations__cta:hover {
+  opacity: 0.8;
+}
+
+/* ============================================================================
+   Tablet Breakpoint (≤1024px)
+   ============================================================================ */
+@media screen and (max-width: 1024px) {
+  .custom-section-bespoke-creations__container {
+    padding: 60px var(--bc-container-padding-tablet);
+  }
+
+  .custom-section-bespoke-creations__heading {
+    font-size: 36px;
+    line-height: 44px;
+    margin-bottom: 40px;
+  }
+
+  /* Reorganize layout: Center video full-width, then side videos in 2-column */
+  .custom-section-bespoke-creations__videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Center video first - full width */
+  .custom-section-bespoke-creations__video--center {
+    width: 100%;
+    max-width: 416px;
+    height: auto;
+    aspect-ratio: 416 / 584;
+    margin: 0;
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  /* Side videos - 2 columns side by side */
+  .custom-section-bespoke-creations__video--left,
+  .custom-section-bespoke-creations__video--right {
+    width: calc(50% - 8px);
+    max-width: calc(208px - 8px);
+    height: auto;
+    aspect-ratio: 264 / 376;
+    flex-basis: calc(50% - 8px);
+  }
+
+  .custom-section-bespoke-creations__video--left {
+    order: 2;
+  }
+
+  .custom-section-bespoke-creations__video--right {
+    order: 3;
+  }
+
+  .custom-section-bespoke-creations__description {
+    width: 100%;
+    max-width: 416px;
+    text-align: left;
+  }
+
+  /* Disable parallax on tablet/mobile */
+  .js-parallax-image {
+    transform: none !important;
+  }
+}
+
+/* ============================================================================
+   Mobile Breakpoint (≤767px)
+   ============================================================================ */
+@media screen and (max-width: 767px) {
+  .custom-section-bespoke-creations__container {
+    padding: 40px var(--bc-container-padding-mobile);
+  }
+
+  .custom-section-bespoke-creations__heading {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 32px;
+  }
+
+  .custom-section-bespoke-creations__description-text {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .custom-section-bespoke-creations__cta {
+    font-size: 18px;
+    line-height: 36px;
+  }
+
+  .custom-section-bespoke-creations__cta-wrapper {
+    margin-top: 32px;
+  }
+}
+
+/* ============================================================================
+   Mobile Breakpoint (≤480px)
+   ============================================================================ */
+@media screen and (max-width: 480px) {
+  /* Change clip-path to border-radius for center video */
+  .custom-section-bespoke-creations__video--center .custom-section-bespoke-creations__media {
+    clip-path: none;
+    border-radius: 100% 100% 0 0 / 50% 50% 0 0;
+  }
+}
+
+/* ============================================================================
+   Small Mobile Breakpoint (≤375px)
+   ============================================================================ */
+@media screen and (max-width: 375px) {
+  .custom-section-bespoke-creations__container {
+    padding: 30px 15px;
+  }
+
+  .custom-section-bespoke-creations__heading {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .custom-section-bespoke-creations__description-text {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .custom-section-bespoke-creations__cta {
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .custom-section-bespoke-creations__videos {
+    gap: 12px;
+  }
+}
+
+/* ============================================================================
+   Large Desktop (≥1441px) - Center content
+   ============================================================================ */
+@media screen and (min-width: 1441px) {
+  .custom-section-bespoke-creations__container {
+    max-width: var(--bc-container-max-width);
+    margin: 0 auto;
+  }
+}
