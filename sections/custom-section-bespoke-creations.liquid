@@ -21,7 +21,7 @@
               >
                 {% if section.settings.left_video != blank %}
                   <!-- Video will be injected by JavaScript -->
-                  <div class="custom-section-bespoke-creations__video-placeholder"></div>
+                  <div class="custom-section-bespoke-creations__video-placeholder">&nbsp;</div>
                 {% elsif section.settings.left_image != blank %}
                   <img
                     src="{{ section.settings.left_image | image_url: width: 530 }}"

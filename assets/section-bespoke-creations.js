@@ -3,7 +3,7 @@
  * Handles video loading (Direct MP4/WebM) and parallax effects
  */
 
-(function() {
+(function () {
   'use strict';
 
   // ============================================================================
@@ -13,15 +13,15 @@
     selectors: {
       section: '.custom-section-bespoke-creations',
       videoContainer: '.js-video-container',
-      parallaxImages: '.js-parallax-image'
+      parallaxImages: '.js-parallax-image',
     },
     breakpoints: {
-      tablet: 1024
+      tablet: 1024,
     },
     parallax: {
-      movement: 80, // Pixels of vertical movement
-      ease: 'none'
-    }
+      movement: 250, // Pixels of vertical movement
+      ease: 'none',
+    },
   };
 
   // ============================================================================
@@ -43,7 +43,9 @@
       if (videoType === 'direct') {
         this.loadDirectVideo();
       } else {
-        console.warn('Bespoke Creations: Unsupported video URL format. Only direct video links (.mp4, .webm) are supported.');
+        console.warn(
+          'Bespoke Creations: Unsupported video URL format. Only direct video links (.mp4, .webm) are supported.'
+        );
       }
     }
 
@@ -66,7 +68,8 @@
       video.loop = true;
       video.playsInline = true;
       video.controls = false;
-      video.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover;';
+      video.style.cssText =
+        'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover;';
 
       // Handle video load errors
       video.addEventListener('error', () => {
@@ -87,7 +90,12 @@
       this.images = section.querySelectorAll(CONFIG.selectors.parallaxImages);
       this.isDesktop = window.innerWidth > CONFIG.breakpoints.tablet;
 
-      if (this.isDesktop && this.images.length > 0 && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      if (
+        this.isDesktop &&
+        this.images.length > 0 &&
+        typeof gsap !== 'undefined' &&
+        typeof ScrollTrigger !== 'undefined'
+      ) {
         this.init();
       }
     }
@@ -99,9 +107,10 @@
       this.images.forEach((image) => {
         // Create parallax effect for each image
         // Animation goes from -movement to +movement for proper parallax effect
-        gsap.fromTo(image,
+        gsap.fromTo(
+          image,
           {
-            y: -CONFIG.parallax.movement
+            y: -CONFIG.parallax.movement,
           },
           {
             y: CONFIG.parallax.movement,
@@ -110,8 +119,8 @@
               trigger: this.section,
               start: 'top 80%', // Start animation when section reaches 80% from top
               end: 'bottom 20%', // End animation when section is 20% from top
-              scrub: true
-            }
+              scrub: true,
+            },
           }
         );
       });
@@ -119,7 +128,7 @@
 
     destroy() {
       if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     }
   }
@@ -139,7 +148,7 @@
 
     init() {
       // Initialize video handlers
-      this.videoContainers.forEach(container => {
+      this.videoContainers.forEach((container) => {
         new VideoHandler(container);
       });
 
@@ -181,7 +190,7 @@
 
     if (sections.length === 0) return;
 
-    sections.forEach(section => {
+    sections.forEach((section) => {
       new BespokeCreationsSection(section);
     });
   }
@@ -195,11 +204,10 @@
 
   // Re-initialize on Shopify section load (theme editor)
   if (typeof Shopify !== 'undefined' && Shopify.designMode) {
-    document.addEventListener('shopify:section:load', function(event) {
+    document.addEventListener('shopify:section:load', function (event) {
       if (event.target.querySelector(CONFIG.selectors.section)) {
         init();
       }
     });
   }
-
 })();
