@@ -26,7 +26,10 @@
         >
           {% if section.settings.show_logo_overlay %}
             <div class="custom-section-brand-story__logo-overlay animate-on-scroll">
-              {{ 'custom-section-diamension-quote/logo/diamension-logo.svg' | asset_url | image_tag }}
+              <img
+                src="{{ 'custom-section-diamension-quote/logo/diamension-logo.svg' | asset_url }}"
+                alt="Diamension Logo"
+              >
             </div>
           {% endif %}
         </div>
@@ -35,7 +38,10 @@
           <span class="custom-section-brand-story__placeholder-text">Add a background image</span>
           {% if section.settings.show_logo_overlay %}
             <div class="custom-section-brand-story__logo-overlay animate-on-scroll">
-              {{ 'custom-section-diamension-quote/logo/diamension-logo.svg' | asset_url | image_tag }}
+              <img
+                src="{{ 'custom-section-diamension-quote/logo/diamension-logo.svg' | asset_url }}"
+                alt="Diamension Logo"
+              >
             </div>
           {% endif %}
         </div>
