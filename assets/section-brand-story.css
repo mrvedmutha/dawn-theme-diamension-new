@@ -21,7 +21,7 @@
 
 /* Section Container */
 .custom-section-brand-story {
-  background-color: #FFFAF5;
+  background-color: #fffaf5;
   width: 100%;
   height: 800px;
   overflow: hidden;
@@ -42,8 +42,8 @@
   flex: 0 0 50vw;
   width: 50vw;
   display: flex;
-  align-items: flex-start;
-  padding: 192px 0 0 56px;
+  align-items: center;
+  padding: 0 0 0 56px;
   position: relative;
   z-index: 4;
 }
@@ -73,7 +73,7 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
-  color: #3E6282;
+  color: #3e6282;
 }
 
 .custom-section-brand-story__text p {
@@ -101,11 +101,14 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Image Placeholder */
 .custom-section-brand-story__image--placeholder {
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,15 +126,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
-  max-width: 200px;
-  width: 100%;
+  z-index: 10;
+  width: 75px;
+  height: auto;
+  pointer-events: none;
 }
 
 .custom-section-brand-story__logo-overlay img {
   width: 100%;
   height: auto;
   display: block;
+  filter: brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(416%) hue-rotate(15deg) brightness(98%)
+    contrast(91%);
 }
 
 /* =============================================
@@ -142,15 +148,24 @@
 .custom-section-brand-story .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
+}
+
+/* Logo needs special centering during animation */
+.custom-section-brand-story__logo-overlay.animate-on-scroll {
+  transform: translate(-50%, calc(-50% + 30px));
 }
 
 /* Active state when in view */
 .custom-section-brand-story .animate-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Logo centered state when visible */
+.custom-section-brand-story__logo-overlay.animate-on-scroll.is-visible {
+  transform: translate(-50%, -50%);
 }
 
 /* Sequential animation delays */
@@ -202,7 +217,7 @@
   }
 
   .custom-section-brand-story__content {
-    padding: 140px 0 0 40px;
+    padding: 0 20px 0 20px;
   }
 
   .custom-section-brand-story__content-inner {
@@ -225,7 +240,7 @@
   }
 
   .custom-section-brand-story__logo-overlay {
-    max-width: 180px;
+    max-width: 65px;
   }
 
   /* DISABLE ANIMATIONS ON TABLET */
@@ -242,27 +257,28 @@
 
 @media (max-width: 767px) {
   .custom-section-brand-story {
-    height: 75vh;
+    height: auto;
   }
 
   .custom-section-brand-story__container {
     flex-direction: column;
   }
 
-  /* Image first - takes 60% of 75vh */
+  /* Image first - fixed height */
   .custom-section-brand-story__image-wrapper {
-    flex: 0 0 60%;
+    flex: 0 0 500px;
     width: 100%;
+    height: 500px;
     order: 1;
   }
 
-  /* Content below - takes 40% of 75vh */
+  /* Content below - auto height */
   .custom-section-brand-story__content {
-    flex: 0 0 40%;
+    flex: 0 0 auto;
     width: 100%;
     padding: 40px 20px;
     order: 2;
-    overflow-y: auto;
+    overflow-y: visible;
   }
 
   .custom-section-brand-story__content-inner {
@@ -287,7 +303,7 @@
   }
 
   .custom-section-brand-story__logo-overlay {
-    max-width: 150px;
+    max-width: 50px;
   }
 
   /* DISABLE ANIMATIONS ON MOBILE */
@@ -304,7 +320,12 @@
 
 @media (max-width: 375px) {
   .custom-section-brand-story {
-    height: 75vh;
+    height: auto;
+  }
+
+  .custom-section-brand-story__image-wrapper {
+    flex: 0 0 500px;
+    height: 500px;
   }
 
   .custom-section-brand-story__content {
@@ -326,6 +347,6 @@
   }
 
   .custom-section-brand-story__logo-overlay {
-    max-width: 120px;
+    max-width: 40px;
   }
 }
