@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "contact_page": {
+      "type": "custom-section-contact-page",
+      "blocks": {
+        "menu_item_1": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "CONTACT",
+            "menu_link": "",
+            "is_active": true
+          }
+        },
+        "menu_item_2": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "FAQS",
+            "menu_link": "",
+            "is_active": false
+          }
+        },
+        "menu_item_3": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "RETURN & REFUNDS",
+            "menu_link": "",
+            "is_active": false
+          }
+        },
+        "menu_item_4": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "SHIPPING",
+            "menu_link": "",
+            "is_active": false
+          }
+        },
+        "info_block_1": {
+          "type": "info_block",
+          "settings": {
+            "heading_left": "CUSTOMER CARE",
+            "content_left": "<p>Our concierge team will get back to you in 1-2 business days. Please be advised that we may be slower to reply during peak sessions.</p><p>(Monday–Friday, 9am–5pm)</p>",
+            "email_left": "diamension@gmail.com",
+            "heading_right": "ORDERS, SHIPPING AND RETURNS",
+            "content_right": "<p>Questions about your order, shipping and returns? Please contact:</p>",
+            "email_right": "Info@diamensions.world"
+          }
+        },
+        "info_block_2": {
+          "type": "info_block",
+          "settings": {
+            "heading_left": "HEAD QUATERS",
+            "content_left": "<p>Mumbai (H.O)</p><p>Diamension India PVT- FC-9020, Bharat Diamond Bourse, Bandra Kurla Complex, G Block, Bandra East, Mumbai - 400051</p><p>&nbsp;</p><p>+91 2266449999</p>",
+            "email_left": "",
+            "heading_right": "DIAMOND MANUFACTURING",
+            "content_right": "<p>Surat</p><p>Diamension INDIA PVT LMT Minaxi Wadi, Katargam, Surat, Gujarat 395004</p><p>&nbsp;</p><p>+91 9833045757</p>",
+            "email_right": ""
+          }
+        },
+        "info_block_3": {
+          "type": "info_block",
+          "settings": {
+            "heading_left": "JEWELRY MANUFACTURING",
+            "content_left": "<p>Surat</p><p>DIAMENSION PVT LMT B/H, Gotalawadi Tenement, Near Chunawala Building, Gotalawadi, Katargaum, Surat - 395004</p><p>&nbsp;</p><p>+91 98254 33364</p><p>Jewelry@diamensions.world</p>",
+            "email_left": "",
+            "heading_right": "",
+            "content_right": "",
+            "email_right": ""
+          }
+        }
+      },
+      "block_order": [
+        "menu_item_1",
+        "menu_item_2",
+        "menu_item_3",
+        "menu_item_4",
+        "info_block_1",
+        "info_block_2",
+        "info_block_3"
+      ],
+      "settings": {
+        "menu_title": "INFO",
+        "form_title": "Got Any Questions?",
+        "form_subtitle": "Need assistance? Drop us a line and we'll make sure you're taken care of."
+      }
+    }
+  },
+  "order": [
+    "contact_page"
+  ]
+}
