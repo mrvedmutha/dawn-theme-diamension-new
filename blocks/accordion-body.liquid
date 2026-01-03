@@ -1,0 +1,21 @@
+<div class="accordion__body" data-accordion-body>
+  {{ block.settings.content }}
+</div>
+
+{% schema %}
+{
+  "name": "Accordion Body",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Body Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion Body"
+    }
+  ]
+}
+{% endschema %}

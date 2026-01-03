@@ -1,0 +1,72 @@
+<section id="accordion-section-{{ section.id }}" class="accordion-section">
+  <div class="accordion">
+    {% comment %} Render blocks from the editor {% endcomment %}
+    {% content_for 'blocks' %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .accordion .accordion__header {
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem 0;
+  }
+
+  .accordion__btn {
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .accordion__body {
+    display: none;
+    padding: 0.75rem 0;
+  }
+
+  .accordion__btn.active + .accordion__body {
+    display: block;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    const headers = document.querySelectorAll('[data-accordion-header] .accordion__btn');
+
+    headers.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        this.classList.toggle('active');
+        const body = this.closest('[data-accordion-header]').nextElementSibling;
+        if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Accordion Section",
+  "blocks": [
+    {
+      "type": "accordion-header"
+    },
+    {
+      "type": "accordion-body"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Accordion Section"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

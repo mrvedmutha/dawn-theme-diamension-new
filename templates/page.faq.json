@@ -1,0 +1,153 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-section-faq",
+      "settings": {
+        "menu_title": "INFO",
+        "page_title": "Frequently Asked Questions"
+      },
+      "blocks": {
+        "info_menu_1": {
+          "type": "info-menu-item",
+          "settings": {
+            "menu_text": "FAQS",
+            "menu_link": "",
+            "is_active": true
+          }
+        },
+        "info_menu_2": {
+          "type": "info-menu-item",
+          "settings": {
+            "menu_text": "CONTACT",
+            "menu_link": "/pages/contact",
+            "is_active": false
+          }
+        },
+        "info_menu_3": {
+          "type": "info-menu-item",
+          "settings": {
+            "menu_text": "ABOUT",
+            "menu_link": "/pages/about",
+            "is_active": false
+          }
+        },
+        "faq_tab_1": {
+          "type": "faq-tab",
+          "settings": {
+            "tab_label": "Orders Issues",
+            "tab_id": "orders"
+          },
+          "blocks": {
+            "faq_item_1_1": {
+              "type": "faq-item",
+              "settings": {
+                "question": "What's your return policy?",
+                "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund. Items must be in their original condition with all tags attached.</p>"
+              }
+            },
+            "faq_item_1_2": {
+              "type": "faq-item",
+              "settings": {
+                "question": "Can I return an item I exchanged?",
+                "answer": "<p>Yes, exchanged items can be returned following the same return policy. Please note that the return period starts from your original order date, not the exchange date.</p>"
+              }
+            },
+            "faq_item_1_3": {
+              "type": "faq-item",
+              "settings": {
+                "question": "How can I process a return?",
+                "answer": "<p>To process a return, please contact our customer service team with your order number. We'll provide you with a return shipping label and instructions on how to send the items back.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "faq_item_1_1",
+            "faq_item_1_2",
+            "faq_item_1_3"
+          ]
+        },
+        "faq_tab_2": {
+          "type": "faq-tab",
+          "settings": {
+            "tab_label": "Products & Materials",
+            "tab_id": "products"
+          },
+          "blocks": {
+            "faq_item_2_1": {
+              "type": "faq-item",
+              "settings": {
+                "question": "Where is your jewelry made?",
+                "answer": "<p>All our jewelry is handcrafted in our workshop using ethically sourced materials. We work with skilled artisans who follow traditional techniques combined with modern design.</p>"
+              }
+            },
+            "faq_item_2_2": {
+              "type": "faq-item",
+              "settings": {
+                "question": "Are all pieces 14K solid gold?",
+                "answer": "<p>Yes, all our gold pieces are made from 14K solid gold, not plated. This ensures durability and lasting beauty. Each piece comes with a certificate of authenticity.</p>"
+              }
+            },
+            "faq_item_2_3": {
+              "type": "faq-item",
+              "settings": {
+                "question": "Do your products have a warranty?",
+                "answer": "<p>All our products come with a 1-year warranty against manufacturing defects. This covers issues like loose stones, broken clasps, or tarnishing (for applicable materials).</p>"
+              }
+            }
+          },
+          "block_order": [
+            "faq_item_2_1",
+            "faq_item_2_2",
+            "faq_item_2_3"
+          ]
+        },
+        "faq_tab_3": {
+          "type": "faq-tab",
+          "settings": {
+            "tab_label": "Shipping & Delivery",
+            "tab_id": "shipping"
+          },
+          "blocks": {
+            "faq_item_3_1": {
+              "type": "faq-item",
+              "settings": {
+                "question": "Do you ship internationally?",
+                "answer": "<p>Yes, we ship to most countries worldwide. International shipping times vary by location but typically take 7-14 business days. Customs duties and taxes may apply.</p>"
+              }
+            },
+            "faq_item_3_2": {
+              "type": "faq-item",
+              "settings": {
+                "question": "How can I track my order?",
+                "answer": "<p>Once your order ships, you'll receive a tracking number via email. You can use this number to track your package on our website or the carrier's tracking page.</p>"
+              }
+            },
+            "faq_item_3_3": {
+              "type": "faq-item",
+              "settings": {
+                "question": "What if my package is lost or damaged?",
+                "answer": "<p>All our shipments are fully insured. If your package is lost or arrives damaged, please contact us immediately with photos (if damaged) and we'll arrange a replacement or refund.</p>"
+              }
+            }
+          },
+          "block_order": [
+            "faq_item_3_1",
+            "faq_item_3_2",
+            "faq_item_3_3"
+          ]
+        }
+      },
+      "block_order": [
+        "info_menu_1",
+        "info_menu_2",
+        "info_menu_3",
+        "faq_tab_1",
+        "faq_tab_2",
+        "faq_tab_3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

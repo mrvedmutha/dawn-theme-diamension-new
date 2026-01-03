@@ -1,0 +1,25 @@
+<div class="accordion__header" data-accordion-header>
+  <button type="button" class="accordion__btn">
+    {{ block.settings.title }}
+    <span class="accordion__icon">+</span>
+  </button>
+</div>
+
+{% schema %}
+{
+  "name": "Accordion Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header Text",
+      "default": "Accordion Title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Accordion Header"
+    }
+  ]
+}
+{% endschema %}
