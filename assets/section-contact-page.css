@@ -1,0 +1,576 @@
+/* ============================================
+   Custom Section: Contact Page
+   Unified section with info menu + contact content
+   ============================================ */
+
+/* Wrapper - Background color */
+.custom-section-contact-page__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Container - Grid Layout */
+.custom-section-contact-page__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 238px 1fr;
+  gap: 128px;
+  padding: 140px 48px 80px;
+}
+
+/* ============================================
+   Left Column: Info Menu (Sidebar)
+   ============================================ */
+
+.custom-section-contact-page__sidebar {
+  position: relative;
+}
+
+.custom-section-contact-page__sidebar-sticky {
+  position: sticky;
+  top: 140px;
+  align-self: start;
+}
+
+/* Menu Title "INFO" */
+.custom-section-contact-page__menu-title {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0 0 48px 0;
+}
+
+/* Menu Navigation */
+.custom-section-contact-page__menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-section-contact-page__menu-item-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu Links */
+.custom-section-contact-page__menu-link {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #9a9a9a;
+  text-decoration: none;
+  margin-bottom: 24px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.custom-section-contact-page__menu-link:hover {
+  color: #212121;
+}
+
+/* Active/Current Menu Item */
+.custom-section-contact-page__menu-link--active {
+  color: #212121;
+}
+
+/* Menu Divider Line */
+.custom-section-contact-page__menu-divider {
+  height: 1px;
+  background: #CDCDCC;
+  width: 100%;
+  margin-bottom: 24px;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Remove margin from last divider */
+.custom-section-contact-page__menu-item-wrapper:last-of-type .custom-section-contact-page__menu-divider {
+  display: none;
+}
+
+/* ============================================
+   Right Column: Contact Content
+   ============================================ */
+
+.custom-section-contact-page__content {
+  min-width: 0; /* Prevent grid overflow */
+}
+
+/* Info Blocks Section */
+.custom-section-contact-page__info-blocks {
+  margin-bottom: 0;
+}
+
+.custom-section-contact-page__info-block {
+  margin-bottom: 32px;
+}
+
+/* Two Column Layout for Info Blocks */
+.custom-section-contact-page__info-columns {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.custom-section-contact-page__info-column {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Info Block Headings */
+.custom-section-contact-page__info-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+}
+
+/* Info Block Content */
+.custom-section-contact-page__info-content {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3e6282;
+  letter-spacing: 0.64px;
+  margin: 0 0 20px 0;
+}
+
+.custom-section-contact-page__info-content p {
+  margin: 0;
+}
+
+/* Info Block Email Links */
+.custom-section-contact-page__info-email {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #183754;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-contact-page__info-email:hover {
+  opacity: 0.7;
+}
+
+/* Info Divider Lines */
+.custom-section-contact-page__info-divider {
+  height: 0.5px;
+  background-color: #8AA8C4;
+  width: 100%;
+  margin: 32px 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.custom-section-contact-page__info-divider--before-form {
+  margin-bottom: 32px;
+}
+
+/* ============================================
+   Contact Form Section
+   ============================================ */
+
+.custom-section-contact-page__form-section {
+  max-width: 550px;
+}
+
+/* Form Title */
+.custom-section-contact-page__form-title {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0 0 12px 0;
+}
+
+/* Form Subtitle */
+.custom-section-contact-page__form-subtitle {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #3e6282;
+  margin: 0 0 32px 0;
+}
+
+/* Form */
+.custom-section-contact-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Form Rows */
+.custom-section-contact-page__form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.custom-section-contact-page__form-row--two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 21px;
+}
+
+.custom-section-contact-page__form-field {
+  flex: 1;
+}
+
+/* Form Inputs */
+.custom-section-contact-page__input,
+.custom-section-contact-page__textarea {
+  width: 100%;
+  background-color: #f6f3f0;
+  border: none;
+  padding: 16.87px;
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #183754;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.custom-section-contact-page__input::placeholder,
+.custom-section-contact-page__textarea::placeholder {
+  color: #afa9a3;
+}
+
+.custom-section-contact-page__input:focus,
+.custom-section-contact-page__textarea:focus {
+  background-color: #ede9e4;
+}
+
+.custom-section-contact-page__input {
+  height: 59px;
+}
+
+.custom-section-contact-page__textarea {
+  height: 96px;
+  resize: vertical;
+  min-height: 96px;
+}
+
+/* Submit Button */
+.custom-section-contact-page__submit {
+  width: 100%;
+  height: 51px;
+  background-color: #183754;
+  border: none;
+  color: #ffffff;
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: normal;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-section-contact-page__submit:hover {
+  background-color: #2a5170;
+}
+
+.custom-section-contact-page__submit:active {
+  background-color: #0f2838;
+}
+
+/* Success/Error Messages */
+.custom-section-contact-page__message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin-top: 32px;
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: normal;
+  color: #3e6282;
+  background-color: #f6f3f0;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-contact-page__message.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.custom-section-contact-page__message-icon {
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Responsive Breakpoints
+   ============================================ */
+
+/* Large Desktop - Prevent stretch beyond 1440px */
+@media (min-width: 1441px) {
+  .custom-section-contact-page__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-section-contact-page__container {
+    grid-template-columns: 220px 1fr;
+    gap: 100px;
+    padding: 120px 40px 60px;
+  }
+
+  .custom-section-contact-page__sidebar-sticky {
+    top: 120px;
+  }
+
+  .custom-section-contact-page__menu-title {
+    font-size: 36px;
+    line-height: 40px;
+    margin-bottom: 40px;
+  }
+
+  .custom-section-contact-page__menu-link {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .custom-section-contact-page__menu-divider {
+    margin-bottom: 20px;
+  }
+
+  .custom-section-contact-page__info-columns {
+    gap: 40px;
+  }
+
+  .custom-section-contact-page__info-heading {
+    font-size: 17px;
+    line-height: 28px;
+  }
+
+  .custom-section-contact-page__info-content {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .custom-section-contact-page__info-email {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .custom-section-contact-page__form-title {
+    font-size: 26px;
+    line-height: 38px;
+  }
+
+  .custom-section-contact-page__form-subtitle {
+    font-size: 15px;
+  }
+}
+
+/* Mobile - Single Column Layout */
+@media (max-width: 767px) {
+  .custom-section-contact-page__container {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 40px 20px;
+  }
+
+  .custom-section-contact-page__sidebar {
+    margin-bottom: 32px;
+  }
+
+  .custom-section-contact-page__sidebar-sticky {
+    position: relative;
+    top: 0;
+  }
+
+  .custom-section-contact-page__menu-title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  /* Horizontal menu layout with wrapping */
+  .custom-section-contact-page__menu {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .custom-section-contact-page__menu-item-wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .custom-section-contact-page__menu-link {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  /* Change divider to pipe symbol */
+  .custom-section-contact-page__menu-divider {
+    width: 1px;
+    height: 16px;
+    margin-bottom: 0;
+    background: #CDCDCC;
+    flex-shrink: 0;
+  }
+
+  /* Hide last divider */
+  .custom-section-contact-page__menu-item-wrapper:last-of-type .custom-section-contact-page__menu-divider {
+    display: none;
+  }
+
+  /* Stack info columns vertically */
+  .custom-section-contact-page__info-columns {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .custom-section-contact-page__info-block {
+    margin-bottom: 0;
+  }
+
+  .custom-section-contact-page__info-column {
+    margin-bottom: 32px;
+  }
+
+  .custom-section-contact-page__info-column:last-child {
+    margin-bottom: 0;
+  }
+
+  .custom-section-contact-page__info-divider {
+    margin: 32px 0;
+  }
+
+  .custom-section-contact-page__info-heading {
+    font-size: 16px;
+    line-height: 26px;
+    margin-bottom: 10px;
+  }
+
+  .custom-section-contact-page__info-content {
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.56px;
+    margin-bottom: 16px;
+  }
+
+  .custom-section-contact-page__info-email {
+    font-size: 17px;
+    line-height: 26px;
+  }
+
+  /* Form adjustments */
+  .custom-section-contact-page__form-section {
+    max-width: 100%;
+  }
+
+  .custom-section-contact-page__form-title {
+    font-size: 22px;
+    line-height: 32px;
+    margin-bottom: 10px;
+  }
+
+  .custom-section-contact-page__form-subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  /* Stack first name and last name */
+  .custom-section-contact-page__form-row--two-col {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .custom-section-contact-page__input {
+    height: 52px;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .custom-section-contact-page__textarea {
+    height: 90px;
+    min-height: 90px;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .custom-section-contact-page__submit {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .custom-section-contact-page__message {
+    margin-top: 24px;
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .custom-section-contact-page__container {
+    padding: 40px 16px;
+  }
+
+  .custom-section-contact-page__menu-title {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 16px;
+  }
+
+  .custom-section-contact-page__menu {
+    gap: 12px;
+  }
+
+  .custom-section-contact-page__menu-item-wrapper {
+    gap: 12px;
+  }
+
+  .custom-section-contact-page__menu-link {
+    font-size: 13px;
+  }
+
+  .custom-section-contact-page__form-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .custom-section-contact-page__form-subtitle {
+    font-size: 13px;
+  }
+
+  .custom-section-contact-page__input,
+  .custom-section-contact-page__textarea {
+    font-size: 14px;
+  }
+
+  .custom-section-contact-page__submit {
+    font-size: 14px;
+  }
+}

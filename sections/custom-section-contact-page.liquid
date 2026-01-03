@@ -1,0 +1,333 @@
+{{ 'section-contact-page.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-contact-page">
+  <div class="custom-section-contact-page__wrapper">
+    <div class="custom-section-contact-page__container">
+
+      {%- comment -%} Left Column: Info Menu {%- endcomment -%}
+      <aside class="custom-section-contact-page__sidebar">
+        <div class="custom-section-contact-page__sidebar-sticky">
+
+          {% if section.settings.menu_title != blank %}
+            <h1 class="custom-section-contact-page__menu-title">
+              {{ section.settings.menu_title }}
+            </h1>
+          {% endif %}
+
+          <nav class="custom-section-contact-page__menu">
+            {% for block in section.blocks %}
+              {% if block.type == 'info_menu_item' %}
+                <div class="custom-section-contact-page__menu-item-wrapper" {{ block.shopify_attributes }}>
+                  {% if block.settings.menu_link != blank %}
+                    <a
+                      href="{{ block.settings.menu_link }}"
+                      class="custom-section-contact-page__menu-link{% if block.settings.is_active %} custom-section-contact-page__menu-link--active{% endif %}"
+                    >
+                      {{ block.settings.menu_text }}
+                    </a>
+                  {% else %}
+                    <span class="custom-section-contact-page__menu-link{% if block.settings.is_active %} custom-section-contact-page__menu-link--active{% endif %}">
+                      {{ block.settings.menu_text }}
+                    </span>
+                  {% endif %}
+                  <div class="custom-section-contact-page__menu-divider">&nbsp;</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </nav>
+
+        </div>
+      </aside>
+
+      {%- comment -%} Right Column: Contact Content {%- endcomment -%}
+      <main class="custom-section-contact-page__content">
+
+        {%- comment -%} Info Blocks - Two Column Layout {%- endcomment -%}
+        <div class="custom-section-contact-page__info-blocks">
+          {% assign info_blocks = section.blocks | where: "type", "info_block" %}
+          {% if info_blocks.size > 0 %}
+            {% for block in info_blocks %}
+              <div class="custom-section-contact-page__info-block" {{ block.shopify_attributes }}>
+                <div class="custom-section-contact-page__info-columns">
+
+                  {%- comment -%} Left Column {%- endcomment -%}
+                  {% if block.settings.heading_left != blank or block.settings.content_left != blank or block.settings.email_left != blank %}
+                    <div class="custom-section-contact-page__info-column">
+                      {% if block.settings.heading_left != blank %}
+                        <h3 class="custom-section-contact-page__info-heading">
+                          {{ block.settings.heading_left }}
+                        </h3>
+                      {% endif %}
+
+                      {% if block.settings.content_left != blank %}
+                        <div class="custom-section-contact-page__info-content">
+                          {{ block.settings.content_left }}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.email_left != blank %}
+                        <a href="mailto:{{ block.settings.email_left }}" class="custom-section-contact-page__info-email">
+                          {{ block.settings.email_left }}
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+                  {%- comment -%} Right Column {%- endcomment -%}
+                  {% if block.settings.heading_right != blank or block.settings.content_right != blank or block.settings.email_right != blank %}
+                    <div class="custom-section-contact-page__info-column">
+                      {% if block.settings.heading_right != blank %}
+                        <h3 class="custom-section-contact-page__info-heading">
+                          {{ block.settings.heading_right }}
+                        </h3>
+                      {% endif %}
+
+                      {% if block.settings.content_right != blank %}
+                        <div class="custom-section-contact-page__info-content">
+                          {{ block.settings.content_right }}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.email_right != blank %}
+                        <a href="mailto:{{ block.settings.email_right }}" class="custom-section-contact-page__info-email">
+                          {{ block.settings.email_right }}
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+                </div>
+              </div>
+
+              {%- comment -%} Divider Line {%- endcomment -%}
+              {% unless forloop.last %}
+                <div class="custom-section-contact-page__info-divider">&nbsp;</div>
+              {% endunless %}
+
+            {% endfor %}
+
+            {%- comment -%} Final Divider before form {%- endcomment -%}
+            <div class="custom-section-contact-page__info-divider custom-section-contact-page__info-divider--before-form">&nbsp;</div>
+          {% endif %}
+        </div>
+
+        {%- comment -%} Contact Form Section {%- endcomment -%}
+        <div class="custom-section-contact-page__form-section">
+          <h2 class="custom-section-contact-page__form-title">
+            {{ section.settings.form_title | default: "Got Any Questions?" }}
+          </h2>
+
+          <p class="custom-section-contact-page__form-subtitle">
+            {{ section.settings.form_subtitle | default: "Need assistance? Drop us a line and we'll make sure you're taken care of." }}
+          </p>
+
+          {%- form 'contact', id: 'ContactPageForm', class: 'custom-section-contact-page__form' -%}
+            {% if form.posted_successfully? %}
+              <div class="custom-section-contact-page__message custom-section-contact-page__message--success" id="contact-page-success-message">
+                <svg class="custom-section-contact-page__message-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9" stroke="#3E6282" stroke-width="2"/>
+                  <path d="M6 10L9 13L14 7" stroke="#3E6282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Your message has been sent successfully</span>
+              </div>
+            {% elsif form.errors %}
+              <div class="custom-section-contact-page__message custom-section-contact-page__message--error" id="contact-page-error-message">
+                <svg class="custom-section-contact-page__message-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9" stroke="#3E6282" stroke-width="2"/>
+                  <path d="M7 7L13 13M13 7L7 13" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Failed to send message. Please try again.</span>
+              </div>
+            {% endif %}
+
+            <div class="custom-section-contact-page__form-row custom-section-contact-page__form-row--two-col">
+              <div class="custom-section-contact-page__form-field">
+                <input
+                  type="text"
+                  name="contact[first_name]"
+                  id="ContactPageForm-first-name"
+                  class="custom-section-contact-page__input"
+                  placeholder="Enter first name"
+                  required
+                >
+              </div>
+              <div class="custom-section-contact-page__form-field">
+                <input
+                  type="text"
+                  name="contact[last_name]"
+                  id="ContactPageForm-last-name"
+                  class="custom-section-contact-page__input"
+                  placeholder="Enter last name"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="custom-section-contact-page__form-row">
+              <div class="custom-section-contact-page__form-field">
+                <input
+                  type="email"
+                  name="contact[email]"
+                  id="ContactPageForm-email"
+                  class="custom-section-contact-page__input"
+                  placeholder="Email Address"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="custom-section-contact-page__form-row">
+              <div class="custom-section-contact-page__form-field">
+                <input
+                  type="tel"
+                  name="contact[phone]"
+                  id="ContactPageForm-phone"
+                  class="custom-section-contact-page__input"
+                  placeholder="Phone Number (Optional)"
+                  autocomplete="tel"
+                >
+              </div>
+            </div>
+
+            <div class="custom-section-contact-page__form-row">
+              <div class="custom-section-contact-page__form-field">
+                <textarea
+                  name="contact[body]"
+                  id="ContactPageForm-message"
+                  class="custom-section-contact-page__textarea"
+                  placeholder="Message"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="custom-section-contact-page__form-row">
+              <button type="submit" class="custom-section-contact-page__submit">
+                SUBMIT
+              </button>
+            </div>
+
+          {%- endform -%}
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-contact-page.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Info Menu Settings"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu Title",
+      "default": "INFO"
+    },
+    {
+      "type": "header",
+      "content": "Contact Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form Title",
+      "default": "Got Any Questions?"
+    },
+    {
+      "type": "text",
+      "id": "form_subtitle",
+      "label": "Form Subtitle",
+      "default": "Need assistance? Drop us a line and we'll make sure you're taken care of."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_text",
+          "label": "Menu Text",
+          "default": "CONTACT"
+        },
+        {
+          "type": "url",
+          "id": "menu_link",
+          "label": "Menu Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Is Active/Current Page",
+          "default": false,
+          "info": "Check this to highlight as the current page"
+        }
+      ]
+    },
+    {
+      "type": "info_block",
+      "name": "Info Block",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Left Column"
+        },
+        {
+          "type": "text",
+          "id": "heading_left",
+          "label": "Heading",
+          "default": "Customer Care"
+        },
+        {
+          "type": "richtext",
+          "id": "content_left",
+          "label": "Content",
+          "default": "<p>Our concierge team will get back to you in 1-2 business days.</p>"
+        },
+        {
+          "type": "text",
+          "id": "email_left",
+          "label": "Email"
+        },
+        {
+          "type": "header",
+          "content": "Right Column"
+        },
+        {
+          "type": "text",
+          "id": "heading_right",
+          "label": "Heading",
+          "default": "Orders, Shipping and Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content_right",
+          "label": "Content",
+          "default": "<p>Questions about your order, shipping and returns?</p>"
+        },
+        {
+          "type": "text",
+          "id": "email_right",
+          "label": "Email"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ]
+}
+{% endschema %}
