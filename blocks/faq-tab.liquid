@@ -1,0 +1,76 @@
+{% comment %}
+  FAQ Tab Block - Container for FAQ items (nested blocks)
+{% endcomment %}
+
+<div
+  class="custom-section-faq__content-block custom-section-faq__category"
+  data-tab-id="{{ block.settings.tab_id }}"
+  {{ block.shopify_attributes }}
+>
+  {%- comment -%} Category Heading {%- endcomment -%}
+  {% if block.settings.tab_label != blank %}
+    <h2 class="custom-section-faq__category-heading">
+      {{ block.settings.tab_label | upcase }}
+    </h2>
+  {% endif %}
+
+  {%- comment -%} Render nested FAQ items {%- endcomment -%}
+  <div class="custom-section-faq__faq-list">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ Tab",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "faq-item"
+    },
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_label",
+      "label": "Tab Label",
+      "default": "Orders Issues",
+      "info": "Displayed in tab navigation and as category heading"
+    },
+    {
+      "type": "text",
+      "id": "tab_id",
+      "label": "Tab ID",
+      "default": "orders",
+      "info": "Unique identifier (lowercase, no spaces). Example: 'orders', 'shipping', 'returns'"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Tab",
+      "blocks": [
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+          }
+        },
+        {
+          "type": "faq-item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping typically takes 5-7 business days.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

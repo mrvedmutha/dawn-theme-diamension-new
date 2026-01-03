@@ -1,0 +1,95 @@
+{{ 'section-faq.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-faq">
+  <div class="custom-section-faq__wrapper">
+    <div class="custom-section-faq__container">
+      {%- comment -%} Header with menu title and page title {%- endcomment -%}
+      <div class="custom-section-faq__header">
+        {% if section.settings.menu_title != blank %}
+          <h1 class="custom-section-faq__menu-title">
+            {{ section.settings.menu_title }}
+          </h1>
+        {% endif %}
+
+        {% if section.settings.page_title != blank %}
+          <h1 class="custom-section-faq__page-title">
+            {{ section.settings.page_title }}
+          </h1>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Tab Navigation {%- endcomment -%}
+      {% assign tab_blocks = section.blocks | where: 'type', 'faq-tab' %}
+      {% if tab_blocks.size > 0 %}
+        <div class="custom-section-faq__tabs-container">
+          <div class="custom-section-faq__tabs" data-faq-tabs>
+            {% for block in tab_blocks %}
+              <button
+                class="custom-section-faq__tab{% if forloop.first %} custom-section-faq__tab--active{% endif %}"
+                data-tab="{{ block.settings.tab_id }}"
+                aria-label="Show {{ block.settings.tab_label }} FAQs"
+              >
+                {{ block.settings.tab_label }}
+              </button>
+            {% endfor %}
+          </div>
+          <div class="custom-section-faq__tabs-underline"></div>
+        </div>
+      {% endif %}
+
+      {%- comment -%} Render all blocks - they will position themselves {%- endcomment -%}
+      <div class="custom-section-faq__blocks-container">
+        {% content_for 'blocks' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-faq.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Info Menu Settings"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu Title",
+      "default": "INFO"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Settings"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info-menu-item"
+    },
+    {
+      "type": "faq-tab"
+    },
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Page"
+    }
+  ]
+}
+{% endschema %}
