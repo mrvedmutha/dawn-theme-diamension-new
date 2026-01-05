@@ -3,44 +3,173 @@
 <div class="custom-section-faq">
   <div class="custom-section-faq__wrapper">
     <div class="custom-section-faq__container">
-      {%- comment -%} Header with menu title and page title {%- endcomment -%}
-      <div class="custom-section-faq__header">
-        {% if section.settings.menu_title != blank %}
-          <h1 class="custom-section-faq__menu-title">
-            {{ section.settings.menu_title }}
-          </h1>
-        {% endif %}
+      {%- comment -%} Left Column: Info Menu (exactly like Contact Page) {%- endcomment -%}
+      <aside class="custom-section-faq__sidebar">
+        <div class="custom-section-faq__sidebar-sticky">
+          {% if section.settings.menu_title != blank %}
+            <h1 class="custom-section-faq__menu-title">
+              {{ section.settings.menu_title }}
+            </h1>
+          {% endif %}
+
+          <nav class="custom-section-faq__menu">
+            {% for block in section.blocks %}
+              {% if block.type == 'info_menu_item' %}
+                <div class="custom-section-faq__menu-item-wrapper" {{ block.shopify_attributes }}>
+                  {% if block.settings.menu_link != blank %}
+                    <a
+                      href="{{ block.settings.menu_link }}"
+                      class="custom-section-faq__menu-link{% if block.settings.is_active %} custom-section-faq__menu-link--active{% endif %}"
+                    >
+                      {{ block.settings.menu_text }}
+                    </a>
+                  {% else %}
+                    <span class="custom-section-faq__menu-link{% if block.settings.is_active %} custom-section-faq__menu-link--active{% endif %}">
+                      {{ block.settings.menu_text }}
+                    </span>
+                  {% endif %}
+                  <div class="custom-section-faq__menu-divider">&nbsp;</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        </div>
+      </aside>
+
+      {%- comment -%} Right Column: FAQ Content {%- endcomment -%}
+      <main class="custom-section-faq__content">
 
         {% if section.settings.page_title != blank %}
           <h1 class="custom-section-faq__page-title">
             {{ section.settings.page_title }}
           </h1>
         {% endif %}
-      </div>
 
-      {%- comment -%} Tab Navigation {%- endcomment -%}
-      {% assign tab_blocks = section.blocks | where: 'type', 'faq-tab' %}
-      {% if tab_blocks.size > 0 %}
-        <div class="custom-section-faq__tabs-container">
-          <div class="custom-section-faq__tabs" data-faq-tabs>
-            {% for block in tab_blocks %}
-              <button
-                class="custom-section-faq__tab{% if forloop.first %} custom-section-faq__tab--active{% endif %}"
-                data-tab="{{ block.settings.tab_id }}"
-                aria-label="Show {{ block.settings.tab_label }} FAQs"
-              >
-                {{ block.settings.tab_label }}
-              </button>
-            {% endfor %}
+        {%- comment -%} Get all unique categories from FAQ blocks {%- endcomment -%}
+        {% assign faq_blocks = section.blocks | where: 'type', 'faq_item' %}
+        {% assign categories = '' %}
+        {% for block in faq_blocks %}
+          {% unless categories contains block.settings.category_id %}
+            {% assign categories = categories | append: block.settings.category_id | append: ',' %}
+          {% endunless %}
+        {% endfor %}
+        {% assign category_array = categories | split: ',' %}
+
+        {%- comment -%} Tab Navigation {%- endcomment -%}
+        {% if category_array.size > 0 %}
+          <div class="custom-section-faq__tabs-container">
+            <div class="custom-section-faq__tabs" data-faq-tabs>
+              {% for category_id in category_array %}
+                {% if category_id != blank %}
+                  {%- comment -%} Find first FAQ in this category manually {%- endcomment -%}
+                  {% assign first_in_category = nil %}
+                  {% for faq in faq_blocks %}
+                    {% assign faq_cat = faq.settings.category_id | strip %}
+                    {% assign current_cat = category_id | strip %}
+                    {% if faq_cat == current_cat and first_in_category == nil %}
+                      {% assign first_in_category = faq %}
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if first_in_category %}
+                    <button
+                      class="custom-section-faq__tab{% if forloop.first %} custom-section-faq__tab--active{% endif %}"
+                      data-tab="{{ category_id }}"
+                      aria-label="Show {{ first_in_category.settings.category_label }} FAQs"
+                    >
+                      {{ first_in_category.settings.category_label }}
+                    </button>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="custom-section-faq__tabs-underline">&nbsp;</div>
           </div>
-          <div class="custom-section-faq__tabs-underline"></div>
-        </div>
-      {% endif %}
+        {% endif %}
 
-      {%- comment -%} Render all blocks - they will position themselves {%- endcomment -%}
-      <div class="custom-section-faq__blocks-container">
-        {% content_for 'blocks' %}
-      </div>
+        {%- comment -%} FAQ Categories {%- endcomment -%}
+        <div class="custom-section-faq__categories">
+          {% for category_id in category_array %}
+            {% if category_id != blank %}
+              {%- comment -%} Find first FAQ for category heading {%- endcomment -%}
+              {% assign first_faq = nil %}
+              {% assign faq_count = 0 %}
+              {% for faq in faq_blocks %}
+                {% assign faq_cat = faq.settings.category_id | strip %}
+                {% assign current_cat = category_id | strip %}
+                {% if faq_cat == current_cat %}
+                  {% assign faq_count = faq_count | plus: 1 %}
+                  {% if first_faq == nil %}
+                    {% assign first_faq = faq %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+
+              <div
+                class="custom-section-faq__category"
+                data-tab-content="{{ category_id }}"
+              >
+                {% if first_faq.settings.category_label != blank %}
+                  <h2 class="custom-section-faq__category-heading">
+                    {{ first_faq.settings.category_label | upcase }}
+                  </h2>
+                {% endif %}
+
+                <div class="custom-section-faq__faq-list">
+                  {% for block in faq_blocks %}
+                    {% assign block_cat = block.settings.category_id | strip %}
+                    {% assign current_cat = category_id | strip %}
+                    {% if block_cat == current_cat %}
+                      <div class="custom-section-faq__faq-item" data-faq-item {{ block.shopify_attributes }}>
+                      <button
+                        class="custom-section-faq__question-wrapper"
+                        data-faq-toggle
+                        aria-expanded="false"
+                      >
+                        <h3 class="custom-section-faq__question">
+                          {{ block.settings.question }}
+                        </h3>
+                        <span class="custom-section-faq__icon">
+                          <svg
+                            class="custom-section-faq__icon-plus"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                          <svg
+                            class="custom-section-faq__icon-minus"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style="display: none;"
+                          >
+                            <path d="M5 12H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
+                      </button>
+
+                      <div class="custom-section-faq__answer">
+                        <div class="custom-section-faq__answer-content">
+                          {{ block.settings.answer }}
+                        </div>
+                      </div>
+
+                      <div class="custom-section-faq__divider">&nbsp;</div>
+                    </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </main>
     </div>
   </div>
 </div>
@@ -74,21 +203,234 @@
   ],
   "blocks": [
     {
-      "type": "info-menu-item"
+      "type": "info_menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_text",
+          "label": "Menu Text",
+          "default": "FAQS"
+        },
+        {
+          "type": "url",
+          "id": "menu_link",
+          "label": "Menu Link",
+          "info": "Leave blank for non-clickable text"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Is Active/Current Page",
+          "default": false,
+          "info": "Check this to highlight as the current page"
+        }
+      ]
     },
     {
-      "type": "faq-tab"
-    },
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
+      "type": "faq_item",
+      "name": "FAQ Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_id",
+          "label": "Category ID",
+          "default": "orders",
+          "info": "Group questions by category (e.g., 'orders', 'shipping', 'returns'). Must match across questions in same category."
+        },
+        {
+          "type": "text",
+          "id": "category_label",
+          "label": "Category Label",
+          "default": "Orders Issues",
+          "info": "Display name for this category. Should be the same for all questions in this category."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What's your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "FAQ Page"
+      "name": "FAQ Page",
+      "blocks": [
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "CONTACT",
+            "menu_link": "/pages/contact",
+            "is_active": false
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "FAQS",
+            "is_active": true
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "SHIPPING POLICY",
+            "menu_link": "/pages/shipping-policy",
+            "is_active": false
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "RETURNS",
+            "menu_link": "/pages/returns",
+            "is_active": false
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "Orders Issues",
+            "question": "How do I track my order?",
+            "answer": "<p>You can track your order using the tracking link sent to your email after shipment.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "Orders Issues",
+            "question": "Can I modify my order after placing it?",
+            "answer": "<p>Please contact us immediately if you need to modify your order. We'll do our best to accommodate changes before shipping.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "Orders Issues",
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept all major credit cards, PayPal, and Apple Pay.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "Orders Issues",
+            "question": "Do you offer gift wrapping?",
+            "answer": "<p>Yes, gift wrapping is available for an additional fee at checkout.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "Orders Issues",
+            "question": "Can I cancel my order?",
+            "answer": "<p>Orders can be cancelled within 24 hours of placement. Please contact customer service.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "shipping",
+            "category_label": "Shipping",
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 5-7 business days. Express shipping is 2-3 business days.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "shipping",
+            "category_label": "Shipping",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes, we ship to most countries worldwide. Shipping costs and times vary by location.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "shipping",
+            "category_label": "Shipping",
+            "question": "What are the shipping costs?",
+            "answer": "<p>Shipping costs are calculated at checkout based on your location and selected shipping method.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "shipping",
+            "category_label": "Shipping",
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes, we offer free standard shipping on orders over $75.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "shipping",
+            "category_label": "Shipping",
+            "question": "My package is delayed, what should I do?",
+            "answer": "<p>Please contact our customer service with your tracking number and we'll investigate the delay.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "returns",
+            "category_label": "Returns & Exchanges",
+            "question": "What is your return policy?",
+            "answer": "<p>We accept returns within 30 days of delivery for unworn, unused items with original tags.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "returns",
+            "category_label": "Returns & Exchanges",
+            "question": "How do I initiate a return?",
+            "answer": "<p>Contact customer service or use our online return portal to generate a return label.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "returns",
+            "category_label": "Returns & Exchanges",
+            "question": "Are returns free?",
+            "answer": "<p>Return shipping is free for domestic orders. International returns are at customer's expense.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "returns",
+            "category_label": "Returns & Exchanges",
+            "question": "Can I exchange an item?",
+            "answer": "<p>Yes, exchanges are available for different sizes or colors of the same item.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "returns",
+            "category_label": "Returns & Exchanges",
+            "question": "When will I receive my refund?",
+            "answer": "<p>Refunds are processed within 5-7 business days after we receive your returned item.</p>"
+          }
+        }
+      ]
     }
   ]
 }

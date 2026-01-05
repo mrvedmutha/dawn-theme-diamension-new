@@ -7,8 +7,9 @@ class FaqSection {
   constructor(sectionElement) {
     this.section = sectionElement;
     this.tabs = this.section.querySelectorAll('[data-tab]');
-    this.categories = this.section.querySelectorAll('[data-tab-id]');
+    this.categories = this.section.querySelectorAll('[data-tab-content]');
     this.faqItems = this.section.querySelectorAll('[data-faq-item]');
+    this.underline = this.section.querySelector('.custom-section-faq__tabs-underline');
     this.activeTab = null;
     this.activeFaq = null;
 
@@ -29,7 +30,7 @@ class FaqSection {
    * Setup tab navigation
    */
   setupTabs() {
-    this.tabs.forEach(tab => {
+    this.tabs.forEach((tab) => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
         const tabId = tab.dataset.tab;
@@ -43,7 +44,7 @@ class FaqSection {
    */
   activateTab(tabId, shouldScroll = true) {
     // Update active tab styling
-    this.tabs.forEach(tab => {
+    this.tabs.forEach((tab) => {
       if (tab.dataset.tab === tabId) {
         tab.classList.add('custom-section-faq__tab--active');
         this.activeTab = tab;
@@ -52,33 +53,49 @@ class FaqSection {
       }
     });
 
+    // Animate underline to active tab
+    this.updateUnderline();
+
     // Find the corresponding category
-    const category = Array.from(this.categories).find(
-      cat => cat.dataset.tabId === tabId
-    );
+    const category = Array.from(this.categories).find((cat) => cat.dataset.tabContent === tabId);
 
     if (category && shouldScroll) {
-      // Scroll to category
-      category.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      // Scroll to category with offset (10vh from top)
+      const offset = window.innerHeight * 0.3; // 30vh
+      const categoryTop = category.getBoundingClientRect().top + window.pageYOffset;
+      const scrollPosition = categoryTop - offset;
 
-      // Open first FAQ in this category after scroll
-      setTimeout(() => {
-        const firstFaq = category.querySelector('[data-faq-item]');
-        if (firstFaq) {
-          this.openFaq(firstFaq);
-        }
-      }, 500); // Wait for scroll to complete
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth',
+      });
     }
+  }
+
+  /**
+   * Update underline position and width to match active tab
+   */
+  updateUnderline() {
+    if (!this.activeTab || !this.underline) return;
+
+    const tabRect = this.activeTab.getBoundingClientRect();
+    const tabsContainer = this.activeTab.parentElement;
+    const containerRect = tabsContainer.getBoundingClientRect();
+
+    // Calculate position relative to tabs container
+    const left = tabRect.left - containerRect.left + tabsContainer.scrollLeft;
+    const width = tabRect.width;
+
+    // Update CSS custom properties
+    this.underline.style.setProperty('--indicator-left', `${left}px`);
+    this.underline.style.setProperty('--indicator-width', `${width}px`);
   }
 
   /**
    * Setup accordion functionality
    */
   setupAccordion() {
-    this.faqItems.forEach(item => {
+    this.faqItems.forEach((item) => {
       const toggle = item.querySelector('[data-faq-toggle]');
 
       if (toggle) {
@@ -152,7 +169,7 @@ class FaqSection {
    * Close all FAQ items
    */
   closeAllFaqs() {
-    this.faqItems.forEach(item => {
+    this.faqItems.forEach((item) => {
       this.closeFaq(item);
     });
   }
@@ -162,7 +179,7 @@ class FaqSection {
 document.addEventListener('DOMContentLoaded', () => {
   const faqSections = document.querySelectorAll('.custom-section-faq');
 
-  faqSections.forEach(section => {
+  faqSections.forEach((section) => {
     new FaqSection(section);
   });
 });
