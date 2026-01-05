@@ -19,11 +19,35 @@ class FaqSection {
   init() {
     this.setupTabs();
     this.setupAccordion();
+    this.setupScrollListeners();
 
     // Activate first tab on load
     if (this.tabs.length > 0) {
       this.activateTab(this.tabs[0].dataset.tab, false);
     }
+  }
+
+  /**
+   * Setup scroll and resize listeners for underline positioning
+   */
+  setupScrollListeners() {
+    if (!this.tabs.length) return;
+
+    const tabsContainer = this.tabs[0].parentElement;
+
+    // Sync underline scroll with tabs scroll
+    tabsContainer.addEventListener('scroll', () => {
+      if (this.underline) {
+        // Sync scroll position
+        this.underline.scrollLeft = tabsContainer.scrollLeft;
+      }
+      this.updateUnderline();
+    });
+
+    // Update underline position on window resize
+    window.addEventListener('resize', () => {
+      this.updateUnderline();
+    });
   }
 
   /**
@@ -53,8 +77,17 @@ class FaqSection {
       }
     });
 
-    // Animate underline to active tab
-    this.updateUnderline();
+    // Scroll active tab into view if it's overflowing
+    if (this.activeTab) {
+      this.activeTab.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+
+    // Update underline with delay to let scroll animation start
+    this.updateUnderline(true);
 
     // Find the corresponding category
     const category = Array.from(this.categories).find((cat) => cat.dataset.tabContent === tabId);
@@ -75,20 +108,31 @@ class FaqSection {
   /**
    * Update underline position and width to match active tab
    */
-  updateUnderline() {
+  updateUnderline(withDelay = false) {
     if (!this.activeTab || !this.underline) return;
 
-    const tabRect = this.activeTab.getBoundingClientRect();
-    const tabsContainer = this.activeTab.parentElement;
-    const containerRect = tabsContainer.getBoundingClientRect();
+    const updatePosition = () => {
+      const tabsContainer = this.activeTab.parentElement; // .custom-section-faq__tabs
 
-    // Calculate position relative to tabs container
-    const left = tabRect.left - containerRect.left + tabsContainer.scrollLeft;
-    const width = tabRect.width;
+      const tabRect = this.activeTab.getBoundingClientRect();
+      const tabsContainerRect = tabsContainer.getBoundingClientRect();
 
-    // Update CSS custom properties
-    this.underline.style.setProperty('--indicator-left', `${left}px`);
-    this.underline.style.setProperty('--indicator-width', `${width}px`);
+      // Calculate position relative to tabs container (since underline scrolls with it)
+      // No need to add scrollLeft since underline scrolls in sync
+      const left = tabRect.left - tabsContainerRect.left;
+      const width = tabRect.width;
+
+      // Update CSS custom properties
+      this.underline.style.setProperty('--indicator-left', `${left}px`);
+      this.underline.style.setProperty('--indicator-width', `${width}px`);
+    };
+
+    // Add delay to let scroll animation start (similar to shop-by-price)
+    if (withDelay) {
+      setTimeout(updatePosition, 100);
+    } else {
+      updatePosition();
+    }
   }
 
   /**

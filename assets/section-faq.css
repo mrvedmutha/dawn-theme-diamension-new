@@ -6,6 +6,7 @@
 .custom-section-faq__wrapper {
   background-color: #fffaf5;
   width: 100%;
+  position: relative;
 }
 
 /* Container - Grid Layout (exactly like Contact Page) */
@@ -16,11 +17,14 @@
   grid-template-columns: 238px 1fr;
   gap: 128px;
   padding: 140px 48px 80px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Sidebar */
 .custom-section-faq__sidebar {
   position: relative;
+  box-sizing: border-box;
 }
 
 .custom-section-faq__sidebar-sticky {
@@ -32,6 +36,8 @@
 /* Content Area */
 .custom-section-faq__content {
   max-width: 655px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ============================================
@@ -110,7 +116,7 @@
   line-height: 45px;
   text-transform: uppercase;
   color: #183754;
-  margin: 0 0 51px 0;
+  margin: 0 0 50px 0;
 }
 
 /* ============================================
@@ -118,8 +124,11 @@
    ============================================ */
 
 .custom-section-faq__tabs-container {
-  margin-bottom: 51px;
+  margin-bottom: 50px;
   position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden; /* Hide overflow of underline container */
 }
 
 .custom-section-faq__tabs {
@@ -130,6 +139,19 @@
   scroll-behavior: smooth;
   padding: 0 40px 0 0; /* Right padding for scroll hint */
 
+  /* Touch scrolling with momentum */
+  -webkit-overflow-scrolling: touch;
+
+  /* Prevent text selection while scrolling */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Smooth touch scrolling */
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+
   /* Hide scrollbar but keep scrolling */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
@@ -137,6 +159,8 @@
 
 .custom-section-faq__tabs::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
+  height: 0;
+  width: 0;
 }
 
 /* Scroll hint: Show partial next tab */
@@ -160,6 +184,16 @@
   flex-shrink: 0;
   transition: color 0.3s ease;
   position: relative;
+
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Touch target optimization */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .custom-section-faq__tab:hover {
@@ -175,8 +209,22 @@
   background-color: #cccccc;
   margin-top: 30.5px;
   position: relative;
-  --indicator-left: 0px;
-  --indicator-width: 0px;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* Prevent user scrolling - only programmatic scroll */
+  pointer-events: none;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* Match tabs width */
+  width: 100%;
+}
+
+.custom-section-faq__tabs-underline::-webkit-scrollbar {
+  display: none;
 }
 
 .custom-section-faq__tabs-underline::after {
@@ -212,7 +260,7 @@
   line-height: 1.2;
   letter-spacing: -0.2px;
   color: #183754;
-  margin: 0 0 56px 0;
+  margin: 0 0 32px 0;
   text-transform: uppercase;
 }
 
@@ -228,6 +276,7 @@
 .custom-section-faq__faq-item {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .custom-section-faq__question-wrapper {
@@ -252,6 +301,9 @@
   color: #183754;
   margin: 0;
   flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .custom-section-faq__icon {
@@ -285,8 +337,11 @@
   line-height: 1.5;
   letter-spacing: 0.42px;
   color: rgba(62, 98, 130, 0.71);
-  padding-top: 46px;
+  padding-top: 20px;
   padding-right: 44px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .custom-section-faq__answer-content p {
@@ -301,7 +356,7 @@
 .custom-section-faq__divider {
   height: 1px;
   background-color: #cccccc;
-  margin: 45px 0;
+  margin: 20px 0;
 }
 
 /* ============================================
@@ -320,8 +375,11 @@
 @media (max-width: 1024px) {
   .custom-section-faq__container {
     grid-template-columns: 220px 1fr;
-    gap: 100px;
+    gap: 80px;
     padding: 120px 40px 60px;
+  }
+  .custom-section-faq__content {
+    max-width: 85%;
   }
 
   .custom-section-faq__sidebar-sticky {
@@ -366,7 +424,7 @@
   }
 
   .custom-section-faq__sidebar {
-    margin-bottom: 20px;
+    margin-bottom: 32px;
   }
 
   .custom-section-faq__sidebar-sticky {
@@ -376,7 +434,6 @@
 
   .custom-section-faq__content {
     max-width: 100%;
-    margin-top: 32px;
   }
 
   .custom-section-faq__menu-title {
