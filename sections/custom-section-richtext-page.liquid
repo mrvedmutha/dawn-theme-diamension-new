@@ -1,0 +1,225 @@
+{{ 'section-richtext-page.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-richtext-page">
+  <div class="custom-section-richtext-page__wrapper">
+    <div class="custom-section-richtext-page__container">
+
+      {%- comment -%} Left Column: Info Menu {%- endcomment -%}
+      <aside class="custom-section-richtext-page__sidebar">
+        <div class="custom-section-richtext-page__sidebar-sticky">
+
+          {% if section.settings.menu_title != blank %}
+            <h1 class="custom-section-richtext-page__menu-title">
+              {{ section.settings.menu_title }}
+            </h1>
+          {% endif %}
+
+          <nav class="custom-section-richtext-page__menu">
+            {% for block in section.blocks %}
+              {% if block.type == 'info_menu_item' %}
+                <div class="custom-section-richtext-page__menu-item-wrapper" {{ block.shopify_attributes }}>
+                  {% if block.settings.menu_link != blank %}
+                    <a
+                      href="{{ block.settings.menu_link }}"
+                      class="custom-section-richtext-page__menu-link{% if block.settings.is_active %} custom-section-richtext-page__menu-link--active{% endif %}"
+                    >
+                      {{ block.settings.menu_text }}
+                    </a>
+                  {% else %}
+                    <span class="custom-section-richtext-page__menu-link{% if block.settings.is_active %} custom-section-richtext-page__menu-link--active{% endif %}">
+                      {{ block.settings.menu_text }}
+                    </span>
+                  {% endif %}
+                  <div class="custom-section-richtext-page__menu-divider">&nbsp;</div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </nav>
+
+        </div>
+      </aside>
+
+      {%- comment -%} Right Column: Richtext Content {%- endcomment -%}
+      <main class="custom-section-richtext-page__content">
+
+        {% if section.settings.page_title != blank %}
+          <h1 class="custom-section-richtext-page__page-title">
+            {{ section.settings.page_title }}
+          </h1>
+        {% endif %}
+
+        {%- comment -%} Richtext Content Blocks {%- endcomment -%}
+        <div class="custom-section-richtext-page__richtext-wrapper">
+          {% for block in section.blocks %}
+            {% if block.type == 'richtext_content' %}
+              <div class="custom-section-richtext-page__richtext-block" style="margin-bottom: {{ block.settings.content_gap }}px;" {{ block.shopify_attributes }}>
+                {% if block.settings.section_heading != blank %}
+                  <h2 class="custom-section-richtext-page__section-heading">
+                    {{ block.settings.section_heading }}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.content != blank %}
+                  <div class="custom-section-richtext-page__richtext-content">
+                    {{ block.settings.content }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Richtext Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Info Menu Settings"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu Title",
+      "default": "INFO"
+    },
+    {
+      "type": "header",
+      "content": "Page Settings"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page Title",
+      "default": "Shipping Details"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_menu_item",
+      "name": "Menu Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_text",
+          "label": "Menu Text",
+          "default": "FAQS"
+        },
+        {
+          "type": "url",
+          "id": "menu_link",
+          "label": "Menu Link",
+          "info": "Leave blank for non-clickable text"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Is Active/Current Page",
+          "default": false,
+          "info": "Check this to highlight as the current page"
+        }
+      ]
+    },
+    {
+      "type": "richtext_content",
+      "name": "Content Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_heading",
+          "label": "Section Heading (Optional)",
+          "info": "Leave blank if no heading needed"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Add your content here.</p>"
+        },
+        {
+          "type": "range",
+          "id": "content_gap",
+          "label": "Gap After This Block (px)",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "default": 42,
+          "unit": "px",
+          "info": "Spacing below this content block"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Richtext Page",
+      "blocks": [
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "CONTACT",
+            "menu_link": "/pages/contact",
+            "is_active": false
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "FAQS",
+            "menu_link": "/pages/faqs",
+            "is_active": false
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "RETURN & REFUNDS",
+            "menu_link": "/pages/returns",
+            "is_active": false
+          }
+        },
+        {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "SHIPPING",
+            "is_active": true
+          }
+        },
+        {
+          "type": "richtext_content",
+          "settings": {
+            "content": "<p>At <strong>Diamension</strong>, we offer seamless shipping experiences across India and internationally.</p>"
+          }
+        },
+        {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Domestic Shipping (India – INR)",
+            "content": "<ul><li>Complimentary standard shipping on all orders within India.</li><li>Ready-to-ship pieces: Please allow 3–5 business days for processing + shipping time.</li><li>Made-to-order pieces: Please allow 3–5 weeks for processing + shipping time.</li><li>Orders placed on weekends or public holidays will be processed the next business day.</li><li>We do not deliver on weekends or public holidays.</li></ul>"
+          }
+        },
+        {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "International Shipping (USD)",
+            "content": "<ul><li>All international orders are shipped via DHL Express.</li><li>Shipping charges, customs duties, and taxes are calculated at checkout.</li><li>Please note: There may be courier or customs delays during peak/holiday seasons that are beyond our control.</li><li>International orders are not eligible for returns or exchanges.</li><li>We ship to most countries. If your country is not available at checkout, please contact us at care@diamension.com.</li></ul>"
+          }
+        },
+        {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Important Notes",
+            "content": "<ul><li>Orders valued above $2500 USD (international) or ₹2,00,000 INR (domestic) may require a signature upon delivery.</li><li>Orders placed during peak/holiday seasons may experience slight delays.</li></ul>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
