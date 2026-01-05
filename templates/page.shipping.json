@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-section-richtext-page",
+      "settings": {
+        "menu_title": "INFO",
+        "page_title": "Shipping Details"
+      },
+      "blocks": {
+        "info_menu_1": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "CONTACT",
+            "menu_link": "/pages/contact",
+            "is_active": false
+          }
+        },
+        "info_menu_2": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "FAQS",
+            "menu_link": "/pages/faq",
+            "is_active": false
+          }
+        },
+        "info_menu_3": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "RETURN & REFUNDS",
+            "menu_link": "/pages/returns",
+            "is_active": false
+          }
+        },
+        "info_menu_4": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "SHIPPING",
+            "menu_link": "",
+            "is_active": true
+          }
+        },
+        "richtext_1": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "",
+            "content": "<p>At <strong>Diamension</strong>, we offer seamless shipping experiences across India and internationally.</p>"
+          }
+        },
+        "richtext_2": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Domestic Shipping (India – INR)",
+            "content": "<ul><li>Complimentary standard shipping on all orders within India.</li><li>Ready-to-ship pieces: Please allow 3–5 business days for processing + shipping time.</li><li>Made-to-order pieces: Please allow 3–5 weeks for processing + shipping time.</li><li>Orders placed on weekends or public holidays will be processed the next business day.</li><li>We do not deliver on weekends or public holidays.</li></ul>"
+          }
+        },
+        "richtext_3": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "International Shipping (USD)",
+            "content": "<ul><li>All international orders are shipped via DHL Express.</li><li>Shipping charges, customs duties, and taxes are calculated at checkout.</li><li>Please note: There may be courier or customs delays during peak/holiday seasons that are beyond our control.</li><li>International orders are not eligible for returns or exchanges.</li><li>We ship to most countries. If your country is not available at checkout, please contact us at care@diamension.com.</li></ul>"
+          }
+        },
+        "richtext_4": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Important Notes",
+            "content": "<ul><li>Orders valued above $2500 USD (international) or ₹2,00,000 INR (domestic) may require a signature upon delivery.</li><li>Orders placed during peak/holiday seasons may experience slight delays.</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "info_menu_1",
+        "info_menu_2",
+        "info_menu_3",
+        "info_menu_4",
+        "richtext_1",
+        "richtext_2",
+        "richtext_3",
+        "richtext_4"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

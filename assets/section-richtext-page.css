@@ -1,0 +1,386 @@
+/* ============================================
+   Custom Section: Richtext Page
+   ============================================ */
+
+.custom-section-richtext-page {
+  background-color: #fffaf5;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.custom-section-richtext-page__wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.custom-section-richtext-page__container {
+  display: grid;
+  grid-template-columns: 238px 1fr;
+  gap: 128px;
+  padding-top: 109px;
+  padding-bottom: 80px;
+}
+
+/* ============================================
+   LEFT SIDEBAR - Info Menu
+   ============================================ */
+
+.custom-section-richtext-page__sidebar {
+  position: relative;
+}
+
+.custom-section-richtext-page__sidebar-sticky {
+  position: sticky;
+  top: 109px;
+  align-self: start;
+}
+
+.custom-section-richtext-page__menu-title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0 0 56px 0;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.custom-section-richtext-page__menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-section-richtext-page__menu-item-wrapper {
+  margin-bottom: 0;
+}
+
+.custom-section-richtext-page__menu-link {
+  display: block;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #9a9a9a;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px 0;
+  transition: color 0.2s ease;
+}
+
+.custom-section-richtext-page__menu-link--active {
+  color: #212121;
+  font-weight: 400;
+}
+
+.custom-section-richtext-page__menu-link:hover {
+  color: #212121;
+}
+
+.custom-section-richtext-page__menu-divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 0;
+}
+
+/* ============================================
+   RIGHT CONTENT AREA
+   ============================================ */
+
+.custom-section-richtext-page__content {
+  max-width: 655px;
+  margin: 0;
+}
+
+.custom-section-richtext-page__page-title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0 0 56px 0;
+  letter-spacing: 0.02em;
+}
+
+.custom-section-richtext-page__richtext-wrapper {
+  color: #3e6282;
+}
+
+.custom-section-richtext-page__richtext-block {
+  /* margin-bottom controlled by block settings */
+}
+
+.custom-section-richtext-page__richtext-block:last-child {
+  margin-bottom: 0 !important;
+}
+
+.custom-section-richtext-page__section-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3e6282;
+  text-transform: uppercase;
+  margin: 0 0 0 0;
+}
+
+.custom-section-richtext-page__richtext-content {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20.843px;
+  line-height: 31.265px;
+  color: #3e6282;
+}
+
+/* Typography Styles */
+.custom-section-richtext-page__richtext-content p {
+  margin: 0;
+  font-size: 20.843px;
+  line-height: 31.265px;
+}
+
+.custom-section-richtext-page__richtext-content p + p {
+  margin-top: 42px;
+}
+
+.custom-section-richtext-page__richtext-content strong {
+  font-weight: 500;
+}
+
+/* List Styles */
+.custom-section-richtext-page__richtext-content ul {
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-section-richtext-page__richtext-content ul li {
+  margin-left: 30px;
+  padding-left: 0;
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 0;
+}
+
+.custom-section-richtext-page__richtext-content ul li:last-child {
+  margin-bottom: 0;
+}
+
+.custom-section-richtext-page__richtext-content ol {
+  list-style-type: decimal;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-section-richtext-page__richtext-content ol li {
+  margin-left: 30px;
+  padding-left: 0;
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 0;
+}
+
+.custom-section-richtext-page__richtext-content ol li:last-child {
+  margin-bottom: 0;
+}
+
+/* Section heading followed by list */
+.custom-section-richtext-page__section-heading + .custom-section-richtext-page__richtext-content {
+  margin-top: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet - Keep two columns but smaller */
+@media screen and (max-width: 1024px) {
+  .custom-section-richtext-page__container {
+    grid-template-columns: 200px 1fr;
+    gap: 80px;
+    padding: 100px 40px 60px;
+  }
+
+  .custom-section-richtext-page__sidebar-sticky {
+    top: 100px;
+  }
+
+  .custom-section-richtext-page__wrapper {
+    padding: 0;
+  }
+
+  .custom-section-richtext-page__menu-title {
+    font-size: 36px;
+    line-height: 40px;
+    margin-bottom: 40px;
+  }
+
+  .custom-section-richtext-page__menu-link {
+    font-size: 15px;
+  }
+
+  .custom-section-richtext-page__page-title {
+    font-size: 36px;
+    line-height: 40px;
+    margin-bottom: 40px;
+  }
+
+  .custom-section-richtext-page__section-heading {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .custom-section-richtext-page__richtext-content,
+  .custom-section-richtext-page__richtext-content p {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .custom-section-richtext-page__richtext-content ul li,
+  .custom-section-richtext-page__richtext-content ol li {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+/* Mobile - Single column layout */
+@media screen and (max-width: 767px) {
+  .custom-section-richtext-page {
+    min-height: auto;
+  }
+  .custom-section-richtext-page__wrapper {
+    padding: 0 20px;
+  }
+
+  .custom-section-richtext-page__container {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 40px 20px;
+  }
+
+  .custom-section-richtext-page__sidebar {
+    margin-bottom: 32px;
+  }
+
+  .custom-section-richtext-page__sidebar-sticky {
+    position: relative;
+    top: 0;
+  }
+
+  .custom-section-richtext-page__menu-title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+
+  /* Horizontal menu layout with wrapping */
+  .custom-section-richtext-page__menu {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .custom-section-richtext-page__menu-item-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .custom-section-richtext-page__menu-link {
+    padding: 0;
+    font-size: 14px;
+  }
+
+  /* Change divider to vertical pipe */
+  .custom-section-richtext-page__menu-divider {
+    width: 1px;
+    height: 16px;
+    background: #cdcdcc;
+    flex-shrink: 0;
+  }
+
+  /* Hide last divider */
+  .custom-section-richtext-page__menu-item-wrapper:last-of-type .custom-section-richtext-page__menu-divider {
+    display: none;
+  }
+
+  .custom-section-richtext-page__content {
+    max-width: 100%;
+  }
+
+  .custom-section-richtext-page__page-title {
+    font-size: 22px;
+    line-height: 32px;
+    margin-bottom: 32px;
+  }
+
+  .custom-section-richtext-page__section-heading {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .custom-section-richtext-page__richtext-content,
+  .custom-section-richtext-page__richtext-content p {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .custom-section-richtext-page__richtext-content ul li,
+  .custom-section-richtext-page__richtext-content ol li {
+    font-size: 14px;
+    line-height: 21px;
+    margin-left: 20px;
+  }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 375px) {
+  .custom-section-richtext-page__wrapper {
+    padding: 0 16px;
+  }
+
+  .custom-section-richtext-page__container {
+    padding: 40px 16px;
+  }
+
+  .custom-section-richtext-page__menu-title {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 16px;
+  }
+
+  .custom-section-richtext-page__menu {
+    gap: 12px;
+  }
+
+  .custom-section-richtext-page__menu-item-wrapper {
+    gap: 12px;
+  }
+
+  .custom-section-richtext-page__menu-link {
+    font-size: 13px;
+  }
+
+  .custom-section-richtext-page__page-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .custom-section-richtext-page__richtext-content,
+  .custom-section-richtext-page__richtext-content p {
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .custom-section-richtext-page__richtext-content ul li,
+  .custom-section-richtext-page__richtext-content ol li {
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
