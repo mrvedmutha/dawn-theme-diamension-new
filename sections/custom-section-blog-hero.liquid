@@ -1,0 +1,70 @@
+{{ 'section-blog-hero.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Blog Hero Section
+  - Split layout: Image (left) + Content (right)
+  - 50-50 until tablet, then stacks vertically
+  - Displays article image, date, title, and excerpt
+{%- endcomment -%}
+
+<div class="custom-section-blog-hero">
+  <div class="custom-section-blog-hero__wrapper">
+    {%- comment -%} Image Side {%- endcomment -%}
+    <div class="custom-section-blog-hero__image-side">
+      {%- if article.image -%}
+        <img
+          src="{{ article.image | image_url: width: 1440 }}"
+          srcset="
+            {{ article.image | image_url: width: 720 }} 720w,
+            {{ article.image | image_url: width: 1440 }} 1440w
+          "
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt="{{ article.image.alt | escape }}"
+          class="custom-section-blog-hero__image"
+          loading="eager"
+        >
+      {%- else -%}
+        <div class="custom-section-blog-hero__image-placeholder"></div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Content Side {%- endcomment -%}
+    <div class="custom-section-blog-hero__content-side">
+      <div class="custom-section-blog-hero__content">
+        {%- comment -%} Date {%- endcomment -%}
+        {%- if article.published_at -%}
+          <p class="custom-section-blog-hero__date">
+            {{ article.published_at | date: '%d %B %Y' }}
+          </p>
+        {%- endif -%}
+
+        {%- comment -%} Title {%- endcomment -%}
+        {%- if article.title -%}
+          <h1 class="custom-section-blog-hero__title">
+            {{ article.title }}
+          </h1>
+        {%- endif -%}
+
+        {%- comment -%} Excerpt {%- endcomment -%}
+        {%- if article.excerpt != blank -%}
+          <div class="custom-section-blog-hero__excerpt">
+            {{ article.excerpt | strip_html }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Hero",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Blog Hero"
+    }
+  ],
+  "templates": ["article"]
+}
+{% endschema %}

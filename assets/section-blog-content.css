@@ -1,0 +1,260 @@
+/* =====================================================
+   Blog Content Section
+   - Main article content display
+   - Centered, justified text
+   - Dynamic height
+   ===================================================== */
+
+/* =====================================================
+   Font Face Declarations
+   ===================================================== */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Container */
+.custom-section-blog-content {
+  width: 100%;
+  background: #fffaf5;
+}
+
+.custom-section-blog-content__wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 104px 40px;
+}
+
+.custom-section-blog-content__container {
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+/* Content Body */
+.custom-section-blog-content__body {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  color: #3e6282;
+  text-align: justify;
+}
+
+/* Override all child elements */
+.custom-section-blog-content__body * {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif !important;
+}
+
+.custom-section-blog-content__body span,
+.custom-section-blog-content__body div {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3e6282;
+}
+
+/* Typography - Headings */
+.custom-section-blog-content__body h1,
+.custom-section-blog-content__body h2 {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  margin: 0 0 30px 0;
+}
+
+.custom-section-blog-content__body h3 {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 38px;
+  color: #183754;
+  margin: 0 0 24px 0;
+}
+
+.custom-section-blog-content__body h4 {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+  color: #183754;
+  margin: 0 0 20px 0;
+}
+
+/* Typography - Paragraphs */
+.custom-section-blog-content__body p {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3e6282;
+  margin: 0 0 30px 0;
+}
+
+.custom-section-blog-content__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Typography - Lists */
+.custom-section-blog-content__body ul,
+.custom-section-blog-content__body ol {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #3e6282;
+  margin: 0 0 30px 0;
+  padding-left: 30px;
+}
+
+.custom-section-blog-content__body li {
+  margin-bottom: 10px;
+}
+
+/* Typography - Links */
+.custom-section-blog-content__body a {
+  color: #183754;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.custom-section-blog-content__body a:hover {
+  color: #3e6282;
+}
+
+/* Typography - Images */
+.custom-section-blog-content__body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 40px auto;
+}
+
+/* Typography - Blockquotes */
+.custom-section-blog-content__body blockquote {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 24px;
+  line-height: 34px;
+  color: #183754;
+  font-style: italic;
+  margin: 40px 0;
+  padding-left: 30px;
+  border-left: 4px solid #183754;
+}
+
+/* Divider Line */
+.custom-section-blog-content__divider {
+  width: 100%;
+  height: 1px;
+  background: #d3d3d3;
+  font-size: 0;
+  line-height: 0;
+}
+
+/* =====================================================
+   Responsive Breakpoints
+   ===================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-section-blog-content__wrapper {
+    padding: 80px 30px;
+  }
+
+  .custom-section-blog-content__container {
+    max-width: 800px;
+  }
+
+  .custom-section-blog-content__body h1,
+  .custom-section-blog-content__body h2 {
+    font-size: 36px;
+    line-height: 42px;
+  }
+
+  .custom-section-blog-content__body h3 {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .custom-section-blog-content__body p {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .custom-section-blog-content__wrapper {
+    padding: 60px 20px;
+  }
+
+  .custom-section-blog-content__container {
+    max-width: 100%;
+  }
+
+  .custom-section-blog-content__body {
+    text-align: left;
+  }
+
+  .custom-section-blog-content__body h1,
+  .custom-section-blog-content__body h2 {
+    font-size: 28px;
+    line-height: 34px;
+    margin-bottom: 20px;
+  }
+
+  .custom-section-blog-content__body h3 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 16px;
+  }
+
+  .custom-section-blog-content__body h4 {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .custom-section-blog-content__body p {
+    font-size: 16px;
+    line-height: 26px;
+    margin-bottom: 20px;
+  }
+
+  .custom-section-blog-content__body ul,
+  .custom-section-blog-content__body ol {
+    font-size: 16px;
+    line-height: 26px;
+    padding-left: 20px;
+  }
+
+  .custom-section-blog-content__body blockquote {
+    font-size: 20px;
+    line-height: 30px;
+    margin: 30px 0;
+    padding-left: 20px;
+  }
+
+  .custom-section-blog-content__body img {
+    margin: 30px auto;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .custom-section-blog-content__wrapper {
+    padding: 50px 15px;
+  }
+}

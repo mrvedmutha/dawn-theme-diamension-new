@@ -1,0 +1,36 @@
+{{ 'section-blog-content.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Blog Content Section
+  - Displays main article content
+  - Centered, justified text
+  - Dynamic height based on content
+{%- endcomment -%}
+
+<div class="custom-section-blog-content">
+  <div class="custom-section-blog-content__wrapper">
+    <div class="custom-section-blog-content__container">
+      {%- if article.content -%}
+        <div class="custom-section-blog-content__body">
+          {{ article.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} Divider Line {%- endcomment -%}
+  <div class="custom-section-blog-content__divider">&nbsp;</div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Content",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Blog Content"
+    }
+  ],
+  "templates": ["article"]
+}
+{% endschema %}

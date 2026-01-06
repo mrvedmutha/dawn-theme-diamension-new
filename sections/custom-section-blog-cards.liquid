@@ -1,0 +1,107 @@
+{{ 'section-blog-cards.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Blog Cards Section - Related Posts
+  - Shows 4 articles from same blog (excluding current)
+  - Desktop: 4 cards, Tablet: 3 cards, Mobile: 2x2 grid
+{%- endcomment -%}
+
+{%- liquid
+  comment
+    Get the current blog
+    Show 5 articles (we'll exclude current article in loop, showing 4 total)
+  endcomment
+
+  assign articles_to_show = 4
+  assign articles_count = 0
+-%}
+
+<div class="custom-section-blog-cards">
+  <div class="custom-section-blog-cards__wrapper">
+    <div class="custom-section-blog-cards__container">
+      {%- comment -%} Section Title {%- endcomment -%}
+      <h2 class="custom-section-blog-cards__heading">Other Journals</h2>
+
+      {%- comment -%} Cards Grid {%- endcomment -%}
+      <div class="custom-section-blog-cards__grid">
+        {%- if blog.articles.size > 0 -%}
+          {%- for blog_article in blog.articles limit: 5 -%}
+            {%- comment -%} Skip current article {%- endcomment -%}
+            {%- if blog_article.id == article.id -%}
+              {%- continue -%}
+            {%- endif -%}
+
+            {%- comment -%} Only show 4 articles {%- endcomment -%}
+            {%- if articles_count >= articles_to_show -%}
+              {%- break -%}
+            {%- endif -%}
+
+            {%- assign articles_count = articles_count | plus: 1 -%}
+
+            <div class="custom-section-blog-cards__card">
+              {%- comment -%} Image Holder {%- endcomment -%}
+              <div class="custom-section-blog-cards__image-holder">
+                {%- if blog_article.image -%}
+                  <a href="{{ blog_article.url }}" class="custom-section-blog-cards__image-link">
+                    <img
+                      src="{{ blog_article.image | image_url: width: 688 }}"
+                      srcset="
+                        {{ blog_article.image | image_url: width: 344 }} 344w,
+                        {{ blog_article.image | image_url: width: 688 }} 688w
+                      "
+                      sizes="(max-width: 767px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      alt="{{ blog_article.image.alt | escape }}"
+                      class="custom-section-blog-cards__image"
+                      loading="lazy"
+                    >
+                  </a>
+                {%- else -%}
+                  <div class="custom-section-blog-cards__image-placeholder"></div>
+                {%- endif -%}
+              </div>
+
+              {%- comment -%} Card Content {%- endcomment -%}
+              <div class="custom-section-blog-cards__content">
+                {%- comment -%} Date {%- endcomment -%}
+                <p class="custom-section-blog-cards__date">
+                  {{ blog_article.published_at | date: '%d/%m/%y' }}
+                </p>
+
+                {%- comment -%} Title {%- endcomment -%}
+                {%- if blog_article.title != blank -%}
+                  <h3 class="custom-section-blog-cards__title">
+                    <a href="{{ blog_article.url }}">{{ blog_article.title }}</a>
+                  </h3>
+                {%- endif -%}
+
+                {%- comment -%} Excerpt {%- endcomment -%}
+                {%- if blog_article.excerpt != blank -%}
+                  <div class="custom-section-blog-cards__excerpt">
+                    {{ blog_article.excerpt | strip_html | truncate: 150 }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="custom-section-blog-cards__empty">
+            <p>No related articles found.</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Cards",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Blog Cards"
+    }
+  ],
+  "templates": ["article"]
+}
+{% endschema %}
