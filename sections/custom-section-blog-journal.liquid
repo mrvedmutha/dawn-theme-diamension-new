@@ -86,8 +86,8 @@
         {%- comment -%} Display articles from current blog {%- endcomment -%}
 
         {%- if blog.articles.size > 0 -%}
-          {%- for article in blog.articles limit: articles_per_page -%}
-            <div class="custom-section-blog-journal__card" data-article-card>
+          {%- for article in blog.articles -%}
+            <div class="custom-section-blog-journal__card" data-article-card data-article-index="{{ forloop.index }}" {% if forloop.index > articles_per_page %}style="display: none;"{% endif %}>
               <div class="custom-section-blog-journal__image-holder">
                 {%- if article.image -%}
                   <a href="{{ article.url }}" class="custom-section-blog-journal__image-link">

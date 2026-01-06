@@ -40,7 +40,9 @@
 
       // Track current state
       this.currentPage = 1;
-      this.displayedArticles = this.articlesGrid.querySelectorAll('[data-article-card]').length;
+      // Count only visible articles initially
+      const allCards = this.articlesGrid.querySelectorAll('[data-article-card]');
+      this.displayedArticles = Array.from(allCards).filter(card => card.style.display !== 'none').length;
       this.isLoading = false;
 
       this.init();
@@ -110,7 +112,7 @@
       }
     }
 
-    async loadMoreArticles() {
+    loadMoreArticles() {
       if (this.isLoading) return;
 
       this.isLoading = true;
@@ -118,56 +120,36 @@
       this.loadMoreBtn.textContent = 'Loading...';
       this.loadMoreBtn.disabled = true;
 
-      try {
-        // Calculate next page to fetch
-        this.currentPage++;
-
-        // Fetch next page HTML
-        const response = await fetch(`/blogs/${this.currentBlogHandle}?page=${this.currentPage}`);
-        if (!response.ok) throw new Error('Failed to load articles');
-
-        const html = await response.text();
-
-        // Parse HTML to extract article cards
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        // Find article cards in the fetched HTML
-        const articleCards = doc.querySelectorAll('[data-article-card]');
-
-        if (articleCards.length > 0) {
+      // Small delay to show loading state
+      setTimeout(() => {
+        try {
           // Determine how many articles to show based on viewport
           const articlesToShow = getArticlesPerLoad();
-          let addedCount = 0;
 
-          // Append articles to grid
-          articleCards.forEach((card, index) => {
-            if (index < articlesToShow) {
-              this.articlesGrid.appendChild(card.cloneNode(true));
-              addedCount++;
+          // Get all hidden article cards
+          const allCards = Array.from(this.articlesGrid.querySelectorAll('[data-article-card]'));
+          const hiddenCards = allCards.filter(card => card.style.display === 'none');
+
+          if (hiddenCards.length > 0) {
+            // Show the next batch of hidden articles
+            const cardsToShow = Math.min(articlesToShow, hiddenCards.length);
+
+            for (let i = 0; i < cardsToShow; i++) {
+              hiddenCards[i].style.display = '';
+              this.displayedArticles++;
             }
-          });
-
-          this.displayedArticles += addedCount;
+          }
 
           // Check if we should show load more button
           this.checkLoadMore();
-        } else {
-          // No more articles found
-          this.loadMoreBtn.style.display = 'none';
+        } catch (error) {
+          console.error('Error loading more articles:', error);
         }
-      } catch (error) {
-        console.error('Error loading more articles:', error);
-        this.loadMoreBtn.textContent = 'Error loading articles';
-        setTimeout(() => {
-          this.loadMoreBtn.textContent = originalText;
-          this.loadMoreBtn.disabled = false;
-        }, 2000);
-      }
 
-      this.isLoading = false;
-      this.loadMoreBtn.textContent = originalText;
-      this.loadMoreBtn.disabled = false;
+        this.isLoading = false;
+        this.loadMoreBtn.textContent = originalText;
+        this.loadMoreBtn.disabled = false;
+      }, 300);
     }
 
     checkLoadMore() {
