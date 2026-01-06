@@ -17,9 +17,9 @@
   assign blog_handles = blog_handles_string | split: ','
 
   comment
-    Determine articles per page based on breakpoint
-    Desktop: 4, Tablet: 3, Mobile: 2
-    Using 12 as default to show 3 rows on desktop
+    Initial load shows 12 articles
+    Desktop: 3 rows (4 columns), Tablet: 4 rows (3 columns), Mobile: 6 rows (2 columns)
+    Load More will add 4/3/2 more based on device
   endcomment
 
   assign articles_per_page = 12
