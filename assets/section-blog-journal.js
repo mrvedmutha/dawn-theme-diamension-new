@@ -36,11 +36,12 @@
       this.showDate = this.section.dataset.showDate === 'true';
       this.showExcerpt = this.section.dataset.showExcerpt === 'true';
       this.totalArticles = parseInt(this.section.dataset.articlesCount) || 0;
-      this.articlesPerPage = parseInt(this.section.dataset.articlesPerPage) || 12;
+      this.articlesPerPage = parseInt(this.section.dataset.articlesPerPage) || 4;
 
       // Track current state
       this.currentPage = 1;
       this.displayedArticles = this.articlesGrid.querySelectorAll('[data-article-card]').length;
+      this.isLoading = false;
 
       this.init();
     }
@@ -65,7 +66,7 @@
           if (this.activeTab && this.underline) {
             this.positionUnderlineInitial();
           }
-        }, 200);
+        }, 150);
       });
 
       // Scroll active tab into view on mobile
@@ -75,7 +76,8 @@
     positionUnderlineInitial() {
       if (!this.underline || !this.tabsContainer || !this.activeTab) return;
 
-      setTimeout(() => {
+      // Use requestAnimationFrame for smoother rendering
+      requestAnimationFrame(() => {
         const tabRect = this.activeTab.getBoundingClientRect();
         const containerRect = this.tabsContainer.getBoundingClientRect();
         const offsetLeft = tabRect.left - containerRect.left + this.tabsContainer.scrollLeft;
@@ -84,7 +86,7 @@
         this.underline.style.width = `${tabRect.width}px`;
         this.underline.style.opacity = '1';
         this.underline.classList.add('is-visible');
-      }, 100);
+      });
     }
 
     scrollActiveTabIntoView() {
@@ -93,7 +95,7 @@
       const isResponsive = window.innerWidth <= 1024;
 
       if (isResponsive) {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           const tabRect = this.activeTab.getBoundingClientRect();
           const containerRect = this.tabsContainer.getBoundingClientRect();
           const tabCenter = this.activeTab.offsetLeft + tabRect.width / 2;
@@ -104,22 +106,74 @@
             left: Math.max(0, scrollPosition),
             behavior: 'smooth',
           });
-        }, 200);
+        });
       }
     }
 
-    loadMoreArticles() {
-      // Since Shopify pagination works via URL params,
-      // we'll navigate to the next page with a page parameter
-      this.currentPage++;
-      window.location.href = `/blogs/${this.currentBlogHandle}?page=${this.currentPage}`;
+    async loadMoreArticles() {
+      if (this.isLoading) return;
+
+      this.isLoading = true;
+      const originalText = this.loadMoreBtn.textContent;
+      this.loadMoreBtn.textContent = 'Loading...';
+      this.loadMoreBtn.disabled = true;
+
+      try {
+        // Calculate next page to fetch
+        this.currentPage++;
+
+        // Fetch next page HTML
+        const response = await fetch(`/blogs/${this.currentBlogHandle}?page=${this.currentPage}`);
+        if (!response.ok) throw new Error('Failed to load articles');
+
+        const html = await response.text();
+
+        // Parse HTML to extract article cards
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Find article cards in the fetched HTML
+        const articleCards = doc.querySelectorAll('[data-article-card]');
+
+        if (articleCards.length > 0) {
+          // Determine how many articles to show based on viewport
+          const articlesToShow = getArticlesPerLoad();
+          let addedCount = 0;
+
+          // Append articles to grid
+          articleCards.forEach((card, index) => {
+            if (index < articlesToShow) {
+              this.articlesGrid.appendChild(card.cloneNode(true));
+              addedCount++;
+            }
+          });
+
+          this.displayedArticles += addedCount;
+
+          // Check if we should show load more button
+          this.checkLoadMore();
+        } else {
+          // No more articles found
+          this.loadMoreBtn.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Error loading more articles:', error);
+        this.loadMoreBtn.textContent = 'Error loading articles';
+        setTimeout(() => {
+          this.loadMoreBtn.textContent = originalText;
+          this.loadMoreBtn.disabled = false;
+        }, 2000);
+      }
+
+      this.isLoading = false;
+      this.loadMoreBtn.textContent = originalText;
+      this.loadMoreBtn.disabled = false;
     }
 
     checkLoadMore() {
       if (!this.loadMoreBtn) return;
 
       // Show load more button if there are more articles to load
-      // Shopify blog.articles has a size limit per page, we check if we have more
       const hasMoreArticles = this.totalArticles > this.displayedArticles;
 
       if (hasMoreArticles) {
