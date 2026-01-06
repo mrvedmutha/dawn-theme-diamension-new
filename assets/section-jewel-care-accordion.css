@@ -1,0 +1,302 @@
+/* ========================================
+   Custom Section: Jewelry Care Accordion
+   ======================================== */
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('../assets/fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Wrapper - Background */
+.custom-section-jewel-care-accordion__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Container - Max Width & Centering */
+.custom-section-jewel-care-accordion__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 96px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Heading */
+.custom-section-jewel-care-accordion__heading {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 45px;
+  color: #183754;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Accordion Items Container */
+.custom-section-jewel-care-accordion__items {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 80px;
+}
+
+/* Individual Accordion Item */
+.custom-section-jewel-care-accordion__item {
+  width: 100%;
+  position: relative;
+}
+
+/* Top Divider for each item */
+.custom-section-jewel-care-accordion__item::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #183754;
+  opacity: 0.2;
+}
+
+/* First item should not have top divider */
+.custom-section-jewel-care-accordion__item:first-child::before {
+  display: none;
+}
+
+/* Accordion Item Header (Button) */
+.custom-section-jewel-care-accordion__item-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 24px;
+}
+
+/* Accordion Item Title */
+.custom-section-jewel-care-accordion__item-title {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  color: #183754;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+/* Accordion Item Icon Container */
+.custom-section-jewel-care-accordion__item-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Icons */
+.custom-section-jewel-care-accordion__icon {
+  width: 24px;
+  height: 24px;
+  color: #183754;
+  transition: opacity 0.3s ease;
+}
+
+/* Plus Icon - Show by default */
+.custom-section-jewel-care-accordion__icon--plus {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Minus Icon - Hide by default */
+.custom-section-jewel-care-accordion__icon--minus {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* When accordion is active, swap icons */
+.custom-section-jewel-care-accordion__item.is-active .custom-section-jewel-care-accordion__icon--plus {
+  opacity: 0;
+}
+
+.custom-section-jewel-care-accordion__item.is-active .custom-section-jewel-care-accordion__icon--minus {
+  opacity: 1;
+}
+
+/* Accordion Content Container */
+.custom-section-jewel-care-accordion__item-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+/* Accordion Content Inner */
+.custom-section-jewel-care-accordion__item-content-inner {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* Active State - Content Visible */
+.custom-section-jewel-care-accordion__item.is-active .custom-section-jewel-care-accordion__item-content {
+  max-height: 2000px;
+}
+
+/* When content is active, adjust header padding to remove bottom padding */
+.custom-section-jewel-care-accordion__item.is-active .custom-section-jewel-care-accordion__item-header {
+  padding-bottom: 0;
+}
+
+/* Accordion Item Image */
+.custom-section-jewel-care-accordion__item-image {
+  width: 300px;
+  height: 200px;
+  margin-bottom: 17.36px;
+}
+
+.custom-section-jewel-care-accordion__item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Accordion Item Text */
+.custom-section-jewel-care-accordion__item-text {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(62, 98, 130, 0.7);
+  max-width: 538.891px;
+}
+
+.custom-section-jewel-care-accordion__item-text p {
+  margin: 0 0 16px 0;
+}
+
+.custom-section-jewel-care-accordion__item-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Accordion Item Divider - Hidden (using ::before instead) */
+.custom-section-jewel-care-accordion__item-divider {
+  display: none;
+}
+
+/* Bottom divider for last item */
+.custom-section-jewel-care-accordion__item:last-child::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #183754;
+  opacity: 0.2;
+  margin-top: 0;
+}
+
+/* ========================================
+   Responsive Styles
+   ======================================== */
+
+/* Large Desktop - Contain content */
+@media (min-width: 1441px) {
+  .custom-section-jewel-care-accordion__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-section-jewel-care-accordion__container {
+    padding: 72px 30px;
+  }
+
+  .custom-section-jewel-care-accordion__heading {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .custom-section-jewel-care-accordion__items {
+    margin-top: 60px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .custom-section-jewel-care-accordion__container {
+    padding: 56px 20px;
+  }
+
+  .custom-section-jewel-care-accordion__heading {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .custom-section-jewel-care-accordion__items {
+    margin-top: 48px;
+  }
+
+  .custom-section-jewel-care-accordion__item-title {
+    font-size: 18px;
+  }
+
+  .custom-section-jewel-care-accordion__item-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  .custom-section-jewel-care-accordion__item-text {
+    font-size: 13px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .custom-section-jewel-care-accordion__container {
+    padding: 48px 16px;
+  }
+
+  .custom-section-jewel-care-accordion__heading {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .custom-section-jewel-care-accordion__items {
+    margin-top: 40px;
+  }
+
+  .custom-section-jewel-care-accordion__item-title {
+    font-size: 16px;
+  }
+
+  .custom-section-jewel-care-accordion__item-content-inner {
+    padding-top: 32px;
+    padding-bottom: 20px;
+  }
+}
