@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "two_column_customiser": {
+      "type": "custom-two-column-image-customiser",
+      "settings": {
+        "heading": "Your Imagination, Our Craft",
+        "description": "<p>Book a virtual appointment or request a callback with our design specialists to bring your dream jewelry to life. From sharing ideas to choosing the perfect diamond within your budget, we'll guide you every step of the way.</p>",
+        "button_1_text": "Virtual Appointment",
+        "button_1_link": "",
+        "button_2_text": "Request A Callback",
+        "button_2_link": "",
+        "background_color": "#fffaf5"
+      }
+    },
+    "process_steps": {
+      "type": "custom-section-process-steps",
+      "settings": {
+        "heading": "How It Works"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Share Your Idea",
+            "description": "<p>Upload an image or book a call to explain your vision.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Get a Quote",
+            "description": "<p>We'll provide a price estimate for your custom design.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Concept Sketch",
+            "description": "<p>Our designers create a concept sketch for your approval.</p>"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Confirm & Crafting",
+            "description": "<p>Once you approve and place a deposit, your design goes into production, handcrafted with care.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    }
+  },
+  "order": [
+    "two_column_customiser",
+    "process_steps"
+  ]
+}

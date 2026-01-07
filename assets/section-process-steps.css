@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Process Steps Section
+   ========================================================================== */
+
+/* Wrapper - Fluid with Background */
+.custom-section-process-steps__wrapper {
+  width: 100%;
+  background-color: #fffaf5;
+  padding: 80px 0;
+}
+
+/* Container - Max Width 1440px */
+.custom-section-process-steps__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section Header */
+.custom-section-process-steps__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* Section Heading */
+.custom-section-process-steps__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: normal;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Cards Grid - 4 Columns Desktop */
+.custom-section-process-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* Card */
+.custom-section-process-steps__card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Image Holder */
+.custom-section-process-steps__image-holder {
+  width: 100%;
+  height: 500px;
+  background-color: #f0efea;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image */
+.custom-section-process-steps__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder (if no image) */
+.custom-section-process-steps__placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f0efea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-process-steps__placeholder::after {
+  content: 'Add Image';
+  color: #999;
+  font-size: 16px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+}
+
+/* Card Content */
+.custom-section-process-steps__content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Card Title */
+.custom-section-process-steps__title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: normal;
+  color: #183754;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card Description */
+.custom-section-process-steps__description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #3e6282;
+  margin: 0;
+  max-width: 290px;
+}
+
+.custom-section-process-steps__description p {
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   Responsive - Tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .custom-section-process-steps__wrapper {
+    padding: 60px 0;
+  }
+
+  .custom-section-process-steps__container {
+    padding: 0 20px;
+  }
+
+  .custom-section-process-steps__header {
+    margin-bottom: 50px;
+  }
+
+  .custom-section-process-steps__heading {
+    font-size: 36px;
+  }
+
+  /* Grid - 2 Columns (2+2) */
+  .custom-section-process-steps__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .custom-section-process-steps__image-holder {
+    height: 450px;
+  }
+
+  .custom-section-process-steps__title {
+    font-size: 18px;
+  }
+
+  .custom-section-process-steps__description {
+    font-size: 15px;
+    max-width: 260px;
+  }
+}
+
+
+/* ==========================================================================
+   Responsive - Mobile
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .custom-section-process-steps__wrapper {
+    padding: 50px 0;
+  }
+
+  .custom-section-process-steps__container {
+    padding: 0 16px;
+  }
+
+  .custom-section-process-steps__header {
+    margin-bottom: 40px;
+  }
+
+  .custom-section-process-steps__heading {
+    font-size: 28px;
+  }
+
+  /* Grid - 2 Columns */
+  .custom-section-process-steps__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .custom-section-process-steps__card {
+    gap: 12px;
+  }
+
+  .custom-section-process-steps__image-holder {
+    height: 250px;
+  }
+
+  .custom-section-process-steps__title {
+    font-size: 16px;
+  }
+
+  .custom-section-process-steps__description {
+    font-size: 14px;
+    max-width: 200px;
+  }
+
+  .custom-section-process-steps__content {
+    gap: 10px;
+  }
+}
+
+
+/* ==========================================================================
+   Responsive - Extra Small Mobile
+   ========================================================================== */
+
+@media (max-width: 375px) {
+  .custom-section-process-steps__wrapper {
+    padding: 40px 0;
+  }
+
+  .custom-section-process-steps__container {
+    padding: 0 12px;
+  }
+
+  .custom-section-process-steps__header {
+    margin-bottom: 30px;
+  }
+
+  .custom-section-process-steps__heading {
+    font-size: 24px;
+  }
+
+  .custom-section-process-steps__grid {
+    gap: 8px;
+  }
+
+  .custom-section-process-steps__card {
+    gap: 10px;
+  }
+
+  .custom-section-process-steps__image-holder {
+    height: 200px;
+  }
+
+  .custom-section-process-steps__title {
+    font-size: 14px;
+  }
+
+  .custom-section-process-steps__description {
+    font-size: 13px;
+    max-width: 160px;
+  }
+
+  .custom-section-process-steps__content {
+    gap: 8px;
+  }
+}
