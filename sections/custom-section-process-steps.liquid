@@ -1,0 +1,159 @@
+{% comment %}
+  Section: Process Steps
+  Purpose: Display process/workflow steps in a grid layout
+  Author: Wings Design Team
+  Version: 1.0
+  Figma Node: 507-302
+{% endcomment %}
+
+{{ 'section-process-steps.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.id
+  assign heading = section.settings.heading
+  assign blocks = section.blocks
+%}
+
+<div class="custom-section-process-steps" data-section-id="{{ section_id }}">
+  <div class="custom-section-process-steps__wrapper">
+    <div class="custom-section-process-steps__container">
+
+      {% comment %} Section Heading {% endcomment %}
+      {% if heading != blank %}
+        <div class="custom-section-process-steps__header">
+          <h2 class="custom-section-process-steps__heading">
+            {{ heading | escape }}
+          </h2>
+        </div>
+      {% endif %}
+
+      {% comment %} Cards Grid {% endcomment %}
+      <div class="custom-section-process-steps__grid">
+        {% for block in blocks %}
+          {% liquid
+            assign card_image = block.settings.image
+            assign card_title = block.settings.title
+            assign card_description = block.settings.description
+          %}
+
+          <div class="custom-section-process-steps__card" {{ block.shopify_attributes }}>
+            {% comment %} Image Holder {% endcomment %}
+            <div class="custom-section-process-steps__image-holder">
+              {% if card_image != blank %}
+                <img
+                  src="{{ card_image | image_url: width: 700 }}"
+                  srcset="
+                    {{ card_image | image_url: width: 350 }} 350w,
+                    {{ card_image | image_url: width: 500 }} 500w,
+                    {{ card_image | image_url: width: 700 }} 700w
+                  "
+                  sizes="(max-width: 767px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                  alt="{{ card_title | default: 'Process Step' | escape }}"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  class="custom-section-process-steps__image"
+                >
+              {% else %}
+                {% comment %} Fallback placeholder if no image {% endcomment %}
+                <div class="custom-section-process-steps__placeholder"></div>
+              {% endif %}
+            </div>
+
+            {% comment %} Card Content {% endcomment %}
+            <div class="custom-section-process-steps__content">
+              {% if card_title != blank %}
+                <h3 class="custom-section-process-steps__title">
+                  {{ card_title | escape }}
+                </h3>
+              {% endif %}
+
+              {% if card_description != blank %}
+                <div class="custom-section-process-steps__description">
+                  {{ card_description }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Process Steps",
+  "class": "section-process-steps",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended size: 700px × 1000px"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Step description goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "How It Works"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Process Steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Share Your Idea",
+            "description": "<p>Upload an image or book a call to explain your vision.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Get a Quote",
+            "description": "<p>We'll provide a price estimate for your custom design.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Concept Sketch",
+            "description": "<p>Our designers create a concept sketch for your approval.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Confirm & Crafting",
+            "description": "<p>Once you approve and place a deposit, your design goes into production, handcrafted with care.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

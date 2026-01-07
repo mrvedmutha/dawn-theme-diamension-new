@@ -1,0 +1,184 @@
+{% comment %}
+  Section: Two-Column Image Customiser
+  Purpose: Split-screen section for custom jewelry appointment booking
+  Author: Wings Design Team
+  Version: 1.0
+  Figma Node: 12-7504
+{% endcomment %}
+
+{{ 'section-two-column-image-customiser.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.id
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign button_1_text = section.settings.button_1_text
+  assign button_1_link = section.settings.button_1_link
+  assign button_2_text = section.settings.button_2_text
+  assign button_2_link = section.settings.button_2_link
+  assign image = section.settings.image
+  assign background_color = section.settings.background_color
+%}
+
+<div
+  class="custom-section-two-column-image-customiser"
+  data-section-id="{{ section_id }}"
+  style="--bg-color: {{ background_color }};"
+>
+  <div class="custom-section-two-column-image-customiser__wrapper">
+    {% comment %} Content Section {% endcomment %}
+    <div class="custom-section-two-column-image-customiser__content">
+      <div class="custom-section-two-column-image-customiser__content-inner">
+        {% comment %} Heading {% endcomment %}
+        {% if heading != blank %}
+          <h2 class="custom-section-two-column-image-customiser__heading">
+            {{ heading | escape }}
+          </h2>
+        {% endif %}
+
+        {% comment %} Description {% endcomment %}
+        {% if description != blank %}
+          <div class="custom-section-two-column-image-customiser__description">
+            {{ description }}
+          </div>
+        {% endif %}
+
+        {% comment %} CTA Buttons {% endcomment %}
+        {% if button_1_text != blank or button_2_text != blank %}
+          <div class="custom-section-two-column-image-customiser__buttons">
+            {% if button_1_text != blank %}
+              <a
+                href="{{ button_1_link | default: '#' }}"
+                class="custom-section-two-column-image-customiser__button custom-section-two-column-image-customiser__button--primary"
+                {% if button_1_link == blank %}
+                  aria-disabled="true"
+                  tabindex="-1"
+                {% endif %}
+              >
+                {{ button_1_text | escape }}
+              </a>
+            {% endif %}
+
+            {% if button_2_text != blank %}
+              <a
+                href="{{ button_2_link | default: '#' }}"
+                class="custom-section-two-column-image-customiser__button custom-section-two-column-image-customiser__button--secondary"
+                {% if button_2_link == blank %}
+                  aria-disabled="true"
+                  tabindex="-1"
+                {% endif %}
+              >
+                {{ button_2_text | escape }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% comment %} Image Section {% endcomment %}
+    <div class="custom-section-two-column-image-customiser__image-wrapper">
+      {% if image != blank %}
+        <img
+          src="{{ image | image_url: width: 1920 }}"
+          srcset="
+            {{ image | image_url: width: 750 }} 750w,
+            {{ image | image_url: width: 1000 }} 1000w,
+            {{ image | image_url: width: 1500 }} 1500w,
+            {{ image | image_url: width: 1920 }} 1920w
+          "
+          sizes="(max-width: 767px) 100vw, 50vw"
+          alt="{{ image.alt | default: heading | escape }}"
+          loading="lazy"
+          class="custom-section-two-column-image-customiser__image"
+        >
+      {% else %}
+        {% comment %} Fallback placeholder if no image {% endcomment %}
+        <div class="custom-section-two-column-image-customiser__placeholder"></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Two Column Image Custom",
+  "class": "section-two-column-image-customiser",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Imagination, Our Craft"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Book a virtual appointment or request a callback with our design specialists to bring your dream jewelry to life.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button 1 (Primary)"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "Virtual Appointment"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Button 2 (Secondary)"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "Request A Callback"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Visual Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended: 1440px × 1600px for desktop, will be cropped to 1:1 on mobile"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fffaf5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Column Image Customiser",
+      "settings": {
+        "heading": "Your Imagination, Our Craft",
+        "description": "<p>Book a virtual appointment or request a callback with our design specialists to bring your dream jewelry to life. From sharing ideas to choosing the perfect diamond within your budget, we'll guide you every step of the way.</p>",
+        "button_1_text": "Virtual Appointment",
+        "button_2_text": "Request A Callback",
+        "background_color": "#fffaf5"
+      }
+    }
+  ]
+}
+{% endschema %}
