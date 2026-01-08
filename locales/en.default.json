@@ -439,6 +439,13 @@
       "submit": "Submit",
       "alternate_provider_separator": "or"
     },
+    "login": {
+      "email": "Enter Email",
+      "password": "Enter Password",
+      "forgot_password": "Forgot Password?",
+      "sign_in": "Log In",
+      "create_account": "Create An Account"
+    },
     "order": {
       "title": "Order {{ name }}",
       "date_html": "Placed on {{ date }}",
@@ -478,15 +485,19 @@
     "recover_password": {
       "title": "Reset your password",
       "subtext": "We will send you an email to reset your password",
+      "email": "Enter Email*",
+      "submit": "SEND RESET LINK",
+      "cancel": "BACK TO LOGIN",
       "success": "We've sent you an email with a link to update your password."
     },
     "register": {
       "title": "Create account",
-      "first_name": "First name",
-      "last_name": "Last name",
-      "email": "Email",
-      "password": "Password",
-      "submit": "Create"
+      "first_name": "Enter First Name*",
+      "last_name": "Enter Last Name*",
+      "email": "Enter Email*",
+      "password": "Enter Password*",
+      "submit": "CREATE ACCOUNT",
+      "sign_in": "LOG IN"
     },
     "reset_password": {
       "title": "Reset account password",

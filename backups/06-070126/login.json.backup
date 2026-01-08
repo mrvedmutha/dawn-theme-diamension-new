@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "custom-profile-login": {
+      "type": "custom-section-profile-login",
+      "settings": {
+        "heading": "LOG IN",
+        "description": "Please enter your email and password",
+        "background_color": "#fffaf5"
+      }
+    }
+  },
+  "order": [
+    "custom-profile-login"
+  ]
+}

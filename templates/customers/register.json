@@ -1,10 +1,16 @@
 {
   "sections": {
-    "main": {
-      "type": "main-register"
+    "signup-section": {
+      "type": "custom-section-profile-signup",
+      "settings": {
+        "heading": "CREATE ACCOUNT",
+        "description": "Sign up for exclusive deals and a personalized shopping experience.",
+        "newsletter_text": "Subscribe to our newsletter to stay up-to-date on our latest collections",
+        "background_color": "#fff9f5"
+      }
     }
   },
   "order": [
-    "main"
+    "signup-section"
   ]
 }
