@@ -8,6 +8,26 @@
 
 {{ 'section-profile-login.css' | asset_url | stylesheet_tag }}
 
+{% comment %} TODO: Redirect logged-in customers trying to access login page {% endcomment %}
+{% if customer %}
+  {% comment %} Customer is already logged in - redirect to account page {% endcomment %}
+  {% comment %} Allow ?recover_success=true to show the recovery success message first {% endcomment %}
+  <script>
+    (function () {
+      // TODO: Check if this is a recovery success redirect
+      var urlParams = new URLSearchParams(window.location.search);
+      var recoverSuccess = urlParams.get('recover_success');
+
+      // If not showing recovery success, redirect immediately
+      if (recoverSuccess !== 'true') {
+        console.log('TODO: User already logged in, redirecting to account');
+        window.location.href = '/account';
+      }
+      // If recover_success=true, let the JavaScript show the message first
+    })();
+  </script>
+{% endif %}
+
 {% liquid
   assign section_id = section.id
   assign heading = section.settings.heading
@@ -64,6 +84,10 @@
         <div class="custom-section-profile-login__form-wrapper" data-login-form>
           {% form 'customer_login' %}
             <div class="custom-section-profile-login__form">
+              {% comment %} TODO: Hidden return_to parameter - Controls where Shopify redirects after successful login {% endcomment %}
+              {% comment %} Using login page with ?success=true so we can show success message before final redirect {% endcomment %}
+              <input type="hidden" name="return_to" value="{{ routes.account_login_url }}?login_success=true">
+
               {% if form.errors %}
                 <div class="custom-section-profile-login__errors">
                   {{ form.errors | default_errors }}
@@ -142,12 +166,26 @@
         </div>
 
         {% comment %} Forgot Password Form {% endcomment %}
-        <div class="custom-section-profile-login__form-wrapper custom-section-profile-login__form-wrapper--hidden" data-recover-form>
+        <div
+          class="custom-section-profile-login__form-wrapper custom-section-profile-login__form-wrapper--hidden"
+          data-recover-form
+        >
           {% form 'recover_customer_password' %}
             <div class="custom-section-profile-login__form">
+              {% comment %} TODO: Hidden return_to parameter - Redirect back to show success message {% endcomment %}
+              <input type="hidden" name="return_to" value="{{ routes.account_login_url }}?recover_success=true">
+
               {% if form.posted_successfully? %}
-                <div class="custom-section-profile-login__success">
-                  {{ 'customer.recover_password.success' | t }}
+                <div class="custom-section-profile-login__info">
+                  <div class="custom-section-profile-login__info-title">
+                    {{ 'customer.recover_password.success_title' | t }}
+                  </div>
+                  <div class="custom-section-profile-login__info-text">
+                    {{ 'customer.recover_password.success_message' | t }}
+                  </div>
+                  <div class="custom-section-profile-login__info-text">
+                    {{ 'customer.recover_password.success_spam_note' | t }}
+                  </div>
                 </div>
               {% endif %}
 
@@ -175,7 +213,10 @@
               <div class="custom-section-profile-login__field-line">&nbsp;</div>
 
               {% comment %} Submit Button {% endcomment %}
-              <button type="submit" class="custom-section-profile-login__button custom-section-profile-login__button--recover">
+              <button
+                type="submit"
+                class="custom-section-profile-login__button custom-section-profile-login__button--recover"
+              >
                 {{ 'customer.recover_password.submit' | t }}
               </button>
 
@@ -188,7 +229,11 @@
         </div>
 
         {% comment %} Create Account Link {% endcomment %}
-        <a href="{{ routes.account_register_url }}" class="custom-section-profile-login__create-account" data-create-account>
+        <a
+          href="{{ routes.account_register_url }}"
+          class="custom-section-profile-login__create-account"
+          data-create-account
+        >
           {{ 'customer.login.create_account' | t }}
         </a>
       </div>
@@ -211,7 +256,7 @@
           class="custom-section-profile-login__image"
         >
       {% else %}
-        <div class="custom-section-profile-login__placeholder"></div>
+        <div class="custom-section-profile-login__placeholder">&nbsp;</div>
       {% endif %}
     </div>
   </div>
