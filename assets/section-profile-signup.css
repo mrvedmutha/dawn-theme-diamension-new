@@ -2,6 +2,18 @@
    Profile Signup Section
    ========================================================================== */
 
+/* TODO: Animation for success banner slide down */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Block */
 .custom-section-profile-signup {
   width: 100%;
@@ -91,6 +103,66 @@
   background-color: #f9e6e6;
   border-radius: 4px;
   margin-bottom: 24px;
+}
+
+/* Success Message */
+.custom-section-profile-signup__success {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  color: #155724;
+  padding: 16px;
+  background-color: #d4edda;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-section-profile-signup__success-text {
+  position: relative;
+  z-index: 1;
+  line-height: 1.6;
+}
+
+/* Progress Bar */
+.custom-section-profile-signup__progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background-color: #28a745;
+  width: 0;
+  transition: width 3s linear;
+}
+
+.custom-section-profile-signup__progress-bar.active {
+  width: 100%;
+}
+
+/* Info Message (Blue) */
+.custom-section-profile-signup__info {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  color: #004085;
+  padding: 16px;
+  background-color: #cce5ff;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.custom-section-profile-signup__info-title {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.custom-section-profile-signup__info-text {
+  margin-bottom: 8px;
+}
+
+.custom-section-profile-signup__info-text:last-child {
+  margin-bottom: 0;
 }
 
 /* Name Fields Container - Side by Side */

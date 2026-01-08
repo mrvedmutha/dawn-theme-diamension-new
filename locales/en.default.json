@@ -488,7 +488,10 @@
       "email": "Enter Email*",
       "submit": "SEND RESET LINK",
       "cancel": "BACK TO LOGIN",
-      "success": "We've sent you an email with a link to update your password."
+      "success": "We've sent you an email with a link to update your password.",
+      "success_title": "Reset Link Sent",
+      "success_message": "We have sent you the reset link. The reset link has been sent to your email address. Please check your inbox.",
+      "success_spam_note": "If the email is not present in your inbox, please check your spam folder - sometimes you'll get the links there."
     },
     "register": {
       "title": "Create account",
@@ -497,7 +500,10 @@
       "email": "Enter Email*",
       "password": "Enter Password*",
       "submit": "CREATE ACCOUNT",
-      "sign_in": "LOG IN"
+      "sign_in": "LOG IN",
+      "success": "Account created successfully! Redirecting to home page...",
+      "verification_title": "Email Verification Required",
+      "verification_message": "We have sent an email to {{ email }}, please click the link included to verify your email address."
     },
     "reset_password": {
       "title": "Reset account password",
