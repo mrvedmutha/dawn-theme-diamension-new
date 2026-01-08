@@ -1,10 +1,24 @@
 {
   "sections": {
-    "main": {
-      "type": "main-login"
+    "custom-profile-login": {
+      "type": "custom-section-profile-login",
+      "settings": {
+        "heading": "LOG IN",
+        "description": "Please enter your email and password",
+        "background_color": "#fffaf5"
+      }
+    },
+    "custom-profile-forgot-password": {
+      "type": "custom-section-profile-forgot-password",
+      "settings": {
+        "heading": "RESET YOUR PASSWORD",
+        "description": "We will send you an email to reset your password",
+        "background_color": "#fffaf5"
+      }
     }
   },
   "order": [
-    "main"
+    "custom-profile-login",
+    "custom-profile-forgot-password"
   ]
 }

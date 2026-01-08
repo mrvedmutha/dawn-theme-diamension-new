@@ -500,3 +500,24 @@
     gap: 8px;
   }
 }
+
+/* ============================================
+   Newsletter Highlight Animation
+   (Used when navigating from signup page)
+   ============================================ */
+
+@keyframes newsletter-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(24, 55, 84, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(24, 55, 84, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(24, 55, 84, 0);
+  }
+}
+
+.custom-diamension-footer__newsletter.newsletter-highlight {
+  animation: newsletter-pulse 2s ease-out;
+}

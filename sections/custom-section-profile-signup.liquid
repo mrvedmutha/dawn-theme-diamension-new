@@ -1,0 +1,252 @@
+{% comment %}
+  Section: Profile Signup
+  Purpose: Customer registration page with split-screen layout
+  Author: Wings Design Team
+  Version: 1.0
+  Figma Node: 12-5548
+{% endcomment %}
+
+{{ 'section-profile-signup.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.id
+  assign heading = section.settings.heading
+  assign description = section.settings.description
+  assign image = section.settings.image
+  assign background_color = section.settings.background_color
+  assign newsletter_text = section.settings.newsletter_text
+%}
+
+<div
+  class="custom-section-profile-signup"
+  data-section-id="{{ section_id }}"
+  style="--bg-color: {{ background_color }};"
+>
+  <div class="custom-section-profile-signup__wrapper">
+    {% comment %} Form Section - Left 50% {% endcomment %}
+    <div class="custom-section-profile-signup__form-section">
+      <div class="custom-section-profile-signup__form-container">
+        {% comment %} Heading {% endcomment %}
+        <div class="custom-section-profile-signup__header">
+          {% if heading != blank %}
+            <h1 class="custom-section-profile-signup__heading">
+              {{ heading | escape }}
+            </h1>
+          {% endif %}
+
+          {% if description != blank %}
+            <p class="custom-section-profile-signup__description">
+              {{ description | escape }}
+            </p>
+          {% endif %}
+        </div>
+
+        {% comment %} Signup Form {% endcomment %}
+        <div class="custom-section-profile-signup__form-wrapper">
+          {% form 'create_customer' %}
+            <div class="custom-section-profile-signup__form">
+              {% if form.errors %}
+                <div class="custom-section-profile-signup__errors">
+                  {{ form.errors | default_errors }}
+                </div>
+              {% endif %}
+
+              {% comment %} Name Fields - Side by Side {% endcomment %}
+              <div class="custom-section-profile-signup__name-fields">
+                <div class="custom-section-profile-signup__field-group">
+                  <div class="custom-section-profile-signup__field custom-section-profile-signup__field--half">
+                    <input
+                      type="text"
+                      id="customer-first-name"
+                      name="customer[first_name]"
+                      autocomplete="given-name"
+                      placeholder="{{ 'customer.register.first_name' | t }}"
+                      class="custom-section-profile-signup__input"
+                      {% if form.first_name %}
+                        value="{{ form.first_name }}"
+                      {% endif %}
+                      required
+                    >
+                  </div>
+                  <div class="custom-section-profile-signup__field-line custom-section-profile-signup__field-line--half">&nbsp;</div>
+                </div>
+
+                <div class="custom-section-profile-signup__field-group">
+                  <div class="custom-section-profile-signup__field custom-section-profile-signup__field--half">
+                    <input
+                      type="text"
+                      id="customer-last-name"
+                      name="customer[last_name]"
+                      autocomplete="family-name"
+                      placeholder="{{ 'customer.register.last_name' | t }}"
+                      class="custom-section-profile-signup__input"
+                      {% if form.last_name %}
+                        value="{{ form.last_name }}"
+                      {% endif %}
+                      required
+                    >
+                  </div>
+                  <div class="custom-section-profile-signup__field-line custom-section-profile-signup__field-line--half">&nbsp;</div>
+                </div>
+              </div>
+
+              {% comment %} Email Field {% endcomment %}
+              <div class="custom-section-profile-signup__field">
+                <input
+                  type="email"
+                  id="customer-email"
+                  name="customer[email]"
+                  autocomplete="email"
+                  placeholder="{{ 'customer.register.email' | t }}"
+                  class="custom-section-profile-signup__input"
+                  {% if form.email %}
+                    value="{{ form.email }}"
+                  {% endif %}
+                  required
+                >
+              </div>
+              <div class="custom-section-profile-signup__field-line">&nbsp;</div>
+
+              {% comment %} Password Field {% endcomment %}
+              <div class="custom-section-profile-signup__field custom-section-profile-signup__field--password">
+                <input
+                  type="password"
+                  id="customer-password"
+                  name="customer[password]"
+                  autocomplete="new-password"
+                  placeholder="{{ 'customer.register.password' | t }}"
+                  class="custom-section-profile-signup__input custom-section-profile-signup__input--password"
+                  required
+                >
+                <button
+                  type="button"
+                  class="custom-section-profile-signup__password-toggle"
+                  aria-label="Toggle password visibility"
+                  data-password-toggle
+                >
+                  <svg
+                    class="custom-section-profile-signup__eye-icon custom-section-profile-signup__eye-icon--show"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M23.0136 11.7722C22.9817 11.6991 22.2017 9.96938 20.4599 8.2275C18.8436 6.61313 16.0667 4.6875 11.9999 4.6875C7.93299 4.6875 5.15611 6.61313 3.53986 8.2275C1.79799 9.96938 1.01799 11.6962 0.986113 11.7722C0.954062 11.8442 0.9375 11.9221 0.9375 12.0009C0.9375 12.0798 0.954062 12.1577 0.986113 12.2297C1.01799 12.3019 1.79799 14.0316 3.53986 15.7734C5.15611 17.3878 7.93299 19.3125 11.9999 19.3125C16.0667 19.3125 18.8436 17.3878 20.4599 15.7734C22.2017 14.0316 22.9817 12.3047 23.0136 12.2297C23.0457 12.1577 23.0622 12.0798 23.0622 12.0009C23.0622 11.9221 23.0457 11.8442 23.0136 11.7722ZM11.9999 18.1875C9.05799 18.1875 6.48924 17.1169 4.36393 15.0066C3.473 14.1211 2.71908 13.1078 2.12705 12C2.71891 10.8924 3.47285 9.87932 4.36393 8.99438C6.48924 6.88313 9.05799 5.8125 11.9999 5.8125C14.9417 5.8125 17.5105 6.88313 19.6358 8.99438C20.5269 9.87932 21.2808 10.8924 21.8727 12C21.2755 13.1447 18.2811 18.1875 11.9999 18.1875ZM11.9999 7.6875C11.1469 7.6875 10.3132 7.94042 9.60397 8.41429C8.89478 8.88815 8.34204 9.56167 8.01563 10.3497C7.68923 11.1377 7.60383 12.0048 7.77023 12.8413C7.93663 13.6779 8.34735 14.4463 8.95047 15.0494C9.55358 15.6525 10.322 16.0632 11.1585 16.2296C11.9951 16.396 12.8622 16.3106 13.6502 15.9842C14.4382 15.6578 15.1117 15.1051 15.5856 14.3959C16.0594 13.6867 16.3124 12.8529 16.3124 12C16.3109 10.8567 15.856 9.76067 15.0476 8.95225C14.2392 8.14382 13.1432 7.68899 11.9999 7.6875ZM11.9999 15.1875C11.3694 15.1875 10.7532 15.0006 10.229 14.6503C9.7048 14.3001 9.29625 13.8022 9.055 13.2198C8.81374 12.6374 8.75062 11.9965 8.87361 11.3781C8.9966 10.7598 9.30018 10.1919 9.74596 9.7461C10.1917 9.30032 10.7597 8.99674 11.378 8.87375C11.9963 8.75076 12.6372 8.81388 13.2197 9.05513C13.8021 9.29639 14.2999 9.70494 14.6502 10.2291C15.0004 10.7533 15.1874 11.3696 15.1874 12C15.1874 12.8454 14.8515 13.6561 14.2538 14.2539C13.656 14.8517 12.8452 15.1875 11.9999 15.1875Z" fill="black"/>
+                  </svg>
+                  <svg
+                    class="custom-section-profile-signup__eye-icon custom-section-profile-signup__eye-icon--hide"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M4.91611 3.37483C4.81314 3.27925 4.67812 3.22567 4.53762 3.22462C4.39713 3.22358 4.26133 3.27515 4.15694 3.36919C4.05256 3.46323 3.98715 3.59294 3.97357 3.73278C3.96 3.87262 3.99926 4.01248 4.08361 4.12483L6.04111 6.28108C2.54611 8.33421 1.0508 11.6248 0.986113 11.772C0.954062 11.844 0.9375 11.922 0.9375 12.0008C0.9375 12.0796 0.954062 12.1575 0.986113 12.2295C1.01799 12.3017 1.79799 14.0314 3.53986 15.7733C5.15611 17.3876 7.93299 19.3123 11.9999 19.3123C13.6998 19.3227 15.3815 18.9628 16.9283 18.2576L19.0846 20.6286C19.185 20.739 19.3252 20.805 19.4743 20.812C19.6234 20.819 19.7692 20.7665 19.8796 20.6661C19.9899 20.5656 20.0559 20.4254 20.063 20.2764C20.07 20.1273 20.0175 19.9815 19.917 19.8711L4.91611 3.37483ZM9.47424 10.0611L13.693 14.7036C13.0596 15.0994 12.3073 15.2602 11.5675 15.1579C10.8276 15.0556 10.1472 14.6968 9.6449 14.1441C9.14261 13.5913 8.85036 12.8798 8.81917 12.1335C8.78798 11.3873 9.01982 10.6538 9.47424 10.0611ZM11.9999 18.1873C9.05799 18.1873 6.48924 17.1167 4.36393 15.0064C3.47278 14.1212 2.71884 13.1078 2.12705 11.9998C2.52924 11.2311 4.01143 8.70171 6.81455 7.13327L8.7083 9.21546C8.03406 10.0144 7.67301 11.0311 7.6923 12.0763C7.71159 13.1216 8.10992 14.1242 8.81318 14.8978C9.51644 15.6713 10.4767 16.163 11.5154 16.2815C12.5541 16.3999 13.6005 16.137 14.4599 15.5417L16.1296 17.3792C14.8205 17.9209 13.4165 18.1956 11.9999 18.1873ZM12.5999 8.86858C12.4533 8.84061 12.3238 8.75556 12.24 8.63214C12.1561 8.50871 12.1247 8.35703 12.1527 8.21046C12.1806 8.06389 12.2657 7.93443 12.3891 7.85056C12.5125 7.7667 12.6642 7.7353 12.8108 7.76327C13.7268 7.94121 14.5607 8.41038 15.1883 9.10084C15.8159 9.79131 16.2036 10.6661 16.2936 11.5948C16.3005 11.6684 16.2927 11.7426 16.2709 11.8132C16.2491 11.8837 16.2135 11.9493 16.1664 12.0062C16.1192 12.063 16.0613 12.11 15.9959 12.1445C15.9306 12.1789 15.8591 12.2002 15.7855 12.207H15.733C15.5923 12.2076 15.4565 12.1555 15.3524 12.0609C15.2483 11.9663 15.1834 11.8362 15.1705 11.6961C15.1036 11.0108 14.8173 10.3654 14.3541 9.85597C13.891 9.34651 13.2757 9.00021 12.5999 8.86858ZM23.0136 12.2295C22.9752 12.3158 22.0414 14.3858 19.933 16.272C19.8783 16.3233 19.8139 16.3631 19.7436 16.3891C19.6733 16.4151 19.5985 16.4268 19.5236 16.4236C19.4488 16.4203 19.3753 16.402 19.3075 16.37C19.2398 16.3379 19.1791 16.2926 19.1292 16.2367C19.0792 16.1808 19.0409 16.1156 19.0165 16.0447C18.9921 15.9738 18.9821 15.8988 18.9871 15.824C18.9921 15.7492 19.012 15.6761 19.0457 15.6092C19.0793 15.5422 19.126 15.4826 19.183 15.4339C20.2728 14.4547 21.1831 13.2925 21.8727 11.9998C21.2808 10.892 20.5268 9.87861 19.6358 8.99327C17.5105 6.88296 14.9417 5.81233 11.9999 5.81233C11.3815 5.8116 10.7641 5.86177 10.1539 5.96233C10.0805 5.97618 10.005 5.97525 9.93187 5.95958C9.85877 5.94392 9.78952 5.91384 9.72818 5.8711C9.66684 5.82837 9.61463 5.77383 9.57461 5.71069C9.53459 5.64754 9.50756 5.57705 9.4951 5.50334C9.48264 5.42962 9.48499 5.35416 9.50203 5.28137C9.51907 5.20858 9.55045 5.13991 9.59433 5.07939C9.63822 5.01886 9.69372 4.96769 9.75761 4.92887C9.8215 4.89004 9.89249 4.86434 9.96643 4.85327C10.6385 4.74171 11.3186 4.68621 11.9999 4.68733C16.0667 4.68733 18.8436 6.61296 20.4599 8.22733C22.2017 9.96921 22.9817 11.6961 23.0136 11.772C23.0457 11.844 23.0622 11.922 23.0622 12.0008C23.0622 12.0796 23.0457 12.1575 23.0136 12.2295Z" fill="#9A9A9A"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="custom-section-profile-signup__field-line">&nbsp;</div>
+
+              {% comment %} Newsletter Link {% endcomment %}
+              <a href="#footer-newsletter" class="custom-section-profile-signup__newsletter-link" data-newsletter-link>
+                {{ newsletter_text }}
+              </a>
+
+              {% comment %} Create Account Button {% endcomment %}
+              <button type="submit" class="custom-section-profile-signup__button">
+                {{ 'customer.register.submit' | t }}
+              </button>
+            </div>
+          {% endform %}
+        </div>
+
+        {% comment %} Login Link {% endcomment %}
+        <a href="{{ routes.account_login_url }}" class="custom-section-profile-signup__login-link">
+          {{ 'customer.register.sign_in' | t }}
+        </a>
+      </div>
+    </div>
+
+    {% comment %} Image Section - Right 50% {% endcomment %}
+    <div class="custom-section-profile-signup__image-wrapper">
+      {% if image != blank %}
+        <img
+          src="{{ image | image_url: width: 1920 }}"
+          srcset="
+            {{ image | image_url: width: 750 }} 750w,
+            {{ image | image_url: width: 1000 }} 1000w,
+            {{ image | image_url: width: 1500 }} 1500w,
+            {{ image | image_url: width: 1920 }} 1920w
+          "
+          sizes="(max-width: 767px) 100vw, 50vw"
+          alt="{{ image.alt | default: 'Signup' | escape }}"
+          loading="lazy"
+          class="custom-section-profile-signup__image"
+        >
+      {% else %}
+        <div class="custom-section-profile-signup__placeholder"></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-profile-signup.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Profile Signup",
+  "class": "section-profile-signup",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "CREATE ACCOUNT"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Sign up for exclusive deals and a personalized shopping experience."
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter Link Text",
+      "default": "Subscribe to our newsletter to stay up-to-date on our latest collections"
+    },
+    {
+      "type": "header",
+      "content": "Visual Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended: 720px × 912px for desktop"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fff9f4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Profile Signup",
+      "settings": {
+        "heading": "CREATE ACCOUNT",
+        "description": "Sign up for exclusive deals and a personalized shopping experience.",
+        "newsletter_text": "Subscribe to our newsletter to stay up-to-date on our latest collections",
+        "background_color": "#fff9f4"
+      }
+    }
+  ]
+}
+{% endschema %}

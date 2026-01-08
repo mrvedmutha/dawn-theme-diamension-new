@@ -1,0 +1,569 @@
+/* ==========================================================================
+   Profile Login Section
+   ========================================================================== */
+
+/* Block */
+.custom-section-profile-login {
+  width: 100%;
+  background-color: var(--bg-color, #fffaf5);
+}
+
+/* Wrapper - 50/50 Split */
+.custom-section-profile-login__wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 912px;
+}
+
+/* Form Section - Left 50% */
+.custom-section-profile-login__form-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Form Container - Centered Container */
+.custom-section-profile-login__form-container {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Section */
+.custom-section-profile-login__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 96px;
+  width: 100%;
+}
+
+/* Header - Hidden State */
+.custom-section-profile-login__header--hidden {
+  display: none;
+}
+
+/* Heading */
+.custom-section-profile-login__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: normal;
+  color: #183754;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+/* Description */
+.custom-section-profile-login__description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #3e6282;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+/* Form Wrapper */
+.custom-section-profile-login__form-wrapper {
+  width: 480px;
+  max-width: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Form Wrapper - Hidden State */
+.custom-section-profile-login__form-wrapper--hidden {
+  display: none;
+}
+
+/* Form */
+.custom-section-profile-login__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Error Messages */
+.custom-section-profile-login__errors {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  color: #d9534f;
+  padding: 12px 16px;
+  background-color: #f9e6e6;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+/* Success Message */
+.custom-section-profile-login__success {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  color: #5cb85c;
+  padding: 12px 16px;
+  background-color: #e6f9e6;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+/* Field Container */
+.custom-section-profile-login__field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+/* Password Field with Toggle */
+.custom-section-profile-login__field--password {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Input */
+.custom-section-profile-login__input {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #183754;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.custom-section-profile-login__input::placeholder {
+  color: #9a9a9a;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+}
+
+.custom-section-profile-login__input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.custom-section-profile-login__input:focus::placeholder {
+  color: #183754;
+}
+
+/* Password Input with Eye Button */
+.custom-section-profile-login__input--password {
+  padding: 8px 40px 8px 0;
+}
+
+/* Field Line */
+.custom-section-profile-login__field-line {
+  width: 100%;
+  height: 1px;
+  background-color: #9a9a9a;
+  margin-bottom: 32px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-section-profile-login__field:focus-within + .custom-section-profile-login__field-line {
+  background-color: #183754;
+}
+
+/* Password Toggle Button */
+.custom-section-profile-login__password-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.custom-section-profile-login__password-toggle:hover {
+  opacity: 0.7;
+}
+
+/* Eye Icons */
+.custom-section-profile-login__eye-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.custom-section-profile-login__eye-icon--hide {
+  display: none;
+}
+
+.custom-section-profile-login__password-toggle.is-visible .custom-section-profile-login__eye-icon--show {
+  display: none;
+}
+
+.custom-section-profile-login__password-toggle.is-visible .custom-section-profile-login__eye-icon--hide {
+  display: block;
+}
+
+/* Forgot Password Link */
+.custom-section-profile-login__forgot-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #183754;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  align-self: flex-start;
+  margin-bottom: 44px;
+}
+
+.custom-section-profile-login__forgot-link:hover {
+  opacity: 0.7;
+}
+
+/* Login Button */
+.custom-section-profile-login__button {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #fff9f4;
+  background-color: #183754;
+  border: none;
+  height: 44px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-profile-login__button:hover {
+  background-color: #0f2538;
+}
+
+.custom-section-profile-login__button:active {
+  background-color: #183754;
+}
+
+/* Create Account Link */
+.custom-section-profile-login__create-account {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #183754;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin-top: 42px;
+  width: 100%;
+}
+
+.custom-section-profile-login__create-account:hover {
+  opacity: 0.7;
+}
+
+/* Create Account Link - Hidden State */
+.custom-section-profile-login__create-account--hidden {
+  display: none;
+}
+
+/* Back to Login Link */
+.custom-section-profile-login__back-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #183754;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin-top: 24px;
+  width: 100%;
+  display: block;
+}
+
+.custom-section-profile-login__back-link:hover {
+  opacity: 0.7;
+}
+
+/* Image Section - Right 50% */
+.custom-section-profile-login__image-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+/* Image */
+.custom-section-profile-login__image {
+  width: 100%;
+  height: 912px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder (if no image) */
+.custom-section-profile-login__placeholder {
+  width: 100%;
+  height: 912px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-section-profile-login__placeholder::after {
+  content: 'Add Image';
+  color: #999;
+  font-size: 16px;
+}
+
+/* ==========================================================================
+   Responsive - Tablet
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .custom-section-profile-login__wrapper {
+    min-height: 700px;
+  }
+
+  .custom-section-profile-login__form-section {
+    padding: 30px;
+  }
+
+  .custom-section-profile-login__form-container {
+    max-width: 75%;
+  }
+
+  .custom-section-profile-login__form-wrapper {
+    width: 100%;
+  }
+
+  .custom-section-profile-login__header {
+    gap: 14px;
+    margin-bottom: 80px;
+  }
+
+  .custom-section-profile-login__heading {
+    font-size: 28px;
+  }
+
+  .custom-section-profile-login__description {
+    font-size: 15px;
+  }
+
+  .custom-section-profile-login__input {
+    font-size: 15px;
+  }
+
+  .custom-section-profile-login__field {
+    margin-bottom: 16px;
+  }
+
+  .custom-section-profile-login__field-line {
+    margin-bottom: 28px;
+  }
+
+  .custom-section-profile-login__button {
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .custom-section-profile-login__create-account {
+    margin-top: 36px;
+    font-size: 13px;
+  }
+
+  .custom-section-profile-login__forgot-link {
+    font-size: 13px;
+    margin-bottom: 38px;
+  }
+
+  .custom-section-profile-login__back-link {
+    font-size: 13px;
+    margin-top: 36px;
+  }
+
+  .custom-section-profile-login__image {
+    height: 700px;
+  }
+
+  .custom-section-profile-login__placeholder {
+    height: 700px;
+  }
+}
+
+/* ==========================================================================
+   Responsive - Mobile
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  /* Stack content on top, image on bottom */
+  .custom-section-profile-login__wrapper {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .custom-section-profile-login__form-section {
+    padding: 60px 40px;
+  }
+
+  .custom-section-profile-login__form-container {
+    max-width: 80%;
+  }
+
+  .custom-section-profile-login__form-wrapper {
+    width: 100%;
+  }
+
+  .custom-section-profile-login__header {
+    gap: 12px;
+    margin-bottom: 64px;
+  }
+
+  .custom-section-profile-login__heading {
+    font-size: 24px;
+  }
+
+  .custom-section-profile-login__description {
+    font-size: 14px;
+  }
+
+  .custom-section-profile-login__input {
+    font-size: 14px;
+  }
+
+  .custom-section-profile-login__field {
+    margin-bottom: 14px;
+  }
+
+  .custom-section-profile-login__field-line {
+    margin-bottom: 24px;
+  }
+
+  .custom-section-profile-login__button {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .custom-section-profile-login__create-account {
+    margin-top: 32px;
+    font-size: 12px;
+  }
+
+  .custom-section-profile-login__forgot-link {
+    font-size: 12px;
+    margin-bottom: 32px;
+  }
+
+  .custom-section-profile-login__back-link {
+    font-size: 12px;
+    margin-top: 32px;
+  }
+
+  /* Image 1:1 ratio on mobile */
+  .custom-section-profile-login__image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .custom-section-profile-login__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .custom-section-profile-login__placeholder {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ==========================================================================
+   Responsive - Extra Small Mobile
+   ========================================================================== */
+
+@media (max-width: 375px) {
+  .custom-section-profile-login__form-section {
+    padding: 50px 24px;
+  }
+
+  .custom-section-profile-login__form-container {
+    max-width: 85%;
+  }
+
+  .custom-section-profile-login__form-wrapper {
+    width: 100%;
+  }
+
+  .custom-section-profile-login__header {
+    gap: 10px;
+    margin-bottom: 56px;
+  }
+
+  .custom-section-profile-login__heading {
+    font-size: 22px;
+  }
+
+  .custom-section-profile-login__description {
+    font-size: 13px;
+  }
+
+  .custom-section-profile-login__input {
+    font-size: 13px;
+  }
+
+  .custom-section-profile-login__field {
+    margin-bottom: 12px;
+  }
+
+  .custom-section-profile-login__field-line {
+    margin-bottom: 20px;
+  }
+
+  .custom-section-profile-login__button {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .custom-section-profile-login__create-account {
+    margin-top: 28px;
+    font-size: 11px;
+  }
+
+  .custom-section-profile-login__forgot-link {
+    font-size: 11px;
+    margin-bottom: 28px;
+  }
+
+  .custom-section-profile-login__back-link {
+    font-size: 11px;
+    margin-top: 28px;
+  }
+}
