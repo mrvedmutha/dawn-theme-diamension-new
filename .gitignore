@@ -12,6 +12,9 @@ Thumbs.db
 ###############
 .shopify
 
+# Shopify Theme Settings (prevent overwriting live settings)
+config/settings_data.json
+
 # Dependencies #
 ################
 node_modules/
