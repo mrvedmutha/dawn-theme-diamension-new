@@ -14,12 +14,13 @@ class DiamensionHeader {
     this.isScrolled = false;
     this.isMenuOpen = false;
 
-    // Transparent sticky header (separate instance)
-    this.transparentSticky = document.querySelector('[data-transparent-sticky]');
-    this.stickyHamburger = document.querySelector('[data-hamburger-sticky]');
+    // TODO: debugging - log initialization
+    console.log('🚀 HEADER INITIALIZED - Behavior:', this.behavior, 'Threshold:', this.scrollThreshold);
 
     if (this.header) {
       this.init();
+      // TODO: debugging - add scroll position indicator
+      this.addScrollDebugIndicator();
     }
   }
 
@@ -70,13 +71,6 @@ class DiamensionHeader {
         });
       });
     }
-
-    // Sticky hamburger menu toggle (transparent sticky)
-    if (this.stickyHamburger && this.mobileMenu) {
-      this.stickyHamburger.addEventListener('click', () => {
-        this.toggleMobileMenu();
-      });
-    }
   }
 
   toggleMobileMenu() {
@@ -105,16 +99,91 @@ class DiamensionHeader {
   setInitialState() {
     // Apply initial state based on behavior setting
     if (this.behavior === 'solid') {
+      // TODO: debugging - initial state for solid mode
+      console.log('⚙️ INITIAL STATE: Setting up SOLID mode');
       this.header.classList.add('diamension-header--scrolled');
       this.header.classList.add('diamension-header--solid-layout');
       this.header.classList.remove('diamension-header--transparent-layout');
       this.isScrolled = true;
     } else {
       // 'auto' behavior
+      // TODO: debugging - initial state for auto mode
+      console.log('⚙️ INITIAL STATE: Setting up AUTO mode (starts transparent)');
       this.header.classList.remove('diamension-header--solid-layout');
       this.header.classList.add('diamension-header--transparent-layout');
       // Auto starts as transparent but can become solid on scroll
     }
+  }
+
+  // TODO: debugging - scroll position indicator
+  addScrollDebugIndicator() {
+    const indicator = document.createElement('div');
+    indicator.id = 'scroll-debug-indicator';
+    indicator.style.cssText = `
+      position: fixed;
+      top: 50px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 12px;
+      z-index: 10001;
+      pointer-events: none;
+    `;
+    document.body.appendChild(indicator);
+
+    const updateIndicator = () => {
+      const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+      const diff = scrollPos - this.scrollThreshold;
+      indicator.innerHTML = `
+        Scroll: ${scrollPos.toFixed(0)}px<br>
+        Threshold: ${this.scrollThreshold}px<br>
+        Diff: ${diff > 0 ? '+' : ''}${diff.toFixed(0)}px<br>
+        Mode: ${this.behavior}
+      `;
+    };
+
+    window.addEventListener('scroll', updateIndicator);
+    updateIndicator();
+  }
+
+  // TODO: debugging - show flash warning on screen
+  showFlashWarning() {
+    const warning = document.createElement('div');
+    warning.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 0, 0, 0.9);
+      color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: bold;
+      z-index: 10002;
+      animation: flashWarning 0.5s ease-in-out;
+    `;
+    warning.textContent = '⚠️ FLASH DETECTED! Solid state visible briefly';
+    document.body.appendChild(warning);
+
+    // Add animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes flashWarning {
+        0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    setTimeout(() => {
+      warning.remove();
+      style.remove();
+    }, 1500);
   }
 
   handleScroll() {
@@ -122,54 +191,98 @@ class DiamensionHeader {
     const scrollingDown = scrollPosition > this.lastScrollPosition;
     const scrollingUp = scrollPosition < this.lastScrollPosition;
 
-    // ========================================
-    // SOLID MODE (Keep existing behavior - DO NOT TOUCH)
-    // ========================================
+    // TODO: debugging scroll behavior - log scroll position and direction
+    if (Math.abs(scrollPosition - this.scrollThreshold) < 50) {
+      console.log('🔍 SCROLL DEBUG - Position:', scrollPosition, 'Threshold:', this.scrollThreshold, 'Direction:', scrollingDown ? '⬇️ DOWN' : scrollingUp ? '⬆️ UP' : '➡️ STATIC');
+    }
+
+    // For solid mode: switch to fixed positioning when scrolling starts
     if (this.behavior === 'solid') {
-      // Switch to fixed positioning when scrolling starts
       if (scrollPosition > 10) {
         this.header.classList.add('diamension-header--scrolling');
       } else {
         this.header.classList.remove('diamension-header--scrolling');
       }
+    }
 
-      // Hide/show main header on scroll
+    // Handle hide/show behavior for both modes
+    if (scrollingDown && scrollPosition > this.scrollThreshold) {
+      // TODO: debugging hide behavior - when header gets hidden
+      console.log('🙈 HIDING HEADER at position:', scrollPosition);
+      this.header.classList.add('diamension-header--hidden');
+    }
+
+    if (scrollingUp) {
+      // TODO: debugging show behavior - when header becomes visible
+      if (this.header.classList.contains('diamension-header--hidden')) {
+        console.log('👁️ SHOWING HEADER at position:', scrollPosition);
+      }
+      this.header.classList.remove('diamension-header--hidden');
+    }
+
+    // Handle transparent/solid transition only for auto mode
+    if (this.behavior === 'auto') {
+      // TODO: debugging auto mode behavior
+      if (Math.abs(scrollPosition - this.scrollThreshold) < 50) {
+        console.log('🎨 AUTO MODE - Current classes:', {
+          scrolled: this.header.classList.contains('diamension-header--scrolled'),
+          solid: this.header.classList.contains('diamension-header--solid-layout'),
+          transparent: this.header.classList.contains('diamension-header--transparent-layout'),
+          hidden: this.header.classList.contains('diamension-header--hidden')
+        });
+      }
+
       if (scrollingDown && scrollPosition > this.scrollThreshold) {
-        this.header.classList.add('diamension-header--hidden');
+        // TODO: debugging transition to solid
+        console.log('🟦 TRANSITIONING TO SOLID at position:', scrollPosition);
+
+        // TODO: debugging - flash detector for brief solid state appearance
+        const wasHidden = this.header.classList.contains('diamension-header--hidden');
+
+        this.header.classList.add('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--solid-layout');
+        this.header.classList.remove('diamension-header--transparent-layout');
+
+        // TODO: debugging - check final state after transition
+        const isHidden = this.header.classList.contains('diamension-header--hidden');
+        console.log('🟦 SOLID STATE APPLIED - Classes:', {
+          scrolled: this.header.classList.contains('diamension-header--scrolled'),
+          solid: this.header.classList.contains('diamension-header--solid-layout'),
+          transparent: this.header.classList.contains('diamension-header--transparent-layout'),
+          hidden: this.header.classList.contains('diamension-header--hidden')
+        });
+
+        // TODO: debugging - detect if solid state is visible even briefly
+        if (!wasHidden && !isHidden) {
+          console.warn('⚠️ FLASH DETECTED: Solid state is VISIBLE at', scrollPosition, 'px (should be hidden!)');
+          this.showFlashWarning();
+        }
       }
 
       if (scrollingUp) {
-        this.header.classList.remove('diamension-header--hidden');
+        if (scrollPosition <= this.scrollThreshold) {
+          // TODO: debugging transition to transparent
+          console.log('🔲 TRANSITIONING TO TRANSPARENT at position:', scrollPosition);
+          this.header.classList.remove('diamension-header--scrolled');
+          this.header.classList.add('diamension-header--transparent-layout');
+          this.header.classList.remove('diamension-header--solid-layout');
+        } else {
+          // TODO: debugging - scrolling up but still above threshold
+          console.log('🟦 STAYING SOLID (scrolling up but above threshold) at position:', scrollPosition);
+          this.header.classList.add('diamension-header--scrolled');
+          this.header.classList.add('diamension-header--solid-layout');
+          this.header.classList.remove('diamension-header--transparent-layout');
+        }
       }
-    }
 
-    // ========================================
-    // TRANSPARENT MODE (New behavior with separate sticky)
-    // ========================================
-    if (this.behavior === 'auto') {
-      // Manage header visibility based on scroll position and direction
-      if (scrollPosition <= this.scrollThreshold) {
-        // Below threshold: Show main transparent header, hide sticky
+      // At the very top → always transparent and visible
+      if (scrollPosition <= 10) {
+        // TODO: debugging reset to top
+        console.log('🔝 RESET TO TOP at position:', scrollPosition);
         this.header.classList.remove('diamension-header--hidden');
-        if (this.transparentSticky) {
-          this.transparentSticky.classList.remove('is-visible');
-        }
-      } else {
-        // Above threshold
-        if (scrollingDown) {
-          // Scrolling down: Hide main header
-          this.header.classList.add('diamension-header--hidden');
-          // Sticky stays hidden when scrolling down
-          if (this.transparentSticky) {
-            this.transparentSticky.classList.remove('is-visible');
-          }
-        } else if (scrollingUp) {
-          // Scrolling up: Hide main header, show sticky
-          this.header.classList.add('diamension-header--hidden');
-          if (this.transparentSticky) {
-            this.transparentSticky.classList.add('is-visible');
-          }
-        }
+        this.header.classList.remove('diamension-header--scrolled');
+        this.header.classList.add('diamension-header--transparent-layout');
+        this.header.classList.remove('diamension-header--solid-layout');
       }
     }
 
@@ -181,16 +294,9 @@ class DiamensionHeader {
       const response = await fetch('/cart.js');
       const cart = await response.json();
       const cartCountElement = document.querySelector('[data-cart-count]');
-      const cartCountStickyElement = document.querySelector('[data-cart-count-sticky]');
 
-      // Update main header cart count
       if (cartCountElement) {
         cartCountElement.textContent = cart.item_count > 0 ? cart.item_count : '';
-      }
-
-      // Update transparent sticky cart count
-      if (cartCountStickyElement) {
-        cartCountStickyElement.textContent = cart.item_count > 0 ? cart.item_count : '';
       }
     } catch (error) {
       console.error('Error updating cart count:', error);
@@ -207,7 +313,6 @@ class DiamensionSearch {
   constructor() {
     this.overlay = document.querySelector('[data-search-overlay]');
     this.toggleButton = document.querySelector('[data-search-toggle]');
-    this.toggleButtonSticky = document.querySelector('[data-search-toggle-sticky]');
     this.backdrop = document.querySelector('[data-search-backdrop]');
     this.searchInput = document.querySelector('[data-search-input]');
     this.searchForm = document.querySelector('[data-search-form]');
@@ -218,7 +323,6 @@ class DiamensionSearch {
     this.viewMoreLink = document.querySelector('[data-search-view-more-link]');
 
     this.isOpen = false;
-    this.isTransitioning = false; // Flag to prevent scroll handling during transitions
     this.minSearchLength = 3;
     this.debounceDelay = 500;
     this.debounceTimer = null;
@@ -244,13 +348,6 @@ class DiamensionSearch {
     this.toggleButton.addEventListener('click', () => {
       this.toggleSearch();
     });
-
-    // Sticky toggle button click
-    if (this.toggleButtonSticky) {
-      this.toggleButtonSticky.addEventListener('click', () => {
-        this.toggleSearch();
-      });
-    }
 
     // Backdrop click to close
     this.backdrop.addEventListener('click', () => {
@@ -301,19 +398,12 @@ class DiamensionSearch {
     this.overlay.classList.add('diamension-search-overlay--active');
     document.body.style.overflow = 'hidden';
 
-    // Make header solid and visible when search is open
+    // Make header solid when search is open
     const header = document.querySelector('[data-header]');
     if (header) {
       header.classList.add('diamension-header--search-open');
-      header.classList.remove('diamension-header--hidden'); // Ensure main header is visible
       // Store original behavior to restore later
       this.originalBehavior = header.dataset.headerBehavior;
-    }
-
-    // Hide transparent sticky when search is open (main header takes over)
-    const transparentSticky = document.querySelector('[data-transparent-sticky]');
-    if (transparentSticky) {
-      transparentSticky.classList.remove('is-visible');
     }
 
     // Toggle icon visibility
@@ -356,8 +446,6 @@ class DiamensionSearch {
 
     // Restore original behavior
     const header = document.querySelector('[data-header]');
-    const transparentSticky = document.querySelector('[data-transparent-sticky]');
-
     if (header && this.originalBehavior) {
       header.classList.remove('diamension-header--search-open');
 
@@ -367,41 +455,16 @@ class DiamensionSearch {
         header.classList.add('diamension-header--solid-layout');
         header.classList.remove('diamension-header--transparent-layout');
       } else {
-        // 'auto' - restore to transparent state
+        // 'auto'
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
         if (scrollPosition <= 820) {
-          // Below threshold: show main transparent header, hide sticky
-          header.classList.remove('diamension-header--hidden');
-          if (transparentSticky) {
-            transparentSticky.classList.remove('is-visible');
-          }
+          header.classList.remove('diamension-header--scrolled');
+          header.classList.add('diamension-header--transparent-layout');
+          header.classList.remove('diamension-header--solid-layout');
         } else {
-          // Above threshold: Force instant hide to prevent double header issue
-          // First, make header fully transparent by removing search-open
-          // Then immediately hide it without waiting for transition
-
-          // Add a temporary class to disable transitions
-          header.style.transition = 'none';
-          header.classList.add('diamension-header--hidden');
-
-          // Re-enable transitions after a frame
-          setTimeout(() => {
-            header.style.transition = '';
-          }, 50);
-
-          // Hide sticky initially
-          if (transparentSticky) {
-            transparentSticky.classList.remove('is-visible');
-
-            // Show sticky after ensuring main header is hidden
-            setTimeout(() => {
-              const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-              if (scrollPosition > 820 && !this.isOpen) {
-                transparentSticky.classList.add('is-visible');
-              }
-            }, 100);
-          }
+          header.classList.add('diamension-header--scrolled');
+          header.classList.add('diamension-header--solid-layout');
+          header.classList.remove('diamension-header--transparent-layout');
         }
       }
     }
@@ -620,12 +683,10 @@ class DiamensionSearch {
  */
 function initCartDrawer() {
   const cartLink = document.querySelector('#diamension-cart-icon');
-  const cartLinkSticky = document.querySelector('#diamension-cart-icon-sticky');
   const cartDrawer = document.querySelector('cart-drawer');
 
   // TODO: debugging cart drawer - checking if elements are found
   console.log('Diamension cart link found:', cartLink);
-  console.log('Diamension sticky cart link found:', cartLinkSticky);
   console.log('Cart drawer found:', cartDrawer);
 
   if (cartLink && cartDrawer) {
@@ -641,15 +702,6 @@ function initCartDrawer() {
   } else {
     // TODO: debugging cart drawer - elements not found
     console.log('Cart drawer initialization failed - missing elements');
-  }
-
-  // Handle sticky cart icon
-  if (cartLinkSticky && cartDrawer) {
-    cartLinkSticky.addEventListener('click', (event) => {
-      console.log('Diamension sticky cart icon clicked, preventing default and opening drawer');
-      event.preventDefault();
-      cartDrawer.open(cartLinkSticky);
-    });
   }
 }
 
