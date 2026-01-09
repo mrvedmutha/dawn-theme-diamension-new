@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-section-richtext-page",
+      "settings": {
+        "menu_title": "POLICIES",
+        "page_title": "Privacy Policy"
+      },
+      "blocks": {
+        "policy_menu_1": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "TERMS & CONDITIONS",
+            "menu_link": "/pages/terms-and-conditions",
+            "is_active": false
+          }
+        },
+        "policy_menu_2": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "PRIVACY POLICY",
+            "menu_link": "",
+            "is_active": true
+          }
+        },
+        "richtext_1": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "",
+            "content": "<p>At <strong>Diamension</strong>, we value your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data.</p>",
+            "content_gap": 42
+          }
+        },
+        "richtext_2": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Information We Collect",
+            "content": "<ul><li>Personal identification information (name, email address, phone number, shipping address, billing address)</li><li>Payment information (processed securely through our payment gateway)</li><li>Order history and purchase preferences</li><li>Website usage data and cookies to improve your browsing experience</li><li>Communication records when you contact our customer service team</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_3": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "How We Use Your Information",
+            "content": "<ul><li>To process and fulfill your orders, including shipping and delivery</li><li>To communicate with you about your orders, inquiries, and customer service requests</li><li>To send promotional emails and marketing communications (with your consent)</li><li>To improve our website, products, and services based on your feedback and usage patterns</li><li>To prevent fraud and ensure the security of our platform</li><li>To comply with legal obligations and resolve disputes</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_4": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Information Sharing & Disclosure",
+            "content": "<ul><li>We do not sell, trade, or rent your personal information to third parties.</li><li>We may share information with trusted service providers who assist us in operating our website and conducting business (e.g., payment processors, shipping partners).</li><li>We may disclose information when required by law or to protect our rights, property, or safety.</li><li>In the event of a business transfer or acquisition, your information may be transferred to the new entity.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_5": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Data Security",
+            "content": "<ul><li>We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, or disclosure.</li><li>Payment information is processed through secure, encrypted channels and is never stored on our servers.</li><li>While we strive to protect your data, no method of transmission over the internet is 100% secure. We cannot guarantee absolute security.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_6": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Cookies & Tracking Technologies",
+            "content": "<ul><li>We use cookies and similar technologies to enhance your browsing experience and analyze website traffic.</li><li>You can control cookie preferences through your browser settings. However, disabling cookies may affect certain website functionalities.</li><li>We may use third-party analytics tools (such as Google Analytics) to understand how visitors interact with our website.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_7": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Your Rights",
+            "content": "<ul><li>You have the right to access, update, or delete your personal information at any time.</li><li>You may opt out of marketing communications by clicking the unsubscribe link in our emails or contacting us directly.</li><li>You may request a copy of the data we hold about you by emailing care@diamension.com.</li><li>If you believe your privacy rights have been violated, you may file a complaint with the relevant data protection authority.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_8": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Changes to This Policy",
+            "content": "<p>Diamension reserves the right to update this Privacy Policy at any time. Changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>",
+            "content_gap": 42
+          }
+        },
+        "richtext_9": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Contact Us",
+            "content": "<p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at <strong>care@diamension.com</strong>.</p>",
+            "content_gap": 0
+          }
+        }
+      },
+      "block_order": [
+        "policy_menu_1",
+        "policy_menu_2",
+        "richtext_1",
+        "richtext_2",
+        "richtext_3",
+        "richtext_4",
+        "richtext_5",
+        "richtext_6",
+        "richtext_7",
+        "richtext_8",
+        "richtext_9"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

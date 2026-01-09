@@ -1,0 +1,108 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom-section-richtext-page",
+      "settings": {
+        "menu_title": "POLICIES",
+        "page_title": "Terms & Conditions"
+      },
+      "blocks": {
+        "policy_menu_1": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "TERMS & CONDITIONS",
+            "menu_link": "",
+            "is_active": true
+          }
+        },
+        "policy_menu_2": {
+          "type": "info_menu_item",
+          "settings": {
+            "menu_text": "PRIVACY POLICY",
+            "menu_link": "/pages/privacy-policy",
+            "is_active": false
+          }
+        },
+        "richtext_1": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "",
+            "content": "<p>Welcome to <strong>Diamension</strong>. By accessing and using our website, you agree to comply with and be bound by the following terms and conditions.</p>",
+            "content_gap": 42
+          }
+        },
+        "richtext_2": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "General Terms",
+            "content": "<ul><li>These terms govern your use of the Diamension website and the purchase of products from our online store.</li><li>By placing an order, you confirm that you are at least 18 years of age and legally capable of entering into binding contracts.</li><li>Diamension reserves the right to modify these terms at any time. Continued use of the website constitutes acceptance of updated terms.</li><li>All products are subject to availability. We reserve the right to limit quantities or discontinue products without prior notice.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_3": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Product Information & Pricing",
+            "content": "<ul><li>We strive to display accurate product descriptions, images, and pricing. However, we do not warrant that product descriptions or other content is error-free.</li><li>All prices are listed in Indian Rupees (INR) for domestic orders and US Dollars (USD) for international orders.</li><li>Prices are subject to change without notice. The price applicable to your order is the price displayed at the time of checkout.</li><li>Custom and made-to-order pieces may have different pricing and timelines as communicated during the order process.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_4": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Orders & Payment",
+            "content": "<ul><li>All orders are subject to acceptance and availability. We reserve the right to refuse or cancel any order at our discretion.</li><li>Payment must be received in full before orders are processed and shipped.</li><li>We accept major credit cards, debit cards, and other payment methods as displayed at checkout.</li><li>Once an order is confirmed, you will receive an email confirmation with your order details.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_5": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Intellectual Property",
+            "content": "<ul><li>All content on this website, including designs, images, text, logos, and graphics, is the property of Diamension and protected by copyright and intellectual property laws.</li><li>You may not reproduce, distribute, or use any content from this website without prior written permission from Diamension.</li><li>Unauthorized use of our intellectual property may result in legal action.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_6": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Limitation of Liability",
+            "content": "<ul><li>Diamension shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or products.</li><li>Our liability is limited to the purchase price of the product in question.</li><li>We are not responsible for delays or failures in delivery caused by circumstances beyond our control, including but not limited to natural disasters, courier delays, or customs clearance issues.</li></ul>",
+            "content_gap": 42
+          }
+        },
+        "richtext_7": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Governing Law",
+            "content": "<p>These terms and conditions are governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Mumbai, India.</p>",
+            "content_gap": 42
+          }
+        },
+        "richtext_8": {
+          "type": "richtext_content",
+          "settings": {
+            "section_heading": "Contact Us",
+            "content": "<p>If you have any questions regarding these terms and conditions, please contact us at <strong>care@diamension.com</strong>.</p>",
+            "content_gap": 0
+          }
+        }
+      },
+      "block_order": [
+        "policy_menu_1",
+        "policy_menu_2",
+        "richtext_1",
+        "richtext_2",
+        "richtext_3",
+        "richtext_4",
+        "richtext_5",
+        "richtext_6",
+        "richtext_7",
+        "richtext_8"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
