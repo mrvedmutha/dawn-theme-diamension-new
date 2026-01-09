@@ -75,7 +75,6 @@ body:has(.diamension-header--transparent-layout) [id*='shopify-section'] .image-
 .diamension-header--solid-layout.diamension-header--scrolling {
   position: fixed !important;
   top: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Add padding to body when solid header is scrolling to prevent content jump */
@@ -102,6 +101,61 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   transform: translateY(0);
 }
 
+/* TODO: APPROACH 2 - Disable transitions temporarily when applying state while hidden */
+.diamension-header--no-transition,
+.diamension-header--no-transition * {
+  transition: none !important;
+}
+
+/* TODO: debugging - visual indicators for header states */
+/* These will add a colored border to help visualize state changes */
+.diamension-header--transparent-layout::before {
+  content: 'TRANSPARENT MODE';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 255, 0, 0.8);
+  color: white;
+  padding: 2px 10px;
+  font-size: 10px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.diamension-header--solid-layout::before {
+  content: 'SOLID MODE';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 255, 0.8);
+  color: white;
+  padding: 2px 10px;
+  font-size: 10px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.diamension-header--scrolled::after {
+  content: 'SCROLLED STATE';
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 165, 0, 0.8);
+  color: white;
+  padding: 2px 10px;
+  font-size: 10px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.diamension-header--hidden {
+  /* Red border when hidden */
+  outline: 3px solid rgba(255, 0, 0, 0.5);
+}
+
 /* Transparent state (default) */
 .diamension-header {
   background-color: transparent;
@@ -117,7 +171,7 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 .diamension-header--scrolled {
   background-color: #fffaf5;
   color: #183754;
-  /* Box shadow only for sticky, not for always-solid header */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Solid state when search is open */
@@ -590,46 +644,6 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 .diamension-header--menu-open {
   background-color: #fffaf5;
   color: #183754;
-}
-
-/* ============================================
-   Transparent Sticky Header (Separate Instance)
-   ============================================ */
-
-/* Transparent sticky header - always solid appearance */
-.diamension-header--transparent-sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000; /* Above everything including search overlay */
-  background-color: #fffaf5;
-  color: #183754;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
-}
-
-/* Show transparent sticky when active */
-.diamension-header--transparent-sticky.is-visible {
-  transform: translateY(0);
-}
-
-/* Transparent sticky announcement bar - always solid */
-.diamension-header--transparent-sticky .diamension-header__announcement {
-  border-bottom-color: #183754;
-}
-
-/* Transparent sticky - no hover effects needed, always solid */
-.diamension-header--transparent-sticky .diamension-header__main:hover {
-  background-color: #fffaf5;
-}
-
-/* Cart count styling for transparent sticky */
-.diamension-header--transparent-sticky .diamension-header__cart-count {
-  background-color: #fffaf5;
-  color: #183754;
-  border: 1px solid #183754;
 }
 
 /* ============================================
