@@ -238,6 +238,43 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   color: inherit;
   transition: opacity 0.2s ease;
   white-space: nowrap;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  --after-width: 0%;
+  --after-left: 0%;
+}
+
+.diamension-header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--after-left);
+  width: var(--after-width);
+  height: 1px;
+  background-color: #fffaf5;
+  transition: background-color 0.3s ease;
+}
+
+/* Active state - always visible */
+.diamension-header__nav-link.is-active {
+  --after-width: 100%;
+}
+
+.diamension-header__nav-link.is-active::after {
+  width: 100%;
+}
+
+/* Change underline color based on header state */
+.diamension-header--scrolled .diamension-header__nav-link::after,
+.diamension-header__main:hover .diamension-header__nav-link::after,
+.diamension-header--search-open .diamension-header__nav-link::after {
+  background-color: #183754;
+}
+
+/* Transparent sticky always uses dark underline */
+.diamension-header--transparent-sticky .diamension-header__nav-link::after {
+  background-color: #183754;
 }
 
 .diamension-header__nav-link:hover {
@@ -580,6 +617,30 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   text-decoration: none;
   color: #183754; /* Dark text */
   transition: opacity 0.2s ease;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+  --after-width: 0%;
+  --after-left: 0%;
+}
+
+.diamension-header__mobile-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--after-left);
+  width: var(--after-width);
+  height: 1px;
+  background-color: #183754;
+}
+
+/* Active state - always visible */
+.diamension-header__mobile-nav-link.is-active {
+  --after-width: 100%;
+}
+
+.diamension-header__mobile-nav-link.is-active::after {
+  width: 100%;
 }
 
 .diamension-header__mobile-nav-link:hover {
@@ -1107,7 +1168,7 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 
   .diamension-search-overlay__input {
     height: 50px;
-    font-size: 14px;
+    font-size: 16px;
     padding: 15px 50px 15px 15px;
   }
 
