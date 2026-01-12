@@ -28,6 +28,7 @@ class DiamensionHeader {
     this.handleScroll();
     this.attachEventListeners();
     this.updateCartCount();
+    this.initNavigationUnderlines();
   }
 
   attachEventListeners() {
@@ -195,6 +196,91 @@ class DiamensionHeader {
     } catch (error) {
       console.error('Error updating cart count:', error);
     }
+  }
+
+  initNavigationUnderlines() {
+    // Get all navigation links (desktop main, desktop sticky, mobile)
+    const mainNavLinks = this.header.querySelectorAll('.diamension-header__nav-link');
+    const stickyNavLinks = this.transparentSticky?.querySelectorAll('.diamension-header__nav-link') || [];
+    const mobileNavLinks = document.querySelectorAll('.diamension-header__mobile-nav-link');
+
+    // Get current page URL path
+    const currentPath = window.location.pathname;
+
+    // Function to check if link is active
+    const isActiveLink = (link) => {
+      const linkPath = new URL(link.href).pathname;
+      // Exact match or if current path starts with link path (for section matching)
+      return currentPath === linkPath || (linkPath !== '/' && currentPath.startsWith(linkPath));
+    };
+
+    // Function to set up GSAP hover animation for a link
+    const setupHoverAnimation = (link) => {
+      // Check if GSAP is available
+      if (typeof gsap === 'undefined') {
+        console.warn('GSAP is not loaded. Underline animations will not work.');
+        return;
+      }
+
+      link.addEventListener('mouseenter', () => {
+        // Don't animate if it's the active link
+        if (link.classList.contains('is-active')) return;
+
+        // Mouse enter: Enter through LEFT door
+        // Line grows from left to right (left stays at 0, width goes 0→100%)
+        gsap.fromTo(
+          link,
+          {
+            '--after-left': '0%',
+            '--after-width': '0%'
+          },
+          {
+            '--after-left': '0%',
+            '--after-width': '100%',
+            duration: 0.3,
+            ease: 'power2.out',
+          }
+        );
+      });
+
+      link.addEventListener('mouseleave', () => {
+        // Don't animate if it's the active link
+        if (link.classList.contains('is-active')) return;
+
+        // Mouse leave: Exit through RIGHT door
+        // Line slides out to the right (left moves 0→100%, width shrinks 100→0%)
+        gsap.to(link, {
+          '--after-left': '100%',
+          '--after-width': '0%',
+          duration: 0.3,
+          ease: 'power2.in',
+        });
+      });
+    };
+
+    // Apply active class and set up animations for main nav
+    mainNavLinks.forEach((link) => {
+      if (isActiveLink(link)) {
+        link.classList.add('is-active');
+      }
+      setupHoverAnimation(link);
+    });
+
+    // Apply active class and set up animations for sticky nav
+    stickyNavLinks.forEach((link) => {
+      if (isActiveLink(link)) {
+        link.classList.add('is-active');
+      }
+      setupHoverAnimation(link);
+    });
+
+    // Apply active class and set up animations for mobile nav
+    mobileNavLinks.forEach((link) => {
+      if (isActiveLink(link)) {
+        link.classList.add('is-active');
+      }
+      setupHoverAnimation(link);
+    });
   }
 }
 
