@@ -209,6 +209,13 @@ class DiamensionHeader {
 
     // Function to check if link is active
     const isActiveLink = (link) => {
+      const linkHref = link.getAttribute('href');
+
+      // Exclude dead links (#) from being marked active
+      if (!linkHref || linkHref === '#' || linkHref.startsWith('#')) {
+        return false;
+      }
+
       const linkPath = new URL(link.href).pathname;
       // Exact match or if current path starts with link path (for section matching)
       return currentPath === linkPath || (linkPath !== '/' && currentPath.startsWith(linkPath));
@@ -701,6 +708,281 @@ class DiamensionSearch {
 }
 
 /**
+ * Mega Menu Functionality
+ * Handles mega menu with hover (desktop) and click toggle (touch devices)
+ */
+class DiamensionMegaMenu {
+  constructor() {
+    this.megaMenus = document.querySelectorAll('[data-mega-menu]');
+    this.mainHeader = document.querySelector('[data-header]');
+    this.stickyHeader = document.querySelector('[data-transparent-sticky]');
+    this.navLinks = document.querySelectorAll('.diamension-header__nav-link');
+    this.activeMegaMenu = null;
+    this.hideTimeout = null;
+    this.hideDelay = 100; // ms delay before hiding
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    this.lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (this.megaMenus.length > 0 && this.navLinks.length > 0) {
+      this.init();
+    }
+  }
+
+  init() {
+    this.attachEventListeners();
+  }
+
+  attachEventListeners() {
+    // Loop through each nav link
+    this.navLinks.forEach((link) => {
+      // Find the corresponding mega menu for this link within the same header
+      const megaMenuId = this.getMegaMenuId(link);
+      const parentHeader = link.closest('[data-header], [data-transparent-sticky]');
+      const megaMenu = parentHeader ? parentHeader.querySelector(`[data-mega-menu="${megaMenuId}"]`) : null;
+
+      if (!megaMenu) return;
+
+      if (this.isTouchDevice) {
+        // Touch devices: Click to toggle
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // If this menu is already active, close it
+          if (this.activeMegaMenu === megaMenu) {
+            this.hideMegaMenu(megaMenu);
+            this.activeMegaMenu = null;
+          } else {
+            // Close any open menu and open this one
+            if (this.activeMegaMenu) {
+              this.hideMegaMenu(this.activeMegaMenu);
+            }
+            this.showMegaMenu(megaMenu);
+            this.activeMegaMenu = megaMenu;
+          }
+        });
+      } else {
+        // Desktop: Hover behavior
+        link.addEventListener('mouseenter', () => {
+          clearTimeout(this.hideTimeout);
+          if (this.activeMegaMenu && this.activeMegaMenu !== megaMenu) {
+            this.hideMegaMenu(this.activeMegaMenu);
+          }
+          this.showMegaMenu(megaMenu);
+          this.activeMegaMenu = megaMenu;
+        });
+
+        link.addEventListener('mouseleave', () => {
+          this.hideTimeout = setTimeout(() => {
+            if (this.activeMegaMenu === megaMenu) {
+              this.hideMegaMenu(megaMenu);
+              this.activeMegaMenu = null;
+            }
+          }, this.hideDelay);
+        });
+
+        // Keep mega menu visible when hovering over it
+        megaMenu.addEventListener('mouseenter', () => {
+          clearTimeout(this.hideTimeout);
+        });
+
+        // Hide mega menu when leaving the menu
+        megaMenu.addEventListener('mouseleave', () => {
+          this.hideTimeout = setTimeout(() => {
+            this.hideMegaMenu(megaMenu);
+            this.activeMegaMenu = null;
+          }, this.hideDelay);
+        });
+      }
+    });
+
+    // Close mega menu when clicking outside (touch devices)
+    if (this.isTouchDevice) {
+      document.addEventListener('click', (e) => {
+        if (!this.activeMegaMenu) return;
+
+        // Check if click is outside mega menu and nav links
+        const isClickInsideMegaMenu = this.activeMegaMenu.contains(e.target);
+        const isClickOnNavLink = Array.from(this.navLinks).some((link) => link.contains(e.target));
+
+        if (!isClickInsideMegaMenu && !isClickOnNavLink) {
+          this.hideMegaMenu(this.activeMegaMenu);
+          this.activeMegaMenu = null;
+        }
+      });
+    }
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.activeMegaMenu) {
+        this.hideMegaMenu(this.activeMegaMenu);
+        this.activeMegaMenu = null;
+      }
+    });
+
+    // Close mega menu only when scrolling DOWN
+    window.addEventListener('scroll', () => {
+      if (!this.activeMegaMenu) return;
+
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollingDown = currentScrollPosition > this.lastScrollPosition;
+
+      // Only close when scrolling down (towards bottom)
+      if (scrollingDown) {
+        // Close the active mega menu (whether in main or sticky header)
+        this.hideMegaMenu(this.activeMegaMenu);
+        this.activeMegaMenu = null;
+
+        // Also close any mega menus in both headers to ensure cleanup
+        this.megaMenus.forEach((menu) => {
+          if (menu.classList.contains('is-active')) {
+            menu.classList.remove('is-active');
+          }
+        });
+      }
+
+      this.lastScrollPosition = currentScrollPosition;
+    });
+  }
+
+  getMegaMenuId(link) {
+    // Extract menu identifier from link
+    // Assumes link text matches mega menu data attribute
+    // e.g., "Shop" link -> data-mega-menu="shop"
+    const linkText = link.textContent.trim().toLowerCase();
+    return linkText;
+  }
+
+  showMegaMenu(megaMenu) {
+    // Determine which mega menu to show based on header visibility
+    const isStickyVisible = this.stickyHeader && this.stickyHeader.classList.contains('is-visible');
+
+    // Get the correct mega menu (from sticky header or main header)
+    let targetMegaMenu = megaMenu;
+    if (isStickyVisible) {
+      // If sticky is visible, use the mega menu inside sticky header
+      const megaMenuId = megaMenu.dataset.megaMenu;
+      const stickyMegaMenu = this.stickyHeader.querySelector(`[data-mega-menu="${megaMenuId}"]`);
+      if (stickyMegaMenu) {
+        targetMegaMenu = stickyMegaMenu;
+      }
+    } else {
+      // If main header is visible, use the mega menu inside main header
+      const megaMenuId = megaMenu.dataset.megaMenu;
+      const mainMegaMenu = this.mainHeader.querySelector(`[data-mega-menu="${megaMenuId}"]`);
+      if (mainMegaMenu) {
+        targetMegaMenu = mainMegaMenu;
+      }
+    }
+
+    // Hide all other mega menus first
+    this.megaMenus.forEach((menu) => {
+      if (menu !== targetMegaMenu) {
+        this.hideMegaMenu(menu);
+      }
+    });
+
+    // Show the target mega menu
+    targetMegaMenu.classList.add('is-active');
+
+    // Animate with GSAP if available
+    if (typeof gsap !== 'undefined') {
+      // Check if this is a shop mega menu or card mega menu
+      const shopColumns = targetMegaMenu.querySelectorAll('.mega-menu-shop__column');
+      const shopCards = targetMegaMenu.querySelectorAll('.mega-menu-shop__card');
+      const cardItems = targetMegaMenu.querySelectorAll('.mega-menu-cards__card');
+
+      if (shopColumns.length > 0 || shopCards.length > 0) {
+        // Shop mega menu animation
+        // Animate columns with stagger
+        gsap.fromTo(
+          shopColumns,
+          {
+            opacity: 0,
+            y: -20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out',
+            stagger: 0.05, // 0.05s delay between each column
+          }
+        );
+
+        // Animate cards with stagger (start after columns begin)
+        gsap.fromTo(
+          shopCards,
+          {
+            opacity: 0,
+            y: -20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out',
+            stagger: 0.05,
+            delay: 0.1, // Cards start 0.1s after columns
+          }
+        );
+      } else if (cardItems.length > 0) {
+        // Card mega menu animation
+        gsap.fromTo(
+          cardItems,
+          {
+            opacity: 0,
+            y: -20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out',
+            stagger: 0.05,
+          }
+        );
+      }
+    } else {
+      // Fallback without GSAP - instant show
+      const allAnimatableElements = targetMegaMenu.querySelectorAll(
+        '.mega-menu-shop__column, .mega-menu-shop__card, .mega-menu-cards__card'
+      );
+
+      allAnimatableElements.forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }
+
+    // Update active mega menu reference
+    this.activeMegaMenu = targetMegaMenu;
+  }
+
+  hideMegaMenu(megaMenu) {
+    if (typeof gsap !== 'undefined') {
+      const allAnimatableElements = megaMenu.querySelectorAll(
+        '.mega-menu-shop__column, .mega-menu-shop__card, .mega-menu-cards__card'
+      );
+
+      // Quick fade out
+      gsap.to(allAnimatableElements, {
+        opacity: 0,
+        y: -20,
+        duration: 0.2,
+        ease: 'power2.in',
+        onComplete: () => {
+          megaMenu.classList.remove('is-active');
+        },
+      });
+    } else {
+      // Fallback without GSAP
+      megaMenu.classList.remove('is-active');
+    }
+  }
+}
+
+/**
  * Initialize Cart Drawer
  * Prevents default cart link behavior and opens cart drawer instead
  */
@@ -739,15 +1021,17 @@ function initCartDrawer() {
   }
 }
 
-// Initialize header and search when DOM is ready
+// Initialize header, search, mega menu, and cart drawer when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     new DiamensionHeader();
     new DiamensionSearch();
+    new DiamensionMegaMenu();
     initCartDrawer();
   });
 } else {
   new DiamensionHeader();
   new DiamensionSearch();
+  new DiamensionMegaMenu();
   initCartDrawer();
 }

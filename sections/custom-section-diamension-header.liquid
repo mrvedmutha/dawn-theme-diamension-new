@@ -55,6 +55,14 @@
         {%- endfor -%}
       </nav>
 
+      {%- comment -%} Mega Menu - Shop {%- endcomment -%}
+      {% render 'mega-menu-shop', blocks: section.blocks %}
+
+      {%- comment -%} Mega Menu - Cards (BRAND, CUSTOMIZE, ORIGINS) {%- endcomment -%}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'brand' %}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'customize' %}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'origins' %}
+
       {%- comment -%} Center Logo {%- endcomment -%}
       <div class="diamension-header__logo">
         <a href="{{ routes.root_url }}" class="diamension-header__logo-link">
@@ -258,6 +266,14 @@
         {%- endfor -%}
       </nav>
 
+      {%- comment -%} Mega Menu - Shop (Sticky Header) {%- endcomment -%}
+      {% render 'mega-menu-shop', blocks: section.blocks %}
+
+      {%- comment -%} Mega Menu - Cards (BRAND, CUSTOMIZE, ORIGINS - Sticky Header) {%- endcomment -%}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'brand' %}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'customize' %}
+      {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'origins' %}
+
       {%- comment -%} Center Logo {%- endcomment -%}
       <div class="diamension-header__logo">
         <a href="{{ routes.root_url }}" class="diamension-header__logo-link">
@@ -393,6 +409,91 @@
       ],
       "default": "auto",
       "info": "Control header appearance behavior for this page"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu_column",
+      "name": "Mega Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column Heading",
+          "info": "e.g., CATEGORIES, COLLECTIONS, BY STYLE"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Select the menu to display in this column"
+        }
+      ]
+    },
+    {
+      "type": "mega_menu_featured_card",
+      "name": "Mega Menu Featured Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Card Heading",
+          "default": "NEW ARRIVALS"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card Link"
+        }
+      ]
+    },
+    {
+      "type": "mega_menu_card_item",
+      "name": "Mega Menu Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "menu_type",
+          "label": "Assign to Menu",
+          "options": [
+            {
+              "value": "brand",
+              "label": "BRAND"
+            },
+            {
+              "value": "customize",
+              "label": "CUSTOMIZE"
+            },
+            {
+              "value": "origins",
+              "label": "ORIGINS"
+            }
+          ],
+          "default": "brand",
+          "info": "Choose which menu this card should appear in"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Card Heading",
+          "default": "OUR STORY"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card Link"
+        }
+      ]
     }
   ],
   "presets": [

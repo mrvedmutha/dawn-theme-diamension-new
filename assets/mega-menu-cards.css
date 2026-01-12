@@ -1,0 +1,152 @@
+/* ============================================================================
+   Mega Menu - Cards (Centered Layout)
+   ============================================================================ */
+
+.mega-menu-cards {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 100;
+}
+
+.mega-menu-cards.is-active {
+  display: block;
+}
+
+/* Wrapper - Fluid background */
+.mega-menu-cards__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Container - Max width with padding */
+.mega-menu-cards__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Cards Grid - Centered */
+.mega-menu-cards__grid {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Individual Card */
+.mega-menu-cards__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 153px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.mega-menu-cards__card-image {
+  width: 153px;
+  height: 216px;
+  background-color: #fffaf5;
+  overflow: hidden;
+  position: relative;
+}
+
+.mega-menu-cards__card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mega-menu-cards__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.mega-menu-cards__card-image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mega-menu-cards__card-image--placeholder svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mega-menu-cards__card-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #3e6282;
+  margin: 0;
+}
+
+.mega-menu-cards__card-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mega-menu-cards__card-link:hover {
+  color: #183754;
+}
+
+/* ============================================================================
+   Responsive - 1024px
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .mega-menu-cards__container {
+    padding: 32px 48px;
+  }
+
+  .mega-menu-cards__grid {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .mega-menu-cards__card {
+    width: 130px;
+  }
+
+  .mega-menu-cards__card-image {
+    width: 130px;
+    height: 183px;
+  }
+}
+
+/* ============================================================================
+   Responsive - Mobile
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .mega-menu-cards__container {
+    padding: 24px;
+  }
+
+  .mega-menu-cards__grid {
+    gap: 16px;
+  }
+
+  .mega-menu-cards__card {
+    width: 140px;
+  }
+
+  .mega-menu-cards__card-image {
+    width: 140px;
+    height: 197px;
+  }
+}
