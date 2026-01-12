@@ -1,0 +1,83 @@
+{% comment %}
+  Mega Menu - Card Based Layout (for BRAND, CUSTOMIZE, ORIGINS, etc.)
+
+  Accepts:
+  - blocks: array of blocks from the parent section
+  - menu_type: which menu to show cards for (e.g., 'brand', 'customize', 'origins')
+
+  Usage:
+  {% render 'mega-menu-cards', blocks: section.blocks, menu_type: 'brand' %}
+{% endcomment %}
+
+{{ 'mega-menu-cards.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign card_blocks = blocks | where: 'type', 'mega_menu_card_item'
+  assign filtered_cards = ''
+  assign filtered_cards_array = ''
+-%}
+
+{%- comment -%} Filter cards by menu_type {%- endcomment -%}
+{%- capture filtered_cards -%}
+  {%- for block in card_blocks -%}
+    {%- if block.settings.menu_type == menu_type -%}
+      {{ block.id }}{% unless forloop.last %},{% endunless %}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign filtered_cards_array = filtered_cards | split: ',' -%}
+
+<div class="mega-menu-cards" data-mega-menu="{{ menu_type }}">
+  <div class="mega-menu-cards__wrapper">
+    <div class="mega-menu-cards__container">
+
+      {%- if filtered_cards_array.size > 0 -%}
+        <div class="mega-menu-cards__grid">
+          {%- for block in card_blocks -%}
+            {%- if block.settings.menu_type == menu_type -%}
+              <div class="mega-menu-cards__card" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  <div class="mega-menu-cards__card-image">
+                    {%- if block.settings.link != blank -%}
+                      <a href="{{ block.settings.link }}" class="mega-menu-cards__card-image-link">
+                    {%- endif -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 306
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '153, 306',
+                        sizes: '153px',
+                        class: 'mega-menu-cards__card-img'
+                    }}
+                    {%- if block.settings.link != blank -%}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- else -%}
+                  <div class="mega-menu-cards__card-image mega-menu-cards__card-image--placeholder">
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.heading != blank -%}
+                  <h4 class="mega-menu-cards__card-heading">
+                    {%- if block.settings.link != blank -%}
+                      <a href="{{ block.settings.link }}" class="mega-menu-cards__card-link">
+                        {{ block.settings.heading }}
+                      </a>
+                    {%- else -%}
+                      {{ block.settings.heading }}
+                    {%- endif -%}
+                  </h4>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>

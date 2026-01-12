@@ -1,0 +1,177 @@
+/* ============================================================================
+   Mega Menu - Shop
+   ============================================================================ */
+
+.mega-menu-shop {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 100;
+}
+
+.mega-menu-shop.is-active {
+  display: block;
+}
+
+/* Wrapper - Fluid background */
+.mega-menu-shop__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Container - Max width with padding */
+.mega-menu-shop__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px;
+  display: flex;
+  gap: 96px;
+  align-items: flex-start;
+}
+
+/* Menu Columns Section */
+.mega-menu-shop__columns {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.mega-menu-shop__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.mega-menu-shop__column-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #3e6282;
+  margin: 0;
+}
+
+.mega-menu-shop__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mega-menu-shop__link-item {
+  margin: 0;
+}
+
+.mega-menu-shop__link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  color: #183754;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mega-menu-shop__link:hover {
+  color: #3e6282;
+}
+
+/* Featured Cards Section */
+.mega-menu-shop__featured {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.mega-menu-shop__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 153px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.mega-menu-shop__card-image {
+  width: 153px;
+  height: 216px;
+  background-color: #fffaf5;
+  overflow: hidden;
+  position: relative;
+}
+
+.mega-menu-shop__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.mega-menu-shop__card-image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mega-menu-shop__card-image--placeholder svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mega-menu-shop__card-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #3e6282;
+  margin: 0;
+}
+
+.mega-menu-shop__card-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mega-menu-shop__card-link:hover {
+  color: #183754;
+}
+
+/* ============================================================================
+   Responsive - 1024px
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .mega-menu-shop__container {
+    gap: 48px;
+  }
+
+  /* Menu columns: 3 rows (narrower columns) */
+  .mega-menu-shop__columns {
+    flex-wrap: wrap;
+    gap: 32px 24px; /* vertical gap 32px, horizontal gap 24px */
+  }
+
+  .mega-menu-shop__column {
+    flex: 0 0 auto;
+    min-width: 100px;
+    max-width: 150px;
+  }
+
+  /* Featured cards remain in horizontal flow */
+  .mega-menu-shop__featured {
+    gap: 16px;
+  }
+}
