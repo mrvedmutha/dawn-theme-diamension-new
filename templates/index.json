@@ -1,210 +1,321 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
+    "video_hero_9dcbHc": {
+      "type": "video-hero",
+      "name": "Video Hero",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "rich_text": {
-      "type": "rich-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
-      "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
-      ],
-      "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
+        "video_type": "upload",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "vimeo_url": "",
+        "show_overlay": false,
+        "overlay_opacity": 30,
         "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "subheading": "",
+        "text_position": "middle-left",
+        "text_alignment": "left",
+        "content_width": 600,
+        "content_gap": 24,
+        "heading_color": "#ffffff",
+        "heading_size_desktop": 56,
+        "heading_size_tablet": 48,
+        "heading_size_mobile": 32,
+        "subheading_color": "#ffffff",
+        "subheading_size_desktop": 20,
+        "subheading_size_tablet": 18,
+        "subheading_size_mobile": 16,
+        "button_text": "",
+        "button_link": "",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_radius": 4,
+        "button_padding_vertical": 12,
+        "button_padding_horizontal": 32,
+        "max_height": 800,
+        "mobile_height": 80
       }
     },
-    "multicolumn": {
-      "type": "multicolumn",
+    "custom_section_rich_text_diamension_i9qYDp": {
+      "type": "custom-section-rich-text-diamension",
+      "name": "Custom Rich Text Diamension",
+      "settings": {
+        "headline": "Luxury Within Reach. Brilliance Beyond Measure",
+        "subtext": "Backed by HVK Diamonds' 25-year heritage, we merge mastery in craftsmanship with next-gen innovation. Every piece is crafted in 14K gold, IGI certified, and designed to be cherished for a lifetime.",
+        "headline_color": "#183754",
+        "subtext_color": "#3e6282",
+        "background_color": "#fffaf5"
+      }
+    },
+    "custom_section_featured_category_slider_qaqqVy": {
+      "type": "custom-section-featured-category-slider",
       "blocks": {
-        "column1": {
-          "type": "column",
+        "category_PRJiVp": {
+          "type": "category",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "category_name": "Earrings",
+            "collection": "earrings",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+            "video_youtube_vimeo": ""
           }
         },
-        "column2": {
-          "type": "column",
+        "category_TyLE4h": {
+          "type": "category",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "category_name": "Necklace",
+            "collection": "necklaces",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/e07fbb1e312c451b87ad067d02c7f731.mp4",
+            "video_youtube_vimeo": ""
           }
         },
-        "column3": {
-          "type": "column",
+        "category_Tr3Nfg": {
+          "type": "category",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "category_name": "Rings",
+            "collection": "rings",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_bnDGXH": {
+          "type": "category",
+          "settings": {
+            "category_name": "Pendents",
+            "collection": "pendants",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/e07fbb1e312c451b87ad067d02c7f731.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_bKBkPD": {
+          "type": "category",
+          "settings": {
+            "category_name": "Bracelets",
+            "collection": "bracelets",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+            "video_youtube_vimeo": ""
+          }
+        }
+      },
+      "block_order": ["category_PRJiVp", "category_TyLE4h", "category_Tr3Nfg", "category_bnDGXH", "category_bKBkPD"],
+      "name": "Featured Category Slider",
+      "settings": {
+        "section_height": 950,
+        "enable_animations": true,
+        "shop_now_text": "SHOP NOW",
+        "view_collection_text": "VIEW COLLECTION",
+        "next_text": "NEXT"
+      }
+    },
+    "custom_section_trust_badge_Y6tEJi": {
+      "type": "custom-section-trust-badge",
+      "blocks": {
+        "trust_badge_rQQhcL": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-100percent-cert-jwellery.svg",
+            "badge_label": "100% certified jewellery"
+          }
+        },
+        "trust_badge_KU4NFG": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-easy-returns.svg",
+            "badge_label": "15 days easy return"
+          }
+        },
+        "trust_badge_NQ77gz": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-lifetime-exchange.svg",
+            "badge_label": "lifetime exchange"
+          }
+        },
+        "trust_badge_mYgh3B": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-lifetime-warranty.svg",
+            "badge_label": "lifetime warrenty"
+          }
+        }
+      },
+      "block_order": ["trust_badge_rQQhcL", "trust_badge_KU4NFG", "trust_badge_NQ77gz", "trust_badge_mYgh3B"],
+      "name": "Custom Trust Badge",
+      "settings": {}
+    },
+    "custom_section_feature_slider_with_left_image_bQi7qG": {
+      "type": "custom-section-feature-slider-with-left-image",
+      "name": "Feature Slider with Left Image",
+      "settings": {
+        "section_heading": "New Arrivals",
+        "sidebar_image": "shopify://shop_images/neck-jewellery.jpg",
+        "collection": "new-arrivals",
+        "products_limit": 10,
+        "show_heading": true,
+        "heading_alignment": "left"
+      }
+    },
+    "custom_section_shop_collection_arch_AH8MpR": {
+      "type": "custom-section-shop-collection-arch",
+      "name": "Shop Collection Arch",
+      "settings": {
+        "heading": "Radiance Collection",
+        "center_video": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "center_cta_link": "shopify://collections/new-arrivals",
+        "center_cta_text": "Shop the Collection",
+        "left_image": "shopify://shop_images/neck-jewellery.jpg",
+        "left_image_link": "shopify://products/product-bracelet",
+        "right_image": "shopify://shop_images/Frame_31.png",
+        "right_image_link": "shopify://products/chris-baguette-chain-bracelet",
+        "bottom_image_link": ""
+      }
+    },
+    "custom_section_shop_by_price_HH876J": {
+      "type": "custom-section-shop-by-price",
+      "name": "Shop by Price",
+      "settings": {
+        "title": "SHOP BY PRICE",
+        "tagline": "Whatever the budget, we have got a beautiful piece of jewellery for every YOU!"
+      }
+    },
+    "image_with_product_hero_AyTzGC": {
+      "type": "image-with-product-hero",
+      "name": "Image Hero with Product",
+      "settings": {
+        "background_image": "shopify://shop_images/jewellery_back_showcase.jpg",
+        "heading": "INTO THE RED",
+        "caption": "Jewelry that feels as good as it looks.",
+        "cta_text": "Shop the Collection",
+        "cta_link": "shopify://collections",
+        "text_color": "#fffaf5",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "custom_section_four_collection_arch_e3WPan": {
+      "type": "custom-section-four-collection-arch",
+      "blocks": {
+        "collection_card_bfdzcX": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/neck-jewellery.jpg",
+            "title": "Engagement & Bridal",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections/earrings",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_P6wW8E": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/LAB09493_1.png",
+            "title": "Everyday Essentials",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections/bracelets",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_QxP9xT": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/APF_5692.jpg",
+            "title": "Statement Jewelry",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_d8Mgf4": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/image_4.png",
+            "title": "Gifts That Shine",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections",
+            "text_color": "#fffaf5"
           }
         }
       },
       "block_order": [
-        "column1",
-        "column2",
-        "column3"
+        "collection_card_bfdzcX",
+        "collection_card_P6wW8E",
+        "collection_card_QxP9xT",
+        "collection_card_d8Mgf4"
       ],
+      "name": "Four Collection Arch",
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "heading": "YOUR STYLE, OUR COLLECTION",
+        "heading_color": "#183754",
+        "mobile_aspect_ratio": "9-16"
+      }
+    },
+    "headline_ring_collection_gdTW6r": {
+      "type": "headline-ring-collection",
+      "name": "Headline Ring Collection",
+      "settings": {
+        "headline_line_1": "BRILLIANCE",
+        "headline_line_2": "WITHOUT",
+        "headline_line_3": "COMPROMISE",
+        "cta_text": "Our story",
+        "cta_url": "shopify://pages/contact",
+        "product_image": "shopify://shop_images/CBR40092_Yg_F10_1_1.png",
+        "paragraph_content": "Our diamonds are chemically, physically, and optically identical to mined diamonds — the only difference is the journey. Crafted with cutting-edge technology and ethical values, each stone delivers pure beauty without the environmental and financial cost.",
+        "feature_1_icon": "shopify://shop_images/three-circle-union-icon.svg",
+        "feature_1_text": "QUALITY CRAFTMANSHIP",
+        "feature_2_icon": "shopify://shop_images/globe-icon.svg",
+        "feature_2_text": "PLANET FRIENDLY AND SUSTAINABLY MADE",
+        "badge_1_image": "shopify://shop_images/igi_certification_logo.png",
+        "badge_2_image": "shopify://shop_images/image_395.png"
+      }
+    },
+    "custom_section_diamension_follow_insta_rz3x9q": {
+      "type": "custom-section-diamension-follow-insta",
+      "name": "Diamension Follow Instagram",
+      "settings": {
+        "headline_text": "FOLLOW US ON INSTAGRAM",
+        "image_1": "shopify://shop_images/Frame_1834_32a232d0-a97c-422c-ab7b-75ee04c6241c.png",
+        "image_2": "shopify://shop_images/Frame_31.png",
+        "image_3": "shopify://shop_images/Frame_32_1.png",
+        "image_4": "shopify://shop_images/Frame_33.png",
+        "cta_text": "Instagram",
+        "cta_url": "https://instagram.com",
+        "show_decorative_ellipse": true
+      }
+    },
+    "custom_diamension_before_footer_hero_dmVzVR": {
+      "type": "custom-diamension-before-footer-hero",
+      "name": "Before Footer Hero",
+      "settings": {
+        "quote_text": "\"We believe jewelry should be something you never take off. A companion to your memory, made to last a lifetime, the kind you'll invest in and pass down.\"",
+        "caption_text": "—KARAN, FOUNDER",
+        "product_image": "shopify://shop_images/ring-at-footer-hero-image.png",
+        "image_offset": -448
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "video_hero_9dcbHc",
+    "custom_section_rich_text_diamension_i9qYDp",
+    "custom_section_featured_category_slider_qaqqVy",
+    "custom_section_trust_badge_Y6tEJi",
+    "custom_section_feature_slider_with_left_image_bQi7qG",
+    "custom_section_shop_collection_arch_AH8MpR",
+    "custom_section_shop_by_price_HH876J",
+    "image_with_product_hero_AyTzGC",
+    "custom_section_four_collection_arch_e3WPan",
+    "headline_ring_collection_gdTW6r",
+    "custom_section_diamension_follow_insta_rz3x9q",
+    "custom_diamension_before_footer_hero_dmVzVR"
   ]
 }
