@@ -50,7 +50,8 @@
   height: 544px;
   overflow: hidden;
   cursor: pointer;
-  transition: clip-path 0.2s ease;
+  border-radius: 0;
+  transition: border-radius 0.6s ease;
 }
 
 .custom-section-four-collection-arch__card-image {
@@ -137,7 +138,7 @@
 
 @media (min-width: 768px) {
   .custom-section-four-collection-arch__card:hover {
-    /* Arch effect applied via GSAP */
+    border-radius: 1000px 1000px 0 0;
   }
 
   .custom-section-four-collection-arch__card:hover .custom-section-four-collection-arch__card-cta {
