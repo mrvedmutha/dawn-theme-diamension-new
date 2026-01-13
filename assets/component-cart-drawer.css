@@ -1,3 +1,37 @@
+/* ===================================
+   CUSTOM FONTS - Neue Haas Display
+   =================================== */
+
+/* Light (300) */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Roman (400) */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medium (500) - Using Bold as Medium equivalent */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 .drawer {
   position: fixed;
   z-index: 1000;
@@ -17,8 +51,8 @@
 
 .drawer__inner {
   height: 100%;
-  width: 40rem;
-  max-width: calc(100vw - 3rem);
+  width: 100vw;
+  max-width: 100vw;
   padding: 0 1.5rem;
   border: 0.1rem solid rgba(var(--color-foreground), 0.2);
   border-right: 0;
@@ -27,6 +61,15 @@
   flex-direction: column;
   transform: translateX(100%);
   transition: transform var(--duration-default) ease;
+  background-color: #fffaf5 !important;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@media screen and (min-width: 990px) {
+  .drawer__inner {
+    width: 40rem;
+    max-width: calc(100vw - 3rem);
+  }
 }
 
 .drawer__inner-empty {
@@ -332,6 +375,28 @@ cart-drawer-items {
 
 .cart-drawer .cart__checkout-button {
   max-width: none;
+  /* Custom button styles matching product detail page */
+  background-color: #183754;
+  color: #ffffff;
+  border: 1px solid #183754;
+  padding: 12px 36px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.cart-drawer .cart__checkout-button:hover:not(:disabled) {
+  background-color: #0f2639;
+}
+
+.cart-drawer .cart__checkout-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .drawer__footer .cart__dynamic-checkout-buttons {
@@ -411,4 +476,25 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
   .cart-drawer .cart-item__error {
     margin-left: 0;
   }
+}
+
+/* Custom button styles for empty cart "Continue Shopping" button */
+.cart-drawer__empty-content .button {
+  background-color: #fffaf5;
+  color: #183754;
+  border: 1px solid #183754;
+  padding: 12px 36px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.cart-drawer__empty-content .button:hover {
+  background-color: #183754;
+  color: #ffffff;
 }
