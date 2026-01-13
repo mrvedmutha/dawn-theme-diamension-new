@@ -1,0 +1,195 @@
+/* ============================================================================
+   Custom Header Mega Menu
+   Consolidated desktop mega menu with adaptive layouts
+   ============================================================================ */
+
+/* Base Mega Menu Container */
+.custom-header-mega-menu {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 100;
+}
+
+.custom-header-mega-menu.is-active {
+  display: block;
+}
+
+/* Wrapper - Fluid background */
+.custom-header-mega-menu__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Container - Max width with padding */
+.custom-header-mega-menu__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px;
+  display: flex;
+  gap: 96px;
+  align-items: flex-start;
+}
+
+/* Layout Mode: Columns + Cards (columns left, cards right) */
+.custom-header-mega-menu__container--columns-cards {
+  justify-content: flex-start;
+}
+
+/* Layout Mode: Centered (only columns OR only cards) */
+.custom-header-mega-menu__container--centered {
+  justify-content: center;
+}
+
+/* Layout Mode: Left-aligned (only columns) */
+.custom-header-mega-menu__container--left-aligned {
+  justify-content: flex-start;
+}
+
+/* ============================================================================
+   Menu Columns Section
+   ============================================================================ */
+
+.custom-header-mega-menu__columns {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.custom-header-mega-menu__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.custom-header-mega-menu__column-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #3e6282;
+  margin: 0;
+}
+
+.custom-header-mega-menu__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.custom-header-mega-menu__link-item {
+  margin: 0;
+}
+
+.custom-header-mega-menu__link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  color: #183754;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.custom-header-mega-menu__link:hover {
+  color: #3e6282;
+}
+
+/* ============================================================================
+   Featured Cards Section
+   ============================================================================ */
+
+.custom-header-mega-menu__cards {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* Centered layout: cards centered */
+.custom-header-mega-menu__container--centered .custom-header-mega-menu__cards {
+  justify-content: center;
+}
+
+.custom-header-mega-menu__card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 153px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.custom-header-mega-menu__card-image {
+  width: 153px;
+  height: 216px;
+  background-color: #fffaf5;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-header-mega-menu__card-image a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-header-mega-menu__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.custom-header-mega-menu__card-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #3e6282;
+  margin: 0;
+}
+
+.custom-header-mega-menu__card-heading a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.custom-header-mega-menu__card-heading a:hover {
+  color: #183754;
+}
+
+/* ============================================================================
+   Responsive Adjustments
+   ============================================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-header-mega-menu__container {
+    padding: 40px 30px;
+    gap: 60px;
+  }
+
+  .custom-header-mega-menu__columns {
+    gap: 36px;
+  }
+}
+
+/* Hide mega menu on mobile */
+@media (max-width: 767px) {
+  .custom-header-mega-menu {
+    display: none !important;
+  }
+}
