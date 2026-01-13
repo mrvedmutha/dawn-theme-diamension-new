@@ -737,6 +737,7 @@
       addToCartBtn.textContent = 'ADDING...';
 
       try {
+        // Use /cart/add.js endpoint which returns JSON
         const response = await fetch('/cart/add.js', {
           method: 'POST',
           headers: {
@@ -749,13 +750,112 @@
         });
 
         if (response.ok) {
+          const data = await response.json();
           addToCartBtn.textContent = 'ADDED ✓';
 
-          // Update cart count (if cart drawer exists)
-          updateCartCount();
+          // Publish cart update event for any subscribers
+          if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, {
+              source: 'custom-product-detail',
+              productVariantId: variantId,
+              cartData: data,
+            });
+          }
 
-          // Trigger cart drawer open (if theme has one)
-          document.dispatchEvent(new CustomEvent('cart:item-added'));
+          // Update cart icon bubble
+          try {
+            console.log('🛒 Updating cart icon badge...');
+
+            // Fetch cart data to get item count
+            const cartDataResponse = await fetch('/cart.js');
+            const cartData = await cartDataResponse.json();
+            console.log('  Cart data:', cartData);
+            console.log('  Item count:', cartData.item_count);
+
+            // Update all cart count elements
+            const cartCountElements = document.querySelectorAll('[data-cart-count]');
+            console.log('  Found cart count elements:', cartCountElements.length);
+
+            cartCountElements.forEach((el) => {
+              el.textContent = cartData.item_count;
+              console.log('  Updated cart count element:', el);
+            });
+
+            // Also try to update cart-icon-bubble if it exists
+            const cartIconBubble = document.getElementById('cart-icon-bubble');
+            if (cartIconBubble) {
+              const bubbleResponse = await fetch(`${window.routes.cart_url}?section_id=cart-icon-bubble`);
+              const bubbleHtml = await bubbleResponse.text();
+              const parser = new DOMParser();
+              const bubbleDoc = parser.parseFromString(bubbleHtml, 'text/html');
+              const newBubble = bubbleDoc.getElementById('cart-icon-bubble');
+              if (newBubble) {
+                cartIconBubble.innerHTML = newBubble.innerHTML;
+              }
+            }
+
+            console.log('🛒 Cart icon badge updated!');
+          } catch (error) {
+            console.error('Error updating cart icon:', error);
+          }
+
+          // Manually fetch and update cart drawer
+          const cartDrawer = document.querySelector('cart-drawer');
+          const cartDrawerItems = document.querySelector('cart-drawer-items');
+
+          console.log('🛒 Updating cart drawer...');
+          console.log('  Cart drawer exists:', !!cartDrawer);
+          console.log('  Cart drawer items exists:', !!cartDrawerItems);
+
+          if (cartDrawer && cartDrawerItems) {
+            try {
+              const cartResponse = await fetch(`${window.routes.cart_url}?section_id=cart-drawer`);
+              const cartHtml = await cartResponse.text();
+              console.log('🛒 Fetched cart HTML (first 300 chars):', cartHtml.substring(0, 300));
+
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(cartHtml, 'text/html');
+
+              // Get the entire cart drawer from fetched HTML
+              const newCartDrawer = doc.querySelector('cart-drawer');
+              console.log('🛒 New full cart drawer found:', !!newCartDrawer);
+
+              if (newCartDrawer) {
+                // Get the inner content
+                const newInnerContent = newCartDrawer.querySelector('.drawer__inner');
+                const currentInnerContent = cartDrawer.querySelector('.drawer__inner');
+
+                console.log('🛒 New inner content found:', !!newInnerContent);
+                console.log('🛒 Current inner content found:', !!currentInnerContent);
+
+                if (newInnerContent && currentInnerContent) {
+                  currentInnerContent.innerHTML = newInnerContent.innerHTML;
+                  console.log('🛒 Replaced drawer inner content');
+                }
+
+                // Remove is-empty class
+                const wasEmpty = cartDrawer.classList.contains('is-empty');
+                cartDrawer.classList.remove('is-empty');
+                console.log('🛒 Was empty:', wasEmpty, '→ Now has content');
+
+                // Check final state
+                const finalCartItems = cartDrawer.querySelectorAll('.cart-item');
+                console.log('🛒 Final cart items count in drawer:', finalCartItems.length);
+
+                // Log the actual HTML structure
+                const cartItemsWrapper = cartDrawer.querySelector('.drawer__cart-items-wrapper');
+                console.log('🛒 Cart items wrapper exists:', !!cartItemsWrapper);
+                if (cartItemsWrapper) {
+                  console.log(
+                    '🛒 Cart items wrapper HTML (first 500 chars):',
+                    cartItemsWrapper.innerHTML.substring(0, 500)
+                  );
+                }
+              }
+            } catch (error) {
+              console.error('Error updating cart drawer:', error);
+            }
+          }
 
           setTimeout(() => {
             addToCartBtn.textContent = originalText;
@@ -763,7 +863,7 @@
           }, 2000);
         } else {
           const data = await response.json();
-          throw new Error(data.description || 'Failed to add to cart');
+          throw new Error(data.description || data.message || 'Failed to add to cart');
         }
       } catch (error) {
         console.error('Add to cart error:', error);
