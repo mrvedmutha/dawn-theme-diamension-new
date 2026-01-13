@@ -9,10 +9,13 @@
   top: 0;
   left: 0;
   width: 100vw;
+  width: 100dvw;
   height: 100vh;
+  height: 100dvh;
   background-color: #fffaf5;
   z-index: 999;
   display: none;
+  overflow-x: hidden;
   overflow-y: auto;
   transform: translateX(-100%);
 }
@@ -48,8 +51,10 @@
   padding-left: 20.96px;
   padding-right: 20.96px;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* Level 1 specific layout */
@@ -72,6 +77,10 @@
   left: 0;
   width: 100%;
   background-color: #fffaf5;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* Back Button Header */
@@ -214,6 +223,7 @@
 .custom-mobile-nav-drawer__footer {
   margin-top: auto;
   padding: 20px 0px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(24, 55, 84, 0.1);
   flex-shrink: 0;
 }

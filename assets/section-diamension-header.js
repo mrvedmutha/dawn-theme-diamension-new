@@ -239,7 +239,7 @@ class DiamensionHeader {
           link,
           {
             '--after-left': '0%',
-            '--after-width': '0%'
+            '--after-width': '0%',
           },
           {
             '--after-left': '0%',
@@ -887,66 +887,22 @@ class DiamensionMegaMenu {
 
     // Animate with GSAP if available
     if (typeof gsap !== 'undefined') {
-      // Check if this is a shop mega menu or card mega menu
-      const shopColumns = targetMegaMenu.querySelectorAll('.mega-menu-shop__column');
-      const shopCards = targetMegaMenu.querySelectorAll('.mega-menu-shop__card');
-      const cardItems = targetMegaMenu.querySelectorAll('.mega-menu-cards__card');
+      // Use new custom-header-mega-menu selectors
+      const columns = targetMegaMenu.querySelectorAll('.custom-header-mega-menu__column');
+      const cards = targetMegaMenu.querySelectorAll('.custom-header-mega-menu__card');
 
-      if (shopColumns.length > 0 || shopCards.length > 0) {
-        // Shop mega menu animation
-        // Animate columns with stagger
+      if (columns.length > 0 || cards.length > 0) {
+        // Animate columns and cards with stagger
         gsap.fromTo(
-          shopColumns,
-          {
-            opacity: 0,
-            y: -20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: 'power2.out',
-            stagger: 0.05, // 0.05s delay between each column
-          }
-        );
-
-        // Animate cards with stagger (start after columns begin)
-        gsap.fromTo(
-          shopCards,
-          {
-            opacity: 0,
-            y: -20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: 'power2.out',
-            stagger: 0.05,
-            delay: 0.1, // Cards start 0.1s after columns
-          }
-        );
-      } else if (cardItems.length > 0) {
-        // Card mega menu animation
-        gsap.fromTo(
-          cardItems,
-          {
-            opacity: 0,
-            y: -20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: 'power2.out',
-            stagger: 0.05,
-          }
+          [...columns, ...cards],
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.05 }
         );
       }
     } else {
       // Fallback without GSAP - instant show
       const allAnimatableElements = targetMegaMenu.querySelectorAll(
-        '.mega-menu-shop__column, .mega-menu-shop__card, .mega-menu-cards__card'
+        '.custom-header-mega-menu__column, .custom-header-mega-menu__card'
       );
 
       allAnimatableElements.forEach((el) => {
@@ -962,7 +918,7 @@ class DiamensionMegaMenu {
   hideMegaMenu(megaMenu) {
     if (typeof gsap !== 'undefined') {
       const allAnimatableElements = megaMenu.querySelectorAll(
-        '.mega-menu-shop__column, .mega-menu-shop__card, .mega-menu-cards__card'
+        '.custom-header-mega-menu__column, .custom-header-mega-menu__card'
       );
 
       // Quick fade out
@@ -979,6 +935,273 @@ class DiamensionMegaMenu {
       // Fallback without GSAP
       megaMenu.classList.remove('is-active');
     }
+  }
+}
+
+/**
+ * Mobile Navigation Drawer
+ * 3-level drill-down navigation with slide animations
+ */
+class DiamensionMobileNav {
+  constructor() {
+    this.drawer = document.querySelector('[data-mobile-nav-drawer]');
+    this.hamburger = document.querySelector('[data-hamburger]');
+    this.hamburgerSticky = document.querySelector('[data-hamburger-sticky]');
+    this.closeButton = document.querySelector('[data-mobile-nav-close]');
+    this.backButtons = document.querySelectorAll('[data-nav-back]');
+    this.isOpen = false;
+    this.currentLevel = 1;
+    this.currentLevelElement = null; // Track the currently active level element
+    this.navigationHistory = []; // Stack to track navigation path
+
+    if (this.drawer && this.hamburger) {
+      this.init();
+    }
+  }
+
+  init() {
+    this.attachEventListeners();
+  }
+
+  attachEventListeners() {
+    // Hamburger buttons open drawer
+    this.hamburger.addEventListener('click', () => {
+      this.openDrawer();
+    });
+
+    if (this.hamburgerSticky) {
+      this.hamburgerSticky.addEventListener('click', () => {
+        this.openDrawer();
+      });
+    }
+
+    // Close button
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', () => {
+        this.closeDrawer();
+      });
+    }
+
+    // Back buttons
+    this.backButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        this.navigateBack();
+      });
+    });
+
+    // Navigation triggers (Level 1 -> Level 2)
+    const level1Triggers = this.drawer.querySelectorAll('[data-nav-level="1"] [data-nav-trigger]');
+    level1Triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const targetId = trigger.dataset.navTrigger;
+        this.navigateToLevel2(targetId);
+      });
+    });
+
+    // Navigation triggers (Level 2 -> Level 3)
+    const level2Triggers = this.drawer.querySelectorAll('[data-nav-level="2"] [data-nav-trigger]');
+    level2Triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const columnId = trigger.dataset.navTrigger;
+        const parentId = trigger.closest('[data-nav-level="2"]').dataset.parentId;
+        this.navigateToLevel3(columnId, parentId);
+      });
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.closeDrawer();
+      }
+    });
+  }
+
+  openDrawer() {
+    this.isOpen = true;
+    this.drawer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+
+    // Set initial level element reference
+    if (!this.currentLevelElement) {
+      this.currentLevelElement = this.drawer.querySelector('[data-nav-level="1"]');
+    }
+
+    // GSAP Animation: Slide in from LEFT to RIGHT
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(
+        this.drawer,
+        { x: '-100%' },
+        {
+          x: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }
+      );
+    } else {
+      // Fallback
+      this.drawer.style.transform = 'translateX(0)';
+    }
+  }
+
+  closeDrawer() {
+    this.isOpen = false;
+    document.body.style.overflow = '';
+
+    // GSAP Animation: Slide out to LEFT (reverse of opening)
+    if (typeof gsap !== 'undefined') {
+      gsap.to(this.drawer, {
+        x: '-100%',
+        duration: 0.4,
+        ease: 'power2.in',
+        onComplete: () => {
+          this.drawer.classList.remove('is-open');
+          this.resetToLevel1();
+        },
+      });
+    } else {
+      // Fallback
+      this.drawer.style.transform = 'translateX(-100%)';
+      setTimeout(() => {
+        this.drawer.classList.remove('is-open');
+        this.resetToLevel1();
+      }, 400);
+    }
+  }
+
+  navigateToLevel2(parentId) {
+    const level1 = this.drawer.querySelector('[data-nav-level="1"]');
+    const level2 = this.drawer.querySelector(`[data-nav-level="2"][data-parent-id="${parentId}"]`);
+
+    if (!level2) return;
+
+    this.navigationHistory.push({ level: 1, id: null, element: level1 });
+    this.currentLevel = 2;
+    this.currentLevelElement = level2;
+
+    // Show level 2
+    level2.style.display = 'block';
+
+    // GSAP Animation: Slide from LEFT to RIGHT
+    if (typeof gsap !== 'undefined') {
+      // Current level slides out to right
+      gsap.to(level1, {
+        x: '100%',
+        duration: 0.4,
+        ease: 'power2.out',
+      });
+
+      // New level slides in from left
+      gsap.fromTo(
+        level2,
+        { x: '-100%' },
+        {
+          x: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }
+
+  navigateToLevel3(columnId, parentId) {
+    const level2 = this.currentLevelElement; // Use the currently active Level 2
+    const level3 = this.drawer.querySelector(`[data-nav-level="3"][data-column-id="${columnId}"]`);
+
+    if (!level3 || !level2) return;
+
+    this.navigationHistory.push({ level: 2, id: parentId, element: level2 });
+    this.currentLevel = 3;
+    this.currentLevelElement = level3;
+
+    // Show level 3
+    level3.style.display = 'block';
+
+    // GSAP Animation: Slide from LEFT to RIGHT
+    if (typeof gsap !== 'undefined') {
+      // Current level slides out to right
+      gsap.to(level2, {
+        x: '100%',
+        duration: 0.4,
+        ease: 'power2.out',
+      });
+
+      // New level slides in from left
+      gsap.fromTo(
+        level3,
+        { x: '-100%' },
+        {
+          x: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }
+      );
+    }
+  }
+
+  navigateBack() {
+    if (this.navigationHistory.length === 0) return;
+
+    const previous = this.navigationHistory.pop();
+    const currentLevelEl = this.currentLevelElement; // Use the tracked current level element
+    const previousLevelEl = previous.element; // Use the element reference from history
+
+    if (!previousLevelEl || !currentLevelEl) return;
+
+    this.currentLevel = previous.level;
+    this.currentLevelElement = previousLevelEl; // Update current level element
+
+    // Show previous level (use flex for Level 1 to maintain footer positioning)
+    previousLevelEl.style.display = previous.level === 1 ? 'flex' : 'block';
+
+    // GSAP Animation: Slide back RIGHT to LEFT (reverse of forward)
+    if (typeof gsap !== 'undefined') {
+      // Previous level slides in from RIGHT (< direction)
+      gsap.fromTo(
+        previousLevelEl,
+        { x: '100%' },
+        {
+          x: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }
+      );
+
+      // Current level slides out to LEFT
+      gsap.to(currentLevelEl, {
+        x: '-100%',
+        duration: 0.4,
+        ease: 'power2.out',
+        onComplete: () => {
+          currentLevelEl.style.display = 'none';
+          gsap.set(currentLevelEl, { x: 0 });
+        },
+      });
+    }
+  }
+
+  resetToLevel1() {
+    const level1 = this.drawer.querySelector('[data-nav-level="1"]');
+    const allLevels = this.drawer.querySelectorAll('[data-nav-level]');
+
+    if (typeof gsap !== 'undefined') {
+      gsap.set(allLevels, { x: 0 });
+    }
+
+    allLevels.forEach((level) => {
+      if (level !== level1) {
+        level.style.display = 'none';
+      } else {
+        level.style.display = 'flex'; // Use flex to maintain footer positioning
+      }
+
+      if (typeof gsap !== 'undefined') {
+        gsap.set(level, { clearProps: 'transform' });
+      }
+    });
+
+    this.currentLevel = 1;
+    this.currentLevelElement = level1; // Reset to level 1 element
+    this.navigationHistory = [];
   }
 }
 
@@ -1021,17 +1244,19 @@ function initCartDrawer() {
   }
 }
 
-// Initialize header, search, mega menu, and cart drawer when DOM is ready
+// Initialize header, search, mega menu, mobile nav, and cart drawer when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     new DiamensionHeader();
     new DiamensionSearch();
     new DiamensionMegaMenu();
+    new DiamensionMobileNav();
     initCartDrawer();
   });
 } else {
   new DiamensionHeader();
   new DiamensionSearch();
   new DiamensionMegaMenu();
+  new DiamensionMobileNav();
   initCartDrawer();
 }
