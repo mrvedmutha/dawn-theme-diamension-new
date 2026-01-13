@@ -1,0 +1,529 @@
+/* ============================================
+   Section: Search Results
+   Purpose: Custom search results page with categories sidebar
+   Author: Wings Design Team
+   Version: 1.0
+   ============================================ */
+
+/* ============================================
+   Font Face Declarations
+   ============================================ */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   Wrapper & Container
+   ============================================ */
+
+.custom-section-search-results__wrapper {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+.custom-section-search-results__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+/* ============================================
+   Search Bar
+   ============================================ */
+
+.custom-section-search-results__search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.custom-section-search-results__form {
+  position: relative;
+  width: 760px;
+  max-width: 100%;
+  height: 60px;
+  background-color: #eae9e7;
+}
+
+.custom-section-search-results__input {
+  width: 100%;
+  height: 100%;
+  padding: 0 60px 0 20px;
+  border: none;
+  background: transparent;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.custom-section-search-results__input::placeholder {
+  color: #183754;
+  opacity: 0.6;
+}
+
+.custom-section-search-results__search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.custom-section-search-results__search-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================================
+   Suggested Terms
+   ============================================ */
+
+.custom-section-search-results__suggested {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.custom-section-search-results__suggested-label {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.custom-section-search-results__suggested-terms {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.custom-section-search-results__suggested-term {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.custom-section-search-results__suggested-term:hover {
+  color: #183754;
+}
+
+/* ============================================
+   Main Content: Two Column Layout
+   ============================================ */
+
+.custom-section-search-results__main-content {
+  display: flex;
+  gap: 28px;
+}
+
+/* ============================================
+   Sidebar: Categories
+   ============================================ */
+
+.custom-section-search-results__sidebar {
+  flex-shrink: 0;
+  width: auto;
+}
+
+.custom-section-search-results__sidebar-title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3e6282;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+}
+
+.custom-section-search-results__categories {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.custom-section-search-results__category-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.custom-section-search-results__category-link:hover {
+  color: #3e6282;
+}
+
+/* ============================================
+   Vertical Divider
+   ============================================ */
+
+.custom-section-search-results__divider {
+  flex-shrink: 0;
+  width: 1px;
+  background-color: #cdcdcc;
+  align-self: stretch;
+}
+
+/* ============================================
+   Products Grid
+   ============================================ */
+
+.custom-section-search-results__products-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+/* ============================================
+   Product Card (Snippet Styles)
+   ============================================ */
+
+.product-card-search {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-search__link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-search__image-wrapper {
+  background-color: #f0efea;
+  width: 100%;
+  aspect-ratio: 223 / 271;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 13px;
+}
+
+.product-card-search__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card-search__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card-search__placeholder-svg {
+  width: 50%;
+  height: 50%;
+  opacity: 0.3;
+}
+
+.product-card-search__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-card-search__title {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 26px;
+  color: #183754;
+  text-align: left;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-card-search__price {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #3e6282;
+  text-align: left;
+  margin: 0;
+}
+
+/* ============================================
+   No Results
+   ============================================ */
+
+.custom-section-search-results__no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.custom-section-search-results__no-results-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  margin: 0;
+}
+
+/* ============================================
+   Load More Button
+   ============================================ */
+
+.custom-section-search-results__load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 104px;
+}
+
+.custom-section-search-results__load-more-btn {
+  padding: 16px 120px;
+  border: 1px solid #183754;
+  background-color: transparent;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-section-search-results__load-more-btn:hover {
+  background-color: #183754;
+  color: #fffaf5;
+}
+
+.custom-section-search-results__load-more-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Tablet Breakpoint (768px - 1024px)
+   ============================================ */
+
+@media (max-width: 1024px) and (min-width: 850px) {
+  .custom-section-search-results__container {
+    padding: 40px;
+  }
+
+  .custom-section-search-results__products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .custom-section-search-results__load-more {
+    margin-top: 80px;
+  }
+
+  .custom-section-search-results__load-more-btn {
+    padding: 16px 80px;
+  }
+}
+
+/* ============================================
+   Small Tablet Breakpoint (768px - 849px) - 3 Columns
+   ============================================ */
+
+@media (max-width: 849px) and (min-width: 768px) {
+  .custom-section-search-results__container {
+    padding: 35px;
+  }
+
+  .custom-section-search-results__products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .product-card-search__title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .product-card-search__price {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .custom-section-search-results__load-more {
+    margin-top: 70px;
+  }
+
+  .custom-section-search-results__load-more-btn {
+    padding: 14px 70px;
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   Mobile Breakpoint (max-width: 767px)
+   ============================================ */
+
+@media (max-width: 767px) {
+  .custom-section-search-results__container {
+    padding: 30px 20px;
+  }
+
+  .custom-section-search-results__search-bar {
+    margin-bottom: 30px;
+  }
+
+  .custom-section-search-results__form {
+    height: 50px;
+  }
+
+  .custom-section-search-results__input {
+    font-size: 14px;
+  }
+
+  /* Suggested terms wrap on mobile */
+  .custom-section-search-results__suggested {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .custom-section-search-results__suggested-terms {
+    justify-content: center;
+  }
+
+  /* Main content switches to column layout */
+  .custom-section-search-results__main-content {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Sidebar becomes horizontal at top */
+  .custom-section-search-results__sidebar {
+    width: 100%;
+  }
+
+  .custom-section-search-results__sidebar-title {
+    margin-bottom: 12px;
+  }
+
+  .custom-section-search-results__categories {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Hide divider on mobile */
+  .custom-section-search-results__divider {
+    display: none;
+  }
+
+  /* Products grid: 2 columns on mobile */
+  .custom-section-search-results__products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .custom-section-search-results__load-more {
+    margin-top: 60px;
+  }
+
+  .product-card-search__title {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .product-card-search__price {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .custom-section-search-results__input {
+    font-size: 13px;
+  }
+
+  .custom-section-search-results__suggested-label,
+  .custom-section-search-results__suggested-term {
+    font-size: 12px;
+  }
+
+  .custom-section-search-results__sidebar-title,
+  .custom-section-search-results__category-link {
+    font-size: 13px;
+  }
+
+  .custom-section-search-results__load-more-btn {
+    padding: 12px 50px;
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   Small Mobile Breakpoint (max-width: 375px)
+   ============================================ */
+
+@media (max-width: 375px) {
+  .custom-section-search-results__container {
+    padding: 20px 15px;
+  }
+
+  .product-card-search__title {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .product-card-search__price {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .custom-section-search-results__input {
+    font-size: 12px;
+  }
+
+  .custom-section-search-results__suggested-label,
+  .custom-section-search-results__suggested-term {
+    font-size: 11px;
+  }
+
+  .custom-section-search-results__load-more-btn {
+    padding: 10px 35px;
+    font-size: 12px;
+  }
+}

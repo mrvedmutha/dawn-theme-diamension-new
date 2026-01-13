@@ -1,0 +1,44 @@
+{% comment %}
+  Snippet: Product Card for Search Results
+  Purpose: Display product card in search results grid
+  Accepts: product {Object} - Product object
+  Usage: {% render 'product-card-search', product: product %}
+{% endcomment %}
+
+{% liquid
+  assign product_url = product.url
+  assign product_title = product.title
+  assign product_price = product.price | money
+  assign product_image = product.featured_image
+%}
+
+<div class="product-card-search" data-product-id="{{ product.id }}">
+  <a href="{{ product_url }}" class="product-card-search__link">
+
+    {%- comment -%} Product Image {%- endcomment -%}
+    <div class="product-card-search__image-wrapper">
+      {%- if product_image -%}
+        <img
+          src="{{ product_image | image_url: width: 600 }}"
+          srcset="{{ product_image | image_url: width: 300 }} 300w,
+                  {{ product_image | image_url: width: 600 }} 600w"
+          sizes="(min-width: 1024px) 223px, (min-width: 768px) 25vw, 50vw"
+          alt="{{ product_image.alt | escape }}"
+          class="product-card-search__image"
+          loading="lazy"
+        >
+      {%- else -%}
+        <div class="product-card-search__image-placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'product-card-search__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Product Info {%- endcomment -%}
+    <div class="product-card-search__info">
+      <h3 class="product-card-search__title">{{ product_title }}</h3>
+      <p class="product-card-search__price">{{ product_price }}</p>
+    </div>
+
+  </a>
+</div>
