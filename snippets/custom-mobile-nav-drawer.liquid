@@ -1,0 +1,229 @@
+{% comment %}
+  Custom Mobile Navigation Drawer
+  3-level drill-down navigation for mobile devices
+
+  Level 1: Main menu items + mobile featured cards
+  Level 2: Mega menu content (columns + cards)
+  Level 3: Column links
+
+  Accepts:
+  - blocks: array of blocks from parent section
+  - mobile_menu: mobile menu setting from section
+
+  Usage:
+  {% render 'custom-mobile-nav-drawer', blocks: section.blocks, mobile_menu: section.settings.mobile_menu %}
+{% endcomment %}
+
+{{ 'custom-mobile-nav-drawer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign mobile_menu = mobile_menu | default: linklists['main-menu']
+  assign mobile_featured_cards = blocks | where: 'type', 'mobile_featured_card'
+-%}
+
+<div class="custom-mobile-nav-drawer" data-mobile-nav-drawer>
+  {%- comment -%} Close Button {%- endcomment -%}
+  <button type="button" class="custom-mobile-nav-drawer__close" aria-label="Close Menu" data-mobile-nav-close>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18" stroke="#183754" stroke-width="2" stroke-linecap="round"/>
+      <path d="M6 6L18 18" stroke="#183754" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  {%- comment -%} Level 1: Main Menu {%- endcomment -%}
+  <div class="custom-mobile-nav-drawer__level custom-mobile-nav-drawer__level--1" data-nav-level="1">
+    <div class="custom-mobile-nav-drawer__content">
+      <nav class="custom-mobile-nav-drawer__nav">
+      {%- for link in mobile_menu.links -%}
+        {%- liquid
+          assign link_id = link.title | downcase | strip
+          assign has_mega_menu = false
+
+          for block in blocks
+            if block.settings.menu_id == link_id
+              assign has_mega_menu = true
+              break
+            endif
+          endfor
+        -%}
+
+        <div class="custom-mobile-nav-drawer__item" data-menu-id="{{ link_id }}">
+          {% if has_mega_menu %}
+            <button type="button" class="custom-mobile-nav-drawer__link custom-mobile-nav-drawer__link--has-submenu" data-nav-trigger="{{ link_id }}" aria-expanded="false">
+              {{ link.title }}
+              <img src="{{ 'custom-diamension-header/icons/chevron-right.svg' | asset_url }}" alt="" class="custom-mobile-nav-drawer__chevron" width="6" height="10" aria-hidden="true">
+            </button>
+          {% else %}
+            <a href="{{ link.url }}" class="custom-mobile-nav-drawer__link">
+              {{ link.title }}
+            </a>
+          {% endif %}
+          <div class="custom-mobile-nav-drawer__divider">&nbsp;</div>
+        </div>
+      {%- endfor -%}
+    </nav>
+
+    {%- comment -%} Mobile Featured Cards (2x2 Grid) {%- endcomment -%}
+    {%- if mobile_featured_cards.size > 0 -%}
+      <div class="custom-mobile-nav-drawer__featured">
+        {%- for block in mobile_featured_cards limit: 4 -%}
+          <div class="custom-mobile-nav-drawer__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <div class="custom-mobile-nav-drawer__card-image">
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}">
+                {%- endif -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 306
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '153, 306',
+                    sizes: '153px'
+                }}
+                {%- if block.settings.link != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.heading != blank -%}
+              <p class="custom-mobile-nav-drawer__card-heading">
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}">{{ block.settings.heading }}</a>
+                {%- else -%}
+                  {{ block.settings.heading }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    </div>
+
+    {%- comment -%} Login/Signup or Account {%- endcomment -%}
+    <div class="custom-mobile-nav-drawer__footer">
+      <a href="{{ routes.account_url }}" class="custom-mobile-nav-drawer__login">
+        {% if customer %}ACCOUNT{% else %}LOGIN/SIGNUP{% endif %}
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Level 2: Mega Menu Content (Columns + Cards) {%- endcomment -%}
+  {%- for link in mobile_menu.links -%}
+    {%- liquid
+      assign link_id = link.title | downcase | strip
+      assign has_columns = false
+      assign has_cards = false
+
+      for block in blocks
+        if block.settings.menu_id == link_id
+          if block.type == 'mega_menu_column'
+            assign has_columns = true
+          endif
+          if block.type == 'mega_menu_featured_card' or block.type == 'mega_menu_card_item'
+            assign has_cards = true
+          endif
+        endif
+      endfor
+    -%}
+
+    {%- if has_columns or has_cards -%}
+      <div class="custom-mobile-nav-drawer__level custom-mobile-nav-drawer__level--2" data-nav-level="2" data-parent-id="{{ link_id }}" style="display: none;">
+        <div class="custom-mobile-nav-drawer__header">
+          <button type="button" class="custom-mobile-nav-drawer__back" data-nav-back aria-label="Back to main menu">
+            <img src="{{ 'custom-diamension-header/icons/chevron-left.svg' | asset_url }}" alt="" width="6" height="10" aria-hidden="true">
+            <span>{{ link.title }}</span>
+          </button>
+        </div>
+
+        {%- comment -%} Columns Section {%- endcomment -%}
+        {%- if has_columns -%}
+          <nav class="custom-mobile-nav-drawer__nav">
+            {%- for block in blocks -%}
+              {%- if block.type == 'mega_menu_column' and block.settings.menu_id == link_id -%}
+                <div class="custom-mobile-nav-drawer__item" data-column-id="{{ block.id }}">
+                  <button type="button" class="custom-mobile-nav-drawer__link custom-mobile-nav-drawer__link--has-submenu" data-nav-trigger="{{ block.id }}" aria-expanded="false">
+                    {{ block.settings.heading }}
+                    <img src="{{ 'custom-diamension-header/icons/chevron-right.svg' | asset_url }}" alt="" class="custom-mobile-nav-drawer__chevron" width="6" height="10" aria-hidden="true">
+                  </button>
+                  <div class="custom-mobile-nav-drawer__divider">&nbsp;</div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+
+        {%- comment -%} Cards Section (2x2 Grid) {%- endcomment -%}
+        {%- if has_cards -%}
+          <div class="custom-mobile-nav-drawer__mega-cards">
+            {%- for block in blocks -%}
+              {%- if block.settings.menu_id == link_id -%}
+                {%- if block.type == 'mega_menu_featured_card' or block.type == 'mega_menu_card_item' -%}
+                  <div class="custom-mobile-nav-drawer__card" {{ block.shopify_attributes }}>
+                  {%- if block.settings.image != blank -%}
+                    <div class="custom-mobile-nav-drawer__card-image">
+                      {%- if block.settings.link != blank -%}
+                        <a href="{{ block.settings.link }}">
+                      {%- endif -%}
+                      {{
+                        block.settings.image
+                        | image_url: width: 306
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '153, 306',
+                          sizes: '153px'
+                      }}
+                      {%- if block.settings.link != blank -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.heading != blank -%}
+                    <p class="custom-mobile-nav-drawer__card-heading">
+                      {%- if block.settings.link != blank -%}
+                        <a href="{{ block.settings.link }}">{{ block.settings.heading }}</a>
+                      {%- else -%}
+                        {{ block.settings.heading }}
+                      {%- endif -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Level 3: Column Links {%- endcomment -%}
+  {%- for block in blocks -%}
+    {%- if block.type == 'mega_menu_column' -%}
+      <div class="custom-mobile-nav-drawer__level custom-mobile-nav-drawer__level--3" data-nav-level="3" data-column-id="{{ block.id }}" style="display: none;">
+        <div class="custom-mobile-nav-drawer__header">
+          <button type="button" class="custom-mobile-nav-drawer__back" data-nav-back aria-label="Back">
+            <img src="{{ 'custom-diamension-header/icons/chevron-left.svg' | asset_url }}" alt="" width="6" height="10" aria-hidden="true">
+            <span>{{ block.settings.heading }}</span>
+          </button>
+        </div>
+
+        <nav class="custom-mobile-nav-drawer__nav">
+          {%- if block.settings.menu != blank -%}
+            {%- for link in block.settings.menu.links -%}
+              <div class="custom-mobile-nav-drawer__item">
+                <a href="{{ link.url }}" class="custom-mobile-nav-drawer__link">
+                  {{ link.title }}
+                </a>
+                <div class="custom-mobile-nav-drawer__divider">&nbsp;</div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </nav>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
