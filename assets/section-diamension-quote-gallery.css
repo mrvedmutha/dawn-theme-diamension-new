@@ -74,7 +74,7 @@
   height: 378px;
   left: 128px;
   top: 342px;
-  z-index: 4;
+  z-index: 2;
 }
 
 /* Image 4 - Right Top */
@@ -105,7 +105,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 5;
+  z-index: 1;
   max-width: 676px;
   width: 100%;
   padding: 0 20px;

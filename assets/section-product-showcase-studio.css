@@ -5,7 +5,7 @@
 /* Wrapper - Full width background */
 .custom-section-product-showcase-studio {
   width: 100%;
-  background-color: #FFFAF5; /* Default, overridden by inline style */
+  background-color: #fffaf5; /* Default, overridden by inline style */
 }
 
 /* Container - Max width with padding */
@@ -47,7 +47,7 @@
   top: 112px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 2;
 
   /* Typography */
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
@@ -71,7 +71,7 @@
   bottom: 144px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 2;
 
   /* Typography */
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
