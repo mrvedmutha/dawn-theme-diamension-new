@@ -1,13 +1,23 @@
 {{ 'section-diamension-header.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign transparent_templates = 'index,blog' | split: ','
+  assign transparent_templates = 'index,blog,article' | split: ','
+  assign transparent_page_handles = 'about-v1,studio-page-one,studio-page-two' | split: ','
+
   if transparent_templates contains template.name
+    assign header_behavior = 'auto'
+  elsif template.name == 'page' and transparent_page_handles contains page.handle
     assign header_behavior = 'auto'
   else
     assign header_behavior = 'solid'
   endif
 -%}
+{% comment %}
+  {%- comment -%} DEBUG: Check page handle {%- endcomment -%}
+  <div style="position: fixed; top: 0; left: 0; background: red; color: white; padding: 10px; z-index: 99999;">
+    Template: {{ template.name }} | Page Handle: {{ page.handle }} | Behavior: {{ header_behavior }}
+  </div>
+{% endcomment %}
 <header class="diamension-header" data-header data-header-behavior="{{ header_behavior }}">
   {%- comment -%} Announcement Bar {%- endcomment -%}
   <div class="diamension-header__announcement">
