@@ -179,11 +179,19 @@
 @media (max-width: 1024px) {
   .custom-header-mega-menu__container {
     padding: 40px 30px;
-    gap: 60px;
+    gap: 40px;
   }
 
+  /* Make columns display in 2 rows with 3 columns each */
   .custom-header-mega-menu__columns {
-    gap: 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 32px;
+  }
+
+  /* Cards section stays on the right, aligned to top */
+  .custom-header-mega-menu__cards {
+    align-self: flex-start;
   }
 }
 
