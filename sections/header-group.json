@@ -13,9 +13,126 @@
   "sections": {
     "diamension-header": {
       "type": "custom-section-diamension-header",
+      "blocks": {
+        "mobile_featured_card_BBHBAH": {
+          "type": "mobile_featured_card",
+          "settings": {
+            "image": "shopify://shop_images/neck-bracelet-in-red-background.png",
+            "heading": "EXPLORE PRODUCTS",
+            "link": "#"
+          }
+        },
+        "mobile_featured_card_WncBRN": {
+          "type": "mobile_featured_card",
+          "settings": {
+            "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
+            "heading": "EXPLORE COLLECTIONS",
+            "link": "#"
+          }
+        },
+        "mega_menu_card_item_3haykN": {
+          "type": "mega_menu_card_item",
+          "settings": {
+            "menu_id": "brand",
+            "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
+            "heading": "OUR JOURNEY",
+            "link": "#"
+          }
+        },
+        "mega_menu_card_item_xLn3kK": {
+          "type": "mega_menu_card_item",
+          "settings": {
+            "menu_id": "brand",
+            "image": "shopify://shop_images/LAB09487_1_1.png",
+            "heading": "OUR STORY",
+            "link": "#"
+          }
+        },
+        "mega_menu_featured_card_4Y9VPL": {
+          "type": "mega_menu_featured_card",
+          "settings": {
+            "menu_id": "shop",
+            "image": "shopify://shop_images/image-corporate-comeback.png",
+            "heading": "AQUA COLLECTION",
+            "link": "#"
+          }
+        },
+        "mega_menu_featured_card_PmR9pG": {
+          "type": "mega_menu_featured_card",
+          "settings": {
+            "menu_id": "shop",
+            "image": "shopify://shop_images/image-corporate-comeback-new.jpg",
+            "heading": "NEW ARRIVALS",
+            "link": "shopify://collections/custom-collections"
+          }
+        },
+        "mega_menu_column_7PGryt": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Policies",
+            "menu": "diamensions-1"
+          }
+        },
+        "mega_menu_column_bPfhXk": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Contact",
+            "menu": "footer-menu-legal"
+          }
+        },
+        "mega_menu_column_h3W6Kp": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Follow",
+            "menu": "footer"
+          }
+        },
+        "mega_menu_column_3qPWmU": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "About",
+            "menu": "diamensions"
+          }
+        },
+        "mega_menu_column_NQHywB": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Categories",
+            "menu": "diamensions"
+          }
+        },
+        "mega_menu_column_gQjwDR": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Products",
+            "menu": "diamension-menu"
+          }
+        }
+      },
+      "block_order": [
+        "mobile_featured_card_BBHBAH",
+        "mobile_featured_card_WncBRN",
+        "mega_menu_card_item_3haykN",
+        "mega_menu_card_item_xLn3kK",
+        "mega_menu_featured_card_4Y9VPL",
+        "mega_menu_featured_card_PmR9pG",
+        "mega_menu_column_7PGryt",
+        "mega_menu_column_bPfhXk",
+        "mega_menu_column_h3W6Kp",
+        "mega_menu_column_3qPWmU",
+        "mega_menu_column_NQHywB",
+        "mega_menu_column_gQjwDR"
+      ],
       "settings": {
         "announcement_text": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k",
         "menu": "main-menu",
+        "mobile_menu": "main-menu",
         "logo_light": "shopify://shop_images/diamension-logo-light.svg",
         "logo_dark": "shopify://shop_images/diamension-logo-dark.svg",
         "logo_width": 190,
