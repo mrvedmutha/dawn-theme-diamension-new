@@ -380,8 +380,6 @@ class DiamensionSearch {
   }
 
   toggleSearch() {
-    // TODO: debugging search toggle - checking if close button works
-    console.log('Toggle search - isOpen:', this.isOpen);
     if (this.isOpen) {
       this.closeSearch();
     } else {
@@ -537,9 +535,6 @@ class DiamensionSearch {
   }
 
   toggleSearchIcons(showClose) {
-    // TODO: debugging icon toggle - checking if close button works
-    console.log('Toggle icons - showClose:', showClose);
-
     // Toggle visibility class on the button instead of inline styles
     if (showClose) {
       this.toggleButton.classList.add('diamension-header__icon--close-active');
@@ -580,14 +575,7 @@ class DiamensionSearch {
       if (!response.ok) throw new Error('Search failed');
 
       const data = await response.json();
-
-      // TODO: debugging search results - checking API response structure
-      console.log('Search API response:', data);
-
       const products = data.resources.results.products || [];
-
-      // TODO: debugging search results - checking products array
-      console.log('Products found:', products.length, products);
 
       this.displayResults(products, query);
     } catch (error) {
@@ -599,9 +587,6 @@ class DiamensionSearch {
   displayResults(products, query) {
     this.hideLoading();
 
-    // TODO: debugging display results - checking if products are received
-    console.log('displayResults called with:', products.length, 'products');
-
     if (products.length === 0) {
       this.showNoResults();
       return;
@@ -611,14 +596,8 @@ class DiamensionSearch {
     const displayProducts = products.slice(0, maxResults);
     this.totalResults = products.length;
 
-    // TODO: debugging display results - checking HTML generation
-    console.log('Displaying', displayProducts.length, 'products');
-
     // Generate product cards HTML
     const productsHTML = displayProducts.map((product) => this.createProductCard(product)).join('');
-
-    // TODO: debugging display results - checking generated HTML
-    console.log('Generated HTML length:', productsHTML.length);
 
     this.resultsContainer.innerHTML = productsHTML;
 
@@ -891,10 +870,13 @@ class DiamensionMegaMenu {
       const columns = targetMegaMenu.querySelectorAll('.custom-header-mega-menu__column');
       const cards = targetMegaMenu.querySelectorAll('.custom-header-mega-menu__card');
 
-      if (columns.length > 0 || cards.length > 0) {
+      // Combine elements only if they exist
+      const elementsToAnimate = [...columns, ...cards];
+
+      if (elementsToAnimate.length > 0) {
         // Animate columns and cards with stagger
         gsap.fromTo(
-          [...columns, ...cards],
+          elementsToAnimate,
           { opacity: 0, y: -20 },
           { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.05 }
         );
@@ -921,16 +903,22 @@ class DiamensionMegaMenu {
         '.custom-header-mega-menu__column, .custom-header-mega-menu__card'
       );
 
-      // Quick fade out
-      gsap.to(allAnimatableElements, {
-        opacity: 0,
-        y: -20,
-        duration: 0.2,
-        ease: 'power2.in',
-        onComplete: () => {
-          megaMenu.classList.remove('is-active');
-        },
-      });
+      // Only animate if there are elements to animate
+      if (allAnimatableElements.length > 0) {
+        // Quick fade out
+        gsap.to(allAnimatableElements, {
+          opacity: 0,
+          y: -20,
+          duration: 0.2,
+          ease: 'power2.in',
+          onComplete: () => {
+            megaMenu.classList.remove('is-active');
+          },
+        });
+      } else {
+        // No elements to animate, just remove the class
+        megaMenu.classList.remove('is-active');
+      }
     } else {
       // Fallback without GSAP
       megaMenu.classList.remove('is-active');
@@ -1214,30 +1202,16 @@ function initCartDrawer() {
   const cartLinkSticky = document.querySelector('#diamension-cart-icon-sticky');
   const cartDrawer = document.querySelector('cart-drawer');
 
-  // TODO: debugging cart drawer - checking if elements are found
-  console.log('Diamension cart link found:', cartLink);
-  console.log('Diamension sticky cart link found:', cartLinkSticky);
-  console.log('Cart drawer found:', cartDrawer);
-
   if (cartLink && cartDrawer) {
-    // TODO: debugging cart drawer - event listener attached
-    console.log('Attaching cart drawer event listener');
-
     cartLink.addEventListener('click', (event) => {
-      // TODO: debugging cart drawer - click event fired
-      console.log('Diamension cart icon clicked, preventing default and opening drawer');
       event.preventDefault();
       cartDrawer.open(cartLink);
     });
-  } else {
-    // TODO: debugging cart drawer - elements not found
-    console.log('Cart drawer initialization failed - missing elements');
   }
 
   // Handle sticky cart icon
   if (cartLinkSticky && cartDrawer) {
     cartLinkSticky.addEventListener('click', (event) => {
-      console.log('Diamension sticky cart icon clicked, preventing default and opening drawer');
       event.preventDefault();
       cartDrawer.open(cartLinkSticky);
     });
