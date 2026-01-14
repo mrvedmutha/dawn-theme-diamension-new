@@ -1,0 +1,76 @@
+{{ 'section-404.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-404-wrapper">
+  <div class="custom-404">
+    <div class="custom-404__content">
+
+      {%- comment -%} 404 Text with Image {%- endcomment -%}
+      <div class="custom-404__number-container">
+        <div class="custom-404__number">
+          <p class="custom-404__digit custom-404__digit--first">4</p>
+          <div class="custom-404__digit custom-404__digit--middle">
+            <p class="custom-404__digit-text">0</p>
+            {%- if section.settings.jewelry_image != blank -%}
+              <div class="custom-404__image-wrapper">
+                <img
+                  src="{{ section.settings.jewelry_image | image_url: width: 400 }}"
+                  srcset="{{ section.settings.jewelry_image | image_url: width: 200 }} 200w,
+                          {{ section.settings.jewelry_image | image_url: width: 400 }} 400w"
+                  sizes="(max-width: 767px) 120px, 187px"
+                  alt="{{ section.settings.jewelry_image.alt | escape }}"
+                  class="custom-404__image"
+                  loading="eager"
+                  width="187"
+                  height="267"
+                >
+              </div>
+            {%- endif -%}
+          </div>
+          <p class="custom-404__digit custom-404__digit--last">4</p>
+        </div>
+      </div>
+
+      {%- comment -%} Error Message {%- endcomment -%}
+      {%- if section.settings.error_message != blank -%}
+        <p class="custom-404__message">{{ section.settings.error_message }}</p>
+      {%- endif -%}
+
+      {%- comment -%} Back to Home Link {%- endcomment -%}
+      <a href="{{ routes.root_url }}" class="custom-404__link">
+        {{ section.settings.link_text | default: "Back to Home" }}
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom 404",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "jewelry_image",
+      "label": "Jewelry Image",
+      "info": "Image that appears inside the middle '0'. Recommended size: 187x267px"
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error Message",
+      "default": "The page you're looking for may have been moved or is no longer available."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link Text",
+      "default": "Back to Home"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom 404"
+    }
+  ]
+}
+{% endschema %}
