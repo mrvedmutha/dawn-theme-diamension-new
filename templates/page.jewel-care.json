@@ -15,72 +15,29 @@
         "accordion_1": {
           "type": "accordion_item",
           "settings": {
-            "title": "JEWELRY STORAGE",
-            "image": "shopify://shop_images/pexels-mikhail-nilov-8246009_1.png",
-            "content": "<p>While our 14k solid gold pieces are crafted to keep up with your everyday moments, we recommend removing them during intense activities or when heading to the beach or gym.</p><p>At home, store your pieces in a secure jewelry box, your Kinn pouch, or a dedicated dish to keep them protected and free from tangles.</p>"
+            "title": "Gentle Cleaning:",
+            "content": "<p>Wipe regularly with a soft, lint-free cloth. For deeper cleaning, use warm water with mild dish soap and a soft toothbrush.</p>"
           }
         },
         "accordion_2": {
           "type": "accordion_item",
           "settings": {
-            "title": "CLEANING & POLISHING",
-            "content": "<p>To maintain the brilliance of your jewelry, gently clean your pieces with warm water and mild soap using a soft brush. Rinse thoroughly and pat dry with a lint-free cloth.</p><p>For deeper cleaning, use a professional jewelry cleaning solution or bring your pieces to a jeweler for professional polishing and inspection.</p>"
+            "title": "Avoid Chemicals",
+            "content": "<p>Keep jewellery away from perfumes, lotions, shampoos, and cleaning products, as they can dull the sparkle.</p>"
           }
         },
         "accordion_3": {
           "type": "accordion_item",
           "settings": {
-            "title": "WHAT TO AVOID",
-            "content": "<p>Protect your jewelry by avoiding exposure to harsh chemicals, including household cleaners, chlorine, and beauty products like perfume, hairspray, and lotions.</p><p>Remove your jewelry before swimming, showering, or engaging in activities that may cause impact or scratching. Store pieces separately to prevent them from rubbing against each other.</p>"
+            "title": "Remove During Activities",
+            "content": "<p>Take off your jewellery before exercising, swimming, showering, or doing household chores to avoid impact or chemical exposure.</p>"
           }
         },
         "accordion_4": {
           "type": "accordion_item",
           "settings": {
-            "title": "STERLING SILVER",
-            "content": "<p>Sterling silver naturally tarnishes over time when exposed to air and moisture. To minimize tarnishing, store your silver pieces in anti-tarnish bags or lined jewelry boxes.</p><p>Clean tarnished silver with a silver polishing cloth or a gentle silver cleaning solution. Regular wear actually helps prevent tarnishing, as the oils from your skin create a protective barrier.</p>"
-          }
-        },
-        "accordion_5": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "DIAMONDS",
-            "content": "<p>Diamonds are incredibly durable but can still chip or scratch if struck with force. Clean your diamond jewelry regularly to maintain its sparkle using warm soapy water and a soft brush.</p><p>Have your diamond settings checked annually by a professional jeweler to ensure prongs are secure and stones are properly seated. This prevents loss and maintains the integrity of your piece.</p>"
-          }
-        },
-        "accordion_6": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "PEARL & EMERALD",
-            "content": "<p>Pearls and emeralds are delicate gemstones that require special care. Always put these pieces on last, after applying makeup, perfume, and hairspray, as chemicals can damage their surface.</p><p>Clean pearls and emeralds only with a soft, damp cloth. Never use ultrasonic cleaners or harsh chemicals. Store them separately from harder gemstones to prevent scratching.</p>"
-          }
-        },
-        "accordion_7": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "NECKLACE CHAINS",
-            "content": "<p>Prevent tangles by fastening the clasp and laying necklaces flat in a jewelry box or hanging them on hooks. Avoid pulling or tugging on delicate chains, as this can weaken or break links.</p><p>Regularly inspect clasps and jump rings for wear. If a chain becomes kinked or damaged, bring it to a professional jeweler for repair rather than attempting to fix it yourself.</p>"
-          }
-        },
-        "accordion_8": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "BRACELETS",
-            "content": "<p>Remove bracelets before activities that involve repetitive hand movements or contact with hard surfaces. This prevents stretching of metal and loosening of clasps.</p><p>Check the fit of your bracelets periodically. They should move freely but not slide over your hand too easily. Have a jeweler adjust sizing if needed to prevent loss.</p>"
-          }
-        },
-        "accordion_9": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "RINGS",
-            "content": "<p>Remove rings when washing hands, applying lotions, or doing household chores. Soaps and chemicals can build up under settings and dull the appearance of stones.</p><p>Have your rings professionally cleaned and inspected at least once a year. Jewelers can check for loose stones, worn prongs, and sizing issues before they become serious problems.</p>"
-          }
-        },
-        "accordion_10": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "EARRINGS",
-            "content": "<p>Clean earring posts and backs regularly with rubbing alcohol to prevent buildup and maintain hygiene. Replace worn or bent earring backs to ensure your earrings stay secure.</p><p>Store earrings in pairs using an earring organizer or jewelry box with compartments. This prevents loss and makes it easy to find matching pairs.</p>"
+            "title": " Proper Storage",
+            "content": "<p>Store your jewellery in a soft, lined box or pouch. Diamonds can scratch other pieces, so keep them separate.</p>"
           }
         }
       },
@@ -88,18 +45,14 @@
         "accordion_1",
         "accordion_2",
         "accordion_3",
-        "accordion_4",
-        "accordion_5",
-        "accordion_6",
-        "accordion_7",
-        "accordion_8",
-        "accordion_9",
-        "accordion_10"
+        "accordion_4"
       ],
       "settings": {
-        "heading": "Jewelry care guide"
+        "heading": "How should I care for my diamond jewellery?"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

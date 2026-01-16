@@ -12,58 +12,49 @@
     "main": {
       "type": "custom-section-faq",
       "blocks": {
-        "faq_item_dFUzMj": {
+        "faq_item_zEcxka": {
           "type": "faq_item",
           "settings": {
-            "category_id": "accounts",
-            "category_label": "Accounts",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "What is a lab-grown diamond?",
+            "answer": "<p>A lab-grown diamond is a real diamond created using advanced technology that replicates the natural diamond-growing process. It has the same physical, chemical, and optical properties as a mined diamond—only grown in a controlled environment.</p>"
           }
         },
-        "faq_item_899Vyf": {
+        "faq_item_wrwjYx": {
           "type": "faq_item",
           "settings": {
-            "category_id": "accounts",
-            "category_label": "Accounts",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "What is the difference between natural and lab-grown diamonds?",
+            "answer": "<p>The only difference is their origin. Natural diamonds are formed over millions of years beneath the earth, while lab-grown diamonds are created in laboratories using cutting-edge technology. Both are identical in appearance, quality, and brilliance.</p>"
           }
         },
-        "faq_item_x8iYrf": {
+        "faq_item_z7dLdG": {
           "type": "faq_item",
           "settings": {
-            "category_id": "orders",
-            "category_label": "Orders Issues",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "Are all your diamonds certified?",
+            "answer": "<p>Yes. All our diamonds are SGL certified, ensuring authenticity, quality, and transparency for every piece you purchase.</p>"
           }
         },
-        "faq_item_HXcmA8": {
+        "faq_item_JTwdJj": {
           "type": "faq_item",
           "settings": {
-            "category_id": "orders",
-            "category_label": "Orders Issues",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+            "category_id": "product",
+            "category_label": "PRODUCTS",
+            "question": "Are lab-grown diamonds more affordable?",
+            "answer": "<p>Yes. All our diamonds are SGL certified, ensuring authenticity, quality, and transparency for every piece you purchase.</p>"
           }
         },
-        "faq_item_QVc3t6": {
+        "faq_item_4QMAVi": {
           "type": "faq_item",
           "settings": {
-            "category_id": "orders",
-            "category_label": "Orders Issues",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
-          }
-        },
-        "faq_item_6NDyeR": {
-          "type": "faq_item",
-          "settings": {
-            "category_id": "orders",
-            "category_label": "Orders Issues",
-            "question": "What's your return policy?",
-            "answer": "<p>For domestic orders, you may return most unworn or unused items within 10 business days of the delivery date for a full refund.</p>"
+            "category_id": "return",
+            "category_label": "RETURNS",
+            "question": "What is your return and exchange policy?",
+            "answer": "<p>We offer 100% exchange and returns within 7 working days of delivery. All returns and exchanges are subject to our terms and conditions for a smooth and secure experience.</p>"
           }
         },
         "info_menu_item_Un6JUV": {
@@ -100,12 +91,11 @@
         }
       },
       "block_order": [
-        "faq_item_dFUzMj",
-        "faq_item_899Vyf",
-        "faq_item_x8iYrf",
-        "faq_item_HXcmA8",
-        "faq_item_QVc3t6",
-        "faq_item_6NDyeR",
+        "faq_item_zEcxka",
+        "faq_item_wrwjYx",
+        "faq_item_z7dLdG",
+        "faq_item_JTwdJj",
+        "faq_item_4QMAVi",
         "info_menu_item_Un6JUV",
         "info_menu_item_yFMWm7",
         "info_menu_item_EFwKBQ",
@@ -117,5 +107,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

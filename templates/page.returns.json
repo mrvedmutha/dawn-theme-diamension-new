@@ -56,24 +56,8 @@
           "type": "richtext_content",
           "settings": {
             "section_heading": "Returns",
-            "content": "<ul><li>Returns are accepted on full-price pieces purchased directly from Diamension (online or retail), if they are unworn, in original condition, and returned within 14 days of delivery.</li><li>For hygiene reasons, earrings cannot be returned.</li><li>Custom, bespoke, engraved, or made-to-order pieces are final sale and cannot be returned.</li><li>Returns that do not meet these conditions will be sent back to the customer.</li><li>Once approved, store credits are issued in the form of a Diamension gift card, valid for 3 years across our website and retail stores.</li></ul><p>To request a return, please contact our team at care@diamension.com.</p>",
+            "content": "<ul><li>Returns are accepted within 7 working days from the date of delivery.</li><li>The product must be unused, unworn, and in original condition.</li><li>The original invoice must be included.</li><li>The jewellery tag must remain intact and attached.</li><li>The diamond certification must be returned along with the jewellery. </li><li>Items that are worn, damaged, or altered will not be eligible for return</li></ul><p></p><p>To request a return, please contact our team at <span style=\"text-decoration:underline\">care@diamension.com</span>.</p>",
             "content_gap": 42
-          }
-        },
-        "richtext_3": {
-          "type": "richtext_content",
-          "settings": {
-            "section_heading": "Repairs",
-            "content": "<p>We stand by the quality of our craftsmanship and offer repair services should your piece need attention.</p><ul><li>To initiate a repair, please email care@diamension.com with your order details.</li><li>Items must be returned in their original or secure protective packaging to avoid damage in transit.</li><li>Repair fees may apply depending on the service required. Shipping charges for repairs are borne by the client.</li><li>For international customers, repair shipping and duties will be calculated and confirmed prior to servicing.</li></ul><p>If the item does not meet our return/repair guidelines upon arrival, it will be sent back at the customer's expense.</p>",
-            "content_gap": 42
-          }
-        },
-        "richtext_4": {
-          "type": "richtext_content",
-          "settings": {
-            "section_heading": "Recycling Program",
-            "content": "<p>As part of our sustainability promise, we encourage customers to recycle their old or broken Diamension pieces.</p><ul><li>Jewellery with at least 80% of its original material may be eligible for our recycling program.</li><li>Store credits are offered based on material value (assessed by our team).</li><li>Proof of purchase is required to determine the credit value. Without proof, a fixed recycling credit will be applied.</li><li>Diamension reserves the right to decline recycling requests if the condition does not meet our guidelines.</li></ul>",
-            "content_gap": 0
           }
         }
       },
@@ -83,9 +67,7 @@
         "info_menu_3",
         "info_menu_4",
         "richtext_1",
-        "richtext_2",
-        "richtext_3",
-        "richtext_4"
+        "richtext_2"
       ],
       "settings": {
         "menu_title": "INFO",
@@ -93,5 +75,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

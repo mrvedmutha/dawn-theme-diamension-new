@@ -48,31 +48,15 @@
           "type": "richtext_content",
           "settings": {
             "section_heading": "",
-            "content": "<p>At <strong>Diamension</strong>, we offer seamless shipping experiences across India and internationally.</p>",
+            "content": "<p>At <strong>Diamension</strong>, Each piece of jewellery is carefully crafted and prepared with attention to detail.</p>",
             "content_gap": 42
           }
         },
         "richtext_2": {
           "type": "richtext_content",
           "settings": {
-            "section_heading": "Domestic Shipping (India – INR)",
-            "content": "<ul><li>Complimentary standard shipping on all orders within India.</li><li>Ready-to-ship pieces: Please allow 3–5 business days for processing + shipping time.</li><li>Made-to-order pieces: Please allow 3–5 weeks for processing + shipping time.</li><li>Orders placed on weekends or public holidays will be processed the next business day.</li><li>We do not deliver on weekends or public holidays.</li></ul>",
-            "content_gap": 42
-          }
-        },
-        "richtext_3": {
-          "type": "richtext_content",
-          "settings": {
-            "section_heading": "International Shipping (USD)",
-            "content": "<ul><li>All international orders are shipped via DHL Express.</li><li>Shipping charges, customs duties, and taxes are calculated at checkout.</li><li>Please note: There may be courier or customs delays during peak/holiday seasons that are beyond our control.</li><li>International orders are not eligible for returns or exchanges.</li><li>We ship to most countries. If your country is not available at checkout, please contact us at care@diamension.com.</li></ul>",
-            "content_gap": 42
-          }
-        },
-        "richtext_4": {
-          "type": "richtext_content",
-          "settings": {
-            "section_heading": "Important Notes",
-            "content": "<ul><li>Orders valued above $2500 USD (international) or ₹2,00,000 INR (domestic) may require a signature upon delivery.</li><li>Orders placed during peak/holiday seasons may experience slight delays.</li></ul>",
+            "section_heading": "Domestic Shipping (India)",
+            "content": "<ul><li>Orders are typically dispatched and delivered within 7–12 working days from the date of order confirmation.</li><li>As many of our designs are made to order, this timeline allows us to ensure the highest standards of craftsmanship and quality.</li><li>You will receive tracking details once your order has been shipped, so you can follow its journey to you.</li><li>Delivery timelines may vary slightly due to location, customisation, or unforeseen circumstances.</li></ul>",
             "content_gap": 42
           }
         }
@@ -83,9 +67,7 @@
         "info_menu_3",
         "info_menu_4",
         "richtext_1",
-        "richtext_2",
-        "richtext_3",
-        "richtext_4"
+        "richtext_2"
       ],
       "settings": {
         "menu_title": "INFO",
@@ -93,5 +75,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
