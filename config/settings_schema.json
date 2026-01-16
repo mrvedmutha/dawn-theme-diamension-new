@@ -1400,6 +1400,64 @@
     ]
   },
   {
+    "name": "Preloader",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "preloader_enabled",
+        "label": "Enable Preloader",
+        "default": true,
+        "info": "Show preloader on homepage"
+      },
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "preloader_logo",
+        "label": "Preloader Logo",
+        "info": "Upload your brand logo (includes DIAMENSION + JEWELLERY text). Recommended width: 324px"
+      },
+      {
+        "type": "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "preloader_image",
+        "label": "Featured Image",
+        "info": "Upload image with 344:144 aspect ratio (width:height)"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "preloader_tagline",
+        "label": "Tagline",
+        "default": "Luxury Within Reach. Brilliance Beyond Measure",
+        "info": "Text displayed below the image"
+      },
+      {
+        "type": "header",
+        "content": "Settings"
+      },
+      {
+        "type": "range",
+        "id": "preloader_max_time",
+        "label": "Maximum Loading Time",
+        "info": "Safety timeout in seconds. Preloader will hide after this time even if page isn't fully loaded.",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "unit": "s",
+        "default": 8
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.cart.name",
     "settings": [
       {

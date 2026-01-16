@@ -1,17 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "custom-section-richtext-page",
-      "settings": {
-        "menu_title": "POLICIES",
-        "page_title": "Terms & Conditions"
-      },
       "blocks": {
         "policy_menu_1": {
           "type": "info_menu_item",
           "settings": {
             "menu_text": "TERMS & CONDITIONS",
-            "menu_link": "",
+            "menu_link": "shopify://pages/terms-v1",
             "is_active": true
           }
         },
@@ -19,7 +24,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "PRIVACY POLICY",
-            "menu_link": "/pages/privacy-policy",
+            "menu_link": "shopify://pages/privacy-v1",
             "is_active": false
           }
         },
@@ -99,10 +104,12 @@
         "richtext_6",
         "richtext_7",
         "richtext_8"
-      ]
+      ],
+      "settings": {
+        "menu_title": "POLICIES",
+        "page_title": "Terms & Conditions"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

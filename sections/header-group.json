@@ -19,7 +19,7 @@
           "settings": {
             "image": "shopify://shop_images/neck-bracelet-in-red-background.png",
             "heading": "EXPLORE PRODUCTS",
-            "link": "#"
+            "link": "shopify://collections/custom-collections"
           }
         },
         "mobile_featured_card_WncBRN": {
@@ -27,7 +27,7 @@
           "settings": {
             "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
             "heading": "EXPLORE COLLECTIONS",
-            "link": "#"
+            "link": "shopify://collections/custom-collections"
           }
         },
         "mega_menu_card_item_3haykN": {
@@ -36,7 +36,7 @@
             "menu_id": "brand",
             "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
             "heading": "OUR JOURNEY",
-            "link": "#"
+            "link": "shopify://pages/about-v1"
           }
         },
         "mega_menu_card_item_xLn3kK": {
@@ -45,7 +45,7 @@
             "menu_id": "brand",
             "image": "shopify://shop_images/LAB09487_1_1.png",
             "heading": "OUR STORY",
-            "link": "#"
+            "link": "shopify://pages/about-v1"
           }
         },
         "mega_menu_featured_card_4Y9VPL": {
@@ -54,7 +54,7 @@
             "menu_id": "shop",
             "image": "shopify://shop_images/image-corporate-comeback.png",
             "heading": "AQUA COLLECTION",
-            "link": "#"
+            "link": "shopify://collections/custom-collections"
           }
         },
         "mega_menu_featured_card_PmR9pG": {
@@ -71,7 +71,7 @@
           "settings": {
             "menu_id": "shop",
             "heading": "Policies",
-            "menu": "diamensions-1"
+            "menu": "footer-policies"
           }
         },
         "mega_menu_column_bPfhXk": {
@@ -79,7 +79,7 @@
           "settings": {
             "menu_id": "shop",
             "heading": "Contact",
-            "menu": "footer-menu-legal"
+            "menu": "support-1"
           }
         },
         "mega_menu_column_h3W6Kp": {
@@ -87,7 +87,7 @@
           "settings": {
             "menu_id": "shop",
             "heading": "Follow",
-            "menu": "footer"
+            "menu": "connect"
           }
         },
         "mega_menu_column_3qPWmU": {
@@ -95,7 +95,7 @@
           "settings": {
             "menu_id": "shop",
             "heading": "About",
-            "menu": "diamensions"
+            "menu": "support-1"
           }
         },
         "mega_menu_column_NQHywB": {
@@ -111,7 +111,7 @@
           "settings": {
             "menu_id": "shop",
             "heading": "Products",
-            "menu": "diamension-menu"
+            "menu": "diamensions"
           }
         }
       },

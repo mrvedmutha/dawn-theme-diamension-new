@@ -18,7 +18,7 @@
           "type": "menu_column",
           "settings": {
             "heading": "SHOP",
-            "menu": "footer-menu-shop"
+            "menu": "shop-1"
           }
         },
         "menu-2": {
@@ -49,7 +49,7 @@
         "newsletter_enable": true,
         "newsletter_heading": "NEWSLETTER",
         "newsletter_description": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories.",
-        "legal_menu": "footer-menu-legal"
+        "legal_menu": ""
       }
     },
     "custom-diamension-footer-image": {

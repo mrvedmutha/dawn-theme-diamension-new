@@ -11,8 +11,84 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "custom_section_image_hero_CBFDqJ": {
+      "type": "custom-section-image-hero",
+      "name": "Image Hero",
+      "settings": {
+        "background_image": "shopify://shop_images/hero-image-about-us.png",
+        "heading": "Innovation and artistry, perfected by Diamension.",
+        "text_color": "#fffaf5",
+        "overlay_opacity": 0
+      }
+    },
+    "custom_section_rtc_quote_6xziPn": {
+      "type": "custom-section-rtc-quote",
+      "name": "Rich Text Centered Quote",
+      "settings": {
+        "text_content": "We believe diamonds should not only shine but also stand for something greater. With Diamensions, you don't just wear jewelry—you wear authenticity, innovation, and a vision for the future.",
+        "background_color": "#fffaf5",
+        "text_color": "#183754"
+      }
+    },
+    "custom_section_brand_story_38EUKL": {
+      "type": "custom-section-brand-story",
+      "name": "Brand Story About Us",
+      "settings": {
+        "heading": "OUR STORY",
+        "content": "<p>Diamensions was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>",
+        "background_image": "shopify://shop_images/women-hand-wearing-designed-fish-net-glove-and-ring.webp",
+        "show_logo_overlay": true
+      }
+    },
+    "custom_section_bespoke_creations_mHkd4Y": {
+      "type": "custom-section-bespoke-creations",
+      "name": "Bespoke Creations",
+      "settings": {
+        "heading": "bespoke creATIONS",
+        "left_video": "https://cdn.shopify.com/videos/c/o/v/2a1d7d130ca04e378a3ad58b87859504.mp4",
+        "center_video": "https://cdn.shopify.com/videos/c/o/v/ccc983edfc3346369b88de61695aa23c.mp4",
+        "right_video": "https://cdn.shopify.com/videos/c/o/v/0ad17f5a15f2466aab00299213d05a05.mp4",
+        "description": "<p>At Diamensions, every diamond is more than a gem, it's a journey of innovation, ethics, and artistry. Our craft transforms light into timeless beauty, ensuring every sparkle reflects responsibility and vision.</p>",
+        "cta_text": "Know our Process",
+        "cta_link": ""
+      }
+    },
+    "custom_section_sustainability_hero_9ynihn": {
+      "type": "custom-section-sustainability-hero",
+      "name": "Sustainability Hero",
+      "settings": {
+        "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
+        "heading": "Sustainability at the Heart of Brilliance",
+        "text": "<p>At Diamensions, sustainability isn't an afterthought—it's at the core of how we create brilliance. Our lab-grown diamonds are powered by solar energy, ensuring every stone shines with a smaller footprint and a greater purpose. By harnessing the power of the sun, we redefine luxury for a conscious world—proving that beauty and responsibility can truly go hand in hand.</p>",
+        "text_color": "#FFFFFF",
+        "section_color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_section_founders_vision_tg6pqN": {
+      "type": "custom-section-founders-vision",
+      "name": "Founder's Vision",
+      "settings": {
+        "image": "shopify://shop_images/founder-photo.webp",
+        "heading": "The Founder's Vision",
+        "description": "<p>Diamensions was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "custom_section_image_hero_CBFDqJ",
+    "custom_section_rtc_quote_6xziPn",
+    "custom_section_brand_story_38EUKL",
+    "custom_section_bespoke_creations_mHkd4Y",
+    "custom_section_sustainability_hero_9ynihn",
+    "custom_section_founders_vision_tg6pqN"
+  ]
 }

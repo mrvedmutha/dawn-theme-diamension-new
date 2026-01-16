@@ -61,7 +61,7 @@
           "type": "category",
           "settings": {
             "category_name": "Earrings",
-            "collection": "earrings",
+            "collection": "custom-collections",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
             "video_youtube_vimeo": ""
@@ -71,7 +71,7 @@
           "type": "category",
           "settings": {
             "category_name": "Necklace",
-            "collection": "necklaces",
+            "collection": "custom-collections",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/e07fbb1e312c451b87ad067d02c7f731.mp4",
             "video_youtube_vimeo": ""
@@ -81,7 +81,7 @@
           "type": "category",
           "settings": {
             "category_name": "Rings",
-            "collection": "rings",
+            "collection": "custom-collections",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
             "video_youtube_vimeo": ""
@@ -91,7 +91,7 @@
           "type": "category",
           "settings": {
             "category_name": "Pendents",
-            "collection": "pendants",
+            "collection": "custom-collections",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/e07fbb1e312c451b87ad067d02c7f731.mp4",
             "video_youtube_vimeo": ""
@@ -101,7 +101,7 @@
           "type": "category",
           "settings": {
             "category_name": "Bracelets",
-            "collection": "bracelets",
+            "collection": "custom-collections",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
             "video_youtube_vimeo": ""

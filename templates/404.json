@@ -1,12 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "custom_404": {
       "type": "custom-404",
       "settings": {
+        "jewelry_image": "shopify://shop_images/bl5mdk8h29m8od7mfngt.webp",
+        "error_message": "The page you're looking for may have been moved or is no longer available.",
+        "link_text": "Back to Home"
       }
     }
   },
-  "order": [
-    "custom_404"
-  ]
+  "order": ["custom_404"]
 }

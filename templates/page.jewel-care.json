@@ -1,15 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "custom-section-jewel-care-accordion",
-      "settings": {
-        "heading": "Jewelry care guide"
-      },
       "blocks": {
         "accordion_1": {
           "type": "accordion_item",
           "settings": {
             "title": "JEWELRY STORAGE",
+            "image": "shopify://shop_images/pexels-mikhail-nilov-8246009_1.png",
             "content": "<p>While our 14k solid gold pieces are crafted to keep up with your everyday moments, we recommend removing them during intense activities or when heading to the beach or gym.</p><p>At home, store your pieces in a secure jewelry box, your Kinn pouch, or a dedicated dish to keep them protected and free from tangles.</p>"
           }
         },
@@ -88,10 +95,11 @@
         "accordion_8",
         "accordion_9",
         "accordion_10"
-      ]
+      ],
+      "settings": {
+        "heading": "Jewelry care guide"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }
