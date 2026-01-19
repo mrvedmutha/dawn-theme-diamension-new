@@ -250,3 +250,53 @@
     line-height: 36px;
   }
 }
+
+/* ==========================================================================
+   SCROLL TRIGGER TEXT REVEAL ANIMATIONS
+   Plays once when section enters viewport
+   Staggered timing for quote and caption
+   ========================================================================== */
+
+/* Animation Keyframes */
+@keyframes textRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Initial hidden state for animated elements */
+.custom-diamension-before-footer-hero__quote,
+.custom-diamension-before-footer-hero__caption {
+  opacity: 0;
+  transform: translateY(30px);
+  clip-path: inset(100% 0 0 0);
+}
+
+/* Animated state when section is in view */
+.custom-diamension-before-footer-hero.is-visible .custom-diamension-before-footer-hero__quote {
+  animation: textRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0s;
+}
+
+.custom-diamension-before-footer-hero.is-visible .custom-diamension-before-footer-hero__caption {
+  animation: textRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.15s;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .custom-diamension-before-footer-hero__quote,
+  .custom-diamension-before-footer-hero__caption {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    animation: none;
+  }
+}

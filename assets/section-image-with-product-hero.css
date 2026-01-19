@@ -222,3 +222,60 @@
     text-underline-offset: 2px;
   }
 }
+
+/* ============================================
+   SCROLL TRIGGER TEXT REVEAL ANIMATIONS
+   Plays once when section enters viewport
+   Staggered timing for heading, caption, CTA
+   ============================================ */
+
+/* Animation Keyframes */
+@keyframes textRevealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Initial hidden state for animated elements */
+.image-hero-section__heading,
+.image-hero-section__caption,
+.image-hero-section__cta {
+  opacity: 0;
+  transform: translateY(30px);
+  clip-path: inset(100% 0 0 0);
+}
+
+/* Animated state when section is in view */
+.image-hero-section.is-visible .image-hero-section__heading {
+  animation: textRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0s;
+}
+
+.image-hero-section.is-visible .image-hero-section__caption {
+  animation: textRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.15s;
+}
+
+.image-hero-section.is-visible .image-hero-section__cta {
+  animation: textRevealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .image-hero-section__heading,
+  .image-hero-section__caption,
+  .image-hero-section__cta {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    animation: none;
+  }
+}
