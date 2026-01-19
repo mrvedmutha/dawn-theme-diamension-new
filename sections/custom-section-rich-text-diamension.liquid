@@ -18,23 +18,78 @@
       --custom-rich-text-bg-color: {{ section.settings.background_color }};
     }
   {%- endif -%}
+
+  {%- if section.settings.enable_animation -%}
+    #shopify-section-{{ section.id }} .custom-section-rich-text-diamension__headline,
+    #shopify-section-{{ section.id }} .custom-section-rich-text-diamension__subtext {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+  {%- endif -%}
 </style>
 
-<section class="custom-section-rich-text-diamension">
+<section class="custom-section-rich-text-diamension" data-section-id="{{ section.id }}" data-enable-animation="{{ section.settings.enable_animation }}">
   <div class="custom-section-rich-text-diamension__container">
     {%- if section.settings.headline != blank -%}
-      <h2 class="custom-section-rich-text-diamension__headline">
+      <h2 class="custom-section-rich-text-diamension__headline" data-animate>
         {{ section.settings.headline }}
       </h2>
     {%- endif -%}
 
     {%- if section.settings.subtext != blank -%}
-      <p class="custom-section-rich-text-diamension__subtext">
+      <p class="custom-section-rich-text-diamension__subtext" data-animate>
         {{ section.settings.subtext }}
       </p>
     {%- endif -%}
   </div>
 </section>
+
+{%- if section.settings.enable_animation -%}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!section || section.dataset.enableAnimation !== 'true') return;
+
+      // Wait for GSAP to load
+      const initAnimation = () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+          setTimeout(initAnimation, 100);
+          return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        const animateElements = section.querySelectorAll('[data-animate]');
+
+        animateElements.forEach((element, index) => {
+          gsap.fromTo(element,
+            {
+              opacity: 0,
+              y: 50
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              delay: index * 0.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 60%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        });
+      };
+
+      initAnimation();
+    });
+  </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -79,6 +134,17 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#fffaf5"
+    },
+    {
+      "type": "header",
+      "content": "Animation Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Enable Animation",
+      "default": true,
+      "info": "Enable GSAP ScrollTrigger text reveal animation (fade in from bottom)"
     }
   ],
   "presets": [

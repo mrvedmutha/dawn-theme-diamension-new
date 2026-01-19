@@ -3,7 +3,6 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    max-height: {{ section.settings.max_height }}px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -217,7 +216,7 @@
   /* Mobile responsive */
   @media screen and (max-width: 749px) {
     .video-hero-{{ section.id }} {
-      height: {{ section.settings.mobile_height }}vh;
+      height: 100vh;
     }
 
     .video-hero-{{ section.id }} .video-hero__heading {

@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
       this.container = container;
       this.sectionId = container.dataset.sectionId;
       this.carouselContainer = container.querySelector('[data-carousel-container]');
-      this.navButton = container.querySelector('[data-direction="next"]');
+      this.prevButton = container.querySelector('[data-direction="prev"]');
+      this.nextButton = container.querySelector('[data-direction="next"]');
       this.wishlistButtons = container.querySelectorAll('[data-product-id]');
       this.cards = container.querySelectorAll('.custom-section-feature-slider-with-left-image__card');
+      this.sidebarImage = container.querySelector('.custom-section-feature-slider-with-left-image__sidebar-image');
 
       this.currentIndex = 0;
       this.isAnimating = false;
-      this.direction = 'next';
       this.visibleCards = 3;
       this.offsetCard = false;
 
@@ -20,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     init() {
       try {
-        if (!this.carouselContainer || !this.navButton || this.cards.length === 0) {
-          // TODO: debugging missing elements
+        if (!this.carouselContainer || !this.prevButton || !this.nextButton || this.cards.length === 0) {
           console.log('Feature slider elements not found, skipping initialization');
           return;
         }
 
         this.setCardWidths();
         this.bindEvents();
-        this.updateNavButton();
+        this.updateNavButtons();
+        this.initAnimations();
 
         // Debounced resize handler
         let resizeTimeout;
@@ -36,11 +37,81 @@ document.addEventListener('DOMContentLoaded', () => {
           clearTimeout(resizeTimeout);
           resizeTimeout = setTimeout(() => this.handleResize(), 250);
         });
-
-        // TODO: debugging initialization complete
-        // console.log('Feature slider initialized with', this.cards.length, 'products');
       } catch (error) {
         console.error('Error initializing feature slider:', error);
+      }
+    }
+
+    initAnimations() {
+      // Only run animations on desktop (>= 1250px)
+      const isDesktop = window.innerWidth >= 1250;
+      if (!isDesktop || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        // For tablet and mobile, try card animations only
+        this.initCardStaggerAnimation();
+        return;
+      }
+
+      try {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Parallax for sidebar image (y-axis only, no zoom) - DESKTOP ONLY
+        if (this.sidebarImage) {
+          gsap.fromTo(
+            this.sidebarImage,
+            { y: -200 },
+            {
+              y: 200,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: this.container,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1,
+              },
+            }
+          );
+        }
+
+        // Card stagger animation for desktop
+        this.initCardStaggerAnimation();
+      } catch (error) {
+        console.error('Error initializing animations:', error);
+      }
+    }
+
+    // Separate function for card stagger animation - can be used on all devices
+    initCardStaggerAnimation() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        return;
+      }
+
+      try {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Stagger animation for cards - sliding from right to left with rotation (/ to |)
+        this.cards.forEach((card, index) => {
+          // Set initial state - off to the right, slanted left (/)
+          gsap.set(card, {
+            x: 100,
+            rotation: -10,
+          });
+
+          // Animate to normal position - straight up (|)
+          gsap.to(card, {
+            x: 0,
+            rotation: 0,
+            duration: 0.8,
+            delay: index * 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: this.carouselContainer,
+              start: 'top 80%',
+              once: true,
+            },
+          });
+        });
+      } catch (error) {
+        console.error('Error initializing card stagger animation:', error);
       }
     }
 
@@ -76,10 +147,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     bindEvents() {
       try {
-        if (this.navButton) {
-          this.navButton.addEventListener('click', (e) => {
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.navigate();
+            this.navigate('prev');
+          });
+        }
+
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.navigate('next');
           });
         }
 
@@ -96,49 +174,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    navigate() {
+    navigate(direction) {
       try {
         if (this.isAnimating || this.cards.length <= this.visibleCards) {
           return;
         }
 
-        // Calculate max index to show all slides entirely with space for last one
+        // Calculate max index
         let maxIndex;
         if (this.offsetCard) {
-          // For 1250-1440px: Allow scrolling until last card is in 2nd position (fully visible)
-          // With 5 cards: positions 0,1,2,3 where 3 puts card 5 in 2nd position (cards 4,5,empty)
           maxIndex = this.cards.length - 2;
         } else {
-          // For other viewports: Standard behavior - show all cards fully
           maxIndex = this.cards.length - this.visibleCards;
         }
 
-        if (this.direction === 'next') {
-          if (this.currentIndex < maxIndex) {
-            this.currentIndex += 1;
-          }
-        } else if (this.direction === 'prev') {
-          if (this.currentIndex > 0) {
-            this.currentIndex -= 1;
-          }
+        // Update index based on direction
+        if (direction === 'next' && this.currentIndex < maxIndex) {
+          this.currentIndex += 1;
+        } else if (direction === 'prev' && this.currentIndex > 0) {
+          this.currentIndex -= 1;
         }
 
         this.animateCarousel();
-        this.updateNavButton();
-
-        // TODO: debugging navigation
-        console.log(
-          'Navigate:',
-          this.direction,
-          'Index:',
-          this.currentIndex,
-          'Max:',
-          maxIndex,
-          'Offset:',
-          this.offsetCard,
-          'Total cards:',
-          this.cards.length
-        );
+        this.updateNavButtons();
       } catch (error) {
         console.error('Error in navigation:', error);
       }
@@ -181,67 +239,44 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    updateNavButton() {
+    updateNavButtons() {
       try {
-        if (!this.navButton) return;
+        if (!this.prevButton || !this.nextButton) return;
 
-        // Calculate max index based on viewport
+        // Calculate max index
         let maxIndex;
         if (this.offsetCard) {
-          maxIndex = this.cards.length - 2; // Last card in 2nd position
+          maxIndex = this.cards.length - 2;
         } else {
           maxIndex = this.cards.length - this.visibleCards;
         }
 
-        const isAtEnd = this.currentIndex >= maxIndex;
         const isAtStart = this.currentIndex <= 0;
+        const isAtEnd = this.currentIndex >= maxIndex;
 
-        if (isAtEnd) {
-          // At end - arrow points left, direction becomes 'prev'
-          this.direction = 'prev';
-          this.navButton.setAttribute('aria-label', 'Previous Products');
-
-          if (typeof gsap !== 'undefined') {
-            gsap.to(this.navButton, {
-              rotation: 180,
-              duration: 0.4,
-              ease: 'power2.inOut',
-            });
-          } else {
-            this.navButton.style.transform = 'rotate(180deg)';
-          }
-        } else if (isAtStart && this.direction === 'prev') {
-          // At start after going backwards - arrow points right, direction becomes 'next'
-          this.direction = 'next';
-          this.navButton.setAttribute('aria-label', 'Next Products');
-
-          if (typeof gsap !== 'undefined') {
-            gsap.to(this.navButton, {
-              rotation: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
-            });
-          } else {
-            this.navButton.style.transform = 'rotate(0deg)';
-          }
+        // Disable/enable prev button
+        if (isAtStart) {
+          this.prevButton.setAttribute('disabled', 'true');
+          this.prevButton.style.opacity = '0.5';
+          this.prevButton.style.cursor = 'not-allowed';
+        } else {
+          this.prevButton.removeAttribute('disabled');
+          this.prevButton.style.opacity = '1';
+          this.prevButton.style.cursor = 'pointer';
         }
 
-        // TODO: debugging arrow state
-        // console.log(
-        //   'Arrow update:',
-        //   'Direction:',
-        //   this.direction,
-        //   'AtEnd:',
-        //   isAtEnd,
-        //   'AtStart:',
-        //   isAtStart,
-        //   'Index:',
-        //   this.currentIndex,
-        //   'Max:',
-        //   maxIndex
-        // );
+        // Disable/enable next button
+        if (isAtEnd) {
+          this.nextButton.setAttribute('disabled', 'true');
+          this.nextButton.style.opacity = '0.5';
+          this.nextButton.style.cursor = 'not-allowed';
+        } else {
+          this.nextButton.removeAttribute('disabled');
+          this.nextButton.style.opacity = '1';
+          this.nextButton.style.cursor = 'pointer';
+        }
       } catch (error) {
-        console.error('Error updating nav button:', error);
+        console.error('Error updating nav buttons:', error);
       }
     }
 
@@ -278,17 +313,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let maxIndex;
         if (this.offsetCard) {
           maxIndex = this.cards.length - 2;
-          console.log('maxIndex:', maxIndex);
         } else {
           maxIndex = this.cards.length - this.visibleCards;
         }
 
         // Ensure current index doesn't exceed new max
         this.currentIndex = Math.min(oldIndex, maxIndex);
-        this.direction = 'next'; // Reset to next on resize
 
         this.animateCarousel();
-        this.updateNavButton();
+        this.updateNavButtons();
       } catch (error) {
         console.error('Error handling resize:', error);
       }
