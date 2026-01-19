@@ -698,6 +698,15 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   border: 1px solid #183754;
 }
 
+/* Hamburger visibility for transparent sticky header - always show dark icon */
+.diamension-header--transparent-sticky .diamension-header__hamburger-svg--dark {
+  opacity: 1;
+}
+
+.diamension-header--transparent-sticky .diamension-header__hamburger-svg--light {
+  opacity: 0;
+}
+
 /* ============================================
    Responsive Design
    ============================================ */
