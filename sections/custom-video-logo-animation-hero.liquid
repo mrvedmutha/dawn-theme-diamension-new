@@ -1,0 +1,164 @@
+{%- style -%}
+  .video-logo-hero-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 500vh;
+    background-color: #000000;
+  }
+
+  .video-logo-hero-{{ section.id }} .video-logo-hero__pinned-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-logo-hero-{{ section.id }} .video-logo-hero__video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-logo-hero-{{ section.id }} .video-logo-hero__logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Tablet responsive */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+      width: 50vw;
+    }
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 749px) {
+    .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+      width: 60vw;
+    }
+  }
+{%- endstyle -%}
+
+<div class="video-logo-hero-{{ section.id }}" data-header-trigger data-video-logo-animation>
+  <div class="video-logo-hero__pinned-container">
+    {%- if section.settings.video_url != blank -%}
+      <video
+        class="video-logo-hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      >
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    {%- endif -%}
+
+    {%- if section.settings.logo != blank -%}
+      <div class="video-logo-hero__logo-wrapper">
+        <img
+          src="{{ section.settings.logo | image_url: width: 1200 }}"
+          alt="{{ shop.name }}"
+          class="video-logo-hero__logo"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const videoElement = document.querySelector('.video-logo-hero-{{ section.id }} .video-logo-hero__video');
+
+    if (videoElement) {
+      // Ensure video stays muted (required for autoplay)
+      videoElement.muted = true;
+      videoElement.setAttribute('muted', '');
+      videoElement.setAttribute('playsinline', '');
+
+      // Try to play the video
+      const playPromise = videoElement.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Video autoplay started successfully
+          })
+          .catch((error) => {
+            // Autoplay prevented, try to play on user interaction
+            document.addEventListener(
+              'click',
+              function playOnClick() {
+                videoElement.play();
+                document.removeEventListener('click', playOnClick);
+              },
+              { once: true }
+            );
+          });
+      }
+    }
+  });
+</script>
+
+<script src="{{ 'section-video-logo-animation.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Video Logo Animation Hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Direct Video URL",
+      "info": "Enter the direct URL to your MP4 video file"
+    },
+    {
+      "type": "header",
+      "content": "Logo Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Upload your logo - will be centered at 40vw width (responsive on mobile/tablet)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Logo Animation Hero"
+    }
+  ]
+}
+{% endschema %}

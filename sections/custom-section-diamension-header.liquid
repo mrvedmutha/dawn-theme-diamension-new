@@ -369,6 +369,11 @@
 
 <script src="{{ 'section-diamension-header.js' | asset_url }}" defer></script>
 
+{%- comment -%} Homepage Header Animation {%- endcomment -%}
+{%- if template.name == 'index' -%}
+  <script src="{{ 'homepage-header-animation.js' | asset_url }}" defer></script>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Diamension Header",
