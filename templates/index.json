@@ -9,38 +9,12 @@
  */
 {
   "sections": {
-    "video_hero_9dcbHc": {
-      "type": "video-hero",
-      "name": "Video Hero",
+    "custom_video_logo_animation_hero_iGRzPa": {
+      "type": "custom-video-logo-animation-hero",
+      "name": "Video Logo Animation Hero",
       "settings": {
-        "video_type": "upload",
         "video_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
-        "vimeo_url": "",
-        "show_overlay": false,
-        "overlay_opacity": 30,
-        "heading": "",
-        "subheading": "",
-        "text_position": "middle-left",
-        "text_alignment": "left",
-        "content_width": 600,
-        "content_gap": 24,
-        "heading_color": "#ffffff",
-        "heading_size_desktop": 56,
-        "heading_size_tablet": 48,
-        "heading_size_mobile": 32,
-        "subheading_color": "#ffffff",
-        "subheading_size_desktop": 20,
-        "subheading_size_tablet": 18,
-        "subheading_size_mobile": 16,
-        "button_text": "",
-        "button_link": "",
-        "button_bg_color": "#000000",
-        "button_text_color": "#ffffff",
-        "button_radius": 4,
-        "button_padding_vertical": 12,
-        "button_padding_horizontal": 32,
-        "max_height": 800,
-        "mobile_height": 80
+        "logo": "shopify://shop_images/diamension-logo-light.svg"
       }
     },
     "custom_section_rich_text_diamension_i9qYDp": {
@@ -51,7 +25,8 @@
         "subtext": "Backed by HVK Diamonds' 25-year heritage, we merge mastery in craftsmanship with next-gen innovation. Every piece is crafted in 14K gold, IGI certified, and designed to be cherished for a lifetime.",
         "headline_color": "#183754",
         "subtext_color": "#3e6282",
-        "background_color": "#fffaf5"
+        "background_color": "#fffaf5",
+        "enable_animation": true
       }
     },
     "custom_section_featured_category_slider_qaqqVy": {
@@ -108,7 +83,13 @@
           }
         }
       },
-      "block_order": ["category_PRJiVp", "category_TyLE4h", "category_Tr3Nfg", "category_bnDGXH", "category_bKBkPD"],
+      "block_order": [
+        "category_PRJiVp",
+        "category_TyLE4h",
+        "category_Tr3Nfg",
+        "category_bnDGXH",
+        "category_bKBkPD"
+      ],
       "name": "Featured Category Slider",
       "settings": {
         "section_height": 950,
@@ -150,7 +131,12 @@
           }
         }
       },
-      "block_order": ["trust_badge_rQQhcL", "trust_badge_KU4NFG", "trust_badge_NQ77gz", "trust_badge_mYgh3B"],
+      "block_order": [
+        "trust_badge_rQQhcL",
+        "trust_badge_KU4NFG",
+        "trust_badge_NQ77gz",
+        "trust_badge_mYgh3B"
+      ],
       "name": "Custom Trust Badge",
       "settings": {}
     },
@@ -305,7 +291,7 @@
     }
   },
   "order": [
-    "video_hero_9dcbHc",
+    "custom_video_logo_animation_hero_iGRzPa",
     "custom_section_rich_text_diamension_i9qYDp",
     "custom_section_featured_category_slider_qaqqVy",
     "custom_section_trust_badge_Y6tEJi",
