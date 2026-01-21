@@ -48,7 +48,7 @@
             "category_name": "Necklace",
             "collection": "custom-collections",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/e07fbb1e312c451b87ad067d02c7f731.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/d2cbfa3f5ce648e1bb63c5b61fdd8ac9.mp4",
             "video_youtube_vimeo": ""
           }
         },
@@ -78,7 +78,7 @@
             "category_name": "Bracelets",
             "collection": "custom-collections",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/2febf4b56e3c4ec58f4f7fc3c39bf6d3.mp4",
             "video_youtube_vimeo": ""
           }
         }
@@ -215,7 +215,7 @@
         "collection_card_QxP9xT": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/gifts_that_shine.png",
+            "image": "shopify://shop_images/statement_jewellery.png",
             "title": "Statement Jewelry",
             "cta_text": "View Collection",
             "cta_link": "shopify://collections",
@@ -225,7 +225,7 @@
         "collection_card_d8Mgf4": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/image_4.png",
+            "image": "shopify://shop_images/gifts_that_shine.png",
             "title": "Gifts That Shine",
             "cta_text": "View Collection",
             "cta_link": "shopify://collections",
