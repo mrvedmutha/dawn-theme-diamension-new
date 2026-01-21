@@ -57,6 +57,9 @@
       <!-- Middle Column: Main Product Image -->
       <div class="custom-product-detail__main-image">
         <div class="custom-product-detail__image-wrapper">
+          <div class="custom-product-detail__image-overlay" data-image-overlay>&nbsp;</div>
+          <div class="custom-product-detail__image-loader" data-image-loader>&nbsp;</div>
+
           <img
             id="mainImage-{{ section.id }}"
             class="custom-product-detail__image"
@@ -699,6 +702,71 @@
     <span class="custom-product-detail__modal-close">&times;</span>
     <img class="custom-product-detail__modal-image" id="modalImage-{{ section.id }}" src="" alt="Product image">
   </div>
+
+  <!-- Size Guide Modal -->
+  {%- liquid
+    assign product_type_upper = product.type | upcase
+    assign show_size_guide = false
+
+    if product_type_upper == 'RING' or product_type_upper == 'BRACELET' or product_type_upper == 'NECKLACE'
+      assign show_size_guide = true
+    endif
+  -%}
+
+  {% if show_size_guide %}
+    <div class="custom-product-detail__size-guide-modal" id="sizeGuideModal-{{ section.id }}" data-size-guide-modal>
+      <div class="custom-product-detail__size-guide-overlay" data-size-guide-overlay>&nbsp;</div>
+      <div class="custom-product-detail__size-guide-loading">&nbsp;</div>
+      <div class="custom-product-detail__size-guide-content">
+        <button class="custom-product-detail__size-guide-close" data-size-guide-close aria-label="Close size guide">
+          &times;
+        </button>
+        <div class="custom-product-detail__size-guide-scroll" data-size-guide-scroll>
+          {%- case product_type_upper -%}
+            {%- when 'RING' -%}
+              <img
+                src="{{ 'size-chart-ring-01.jpg' | asset_url }}"
+                alt="Ring Size Chart 1"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+              <img
+                src="{{ 'size-chart-ring-02.jpg' | asset_url }}"
+                alt="Ring Size Chart 2"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+              <img
+                src="{{ 'size-chart-ring-03.jpg' | asset_url }}"
+                alt="Ring Size Chart 3"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+            {%- when 'BRACELET' -%}
+              <img
+                src="{{ 'size-chart-bracelet-01.jpg' | asset_url }}"
+                alt="Bracelet Size Chart 1"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+              <img
+                src="{{ 'size-chart-bracelet-02.jpg' | asset_url }}"
+                alt="Bracelet Size Chart 2"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+            {%- when 'NECKLACE' -%}
+              <img
+                src="{{ 'size-chart-necklace-01.jpg' | asset_url }}"
+                alt="Necklace Size Chart"
+                class="custom-product-detail__size-guide-image"
+                loading="lazy"
+              >
+          {%- endcase -%}
+        </div>
+      </div>
+    </div>
+  {% endif %}
 </section>
 
 {%- comment -%} Size Guide Modal {%- endcomment -%}

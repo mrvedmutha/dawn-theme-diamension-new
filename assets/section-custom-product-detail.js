@@ -35,7 +35,7 @@
       initQuantitySelector(section);
       initAddToCart(section, productData, sectionId);
       initBuyNow(section, productData);
-      initSizeGuide();
+      initSizeGuide(section, sectionId);
       formatInitialPrice(section);
     });
   }
@@ -44,13 +44,15 @@
   function initThumbnailGallery(section, sectionId) {
     const thumbnails = section.querySelectorAll('.custom-product-detail__thumbnail');
     const mainImage = section.querySelector(`#mainImage-${sectionId}`);
+    const imageLoader = section.querySelector('[data-image-loader]');
+    const imageOverlay = section.querySelector('[data-image-overlay]');
     const thumbnailsWrapper = section.querySelector('[data-thumbnails-wrapper]');
     const arrowUp = section.querySelector('[data-thumbnail-arrow="up"]');
     const arrowDown = section.querySelector('[data-thumbnail-arrow="down"]');
 
     if (!thumbnails.length || !mainImage) return;
 
-    // Thumbnail click handler
+    // Thumbnail click handler with image preloading
     thumbnails.forEach((thumbnail, index) => {
       thumbnail.addEventListener('click', function () {
         // Remove active class from all
@@ -64,12 +66,50 @@
         if (imgElement && imgElement.src) {
           const newSrc = imgElement.src.replace(/width=\d+/, 'width=800');
 
-          // Fade effect
+          // Don't reload if it's the same image
+          if (mainImage.src === newSrc) return;
+
+          // Show overlay and loader, fade out current image
+          if (imageOverlay) {
+            imageOverlay.classList.add('custom-product-detail__image-overlay--active');
+          }
+          if (imageLoader) {
+            imageLoader.classList.add('custom-product-detail__image-loader--active');
+          }
           mainImage.style.opacity = '0';
-          setTimeout(() => {
+
+          // Preload the new image
+          const tempImage = new Image();
+          tempImage.onload = function () {
+            // Image loaded, now update and fade in
             mainImage.src = newSrc;
             mainImage.style.opacity = '1';
-          }, 100);
+
+            // Hide overlay and loader after fade in completes
+            setTimeout(() => {
+              if (imageOverlay) {
+                imageOverlay.classList.remove('custom-product-detail__image-overlay--active');
+              }
+              if (imageLoader) {
+                imageLoader.classList.remove('custom-product-detail__image-loader--active');
+              }
+            }, 300);
+          };
+
+          tempImage.onerror = function () {
+            // Error loading image, still update but hide overlay and loader
+            mainImage.src = newSrc;
+            mainImage.style.opacity = '1';
+            if (imageOverlay) {
+              imageOverlay.classList.remove('custom-product-detail__image-overlay--active');
+            }
+            if (imageLoader) {
+              imageLoader.classList.remove('custom-product-detail__image-loader--active');
+            }
+          };
+
+          // Start loading
+          tempImage.src = newSrc;
         }
       });
     });
@@ -927,38 +967,159 @@
   }
 
   // ===== 9. SIZE GUIDE =====
-  function initSizeGuide() {
-    const sizeGuideLinks = document.querySelectorAll('[data-size-guide-trigger]');
-    const modal = document.getElementById('sizeGuideModal');
+  function initSizeGuide(section, sectionId) {
+    const sizeGuideTrigger = section.querySelector('[data-size-guide-trigger]');
+    const modal = section.querySelector(`#sizeGuideModal-${sectionId}`);
 
-    if (!modal) return;
+    if (!sizeGuideTrigger || !modal) return;
 
-    const closeBtn = modal.querySelector('.size-guide-modal__close');
-    const overlay = modal.querySelector('.size-guide-modal__overlay');
+    const closeBtn = modal.querySelector('[data-size-guide-close]');
+    const overlay = modal.querySelector('[data-size-guide-overlay]');
+    const scrollContainer = modal.querySelector('[data-size-guide-scroll]');
+    const images = modal.querySelectorAll('.custom-product-detail__size-guide-image');
+    let scrollPosition = 0;
 
-    sizeGuideLinks.forEach((link) => {
-      link.addEventListener('click', function (e) {
+    // Function to lock body scroll
+    function lockBodyScroll() {
+      scrollPosition = window.pageYOffset;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.style.width = '100%';
+
+      console.log('🔒 Body scroll locked');
+      console.log('  Scroll position:', scrollPosition);
+    }
+
+    // Function to unlock body scroll
+    function unlockBodyScroll() {
+      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty('position');
+      document.body.style.removeProperty('top');
+      document.body.style.removeProperty('width');
+      window.scrollTo(0, scrollPosition);
+
+      console.log('🔓 Body scroll unlocked');
+    }
+
+    // Fix: Manually handle wheel events and convert to scroll
+    // Because position: fixed on body prevents default scroll behavior
+    if (scrollContainer) {
+      console.log('📜 Size Guide Scroll Container Found - Adding manual scroll handler');
+
+      scrollContainer.addEventListener('scroll', function() {
+        console.log('✅ SCROLL EVENT ON CONTAINER:', this.scrollTop);
+      });
+
+      scrollContainer.addEventListener('wheel', function(e) {
+        console.log('🖱️ WHEEL EVENT ON CONTAINER:', e.deltaY, 'Target:', e.target.tagName);
+
+        // Manually scroll the container
         e.preventDefault();
-        modal.classList.add('size-guide-modal--active');
-        document.body.style.overflow = 'hidden';
+        e.stopPropagation();
+        this.scrollTop += e.deltaY;
+
+        console.log('📜 Manual scroll applied. New scrollTop:', this.scrollTop);
+      }, { passive: false });
+
+      // Log computed styles after modal opens
+      setTimeout(() => {
+        const styles = window.getComputedStyle(scrollContainer);
+        console.log('📏 Scroll Container Styles:', {
+          position: styles.position,
+          overflow: styles.overflow,
+          overflowY: styles.overflowY,
+          height: styles.height,
+          maxHeight: styles.maxHeight
+        });
+      }, 100);
+    }
+
+    // Open modal on size guide link click
+    sizeGuideTrigger.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      console.log('🚀 Opening Size Guide Modal');
+
+      // Add loading state
+      modal.classList.add('custom-product-detail__size-guide-modal--loading');
+      modal.classList.add('custom-product-detail__size-guide-modal--active');
+      lockBodyScroll();
+
+      // Debug: Check scroll container dimensions
+      setTimeout(() => {
+        if (scrollContainer) {
+          console.log('📐 Scroll Container Dimensions:', {
+            scrollHeight: scrollContainer.scrollHeight,
+            clientHeight: scrollContainer.clientHeight,
+            canScroll: scrollContainer.scrollHeight > scrollContainer.clientHeight
+          });
+        }
+      }, 500);
+
+      // Check if images are loaded
+      let loadedCount = 0;
+      const totalImages = images.length;
+
+      if (totalImages === 0) {
+        // No images, remove loading immediately
+        modal.classList.remove('custom-product-detail__size-guide-modal--loading');
+        return;
+      }
+
+      images.forEach((img) => {
+        if (img.complete) {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            // All images loaded
+            setTimeout(() => {
+              modal.classList.remove('custom-product-detail__size-guide-modal--loading');
+            }, 300);
+          }
+        } else {
+          img.addEventListener('load', function () {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              // All images loaded
+              setTimeout(() => {
+                modal.classList.remove('custom-product-detail__size-guide-modal--loading');
+              }, 300);
+            }
+          });
+
+          img.addEventListener('error', function () {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+              // All images processed (even with errors)
+              setTimeout(() => {
+                modal.classList.remove('custom-product-detail__size-guide-modal--loading');
+              }, 300);
+            }
+          });
+        }
       });
     });
 
+    // Close modal function
     function closeModal() {
-      modal.classList.remove('size-guide-modal--active');
-      document.body.style.overflow = '';
+      modal.classList.remove('custom-product-detail__size-guide-modal--active');
+      modal.classList.remove('custom-product-detail__size-guide-modal--loading');
+      unlockBodyScroll();
     }
 
+    // Close on close button click
     if (closeBtn) {
       closeBtn.addEventListener('click', closeModal);
     }
 
+    // Close on overlay click
     if (overlay) {
       overlay.addEventListener('click', closeModal);
     }
 
+    // Close on Escape key
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('size-guide-modal--active')) {
+      if (e.key === 'Escape' && modal.classList.contains('custom-product-detail__size-guide-modal--active')) {
         closeModal();
       }
     });

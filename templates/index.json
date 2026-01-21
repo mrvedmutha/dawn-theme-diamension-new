@@ -195,7 +195,7 @@
         "collection_card_bfdzcX": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/neck-jewellery.jpg",
+            "image": "shopify://shop_images/engagement_and_bridal.png",
             "title": "Engagement & Bridal",
             "cta_text": "View Collection",
             "cta_link": "shopify://collections/earrings",
@@ -205,7 +205,7 @@
         "collection_card_P6wW8E": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/LAB09493_1.png",
+            "image": "shopify://shop_images/everyday_essential.png",
             "title": "Everyday Essentials",
             "cta_text": "View Collection",
             "cta_link": "shopify://collections/bracelets",
@@ -215,7 +215,7 @@
         "collection_card_QxP9xT": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/APF_5692.jpg",
+            "image": "shopify://shop_images/gifts_that_shine.png",
             "title": "Statement Jewelry",
             "cta_text": "View Collection",
             "cta_link": "shopify://collections",
@@ -275,7 +275,7 @@
         "image_3": "shopify://shop_images/Frame_32_1.png",
         "image_4": "shopify://shop_images/Frame_33.png",
         "cta_text": "Instagram",
-        "cta_url": "https://instagram.com",
+        "cta_url": "https://www.instagram.com/diamension.official/",
         "show_decorative_ellipse": true
       }
     },
