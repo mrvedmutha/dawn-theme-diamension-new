@@ -133,8 +133,8 @@
         "announcement_text": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k",
         "menu": "main-menu",
         "mobile_menu": "main-menu",
-        "logo_light": "shopify://shop_images/diamension-logo-light.svg",
-        "logo_dark": "shopify://shop_images/diamension-logo-dark.svg",
+        "logo_light": "shopify://shop_images/diamesnion-new-logo-white.svg",
+        "logo_dark": "shopify://shop_images/diamesnion-new-logo-dark.svg",
         "logo_width": 190,
         "currency_text": "INR / ₹",
         "suggested_terms_menu": "",
@@ -142,5 +142,7 @@
       }
     }
   },
-  "order": ["diamension-header"]
+  "order": [
+    "diamension-header"
+  ]
 }
