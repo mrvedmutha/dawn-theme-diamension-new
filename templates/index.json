@@ -156,10 +156,10 @@
       "type": "custom-section-shop-collection-arch",
       "name": "Shop Collection Arch",
       "settings": {
-        "heading": "Radiance Collection",
+        "heading": "THE STUDIO",
         "center_video": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
-        "center_cta_link": "shopify://collections/new-arrivals",
-        "center_cta_text": "Shop the Collection",
+        "center_cta_link": "shopify://pages/the-studio",
+        "center_cta_text": "Explore Now",
         "left_image": "shopify://shop_images/neck-jewellery.jpg",
         "left_image_link": "shopify://products/product-bracelet",
         "right_image": "shopify://shop_images/Frame_31.png",

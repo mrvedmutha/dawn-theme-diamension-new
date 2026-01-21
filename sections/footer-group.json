@@ -18,7 +18,7 @@
           "type": "menu_column",
           "settings": {
             "heading": "SHOP",
-            "menu": "shop-1"
+            "menu": "footer-shop"
           }
         },
         "menu-2": {
@@ -43,7 +43,12 @@
           }
         }
       },
-      "block_order": ["menu-1", "menu-2", "menu-3", "menu-4"],
+      "block_order": [
+        "menu-1",
+        "menu-2",
+        "menu-3",
+        "menu-4"
+      ],
       "settings": {
         "logo": "shopify://shop_images/diamension-logo-dark.svg",
         "newsletter_enable": true,
@@ -57,5 +62,8 @@
       "settings": {}
     }
   },
-  "order": ["custom-diamension-footer", "custom-diamension-footer-image"]
+  "order": [
+    "custom-diamension-footer",
+    "custom-diamension-footer-image"
+  ]
 }
