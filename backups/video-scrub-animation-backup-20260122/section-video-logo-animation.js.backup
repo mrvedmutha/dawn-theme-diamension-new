@@ -45,7 +45,7 @@
       targetY = headerRect.top - logoRect.top;
     }
 
-    // Phase 1: Scale down from 40vw to 190px - completes at 50vh
+    // Phase 1: Scale down from 40vw to 190px - completes at 3350px
     gsap.to(logoWrapper, {
       width: targetWidth,
       y: targetY,
@@ -53,26 +53,26 @@
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '50vh top',
+        end: '3350px top',
         scrub: 1,
         pin: false,
       },
     });
 
-    // Phase 2: Fade out video logo at 50vh-51vh
+    // Phase 2: Fade out video logo at 3350-3360px (10px gap)
     gsap.to(logoWrapper, {
       opacity: 0,
       ease: 'none',
       scrollTrigger: {
         trigger: section,
-        start: '50vh top',
-        end: '51vh top',
+        start: '3350px top',
+        end: '3360px top',
         scrub: 1,
         pin: false,
       },
     });
 
-    // Phase 3: Fade in header logo at 50vh-51vh
+    // Phase 3: Fade in header logo at 3350-3360px (10px gap)
     // Only target transparent sticky header logo
     const stickyHeaderLogoWrapper = document.querySelector('[data-transparent-sticky] .diamension-header__logo');
     if (stickyHeaderLogoWrapper) {
@@ -86,8 +86,8 @@
         ease: 'none',
         scrollTrigger: {
           trigger: section,
-          start: '50vh top',
-          end: '51vh top',
+          start: '3350px top',
+          end: '3360px top',
           scrub: 1,
           pin: false,
           onUpdate: (self) => {

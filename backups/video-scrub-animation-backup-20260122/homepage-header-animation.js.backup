@@ -1,12 +1,12 @@
 /**
  * Homepage Header Animation
  * Controls header and logo visibility during video logo animation
- * - Hides header initially (0-10vh)
- * - Shows main transparent header instantly at 10vh to END OF VIDEO SECTION
- * - Keeps main header logo hidden during animation (0-51vh)
- * - Sticky header logo fades in via GSAP (50vh-51vh)
- * - Main header logo becomes visible after 51vh (still in video section)
- * - After video section ends (150vh): releases control to default sticky header behavior
+ * - Hides header initially (0-25vh)
+ * - Shows main transparent header from 25vh to END OF VIDEO SECTION
+ * - Keeps main header logo hidden during animation (0-3360px)
+ * - Sticky header logo fades in via GSAP (3350-3360px)
+ * - Main header logo becomes visible after 3360px (still in video section)
+ * - After video section ends: releases control to default sticky header behavior
  * - Only runs if video logo animation section exists
  */
 
@@ -33,17 +33,14 @@
     const mainHeaderLogo = header.querySelector('.diamension-header__logo');
     const stickyHeaderLogo = stickyHeader?.querySelector('.diamension-header__logo');
 
-    // Track if animation has been completed
-    let animationCompleted = false;
-
     // Calculate scroll thresholds
     function getScrollThresholds() {
       const vh = window.innerHeight;
-      const scrollStartThreshold = vh * 0.1; // 10vh - start showing main header (faster!)
-      const logoScaleEnd = vh * 0.5; // 50vh - GSAP logo scale completes
-      const logoTransitionEnd = vh * 0.51; // 51vh - GSAP logo fade completes
+      const scrollStartThreshold = vh * 0.25; // 25vh - start showing main header
+      const logoTransitionEnd = 3360; // GSAP logo fade completes
+      const logoScaleEnd = 3350; // GSAP logo scale completes
 
-      // Calculate the end of the video section (150vh tall)
+      // Calculate the end of the video section (500vh tall)
       const sectionEnd = videoLogoSection.offsetHeight;
 
       return {
@@ -58,7 +55,7 @@
     function initHeaderHide() {
       // Hide main header initially
       header.style.setProperty('opacity', '0', 'important');
-      header.style.setProperty('transition', 'opacity 0.2s ease-out', 'important'); // Faster transition!
+      header.style.setProperty('transition', 'opacity 0.6s ease-in-out', 'important');
       header.style.setProperty('visibility', 'visible', 'important');
 
       // Hide sticky header initially
@@ -106,10 +103,8 @@
       const scrollY = window.scrollY || window.pageYOffset;
       const thresholds = getScrollThresholds();
 
-      // Before 10vh - hide everything
+      // Before 25vh - hide everything
       if (scrollY < thresholds.start) {
-        // No transition when hiding (instant)
-        header.style.setProperty('transition', 'none', 'important');
         header.style.setProperty('opacity', '0', 'important');
         header.classList.remove('diamension-header--hidden');
 
@@ -118,17 +113,15 @@
           stickyHeader.classList.remove('is-visible');
         }
 
-        // Keep logos hidden instantly
+        // Keep logos hidden
         if (mainHeaderLogo) {
-          mainHeaderLogo.style.setProperty('transition', 'none', 'important');
           mainHeaderLogo.style.setProperty('opacity', '0', 'important');
           mainHeaderLogo.style.setProperty('visibility', 'hidden', 'important');
         }
       }
-      // From 10vh to end of video section - keep main transparent header visible
+      // From 25vh to end of video section - keep main transparent header visible
       else if (scrollY >= thresholds.start && scrollY < thresholds.sectionEnd) {
-        // Enable transition when showing (smooth)
-        header.style.setProperty('transition', 'opacity 0.2s ease-out', 'important');
+        // Show main header (transparent)
         header.style.setProperty('opacity', '1', 'important');
         header.classList.remove('diamension-header--hidden');
 
@@ -139,26 +132,21 @@
         }
 
         // Logo visibility logic based on position
-        if (scrollY < thresholds.logoTransitionEnd && !animationCompleted) {
+        if (scrollY < thresholds.logoTransitionEnd) {
           // Before logo transition completes - keep main header logo hidden
-          // Only hide if animation hasn't been completed yet
           if (mainHeaderLogo) {
-            mainHeaderLogo.style.setProperty('transition', 'none', 'important');
             mainHeaderLogo.style.setProperty('opacity', '0', 'important');
             mainHeaderLogo.style.setProperty('visibility', 'hidden', 'important');
           }
 
-          // Sticky header logo opacity is controlled by GSAP
+          // Sticky header logo opacity is controlled by GSAP (fades in 3350-3360px)
           if (stickyHeaderLogo && scrollY >= thresholds.logoScaleEnd) {
             stickyHeaderLogo.style.setProperty('visibility', 'visible', 'important');
           }
         } else {
-          // After logo transition - Main header logo can now be visible
-          // Mark animation as completed
-          animationCompleted = true;
-
+          // After logo transition (3360px+) but still in video section
+          // Main header logo can now be visible
           if (mainHeaderLogo) {
-            mainHeaderLogo.style.setProperty('transition', 'opacity 0.2s ease-out', 'important');
             mainHeaderLogo.style.setProperty('opacity', '1', 'important');
             mainHeaderLogo.style.setProperty('visibility', 'visible', 'important');
           }

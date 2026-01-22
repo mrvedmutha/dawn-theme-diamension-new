@@ -1,0 +1,307 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_video_logo_animation_hero_iGRzPa": {
+      "type": "custom-video-logo-animation-hero",
+      "name": "Video Logo Animation Hero",
+      "settings": {
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "logo": "shopify://shop_images/diamesnion-new-logo-white.svg"
+      }
+    },
+    "custom_section_rich_text_diamension_i9qYDp": {
+      "type": "custom-section-rich-text-diamension",
+      "name": "Custom Rich Text Diamension",
+      "settings": {
+        "headline": "Luxury Within Reach. Brilliance Beyond Measure",
+        "subtext": "Backed by HVK Diamonds' 25-year heritage, we merge mastery in craftsmanship with next-gen innovation. Every piece is crafted in 14K gold, IGI certified, and designed to be cherished for a lifetime.",
+        "headline_color": "#183754",
+        "subtext_color": "#3e6282",
+        "background_color": "#fffaf5",
+        "enable_animation": true
+      }
+    },
+    "custom_section_featured_category_slider_qaqqVy": {
+      "type": "custom-section-featured-category-slider",
+      "blocks": {
+        "category_PRJiVp": {
+          "type": "category",
+          "settings": {
+            "category_name": "Earrings",
+            "collection": "custom-collections",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/1f95f4ed095c4ecea8a2141e65ac986b.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_TyLE4h": {
+          "type": "category",
+          "settings": {
+            "category_name": "Necklace",
+            "collection": "custom-collections",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/3ff77210c1de49d0a5be032fc8b5ca58.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_Tr3Nfg": {
+          "type": "category",
+          "settings": {
+            "category_name": "Rings",
+            "collection": "custom-collections",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_bnDGXH": {
+          "type": "category",
+          "settings": {
+            "category_name": "Pendents",
+            "collection": "custom-collections",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/7c09a42c7aef418a9e8b817f3a180b31.mp4",
+            "video_youtube_vimeo": ""
+          }
+        },
+        "category_bKBkPD": {
+          "type": "category",
+          "settings": {
+            "category_name": "Bracelets",
+            "collection": "custom-collections",
+            "description": "",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/2febf4b56e3c4ec58f4f7fc3c39bf6d3.mp4",
+            "video_youtube_vimeo": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_PRJiVp",
+        "category_TyLE4h",
+        "category_Tr3Nfg",
+        "category_bnDGXH",
+        "category_bKBkPD"
+      ],
+      "name": "Featured Category Slider",
+      "settings": {
+        "section_height": 950,
+        "enable_animations": true,
+        "shop_now_text": "SHOP NOW",
+        "view_collection_text": "VIEW COLLECTION",
+        "next_text": "NEXT"
+      }
+    },
+    "custom_section_trust_badge_Y6tEJi": {
+      "type": "custom-section-trust-badge",
+      "blocks": {
+        "trust_badge_rQQhcL": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-100percent-cert-jwellery.svg",
+            "badge_label": "100% certified jewellery"
+          }
+        },
+        "trust_badge_KU4NFG": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-easy-returns.svg",
+            "badge_label": "15 days easy return"
+          }
+        },
+        "trust_badge_NQ77gz": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-lifetime-exchange.svg",
+            "badge_label": "lifetime exchange"
+          }
+        },
+        "trust_badge_mYgh3B": {
+          "type": "trust_badge",
+          "settings": {
+            "badge_icon": "shopify://shop_images/badge-lifetime-warranty.svg",
+            "badge_label": "lifetime warrenty"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_rQQhcL",
+        "trust_badge_KU4NFG",
+        "trust_badge_NQ77gz",
+        "trust_badge_mYgh3B"
+      ],
+      "name": "Custom Trust Badge",
+      "settings": {}
+    },
+    "custom_section_feature_slider_with_left_image_bQi7qG": {
+      "type": "custom-section-feature-slider-with-left-image",
+      "name": "Feature Slider with Left Image",
+      "settings": {
+        "section_heading": "New Arrivals",
+        "sidebar_image": "shopify://shop_images/neck-jewellery.jpg",
+        "collection": "new-arrivals",
+        "products_limit": 10,
+        "show_heading": true,
+        "heading_alignment": "left"
+      }
+    },
+    "custom_section_shop_collection_arch_AH8MpR": {
+      "type": "custom-section-shop-collection-arch",
+      "name": "Shop Collection Arch",
+      "settings": {
+        "heading": "THE STUDIO",
+        "center_video": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "center_cta_link": "shopify://pages/the-studio",
+        "center_cta_text": "Explore Now",
+        "left_image": "shopify://shop_images/neck-jewellery.jpg",
+        "left_image_link": "shopify://products/product-bracelet",
+        "right_image": "shopify://shop_images/Frame_31.png",
+        "right_image_link": "shopify://products/chris-baguette-chain-bracelet",
+        "bottom_image_link": ""
+      }
+    },
+    "custom_section_shop_by_price_HH876J": {
+      "type": "custom-section-shop-by-price",
+      "name": "Shop by Price",
+      "settings": {
+        "title": "SHOP BY PRICE",
+        "tagline": "Whatever the budget, we have got a beautiful piece of jewellery for every YOU!"
+      }
+    },
+    "image_with_product_hero_AyTzGC": {
+      "type": "image-with-product-hero",
+      "name": "Image Hero with Product",
+      "settings": {
+        "background_image": "shopify://shop_images/jewellery_back_showcase.jpg",
+        "heading": "INTO THE RED",
+        "caption": "Jewelry that feels as good as it looks.",
+        "cta_text": "Shop the Collection",
+        "cta_link": "shopify://collections",
+        "text_color": "#fffaf5",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    },
+    "custom_section_four_collection_arch_e3WPan": {
+      "type": "custom-section-four-collection-arch",
+      "blocks": {
+        "collection_card_bfdzcX": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/engagement_and_bridal.png",
+            "title": "Engagement & Bridal",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections/earrings",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_P6wW8E": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/everyday_essential.png",
+            "title": "Everyday Essentials",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections/bracelets",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_QxP9xT": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/statement_jewellery.png",
+            "title": "Statement Jewelry",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections",
+            "text_color": "#fffaf5"
+          }
+        },
+        "collection_card_d8Mgf4": {
+          "type": "collection_card",
+          "settings": {
+            "image": "shopify://shop_images/gifts_that_shine.png",
+            "title": "Gifts That Shine",
+            "cta_text": "View Collection",
+            "cta_link": "shopify://collections",
+            "text_color": "#fffaf5"
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_bfdzcX",
+        "collection_card_P6wW8E",
+        "collection_card_QxP9xT",
+        "collection_card_d8Mgf4"
+      ],
+      "name": "Four Collection Arch",
+      "settings": {
+        "heading": "YOUR STYLE, OUR COLLECTION",
+        "heading_color": "#183754",
+        "mobile_aspect_ratio": "9-16"
+      }
+    },
+    "headline_ring_collection_gdTW6r": {
+      "type": "headline-ring-collection",
+      "name": "Headline Ring Collection",
+      "settings": {
+        "headline_line_1": "BRILLIANCE",
+        "headline_line_2": "WITHOUT",
+        "headline_line_3": "COMPROMISE",
+        "cta_text": "Our story",
+        "cta_url": "shopify://pages/contact",
+        "product_image": "shopify://shop_images/CBR40092_Yg_F10_1_1.png",
+        "paragraph_content": "Our diamonds are chemically, physically, and optically identical to mined diamonds — the only difference is the journey. Crafted with cutting-edge technology and ethical values, each stone delivers pure beauty without the environmental and financial cost.",
+        "feature_1_icon": "shopify://shop_images/three-circle-union-icon.svg",
+        "feature_1_text": "QUALITY CRAFTMANSHIP",
+        "feature_2_icon": "shopify://shop_images/globe-icon.svg",
+        "feature_2_text": "PLANET FRIENDLY AND SUSTAINABLY MADE",
+        "badge_1_image": "shopify://shop_images/igi_certification_logo.png",
+        "badge_2_image": "shopify://shop_images/image_395.png"
+      }
+    },
+    "custom_section_diamension_follow_insta_rz3x9q": {
+      "type": "custom-section-diamension-follow-insta",
+      "name": "Diamension Follow Instagram",
+      "settings": {
+        "headline_text": "FOLLOW US ON INSTAGRAM",
+        "image_1": "shopify://shop_images/Frame_1834_32a232d0-a97c-422c-ab7b-75ee04c6241c.png",
+        "image_2": "shopify://shop_images/Frame_31.png",
+        "image_3": "shopify://shop_images/Frame_32_1.png",
+        "image_4": "shopify://shop_images/Frame_33.png",
+        "cta_text": "Instagram",
+        "cta_url": "https://www.instagram.com/diamension.official/",
+        "show_decorative_ellipse": true
+      }
+    },
+    "custom_diamension_before_footer_hero_dmVzVR": {
+      "type": "custom-diamension-before-footer-hero",
+      "name": "Before Footer Hero",
+      "settings": {
+        "quote_text": "\"We believe jewelry should be something you never take off. A companion to your memory, made to last a lifetime, the kind you'll invest in and pass down.\"",
+        "caption_text": "—KARAN, FOUNDER",
+        "product_image": "shopify://shop_images/ring-at-footer-hero-image.png",
+        "image_offset": -448
+      }
+    }
+  },
+  "order": [
+    "custom_video_logo_animation_hero_iGRzPa",
+    "custom_section_rich_text_diamension_i9qYDp",
+    "custom_section_featured_category_slider_qaqqVy",
+    "custom_section_trust_badge_Y6tEJi",
+    "custom_section_feature_slider_with_left_image_bQi7qG",
+    "custom_section_shop_collection_arch_AH8MpR",
+    "custom_section_shop_by_price_HH876J",
+    "image_with_product_hero_AyTzGC",
+    "custom_section_four_collection_arch_e3WPan",
+    "headline_ring_collection_gdTW6r",
+    "custom_section_diamension_follow_insta_rz3x9q",
+    "custom_diamension_before_footer_hero_dmVzVR"
+  ]
+}

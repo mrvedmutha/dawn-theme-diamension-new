@@ -1,23 +1,22 @@
 {%- style -%}
-  .video-logo-hero-{{ section.id }} {
+  .video-hero-animated-{{ section.id }} {
     position: relative;
-    width: 100%;
-    height: 150vh;
-    background-color: #000000;
-  }
-
-  .video-logo-hero-{{ section.id }} .video-logo-hero__pinned-container {
-    position: sticky;
-    top: 0;
     width: 100%;
     height: 100vh;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #000000;
+    {%- if section.settings.video_poster != blank -%}
+      background-image: url('{{ section.settings.video_poster | image_url: width: 1920 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {%- endif -%}
   }
 
-  .video-logo-hero-{{ section.id }} .video-logo-hero__video {
+  .video-hero-animated-{{ section.id }} .video-hero-animated__video {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -30,7 +29,7 @@
     z-index: 0;
   }
 
-  .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+  .video-hero-animated-{{ section.id }} .video-hero-animated__logo-wrapper {
     position: relative;
     z-index: 2;
     width: 40vw;
@@ -39,7 +38,7 @@
     justify-content: center;
   }
 
-  .video-logo-hero-{{ section.id }} .video-logo-hero__logo {
+  .video-hero-animated-{{ section.id }} .video-hero-animated__logo {
     width: 100%;
     height: auto;
     object-fit: contain;
@@ -47,51 +46,52 @@
 
   /* Tablet responsive */
   @media screen and (min-width: 750px) and (max-width: 989px) {
-    .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+    .video-hero-animated-{{ section.id }} .video-hero-animated__logo-wrapper {
       width: 50vw;
     }
   }
 
   /* Mobile responsive */
   @media screen and (max-width: 749px) {
-    .video-logo-hero-{{ section.id }} .video-logo-hero__logo-wrapper {
+    .video-hero-animated-{{ section.id }} .video-hero-animated__logo-wrapper {
       width: 60vw;
     }
   }
 {%- endstyle -%}
 
-<div class="video-logo-hero-{{ section.id }}" data-header-trigger data-video-logo-animation>
-  <div class="video-logo-hero__pinned-container">
-    {%- if section.settings.video_url != blank -%}
-      <video
-        class="video-logo-hero__video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-      >
-        <source src="{{ section.settings.video_url }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    {%- endif -%}
+<div class="video-hero-animated-{{ section.id }}" data-video-hero-animated data-header-trigger>
+  {%- if section.settings.video_url != blank -%}
+    <video
+      class="video-hero-animated__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      {% if section.settings.video_poster != blank %}
+        poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
+      {% endif %}
+    >
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  {%- endif -%}
 
-    {%- if section.settings.logo != blank -%}
-      <div class="video-logo-hero__logo-wrapper">
-        <img
-          src="{{ section.settings.logo | image_url: width: 1200 }}"
-          alt="{{ shop.name }}"
-          class="video-logo-hero__logo"
-          loading="eager"
-        >
-      </div>
-    {%- endif -%}
-  </div>
+  {%- if section.settings.logo != blank -%}
+    <div class="video-hero-animated__logo-wrapper">
+      <img
+        src="{{ section.settings.logo | image_url: width: 1200 }}"
+        alt="{{ shop.name }}"
+        class="video-hero-animated__logo"
+        loading="eager"
+      >
+    </div>
+  {%- endif -%}
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const videoElement = document.querySelector('.video-logo-hero-{{ section.id }} .video-logo-hero__video');
+    const videoElement = document.querySelector('.video-hero-animated-{{ section.id }} .video-hero-animated__video');
 
     if (videoElement) {
       // Ensure video stays muted (required for autoplay)
@@ -123,11 +123,11 @@
   });
 </script>
 
-<script src="{{ 'section-video-logo-animation.js' | asset_url }}" defer></script>
+<script src="{{ 'section-video-hero-automated-animation.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
-  "name": "Video Logo Animation Hero",
+  "name": "Video Automated Animation",
   "tag": "section",
   "class": "section",
   "disabled_on": {
@@ -145,6 +145,12 @@
       "info": "Enter the direct URL to your MP4 video file"
     },
     {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster image",
+      "info": "Shown while video loads"
+    },
+    {
       "type": "header",
       "content": "Logo Settings"
     },
@@ -157,7 +163,7 @@
   ],
   "presets": [
     {
-      "name": "Video Logo Animation Hero"
+      "name": "Video Hero Automated Animation"
     }
   ]
 }
