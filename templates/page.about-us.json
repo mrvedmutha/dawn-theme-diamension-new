@@ -51,9 +51,9 @@
       "name": "Bespoke Creations",
       "settings": {
         "heading": "bespoke creATIONS",
-        "left_video": "https://cdn.shopify.com/videos/c/o/v/2a1d7d130ca04e378a3ad58b87859504.mp4",
+        "left_video": "https://cdn.shopify.com/videos/c/o/v/4d99706ee6e74f4fb964d7e46ac5780c.mp4",
         "center_video": "https://cdn.shopify.com/videos/c/o/v/ccc983edfc3346369b88de61695aa23c.mp4",
-        "right_video": "https://cdn.shopify.com/videos/c/o/v/0ad17f5a15f2466aab00299213d05a05.mp4",
+        "right_video": "https://cdn.shopify.com/videos/c/o/v/fac0efa175ae4b2ab885c08955f0a265.mp4",
         "description": "<p>At Diamensions, every diamond is more than a gem, it's a journey of innovation, ethics, and artistry. Our craft transforms light into timeless beauty, ensuring every sparkle reflects responsibility and vision.</p>",
         "cta_text": "Know our Process",
         "cta_link": ""
@@ -66,7 +66,7 @@
         "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
         "heading": "Sustainability at the Heart of Brilliance",
         "text": "<p>At Diamensions, sustainability isn't an afterthought—it's at the core of how we create brilliance. Our lab-grown diamonds are powered by solar energy, ensuring every stone shines with a smaller footprint and a greater purpose. By harnessing the power of the sun, we redefine luxury for a conscious world—proving that beauty and responsibility can truly go hand in hand.</p>",
-        "text_color": "#FFFFFF",
+        "text_color": "#ffffff",
         "section_color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
