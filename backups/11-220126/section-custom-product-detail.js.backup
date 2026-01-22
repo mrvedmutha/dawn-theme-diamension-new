@@ -19,7 +19,11 @@
         return;
       }
 
-      // Section initialized
+      console.log('🚀 INITIALIZING PRODUCT DETAIL');
+      console.log('  Section ID:', sectionId);
+      console.log('  Product Data:', productData);
+      console.log('  Total Variants:', productData.variants?.length);
+      console.log('  First Variant Metafields:', productData.variants?.[0]?.metafields);
 
       // Initialize all features
       initThumbnailGallery(section, sectionId);
@@ -33,485 +37,13 @@
       initBuyNow(section, productData);
       initSizeGuide(section, sectionId);
       formatInitialPrice(section);
-
-      // Initialize media filtering based on default selected metal type
-      console.log('🔍 DEBUG: Starting initial media filtering');
-      try {
-        const defaultMetalOption = section.querySelector('.custom-product-detail__metal-option--selected');
-        console.log('🔍 DEBUG: Default metal option:', defaultMetalOption);
-        console.log('🔍 DEBUG: Product data media:', productData.media);
-
-        if (defaultMetalOption && productData.media && productData.media.length > 0) {
-          const defaultMetalType = defaultMetalOption.dataset.value;
-          console.log('🎬 Initial media filter for:', defaultMetalType);
-          console.log('🔍 DEBUG: Total media count:', productData.media.length);
-
-          const filteredMedia = filterMediaByVariant(productData, defaultMetalType);
-          console.log('🔍 DEBUG: Filtered media result:', filteredMedia);
-          console.log('🔍 DEBUG: Filtered media count:', filteredMedia?.length);
-
-          if (filteredMedia && filteredMedia.length > 0) {
-            console.log('🔍 DEBUG: About to update media display');
-            console.log(
-              '🔍 DEBUG: Filtered media array:',
-              filteredMedia.map((m, i) => ({
-                position: i,
-                type: m.media_type,
-                id: m.id,
-              })),
-            );
-            updateMediaDisplay(section, sectionId, filteredMedia);
-          }
-        } else {
-          console.log('⏭️ Skipping media filtering (no metal option selected or no media available)');
-        }
-      } catch (error) {
-        console.error('❌ Error during initial media filtering:', error);
-        console.error('❌ Error stack:', error.stack);
-        // Continue without media filtering
-      }
     });
-  }
-
-  // ===== MEDIA FILTERING BASED ON VARIANT =====
-  /**
-   * Filter media (images + videos) based on selected metal type variant
-   * NEW LOGIC:
-   * 1. Find the FIRST image in media array that matches the variant
-   * 2. From that position, continue collecting images SEQUENTIALLY as long as they match
-   * 3. Stop when hitting a non-matching image
-   * 4. Insert first video at position 3 of filtered array
-   * 5. Append remaining videos at the end
-   */
-  function filterMediaByVariant(productData, selectedMetalType) {
-    console.log('🎯 FILTERING MEDIA BY VARIANT (SEQUENTIAL LOGIC)');
-    console.log('  Selected Metal Type:', selectedMetalType);
-    console.log('  Total Media:', productData.media?.length);
-
-    if (!productData.media || !selectedMetalType) {
-      console.warn('  ⚠️ No media or metal type provided');
-      return productData.media || [];
-    }
-
-    // Get all variants with the selected metal type (option2)
-    const matchingVariants = productData.variants.filter((v) => v.option2 === selectedMetalType);
-    console.log('  Matching variants for', selectedMetalType + ':', matchingVariants.length);
-
-    if (matchingVariants.length === 0) {
-      console.warn('  ⚠️ No matching variants found, showing all media');
-      return productData.media;
-    }
-
-    // Get variant featured image URLs and DEDUPLICATE
-    const allVariantImageSrcs = matchingVariants
-      .map((v) => v.featured_image_src)
-      .filter((src) => src != null && typeof src === 'string');
-
-    // Remove duplicates - multiple size variants may share the same image
-    const variantImageSrcs = [...new Set(allVariantImageSrcs)];
-
-    console.log('  All Variant URLs (with duplicates):', allVariantImageSrcs.length, allVariantImageSrcs);
-    console.log('  Unique Variant URL:', variantImageSrcs.length, variantImageSrcs);
-
-    if (variantImageSrcs.length === 0) {
-      console.warn('  ⚠️ No variant images found, showing all media');
-      return productData.media;
-    }
-
-    // Get the ONE unique variant URL to search for
-    const targetVariantUrl = variantImageSrcs[0];
-    console.log('  🎯 Target Variant URL:', targetVariantUrl);
-
-    // Find where this URL matches in product.media[].src.src
-    let matchStartIndex = -1;
-    for (let i = 0; i < productData.media.length; i++) {
-      const media = productData.media[i];
-      if (media.media_type === 'image' && media.src && media.src.src) {
-        const mediaSrc = media.src.src;
-        // Direct URL comparison (ignoring query params)
-        const mediaUrl = mediaSrc.split('?')[0];
-        const variantUrl = targetVariantUrl.split('?')[0];
-
-        if (mediaUrl === variantUrl) {
-          matchStartIndex = i;
-          console.log(`  ✅ MATCH FOUND at product.media[${i}]`);
-          console.log(`     Media URL: ${mediaSrc}`);
-          break;
-        }
-      }
-    }
-
-    if (matchStartIndex === -1) {
-      console.warn('  ⚠️ No media matched variant URL, showing all media');
-      return productData.media;
-    }
-
-    // Extract base pattern from matched filename (everything before the last number)
-    const matchedFilename = productData.media[matchStartIndex].src.src.split('/').pop().split('?')[0];
-    console.log('  📁 Matched Filename:', matchedFilename);
-
-    // Extract pattern: remove file extension and last numeric part
-    // E.g., "CLR10427_R_1.jpg" -> "CLR10427_R_"
-    const basePattern = matchedFilename.replace(/\.(jpg|png|webp|jpeg)$/i, '').replace(/_\d+$/, '_');
-    console.log('  🔍 Extracted Pattern:', basePattern);
-
-    // Collect images sequentially starting from match position
-    const matchedImages = [];
-    console.log('  📦 Starting sequential collection from index', matchStartIndex);
-
-    for (let i = matchStartIndex; i < productData.media.length; i++) {
-      const media = productData.media[i];
-
-      // Only process images
-      if (media.media_type !== 'image') {
-        console.log(`  ⏭️  Position ${i}: Skipping (not an image)`);
-        continue;
-      }
-
-      // Check if this image matches the pattern
-      const currentFilename = media.src.src.split('/').pop().split('?')[0];
-      const matchesPattern = currentFilename.includes(basePattern);
-
-      console.log(`  🔍 Position ${i}: ${currentFilename} -> ${matchesPattern ? '✅ MATCH' : '❌ NO MATCH'}`);
-
-      if (matchesPattern) {
-        matchedImages.push(media);
-      } else {
-        // Hit a non-matching image, stop sequential collection
-        console.log(`  🛑 Stopping - hit non-matching image`);
-        break;
-      }
-    }
-
-    console.log('  📊 Total Matched Images:', matchedImages.length);
-
-    // Separate videos from all media
-    const allVideos = productData.media.filter((m) => m.media_type === 'video' || m.media_type === 'external_video');
-    console.log('  📹 Total Videos:', allVideos.length);
-
-    // Build final filtered media array
-    let filteredMedia = [...matchedImages];
-
-    // Handle video insertion
-    const firstVideo = allVideos.length > 0 ? allVideos[0] : null;
-    const remainingVideos = allVideos.slice(1);
-
-    console.log('  🎬 First Video (for pos 3):', firstVideo ? `ID ${firstVideo.id}` : 'None');
-    console.log('  🎬 Remaining Videos:', remainingVideos.length);
-
-    // Insert first video at position 3 (index 2) if we have enough images
-    if (firstVideo && filteredMedia.length >= 2) {
-      filteredMedia.splice(2, 0, firstVideo);
-      console.log('  ✅ Inserted video at position 3 (index 2)');
-    } else if (firstVideo) {
-      filteredMedia.push(firstVideo);
-      console.log('  ✅ Appended video at end (less than 2 images)');
-    }
-
-    // Append remaining videos at the end
-    if (remainingVideos.length > 0) {
-      filteredMedia = filteredMedia.concat(remainingVideos);
-      console.log(`  ✅ Appended ${remainingVideos.length} remaining videos at end`);
-    }
-
-    console.log('  📊 FINAL Filtered Media Count:', filteredMedia.length);
-    console.log(
-      '  🎯 FINAL FILTERED ARRAY:',
-      filteredMedia.map((m, i) => ({
-        position: i + 1,
-        type: m.media_type,
-        id: m.id,
-        filename: m.media_type === 'image' ? m.src.src.split('/').pop().split('?')[0] : 'video',
-      })),
-    );
-
-    return filteredMedia;
-  }
-
-  /**
-   * Update thumbnails and main media display with filtered media
-   */
-  function updateMediaDisplay(section, sectionId, filteredMedia) {
-    try {
-      console.log('🖼️ UPDATING MEDIA DISPLAY');
-      console.log('  Media Count:', filteredMedia.length);
-
-      const thumbnailsWrapper = section.querySelector('[data-thumbnails-wrapper]');
-      const mainMedia = section.querySelector('[data-main-media]');
-
-      if (!thumbnailsWrapper || !mainMedia) {
-        console.error('  ❌ Thumbnails wrapper or main media not found');
-        return;
-      }
-
-      if (!filteredMedia || filteredMedia.length === 0) {
-        console.warn('  ⚠️ No filtered media to display');
-        return;
-      }
-
-      // Clear existing thumbnails
-      console.log('🔍 DEBUG: Clearing existing thumbnails');
-      const oldThumbnailCount = thumbnailsWrapper.querySelectorAll('.custom-product-detail__thumbnail').length;
-      console.log('🔍 DEBUG: Old thumbnail count:', oldThumbnailCount);
-      thumbnailsWrapper.innerHTML = '';
-
-      // Create new thumbnails
-      console.log('🔍 DEBUG: Creating new thumbnails for', filteredMedia.length, 'media items');
-      filteredMedia.forEach((media, index) => {
-        console.log(`🔍 DEBUG: Creating thumbnail ${index}:`, {
-          type: media.media_type,
-          id: media.id,
-          hasSrc: !!media.src,
-        });
-        const thumbnailDiv = document.createElement('div');
-        thumbnailDiv.className = 'custom-product-detail__thumbnail';
-        if (index === 0) {
-          thumbnailDiv.classList.add('custom-product-detail__thumbnail--active');
-        }
-        thumbnailDiv.dataset.mediaIndex = index;
-        thumbnailDiv.dataset.mediaId = media.id;
-        thumbnailDiv.dataset.mediaType = media.media_type;
-
-        if (media.media_type === 'image') {
-          const img = document.createElement('img');
-          // For images, src is nested: media.src.src
-          const imageSrc = media.src && media.src.src ? media.src.src : media.src;
-          img.src = imageSrc.replace(/width=\d+/, 'width=100');
-          img.alt = media.alt || 'Product image';
-          img.loading = 'lazy';
-          thumbnailDiv.appendChild(img);
-        } else if (media.media_type === 'video' || media.media_type === 'external_video') {
-          const videoThumb = document.createElement('div');
-          videoThumb.className = 'custom-product-detail__thumbnail-video';
-
-          if (media.preview_image) {
-            const img = document.createElement('img');
-            img.src = media.preview_image.replace(/width=\d+/, 'width=100');
-            img.alt = 'Video thumbnail';
-            img.loading = 'lazy';
-            videoThumb.appendChild(img);
-          }
-
-          const playIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          playIcon.setAttribute('class', 'custom-product-detail__thumbnail-play-icon');
-          playIcon.setAttribute('width', '24');
-          playIcon.setAttribute('height', '24');
-          playIcon.setAttribute('viewBox', '0 0 24 24');
-          playIcon.setAttribute('fill', 'none');
-          playIcon.innerHTML =
-            '<circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.9)"/><path d="M10 8L16 12L10 16V8Z" fill="currentColor"/>';
-          videoThumb.appendChild(playIcon);
-
-          thumbnailDiv.appendChild(videoThumb);
-        }
-
-        thumbnailsWrapper.appendChild(thumbnailDiv);
-        console.log(`  ✅ Added thumbnail ${index} to wrapper`);
-      });
-
-      console.log(
-        '🔍 DEBUG: All thumbnails created. New count:',
-        thumbnailsWrapper.querySelectorAll('.custom-product-detail__thumbnail').length,
-      );
-
-      // Update main media with first item
-      console.log('🔍 DEBUG: Updating main media with first item:', filteredMedia[0]);
-      updateMainMedia(section, sectionId, filteredMedia[0]);
-
-      // Reinitialize thumbnail click handlers
-      initThumbnailClickHandlers(section, sectionId, filteredMedia);
-
-      // Update arrow states
-      updateThumbnailArrowStates(section);
-
-      console.log('  ✅ Media display updated');
-    } catch (error) {
-      console.error('❌ Error updating media display:', error);
-      // Continue without updating media display
-    }
-  }
-
-  /**
-   * Initialize thumbnail click handlers for filtered media
-   */
-  function initThumbnailClickHandlers(section, sectionId, filteredMedia) {
-    const thumbnails = section.querySelectorAll('.custom-product-detail__thumbnail');
-
-    thumbnails.forEach((thumbnail, index) => {
-      thumbnail.addEventListener('click', function () {
-        // Remove active class from all thumbnails
-        thumbnails.forEach((t) => t.classList.remove('custom-product-detail__thumbnail--active'));
-
-        // Add active class to clicked thumbnail
-        this.classList.add('custom-product-detail__thumbnail--active');
-
-        // Update main media with the corresponding filtered media item
-        if (filteredMedia[index]) {
-          updateMainMedia(section, sectionId, filteredMedia[index]);
-        }
-      });
-    });
-
-    console.log('  ✅ Thumbnail click handlers initialized for', thumbnails.length, 'thumbnails');
-  }
-
-  /**
-   * Update thumbnail navigation arrow states
-   */
-  function updateThumbnailArrowStates(section) {
-    const thumbnails = section.querySelectorAll('.custom-product-detail__thumbnail');
-    const arrowUp = section.querySelector('[data-thumbnail-arrow="up"]');
-    const arrowDown = section.querySelector('[data-thumbnail-arrow="down"]');
-
-    if (!arrowUp || !arrowDown) return;
-
-    const maxVisibleThumbnails = 6;
-
-    if (thumbnails.length <= maxVisibleThumbnails) {
-      // Hide arrows if 6 or fewer thumbnails
-      arrowUp.style.display = 'none';
-      arrowDown.style.display = 'none';
-    } else {
-      // Show arrows and update states
-      arrowUp.style.display = 'flex';
-      arrowDown.style.display = 'flex';
-      arrowUp.disabled = true;
-      arrowUp.style.opacity = '0.3';
-      arrowDown.disabled = false;
-      arrowDown.style.opacity = '1';
-    }
-  }
-
-  /**
-   * Update the main media (image or video)
-   */
-  function updateMainMedia(section, sectionId, media) {
-    console.log('🔍 DEBUG: updateMainMedia called with media:', {
-      type: media?.media_type,
-      id: media?.id,
-      src: media?.src || 'N/A',
-      hasPreviewImage: !!media?.preview_image,
-    });
-
-    const mainMediaContainer = section.querySelector('.custom-product-detail__image-wrapper');
-    const imageLoader = section.querySelector('[data-image-loader]');
-    const imageOverlay = section.querySelector('[data-image-overlay]');
-
-    if (!mainMediaContainer) {
-      console.error('🔍 DEBUG: Main media container not found!');
-      return;
-    }
-
-    console.log('🔍 DEBUG: Main media container found');
-
-    // Show loading state
-    if (imageOverlay) imageOverlay.classList.add('custom-product-detail__image-overlay--active');
-    if (imageLoader) imageLoader.classList.add('custom-product-detail__image-loader--active');
-
-    // Get or create main media element
-    let mainMedia = mainMediaContainer.querySelector('[data-main-media]');
-
-    if (media.media_type === 'image') {
-      // Switch to image
-      if (mainMedia && mainMedia.tagName === 'VIDEO') {
-        mainMedia.pause();
-        mainMedia.remove();
-        mainMedia = null;
-      }
-
-      if (!mainMedia || mainMedia.tagName !== 'IMG') {
-        const img = document.createElement('img');
-        img.id = `mainMedia-${sectionId}`;
-        img.className = 'custom-product-detail__image';
-        img.dataset.mainMedia = '';
-        img.dataset.mediaType = 'image';
-        mainMediaContainer.insertBefore(img, mainMediaContainer.querySelector('.custom-product-detail__wishlist-btn'));
-        mainMedia = img;
-      }
-
-      mainMedia.style.opacity = '0';
-      const tempImage = new Image();
-
-      // For images, src is nested: media.src.src
-      const imageSrc = media.src && media.src.src ? media.src.src : media.src;
-
-      tempImage.onload = () => {
-        mainMedia.src = imageSrc.replace(/width=\d+/, 'width=800');
-        mainMedia.alt = media.alt || 'Product image';
-        mainMedia.style.opacity = '1';
-
-        setTimeout(() => {
-          if (imageOverlay) imageOverlay.classList.remove('custom-product-detail__image-overlay--active');
-          if (imageLoader) imageLoader.classList.remove('custom-product-detail__image-loader--active');
-        }, 300);
-      };
-      tempImage.src = imageSrc.replace(/width=\d+/, 'width=800');
-    } else if (media.media_type === 'video' || media.media_type === 'external_video') {
-      console.log('🔍 DEBUG: Switching to VIDEO');
-      // Switch to video
-      if (mainMedia && mainMedia.tagName === 'IMG') {
-        console.log('🔍 DEBUG: Removing existing IMG element');
-        mainMedia.remove();
-        mainMedia = null;
-      }
-
-      if (!mainMedia || mainMedia.tagName !== 'VIDEO') {
-        console.log('🔍 DEBUG: Creating new VIDEO element');
-        const video = document.createElement('video');
-        video.id = `mainMedia-${sectionId}`;
-        video.className = 'custom-product-detail__image custom-product-detail__video';
-        video.dataset.mainMedia = '';
-        video.dataset.mediaType = 'video';
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.playsInline = true;
-        mainMediaContainer.insertBefore(
-          video,
-          mainMediaContainer.querySelector('.custom-product-detail__wishlist-btn'),
-        );
-        mainMedia = video;
-        console.log('🔍 DEBUG: VIDEO element created and inserted');
-      }
-
-      // Clear and add sources
-      console.log('🔍 DEBUG: Adding video sources. Source count:', media.sources?.length || 0);
-      mainMedia.innerHTML = '';
-      if (media.sources && media.sources.length > 0) {
-        media.sources.forEach((source) => {
-          console.log('🔍 DEBUG: Adding source:', source.url);
-          const sourceEl = document.createElement('source');
-          sourceEl.src = source.url;
-          sourceEl.type = source.mime_type;
-          mainMedia.appendChild(sourceEl);
-        });
-      }
-
-      console.log('🔍 DEBUG: Loading and playing video');
-      mainMedia.load();
-      mainMedia.play().catch((err) => console.warn('Auto-play prevented:', err));
-
-      // Hide loading after video starts playing
-      mainMedia.addEventListener(
-        'loadeddata',
-        () => {
-          console.log('🔍 DEBUG: Video loaded successfully');
-          setTimeout(() => {
-            if (imageOverlay) imageOverlay.classList.remove('custom-product-detail__image-overlay--active');
-            if (imageLoader) imageLoader.classList.remove('custom-product-detail__image-loader--active');
-          }, 300);
-        },
-        { once: true },
-      );
-
-      console.log('🔍 DEBUG: Video setup complete');
-    }
   }
 
   // ===== 1. THUMBNAIL GALLERY =====
   function initThumbnailGallery(section, sectionId) {
     const thumbnails = section.querySelectorAll('.custom-product-detail__thumbnail');
-    const mainImage = section.querySelector(`#mainMedia-${sectionId}`);
+    const mainImage = section.querySelector(`#mainImage-${sectionId}`);
     const imageLoader = section.querySelector('[data-image-loader]');
     const imageOverlay = section.querySelector('[data-image-overlay]');
     const thumbnailsWrapper = section.querySelector('[data-thumbnails-wrapper]');
@@ -678,329 +210,24 @@
 
   // ===== 3. IMAGE MODAL =====
   function initImageModal(section, sectionId) {
+    const mainImage = section.querySelector(`#mainImage-${sectionId}`);
     const modal = section.querySelector(`#imageModal-${sectionId}`);
     const modalImage = section.querySelector(`#modalImage-${sectionId}`);
     const modalClose = section.querySelector('.custom-product-detail__modal-close');
 
-    if (!modal) return;
+    if (!mainImage || !modal || !modalImage) return;
 
-    // Hide/remove the original static modal image from the template
-    if (modalImage) {
-      modalImage.style.display = 'none';
-      // Or remove it completely
-      // modalImage.remove();
-    }
-
-    // Store current media array and index
-    let currentMediaArray = [];
-    let currentMediaIndex = 0;
-
-    // Create navigation arrows if they don't exist
-    let prevArrow = modal.querySelector('.custom-product-detail__modal-prev');
-    let nextArrow = modal.querySelector('.custom-product-detail__modal-next');
-
-    if (!prevArrow) {
-      prevArrow = document.createElement('button');
-      prevArrow.className = 'custom-product-detail__modal-prev';
-      prevArrow.innerHTML =
-        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      modal.appendChild(prevArrow);
-    }
-
-    if (!nextArrow) {
-      nextArrow = document.createElement('button');
-      nextArrow.className = 'custom-product-detail__modal-next';
-      nextArrow.innerHTML =
-        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      modal.appendChild(nextArrow);
-    }
-
-    // Function to open modal with specific media
-    function openModal(mediaArray, startIndex) {
-      currentMediaArray = mediaArray;
-      currentMediaIndex = startIndex;
-      showMedia(currentMediaIndex);
+    // Open modal on image click
+    mainImage.addEventListener('click', function () {
+      modalImage.src = this.src;
       modal.classList.add('custom-product-detail__modal--active');
       document.body.style.overflow = 'hidden';
-      updateArrowStates();
-    }
-
-    // Function to show media at specific index
-    function showMedia(index) {
-      const media = currentMediaArray[index];
-      if (!media) return;
-
-      const modalContent = modal.querySelector('.custom-product-detail__modal-content') || modalImage.parentElement;
-
-      // Get existing media and animate out with GSAP
-      const existingMedia = modalContent.querySelector('[data-modal-media]');
-      
-      // Remove existing preview images with GSAP fade
-      const existingPrevPreview = modalContent.querySelector('[data-modal-prev-preview]');
-      const existingNextPreview = modalContent.querySelector('[data-modal-next-preview]');
-      
-      // Simply remove existing media
-      if (existingMedia) {
-        if (existingMedia.tagName === 'VIDEO') existingMedia.pause();
-        existingMedia.remove();
-      }
-      if (existingPrevPreview) existingPrevPreview.remove();
-      if (existingNextPreview) existingNextPreview.remove();
-
-      // Create new media
-      if (media.media_type === 'image') {
-        const img = document.createElement('img');
-        img.id = `modalImage-${sectionId}`;
-        img.className = 'custom-product-detail__modal-image';
-        img.dataset.modalMedia = '';
-        const imageSrc = media.src && media.src.src ? media.src.src : media.src;
-        img.src = imageSrc;
-        img.alt = media.alt || 'Product image';
-        modalContent.insertBefore(img, modalClose);
-        
-        if (window.gsap) {
-          gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-        }
-      } else if (media.media_type === 'video' || media.media_type === 'external_video') {
-        const video = document.createElement('video');
-        video.id = `modalImage-${sectionId}`;
-        video.className = 'custom-product-detail__modal-image custom-product-detail__modal-video';
-        video.dataset.modalMedia = '';
-        video.controls = true;
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = false;
-
-        if (media.sources && media.sources.length > 0) {
-          media.sources.forEach((source) => {
-            const sourceEl = document.createElement('source');
-            sourceEl.src = source.url;
-            sourceEl.type = source.mime_type;
-            video.appendChild(sourceEl);
-          });
-        }
-
-        modalContent.insertBefore(video, modalClose);
-        video.load();
-        
-        if (window.gsap) {
-          gsap.fromTo(video, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-        }
-      }
-
-      // Show previews
-      showPreviews(index, modalContent, modalClose);
-    }
-
-    // Function to show preview thumbnails
-    function showPreviews(index, modalContent, modalClose) {
-      // Show previous preview image (if exists)
-      if (index > 0) {
-        const prevMedia = currentMediaArray[index - 1];
-        if (prevMedia) {
-          const prevPreviewWrapper = document.createElement('div');
-          prevPreviewWrapper.className =
-            'custom-product-detail__modal-preview custom-product-detail__modal-preview--prev';
-          prevPreviewWrapper.dataset.modalPrevPreview = '';
-
-          if (prevMedia.media_type === 'image') {
-            const prevPreview = document.createElement('img');
-            const prevSrc = prevMedia.src && prevMedia.src.src ? prevMedia.src.src : prevMedia.src;
-            prevPreview.src = prevSrc;
-            prevPreview.alt = 'Previous image';
-            prevPreview.style.width = '100%';
-            prevPreview.style.height = '100%';
-            prevPreview.style.objectFit = 'cover';
-            prevPreviewWrapper.appendChild(prevPreview);
-          } else if (prevMedia.media_type === 'video' || prevMedia.media_type === 'external_video') {
-            const prevPreview = document.createElement('img');
-            prevPreview.src = prevMedia.preview_image || '';
-            prevPreview.alt = 'Previous video';
-            prevPreview.style.width = '100%';
-            prevPreview.style.height = '100%';
-            prevPreview.style.objectFit = 'cover';
-            prevPreviewWrapper.appendChild(prevPreview);
-
-            // Add play icon overlay
-            const playIcon = document.createElement('div');
-            playIcon.className = 'custom-product-detail__modal-preview-play';
-            playIcon.innerHTML =
-              '<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.9)"/><path d="M10 8L16 12L10 16V8Z" fill="currentColor"/></svg>';
-            prevPreviewWrapper.appendChild(playIcon);
-          }
-
-          prevPreviewWrapper.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentMediaIndex--;
-            showMedia(currentMediaIndex);
-            updateArrowStates();
-          });
-          modalContent.insertBefore(prevPreviewWrapper, modalClose);
-          
-          // Animate in with GSAP
-          if (window.gsap) {
-            gsap.fromTo(prevPreviewWrapper,
-              { opacity: 0, x: -30 },
-              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' }
-            );
-          }
-        }
-      }
-
-      // Show next preview image (if exists)
-      if (index < currentMediaArray.length - 1) {
-        const nextMedia = currentMediaArray[index + 1];
-        if (nextMedia) {
-          const nextPreviewWrapper = document.createElement('div');
-          nextPreviewWrapper.className =
-            'custom-product-detail__modal-preview custom-product-detail__modal-preview--next';
-          nextPreviewWrapper.dataset.modalNextPreview = '';
-
-          if (nextMedia.media_type === 'image') {
-            const nextPreview = document.createElement('img');
-            const nextSrc = nextMedia.src && nextMedia.src.src ? nextMedia.src.src : nextMedia.src;
-            nextPreview.src = nextSrc;
-            nextPreview.alt = 'Next image';
-            nextPreview.style.width = '100%';
-            nextPreview.style.height = '100%';
-            nextPreview.style.objectFit = 'cover';
-            nextPreviewWrapper.appendChild(nextPreview);
-          } else if (nextMedia.media_type === 'video' || nextMedia.media_type === 'external_video') {
-            const nextPreview = document.createElement('img');
-            nextPreview.src = nextMedia.preview_image || '';
-            nextPreview.alt = 'Next video';
-            nextPreview.style.width = '100%';
-            nextPreview.style.height = '100%';
-            nextPreview.style.objectFit = 'cover';
-            nextPreviewWrapper.appendChild(nextPreview);
-
-            // Add play icon overlay
-            const playIcon = document.createElement('div');
-            playIcon.className = 'custom-product-detail__modal-preview-play';
-            playIcon.innerHTML =
-              '<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.9)"/><path d="M10 8L16 12L10 16V8Z" fill="currentColor"/></svg>';
-            nextPreviewWrapper.appendChild(playIcon);
-          }
-
-          nextPreviewWrapper.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentMediaIndex++;
-            showMedia(currentMediaIndex);
-            updateArrowStates();
-          });
-          modalContent.insertBefore(nextPreviewWrapper, modalClose);
-          
-          // Animate in with GSAP
-          if (window.gsap) {
-            gsap.fromTo(nextPreviewWrapper,
-              { opacity: 0, x: 30 },
-              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' }
-            );
-          }
-        }
-      }
-    }
-
-    // Function to update arrow visibility
-    function updateArrowStates() {
-      if (currentMediaIndex === 0) {
-        prevArrow.style.display = 'none';
-      } else {
-        prevArrow.style.display = 'flex';
-      }
-
-      if (currentMediaIndex === currentMediaArray.length - 1) {
-        nextArrow.style.display = 'none';
-      } else {
-        nextArrow.style.display = 'flex';
-      }
-    }
-
-    // Previous button
-    prevArrow.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (currentMediaIndex > 0) {
-        currentMediaIndex--;
-        showMedia(currentMediaIndex);
-        updateArrowStates();
-      }
     });
-
-    // Next button
-    nextArrow.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (currentMediaIndex < currentMediaArray.length - 1) {
-        currentMediaIndex++;
-        showMedia(currentMediaIndex);
-        updateArrowStates();
-      }
-    });
-
-    // Keyboard navigation
-    function handleKeydown(e) {
-      if (!modal.classList.contains('custom-product-detail__modal--active')) return;
-
-      if (e.key === 'ArrowLeft' && currentMediaIndex > 0) {
-        currentMediaIndex--;
-        showMedia(currentMediaIndex);
-        updateArrowStates();
-      } else if (e.key === 'ArrowRight' && currentMediaIndex < currentMediaArray.length - 1) {
-        currentMediaIndex++;
-        showMedia(currentMediaIndex);
-        updateArrowStates();
-      } else if (e.key === 'Escape') {
-        closeModal();
-      }
-    }
-
-    document.addEventListener('keydown', handleKeydown);
-
-    // Open modal on main media click
-    const mainMediaContainer = section.querySelector('.custom-product-detail__image-wrapper');
-    if (mainMediaContainer) {
-      mainMediaContainer.addEventListener('click', function (e) {
-        // Don't open if clicking on wishlist button
-        if (e.target.closest('.custom-product-detail__wishlist-btn')) return;
-
-        // Get current filtered media array
-        const productData = window.productData[`product-${sectionId}`];
-        const selectedMetalOption = section.querySelector('.custom-product-detail__metal-option--selected');
-
-        if (productData && selectedMetalOption) {
-          const selectedMetalType = selectedMetalOption.dataset.value;
-          const filteredMedia = filterMediaByVariant(productData, selectedMetalType);
-
-          // Find which media is currently displayed
-          const mainMedia = section.querySelector('[data-main-media]');
-          let startIndex = 0;
-
-          if (mainMedia && mainMedia.dataset.mediaType === 'image') {
-            const currentSrc = mainMedia.src;
-            startIndex = filteredMedia.findIndex((m) => {
-              if (m.media_type === 'image') {
-                const mediaSrc = m.src && m.src.src ? m.src.src : m.src;
-                return currentSrc.includes(mediaSrc.split('?')[0]);
-              }
-              return false;
-            });
-            if (startIndex === -1) startIndex = 0;
-          }
-
-          openModal(filteredMedia, startIndex);
-        }
-      });
-    }
 
     // Close modal
     function closeModal() {
       modal.classList.remove('custom-product-detail__modal--active');
       document.body.style.overflow = '';
-
-      // Pause video if playing
-      const video = modal.querySelector('video');
-      if (video) {
-        video.pause();
-      }
     }
 
     if (modalClose) {
@@ -1009,6 +236,12 @@
 
     modal.addEventListener('click', function (e) {
       if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('custom-product-detail__modal--active')) {
         closeModal();
       }
     });
@@ -1119,7 +352,7 @@
             productId: productId,
             isLiked: isNowLiked,
           },
-        }),
+        })
       );
     });
   }
@@ -1136,6 +369,7 @@
     // Purity selection
     purityOptions.forEach((option) => {
       option.addEventListener('click', function () {
+        console.log('🔧 PURITY CLICKED:', this.dataset.value);
         purityOptions.forEach((opt) => opt.classList.remove('custom-product-detail__purity-option--selected'));
         this.classList.add('custom-product-detail__purity-option--selected');
 
@@ -1152,6 +386,7 @@
     // Metal type selection
     metalOptions.forEach((option) => {
       option.addEventListener('click', function () {
+        console.log('🔧 METAL CLICKED:', this.dataset.value);
         metalOptions.forEach((opt) => opt.classList.remove('custom-product-detail__metal-option--selected'));
         this.classList.add('custom-product-detail__metal-option--selected');
 
@@ -1159,29 +394,6 @@
         const label = section.querySelector('[data-selected-value="2"]');
         if (label) {
           label.textContent = this.dataset.value;
-        }
-
-        // Filter media based on selected metal type
-        console.log('🔍 DEBUG: Metal type changed, filtering media');
-        try {
-          const selectedMetalType = this.dataset.value;
-          console.log('🔍 DEBUG: Selected metal type:', selectedMetalType);
-
-          const filteredMedia = filterMediaByVariant(productData, selectedMetalType);
-          console.log('🔍 DEBUG: Filtered media for metal type:', filteredMedia);
-          console.log(
-            '🔍 DEBUG: Filtered array breakdown:',
-            filteredMedia.map((m, i) => ({
-              position: i,
-              type: m.media_type,
-              id: m.id,
-              hasVideo: m.media_type === 'video' || m.media_type === 'external_video',
-            })),
-          );
-
-          updateMediaDisplay(section, sectionId, filteredMedia);
-        } catch (error) {
-          console.error('❌ Error filtering media on metal type change:', error);
         }
 
         updateSelectedVariant(section, productData, sectionId);
@@ -1209,6 +421,7 @@
     // Size selection from dropdown
     sizeOptions.forEach((option) => {
       option.addEventListener('click', function () {
+        console.log('🔧 SIZE CLICKED:', this.dataset.value);
         sizeOptions.forEach((opt) => opt.classList.remove('custom-product-detail__size-option--selected'));
         this.classList.add('custom-product-detail__size-option--selected');
 
@@ -1241,7 +454,13 @@
     const option2 = section.querySelector('.custom-product-detail__metal-option--selected')?.dataset.value;
     const option3 = section.querySelector('.custom-product-detail__size-option--selected')?.dataset.value;
 
+    console.log('🔍 UPDATE SELECTED VARIANT CALLED');
+    console.log('  Option 1 (Purity):', option1);
+    console.log('  Option 2 (Metal):', option2);
+    console.log('  Option 3 (Size):', option3);
+
     if (!option1 || !option2 || !option3) {
+      console.warn('⚠️ Not all options selected yet');
       return;
     }
 
@@ -1250,7 +469,17 @@
       return v.option1 === option1 && v.option2 === option2 && v.option3 === option3;
     });
 
+    console.log('🔎 Looking for variant with:', { option1, option2, option3 });
+    console.log('✅ Found variant:', variant);
+
     if (variant) {
+      console.log('📦 Variant details:', {
+        id: variant.id,
+        price: variant.price,
+        available: variant.available,
+        metafields: variant.metafields,
+      });
+
       // Store current variant
       window.currentVariant = variant;
 
@@ -1274,6 +503,9 @@
 
       // Update URL
       updateURL(variant.id);
+    } else {
+      console.error('❌ No matching variant found!');
+      console.log('📋 Available variants:', productData.variants);
     }
   }
 
@@ -1287,66 +519,114 @@
 
   // Update price breakup accordion
   function updatePriceBreakup(section, variant) {
+    console.log('💰 UPDATE PRICE BREAKUP CALLED');
+    console.log('  Variant metafields:', variant.metafields);
+
     // Metal row
     const metalLabel = section.querySelector('[data-metal-label]');
     const metalCharges = section.querySelector('[data-metal-charges]');
+
+    console.log('🔧 Metal Label Element:', metalLabel);
+    console.log('🔧 Metal Charges Element:', metalCharges);
 
     if (metalLabel && variant.option1 && variant.option2) {
       let labelText = `${variant.option1} ${variant.option2}`;
       if (variant.metafields && variant.metafields.metal_weight) {
         labelText += ` (${variant.metafields.metal_weight})`;
       }
+      console.log('  ✏️ Updating metal label to:', labelText);
       metalLabel.textContent = labelText;
     }
 
     if (metalCharges && variant.metafields && variant.metafields.metal_charges) {
       const chargesText = `₹${variant.metafields.metal_charges}`;
+      console.log('  ✏️ Updating metal charges to:', chargesText);
       metalCharges.textContent = chargesText;
+    } else {
+      console.warn('  ⚠️ Metal charges not updated:', {
+        hasElement: !!metalCharges,
+        hasMetafields: !!variant.metafields,
+        metalCharges: variant.metafields?.metal_charges,
+      });
     }
 
     // Diamond row
     const diamondLabel = section.querySelector('[data-diamond-label]');
     const diamondCharges = section.querySelector('[data-diamond-charges]');
 
+    console.log('💎 Diamond Label Element:', diamondLabel);
+    console.log('💎 Diamond Charges Element:', diamondCharges);
+
     if (diamondLabel && variant.metafields && variant.metafields.diamond_in_ct) {
       const labelText = `Diamonds (${variant.metafields.diamond_in_ct})`;
+      console.log('  ✏️ Updating diamond label to:', labelText);
       diamondLabel.textContent = labelText;
     }
 
     if (diamondCharges && variant.metafields && variant.metafields.diamond_charges) {
       const chargesText = `₹${variant.metafields.diamond_charges}`;
+      console.log('  ✏️ Updating diamond charges to:', chargesText);
       diamondCharges.textContent = chargesText;
+    } else {
+      console.warn('  ⚠️ Diamond charges not updated:', {
+        hasElement: !!diamondCharges,
+        hasMetafields: !!variant.metafields,
+        diamondCharges: variant.metafields?.diamond_charges,
+      });
     }
 
     // Making charges
     const makingCharges = section.querySelector('[data-making-charges]');
+    console.log('🛠️ Making Charges Element:', makingCharges);
 
     if (makingCharges && variant.metafields && variant.metafields.making_charges) {
       const chargesText = `₹${variant.metafields.making_charges}`;
+      console.log('  ✏️ Updating making charges to:', chargesText);
       makingCharges.textContent = chargesText;
+    } else {
+      console.warn('  ⚠️ Making charges not updated:', {
+        hasElement: !!makingCharges,
+        hasMetafields: !!variant.metafields,
+        makingCharges: variant.metafields?.making_charges,
+      });
     }
 
     // GST
     const gstLabel = section.querySelector('[data-gst-label]');
     const gstCharges = section.querySelector('[data-gst-charges]');
 
+    console.log('📊 GST Label Element:', gstLabel);
+    console.log('📊 GST Charges Element:', gstCharges);
+
     if (gstLabel && variant.metafields && variant.metafields.gst_rate) {
       const labelText = `GST (${variant.metafields.gst_rate}%)`;
+      console.log('  ✏️ Updating GST label to:', labelText);
       gstLabel.textContent = labelText;
     }
 
     if (gstCharges && variant.metafields && variant.metafields.gst_charges) {
       const chargesText = `₹${variant.metafields.gst_charges}`;
+      console.log('  ✏️ Updating GST charges to:', chargesText);
       gstCharges.textContent = chargesText;
+    } else {
+      console.warn('  ⚠️ GST charges not updated:', {
+        hasElement: !!gstCharges,
+        hasMetafields: !!variant.metafields,
+        gstCharges: variant.metafields?.gst_charges,
+      });
     }
 
     // Total
     const totalPrice = section.querySelector('[data-total-price]');
+    console.log('💵 Total Price Element:', totalPrice);
 
     if (totalPrice && variant.price) {
       const totalText = `₹${(variant.price / 100).toFixed(2)}`;
+      console.log('  ✏️ Updating total price to:', totalText);
       totalPrice.textContent = totalText;
     }
+
+    console.log('✅ PRICE BREAKUP UPDATE COMPLETE');
   }
 
   // Update product details cards
@@ -1524,15 +804,21 @@
 
           // Update cart icon bubble
           try {
+            console.log('🛒 Updating cart icon badge...');
+
             // Fetch cart data to get item count
             const cartDataResponse = await fetch('/cart.js');
             const cartData = await cartDataResponse.json();
+            console.log('  Cart data:', cartData);
+            console.log('  Item count:', cartData.item_count);
 
             // Update all cart count elements
             const cartCountElements = document.querySelectorAll('[data-cart-count]');
+            console.log('  Found cart count elements:', cartCountElements.length);
 
             cartCountElements.forEach((el) => {
               el.textContent = cartData.item_count;
+              console.log('  Updated cart count element:', el);
             });
 
             // Also try to update cart-icon-bubble if it exists
@@ -1547,6 +833,8 @@
                 cartIconBubble.innerHTML = newBubble.innerHTML;
               }
             }
+
+            console.log('🛒 Cart icon badge updated!');
           } catch (error) {
             console.error('Error updating cart icon:', error);
           }
@@ -1555,28 +843,54 @@
           const cartDrawer = document.querySelector('cart-drawer');
           const cartDrawerItems = document.querySelector('cart-drawer-items');
 
+          console.log('🛒 Updating cart drawer...');
+          console.log('  Cart drawer exists:', !!cartDrawer);
+          console.log('  Cart drawer items exists:', !!cartDrawerItems);
+
           if (cartDrawer && cartDrawerItems) {
             try {
               const cartResponse = await fetch(`${window.routes.cart_url}?section_id=cart-drawer`);
               const cartHtml = await cartResponse.text();
+              console.log('🛒 Fetched cart HTML (first 300 chars):', cartHtml.substring(0, 300));
 
               const parser = new DOMParser();
               const doc = parser.parseFromString(cartHtml, 'text/html');
 
               // Get the entire cart drawer from fetched HTML
               const newCartDrawer = doc.querySelector('cart-drawer');
+              console.log('🛒 New full cart drawer found:', !!newCartDrawer);
 
               if (newCartDrawer) {
                 // Get the inner content
                 const newInnerContent = newCartDrawer.querySelector('.drawer__inner');
                 const currentInnerContent = cartDrawer.querySelector('.drawer__inner');
 
+                console.log('🛒 New inner content found:', !!newInnerContent);
+                console.log('🛒 Current inner content found:', !!currentInnerContent);
+
                 if (newInnerContent && currentInnerContent) {
                   currentInnerContent.innerHTML = newInnerContent.innerHTML;
+                  console.log('🛒 Replaced drawer inner content');
                 }
 
                 // Remove is-empty class
+                const wasEmpty = cartDrawer.classList.contains('is-empty');
                 cartDrawer.classList.remove('is-empty');
+                console.log('🛒 Was empty:', wasEmpty, '→ Now has content');
+
+                // Check final state
+                const finalCartItems = cartDrawer.querySelectorAll('.cart-item');
+                console.log('🛒 Final cart items count in drawer:', finalCartItems.length);
+
+                // Log the actual HTML structure
+                const cartItemsWrapper = cartDrawer.querySelector('.drawer__cart-items-wrapper');
+                console.log('🛒 Cart items wrapper exists:', !!cartItemsWrapper);
+                if (cartItemsWrapper) {
+                  console.log(
+                    '🛒 Cart items wrapper HTML (first 500 chars):',
+                    cartItemsWrapper.innerHTML.substring(0, 500)
+                  );
+                }
               }
             } catch (error) {
               console.error('Error updating cart drawer:', error);
@@ -1672,6 +986,9 @@
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollPosition}px`;
       document.body.style.width = '100%';
+
+      console.log('🔒 Body scroll locked');
+      console.log('  Scroll position:', scrollPosition);
     }
 
     // Function to unlock body scroll
@@ -1681,31 +998,64 @@
       document.body.style.removeProperty('top');
       document.body.style.removeProperty('width');
       window.scrollTo(0, scrollPosition);
+
+      console.log('🔓 Body scroll unlocked');
     }
 
     // Fix: Manually handle wheel events and convert to scroll
     // Because position: fixed on body prevents default scroll behavior
     if (scrollContainer) {
-      scrollContainer.addEventListener(
-        'wheel',
-        function (e) {
-          // Manually scroll the container
-          e.preventDefault();
-          e.stopPropagation();
-          this.scrollTop += e.deltaY;
-        },
-        { passive: false },
-      );
+      console.log('📜 Size Guide Scroll Container Found - Adding manual scroll handler');
+
+      scrollContainer.addEventListener('scroll', function() {
+        console.log('✅ SCROLL EVENT ON CONTAINER:', this.scrollTop);
+      });
+
+      scrollContainer.addEventListener('wheel', function(e) {
+        console.log('🖱️ WHEEL EVENT ON CONTAINER:', e.deltaY, 'Target:', e.target.tagName);
+
+        // Manually scroll the container
+        e.preventDefault();
+        e.stopPropagation();
+        this.scrollTop += e.deltaY;
+
+        console.log('📜 Manual scroll applied. New scrollTop:', this.scrollTop);
+      }, { passive: false });
+
+      // Log computed styles after modal opens
+      setTimeout(() => {
+        const styles = window.getComputedStyle(scrollContainer);
+        console.log('📏 Scroll Container Styles:', {
+          position: styles.position,
+          overflow: styles.overflow,
+          overflowY: styles.overflowY,
+          height: styles.height,
+          maxHeight: styles.maxHeight
+        });
+      }, 100);
     }
 
     // Open modal on size guide link click
     sizeGuideTrigger.addEventListener('click', function (e) {
       e.preventDefault();
 
+      console.log('🚀 Opening Size Guide Modal');
+
       // Add loading state
       modal.classList.add('custom-product-detail__size-guide-modal--loading');
       modal.classList.add('custom-product-detail__size-guide-modal--active');
       lockBodyScroll();
+
+      // Debug: Check scroll container dimensions
+      setTimeout(() => {
+        if (scrollContainer) {
+          console.log('📐 Scroll Container Dimensions:', {
+            scrollHeight: scrollContainer.scrollHeight,
+            clientHeight: scrollContainer.clientHeight,
+            canScroll: scrollContainer.scrollHeight > scrollContainer.clientHeight
+          });
+        }
+      }, 500);
 
       // Check if images are loaded
       let loadedCount = 0;
