@@ -734,11 +734,11 @@
 
       // Get existing media and animate out with GSAP
       const existingMedia = modalContent.querySelector('[data-modal-media]');
-      
+
       // Remove existing preview images with GSAP fade
       const existingPrevPreview = modalContent.querySelector('[data-modal-prev-preview]');
       const existingNextPreview = modalContent.querySelector('[data-modal-next-preview]');
-      
+
       // Simply remove existing media
       if (existingMedia) {
         if (existingMedia.tagName === 'VIDEO') existingMedia.pause();
@@ -757,7 +757,7 @@
         img.src = imageSrc;
         img.alt = media.alt || 'Product image';
         modalContent.insertBefore(img, modalClose);
-        
+
         if (window.gsap) {
           gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
         }
@@ -782,7 +782,7 @@
 
         modalContent.insertBefore(video, modalClose);
         video.load();
-        
+
         if (window.gsap) {
           gsap.fromTo(video, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
         }
@@ -836,12 +836,13 @@
             updateArrowStates();
           });
           modalContent.insertBefore(prevPreviewWrapper, modalClose);
-          
+
           // Animate in with GSAP
           if (window.gsap) {
-            gsap.fromTo(prevPreviewWrapper,
+            gsap.fromTo(
+              prevPreviewWrapper,
               { opacity: 0, x: -30 },
-              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' }
+              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' },
             );
           }
         }
@@ -889,12 +890,13 @@
             updateArrowStates();
           });
           modalContent.insertBefore(nextPreviewWrapper, modalClose);
-          
+
           // Animate in with GSAP
           if (window.gsap) {
-            gsap.fromTo(nextPreviewWrapper,
+            gsap.fromTo(
+              nextPreviewWrapper,
               { opacity: 0, x: 30 },
-              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' }
+              { opacity: 0.5, x: 0, duration: 0.3, ease: 'power2.out' },
             );
           }
         }
