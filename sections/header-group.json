@@ -14,120 +14,84 @@
     "diamension-header": {
       "type": "custom-section-diamension-header",
       "blocks": {
-        "mobile_featured_card_BBHBAH": {
-          "type": "mobile_featured_card",
-          "settings": {
-            "image": "shopify://shop_images/neck-bracelet-in-red-background.png",
-            "heading": "EXPLORE PRODUCTS",
-            "link": "shopify://collections/custom-collections"
-          }
-        },
-        "mobile_featured_card_WncBRN": {
-          "type": "mobile_featured_card",
-          "settings": {
-            "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
-            "heading": "EXPLORE COLLECTIONS",
-            "link": "shopify://collections/custom-collections"
-          }
-        },
-        "mega_menu_card_item_3haykN": {
+        "mega_menu_card_item_hVdQNq": {
           "type": "mega_menu_card_item",
           "settings": {
             "menu_id": "brand",
-            "image": "shopify://shop_images/a-diamond-ring-on-tree-leaf-shiny.webp",
-            "heading": "OUR JOURNEY",
-            "link": "shopify://pages/about-v1"
-          }
-        },
-        "mega_menu_card_item_xLn3kK": {
-          "type": "mega_menu_card_item",
-          "settings": {
-            "menu_id": "brand",
-            "image": "shopify://shop_images/LAB09487_1_1.png",
+            "image": "shopify://shop_images/APF_6013.jpg",
             "heading": "OUR STORY",
             "link": "shopify://pages/about-v1"
           }
         },
-        "mega_menu_featured_card_4Y9VPL": {
+        "mega_menu_card_item_73UYeQ": {
+          "type": "mega_menu_card_item",
+          "settings": {
+            "menu_id": "brand",
+            "image": "shopify://shop_images/Screenshot_2025-08-18_at_5.04.37_PM_1.png",
+            "heading": "The Journey",
+            "link": "shopify://blogs/style-guide"
+          }
+        },
+        "mega_menu_featured_card_DniGYz": {
           "type": "mega_menu_featured_card",
           "settings": {
             "menu_id": "shop",
-            "image": "shopify://shop_images/image-corporate-comeback.png",
-            "heading": "AQUA COLLECTION",
-            "link": "shopify://collections/custom-collections"
+            "image": "shopify://shop_images/glamor-collection-image.webp",
+            "heading": "Sleek Minimal",
+            "link": "shopify://pages/studio-page-two"
           }
         },
-        "mega_menu_featured_card_PmR9pG": {
+        "mega_menu_featured_card_GRrQ7Y": {
           "type": "mega_menu_featured_card",
           "settings": {
             "menu_id": "shop",
-            "image": "shopify://shop_images/image-corporate-comeback-new.jpg",
-            "heading": "NEW ARRIVALS",
-            "link": "shopify://collections/custom-collections"
+            "image": "shopify://shop_images/lady-holding-wine-wearing-jewellery-ring.jpg",
+            "heading": "The Studio",
+            "link": "shopify://pages/the-studio"
           }
         },
-        "mega_menu_column_7PGryt": {
+        "mega_menu_column_JfgE9P": {
           "type": "mega_menu_column",
           "settings": {
             "menu_id": "shop",
-            "heading": "Policies",
-            "menu": "footer-policies"
+            "heading": "Wrist",
+            "menu": "wrist"
           }
         },
-        "mega_menu_column_bPfhXk": {
+        "mega_menu_column_yjjcRe": {
           "type": "mega_menu_column",
           "settings": {
             "menu_id": "shop",
-            "heading": "Contact",
-            "menu": "support-1"
+            "heading": "Rings",
+            "menu": "rings"
           }
         },
-        "mega_menu_column_h3W6Kp": {
+        "mega_menu_column_MrFLki": {
           "type": "mega_menu_column",
           "settings": {
             "menu_id": "shop",
-            "heading": "Follow",
-            "menu": "connect"
+            "heading": "Necklace",
+            "menu": "necklace"
           }
         },
-        "mega_menu_column_3qPWmU": {
+        "mega_menu_column_8JtXXR": {
           "type": "mega_menu_column",
           "settings": {
             "menu_id": "shop",
-            "heading": "About",
-            "menu": "support-1"
-          }
-        },
-        "mega_menu_column_NQHywB": {
-          "type": "mega_menu_column",
-          "settings": {
-            "menu_id": "shop",
-            "heading": "Categories",
-            "menu": "diamensions"
-          }
-        },
-        "mega_menu_column_gQjwDR": {
-          "type": "mega_menu_column",
-          "settings": {
-            "menu_id": "shop",
-            "heading": "Products",
-            "menu": "diamensions"
+            "heading": "Earrings",
+            "menu": "earrings"
           }
         }
       },
       "block_order": [
-        "mobile_featured_card_BBHBAH",
-        "mobile_featured_card_WncBRN",
-        "mega_menu_card_item_3haykN",
-        "mega_menu_card_item_xLn3kK",
-        "mega_menu_featured_card_4Y9VPL",
-        "mega_menu_featured_card_PmR9pG",
-        "mega_menu_column_7PGryt",
-        "mega_menu_column_bPfhXk",
-        "mega_menu_column_h3W6Kp",
-        "mega_menu_column_3qPWmU",
-        "mega_menu_column_NQHywB",
-        "mega_menu_column_gQjwDR"
+        "mega_menu_card_item_hVdQNq",
+        "mega_menu_card_item_73UYeQ",
+        "mega_menu_featured_card_DniGYz",
+        "mega_menu_featured_card_GRrQ7Y",
+        "mega_menu_column_JfgE9P",
+        "mega_menu_column_yjjcRe",
+        "mega_menu_column_MrFLki",
+        "mega_menu_column_8JtXXR"
       ],
       "settings": {
         "announcement_text": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k",
