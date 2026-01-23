@@ -22,6 +22,7 @@
           muted
           loop
           playsinline
+          preload="metadata"
           data-video-src="{{ first_block.settings.video_file | file_url }}"
           data-video-type="direct"
           poster="{% if first_block.settings.fallback_image != blank %}{{ first_block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
@@ -35,6 +36,7 @@
           muted
           loop
           playsinline
+          preload="metadata"
           data-video-src="{{ first_block.settings.video_direct_url }}"
           data-video-type="direct"
           poster="{% if first_block.settings.fallback_image != blank %}{{ first_block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"

@@ -63,6 +63,17 @@
 <div class="video-logo-hero-{{ section.id }}" data-header-trigger data-video-logo-animation>
   <div class="video-logo-hero__pinned-container">
     {%- if section.settings.video_url != blank -%}
+      {%- assign video_url = section.settings.video_url -%}
+      {%- assign video_type = 'video/mp4' -%}
+
+      {%- if video_url contains '.webm' -%}
+        {%- assign video_type = 'video/webm' -%}
+      {%- elsif video_url contains '.mp4' -%}
+        {%- assign video_type = 'video/mp4' -%}
+      {%- elsif video_url contains '.ogg' or video_url contains '.ogv' -%}
+        {%- assign video_type = 'video/ogg' -%}
+      {%- endif -%}
+
       <video
         class="video-logo-hero__video"
         autoplay
@@ -71,7 +82,7 @@
         playsinline
         preload="auto"
       >
-        <source src="{{ section.settings.video_url }}" type="video/mp4">
+        <source src="{{ video_url }}" type="{{ video_type }}">
         Your browser does not support the video tag.
       </video>
     {%- endif -%}
@@ -141,8 +152,8 @@
     {
       "type": "text",
       "id": "video_url",
-      "label": "Direct Video URL",
-      "info": "Enter the direct URL to your MP4 video file"
+      "label": "Video URL",
+      "info": "Direct URL to your video file (.mp4 for Safari, .webm for Chrome/Firefox). Format is auto-detected from file extension."
     },
     {
       "type": "header",

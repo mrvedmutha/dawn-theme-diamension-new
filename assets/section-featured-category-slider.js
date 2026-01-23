@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.enableAnimations = section.dataset.enableAnimations === 'true';
 
       // DOM Elements
+      this.videoContainer = section.querySelector('.custom-section-featured-category-slider__video-container');
       this.video = section.querySelector('.custom-section-featured-category-slider__video');
       this.videoEmbed = section.querySelector('.custom-section-featured-category-slider__video-embed');
       this.fallbackImage = section.querySelector('.custom-section-featured-category-slider__fallback-image');
@@ -31,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
       this.totalSlidesEl = section.querySelector('.custom-section-featured-category-slider__total-slides');
       this.progressBarFill = section.querySelector('.custom-section-featured-category-slider__progress-bar-fill');
       this.categoryTitleMobile = section.querySelector(
-        '.custom-section-featured-category-slider__category-title-mobile'
+        '.custom-section-featured-category-slider__category-title-mobile',
       );
       this.categoryDescriptionMobile = section.querySelector(
-        '.custom-section-featured-category-slider__category-description-mobile'
+        '.custom-section-featured-category-slider__category-description-mobile',
       );
       this.viewCollectionBtn = section.querySelector('.custom-section-featured-category-slider__view-collection-btn');
 
@@ -130,8 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         this.video.addEventListener('loadstart', () => {
-          // TODO: debugging video load start
-          console.log('Video loading started');
+          // Add loading class to prevent Safari glitch
+          this.video.classList.add('is-loading');
+        });
+
+        this.video.addEventListener('loadeddata', () => {
+          // Video data is loaded, dimensions are known
+          this.video.classList.remove('is-loading');
+        });
+
+        this.video.addEventListener('canplay', () => {
+          // Video is ready to play, safe to show
+          this.video.classList.remove('is-loading');
         });
       }
     }
@@ -256,32 +267,92 @@ document.addEventListener('DOMContentLoaded', () => {
             },
           });
 
+          // Fade out current video and show loading background
           tl.to(this.video, {
             opacity: 0,
-            duration: 0.2,
-            ease: 'power2.inOut',
+            duration: 0.15,
+            ease: 'power2.in',
           })
             .call(() => {
-              this.video.src = directVideoSrc;
+              // Show loading background
+              if (this.videoContainer) {
+                this.videoContainer.classList.add('is-loading');
+              }
+              this.video.classList.add('is-loading');
+
+              // Change source
+              const source = this.video.querySelector('source') || document.createElement('source');
+              source.src = directVideoSrc;
+              source.type = directVideoSrc.includes('.webm') ? 'video/webm' : 'video/mp4';
+
+              if (!this.video.querySelector('source')) {
+                this.video.appendChild(source);
+              }
+
               this.video.load();
-              this.video.play().catch((e) => {
-                console.warn('Video autoplay failed:', e);
-                this.handleVideoError();
-              });
+
+              // Wait for loadedmetadata (faster than canplay for Safari)
+              const onMetadataLoaded = () => {
+                // Hide loading background
+                if (this.videoContainer) {
+                  this.videoContainer.classList.remove('is-loading');
+                }
+                this.video.classList.remove('is-loading');
+                this.video.play().catch((e) => {
+                  console.warn('Video autoplay failed:', e);
+                  this.handleVideoError();
+                });
+              };
+
+              if (this.video.readyState >= 1) {
+                // Metadata already loaded
+                onMetadataLoaded();
+              } else {
+                // Wait for loadedmetadata event (Safari fix - faster than canplay)
+                this.video.addEventListener('loadedmetadata', onMetadataLoaded, { once: true });
+              }
             })
             .to(this.video, {
               opacity: 1,
-              duration: 0.2,
-              ease: 'power2.inOut',
+              duration: 0.25,
+              ease: 'power2.out',
             });
         } else {
           // No animation or GSAP not available
-          this.video.src = directVideoSrc;
+          this.video.style.opacity = '0';
+          if (this.videoContainer) {
+            this.videoContainer.classList.add('is-loading');
+          }
+          this.video.classList.add('is-loading');
+
+          const source = this.video.querySelector('source') || document.createElement('source');
+          source.src = directVideoSrc;
+          source.type = directVideoSrc.includes('.webm') ? 'video/webm' : 'video/mp4';
+
+          if (!this.video.querySelector('source')) {
+            this.video.appendChild(source);
+          }
+
           this.video.load();
-          this.video.play().catch((e) => {
-            console.warn('Video autoplay failed:', e);
-            this.handleVideoError();
-          });
+
+          // Wait for metadata (Safari fix - faster than canplay)
+          const onMetadataLoaded = () => {
+            if (this.videoContainer) {
+              this.videoContainer.classList.remove('is-loading');
+            }
+            this.video.classList.remove('is-loading');
+            this.video.style.opacity = '1';
+            this.video.play().catch((e) => {
+              console.warn('Video autoplay failed:', e);
+              this.handleVideoError();
+            });
+          };
+
+          if (this.video.readyState >= 1) {
+            onMetadataLoaded();
+          } else {
+            this.video.addEventListener('loadedmetadata', onMetadataLoaded, { once: true });
+          }
         }
       } else if (this.videoEmbed && videoYouTubeVimeo) {
         // Handle YouTube/Vimeo embed
@@ -369,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const categoryElement = this.section.querySelector(`[data-category-id="${categoryId}"]`);
       const categoryNamesContainer = this.section.querySelector(
-        '.custom-section-featured-category-slider__category-names'
+        '.custom-section-featured-category-slider__category-names',
       );
 
       if (!categoryElement || !categoryNamesContainer) return;
