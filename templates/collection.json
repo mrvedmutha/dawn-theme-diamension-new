@@ -12,13 +12,20 @@
     "custom-product-collection-diamension": {
       "type": "custom-section-product-collection-diamension",
       "settings": {
-        "breadcrumb_menu": "",
+        "breadcrumb_menu": "main-menu",
         "products_per_page": 20,
         "show_filter_button": true,
         "show_sort_button": true,
-        "enable_ajax_loading": true
+        "enable_ajax_loading": true,
+        "filter_style_options": "Classic, Minimal, Statement, Everyday",
+        "show_price_filter": true,
+        "filter_collections_options": "Radial Collection, Aqua Collection, Crystal Collection",
+        "filter_shape_options": "Oval, Emerald, Round, Pear, Asscher, Cushion, Radiant, Heart",
+        "filter_categories_options": "Earrings, Necklaces, Rings, Pendants, Bracelets, New Arrivals"
       }
     }
   },
-  "order": ["custom-product-collection-diamension"]
+  "order": [
+    "custom-product-collection-diamension"
+  ]
 }

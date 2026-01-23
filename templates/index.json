@@ -13,7 +13,7 @@
       "type": "custom-video-logo-animation-hero",
       "name": "Video Logo Animation Hero",
       "settings": {
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/7bde24f41a2a42189065fe336cff2efc.webm",
         "logo": "shopify://shop_images/diamesnion-new-logo-white.svg"
       }
     },
@@ -146,7 +146,7 @@
       "settings": {
         "section_heading": "New Arrivals",
         "sidebar_image": "shopify://shop_images/neck-jewellery.jpg",
-        "collection": "new-arrivals",
+        "collection": "earrings",
         "products_limit": 10,
         "show_heading": true,
         "heading_alignment": "left"
