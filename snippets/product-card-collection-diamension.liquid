@@ -8,15 +8,24 @@
   assign product_url = product.url
   assign product_title = product.title
   assign product_price = product.price | money
+  assign product_price_raw = product.price | divided_by: 100.0
   assign product_image = product.featured_image
   assign product_id = product.id
+  assign product_type = product.type
+  assign product_tags = product.tags | join: ','
   assign is_new_arrival = false
   if product.tags contains 'new-arrival' or product.tags contains 'New Arrival'
     assign is_new_arrival = true
   endif
 %}
 
-<div class="product-card-collection-diamension" data-product-id="{{ product_id }}">
+<div
+  class="product-card-collection-diamension"
+  data-product-id="{{ product_id }}"
+  data-product-tags="{{ product_tags }}"
+  data-product-type="{{ product_type }}"
+  data-product-price="{{ product_price_raw }}"
+>
   <a href="{{ product_url }}" class="product-card-collection-diamension__link">
     <div class="product-card-collection-diamension__image-wrapper">
       {% if product_image %}
