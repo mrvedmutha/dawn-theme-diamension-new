@@ -13,7 +13,8 @@
     selectors: {
       section: '.custom-section-shop-collection-arch',
       videoContainer: '.js-video-container',
-      parallaxImages: '.js-parallax-image'
+      parallaxImages: '.js-parallax-image',
+      ctaButton: '.custom-section-shop-collection-arch__cta'
     },
     breakpoints: {
       tablet: 1024
@@ -199,6 +200,46 @@
   }
 
   // ============================================================================
+  // CTA Animation Handler
+  // ============================================================================
+  class CTAAnimationHandler {
+    constructor(section) {
+      this.ctaButtons = section.querySelectorAll(CONFIG.selectors.ctaButton);
+      this.init();
+    }
+
+    init() {
+      this.ctaButtons.forEach(button => {
+        // Mouse enter: trigger exit-enter animation
+        button.addEventListener('mouseenter', () => {
+          // Remove any existing animation classes
+          button.classList.remove('animate-exit');
+          // Add enter animation class
+          button.classList.add('animate-enter');
+
+          // Remove class after animation completes
+          setTimeout(() => {
+            button.classList.remove('animate-enter');
+          }, 800); // Match the animation duration
+        });
+
+        // Mouse leave: trigger exit-enter animation
+        button.addEventListener('mouseleave', () => {
+          // Remove any existing animation classes
+          button.classList.remove('animate-enter');
+          // Add exit animation class
+          button.classList.add('animate-exit');
+
+          // Remove class after animation completes
+          setTimeout(() => {
+            button.classList.remove('animate-exit');
+          }, 800); // Match the animation duration
+        });
+      });
+    }
+  }
+
+  // ============================================================================
   // Section Manager
   // ============================================================================
   class ShopCollectionArchSection {
@@ -206,6 +247,7 @@
       this.section = section;
       this.videoContainers = section.querySelectorAll(CONFIG.selectors.videoContainer);
       this.parallaxHandler = null;
+      this.ctaHandler = null;
 
       this.init();
       this.bindEvents();
@@ -221,6 +263,9 @@
       if (window.innerWidth > CONFIG.breakpoints.tablet) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       }
+
+      // Initialize CTA animations
+      this.ctaHandler = new CTAAnimationHandler(this.section);
     }
 
     bindEvents() {

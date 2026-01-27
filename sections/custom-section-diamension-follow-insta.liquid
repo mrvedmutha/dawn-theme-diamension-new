@@ -82,14 +82,16 @@
 
       {%- comment -%} CTA Link {%- endcomment -%}
       {%- if cta_text != blank and cta_url != blank -%}
-        <a
-          href="{{ cta_url }}"
-          class="custom-section-diamension-follow-insta__cta"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ cta_text }}
-        </a>
+        <div class="custom-section-diamension-follow-insta__cta-wrapper">
+          <a
+            href="{{ cta_url }}"
+            class="custom-section-diamension-follow-insta__cta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ cta_text }}
+          </a>
+        </div>
       {%- endif -%}
     </div>
   </div>

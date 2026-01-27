@@ -40,6 +40,7 @@
     init() {
       this.initRevealAnimations();
       this.initParallax();
+      this.initCTAAnimation();
     }
 
     initRevealAnimations() {
@@ -283,6 +284,30 @@
           },
         );
       }
+    }
+
+    initCTAAnimation() {
+      if (!this.cta) return;
+
+      // Mouse enter: trigger exit-enter animation
+      this.cta.addEventListener('mouseenter', () => {
+        this.cta.classList.remove('animate-exit');
+        this.cta.classList.add('animate-enter');
+
+        setTimeout(() => {
+          this.cta.classList.remove('animate-enter');
+        }, 800);
+      });
+
+      // Mouse leave: trigger exit-enter animation
+      this.cta.addEventListener('mouseleave', () => {
+        this.cta.classList.remove('animate-enter');
+        this.cta.classList.add('animate-exit');
+
+        setTimeout(() => {
+          this.cta.classList.remove('animate-exit');
+        }, 800);
+      });
     }
 
     onUnload() {

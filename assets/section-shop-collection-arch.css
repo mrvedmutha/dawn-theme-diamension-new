@@ -233,16 +233,49 @@
   font-size: var(--sca-cta-size);
   line-height: var(--sca-cta-line-height);
   color: var(--sca-color-text-light);
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-  transition: opacity var(--sca-transition-default);
+  text-decoration: none;
   cursor: pointer;
   display: inline-block;
   white-space: nowrap;
+  position: relative;
 }
 
-.custom-section-shop-collection-arch__cta:hover {
-  opacity: 0.8;
+/* Animated underline */
+.custom-section-shop-collection-arch__cta::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--sca-color-text-light);
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Animation for both mouse enter and leave (exit right, re-enter left) */
+@keyframes underline-exit-enter {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.custom-section-shop-collection-arch__cta.animate-enter::after,
+.custom-section-shop-collection-arch__cta.animate-exit::after {
+  animation: underline-exit-enter 0.8s ease forwards;
 }
 
 /* ============================================================================

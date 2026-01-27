@@ -63,6 +63,7 @@
     const section = document.querySelector('.image-hero-section');
     if (!section) return;
 
+    // Intersection Observer for text reveal animation
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -79,6 +80,30 @@
     );
 
     observer.observe(section);
+
+    // CTA button underline animation
+    const ctaButton = section.querySelector('.image-hero-section__cta');
+    if (ctaButton) {
+      // Mouse enter: trigger exit-enter animation
+      ctaButton.addEventListener('mouseenter', () => {
+        ctaButton.classList.remove('animate-exit');
+        ctaButton.classList.add('animate-enter');
+
+        setTimeout(() => {
+          ctaButton.classList.remove('animate-enter');
+        }, 800);
+      });
+
+      // Mouse leave: trigger exit-enter animation
+      ctaButton.addEventListener('mouseleave', () => {
+        ctaButton.classList.remove('animate-enter');
+        ctaButton.classList.add('animate-exit');
+
+        setTimeout(() => {
+          ctaButton.classList.remove('animate-exit');
+        }, 800);
+      });
+    }
   })();
 </script>
 

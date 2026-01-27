@@ -81,15 +81,49 @@
   line-height: 20px;
   color: #183754;
   text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-offset: 25%;
-  text-decoration-color: #183754;
+  text-decoration: none;
   z-index: 2;
-  transition: opacity 0.3s ease;
+  cursor: pointer;
+  padding-top: 4px;
+  padding-bottom: 8px;
 }
 
-.headline-ring-collection__cta:hover {
-  opacity: 0.7;
+/* Animated underline */
+.headline-ring-collection__cta::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #183754;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Animation for both mouse enter and leave (exit right, re-enter left) */
+@keyframes underline-exit-enter {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.headline-ring-collection__cta.animate-enter::after,
+.headline-ring-collection__cta.animate-exit::after {
+  animation: underline-exit-enter 0.8s ease forwards;
 }
 
 /* Product Image

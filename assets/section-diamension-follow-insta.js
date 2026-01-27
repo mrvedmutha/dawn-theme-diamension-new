@@ -13,7 +13,8 @@
   const CONFIG = {
     selectors: {
       section: '.custom-section-diamension-follow-insta',
-      parallaxImages: '.js-parallax-image'
+      parallaxImages: '.js-parallax-image',
+      ctaButton: '.custom-section-diamension-follow-insta__cta'
     },
     breakpoints: {
       desktop: 1024
@@ -77,12 +78,47 @@
   }
 
   // ============================================================================
+  // CTA Animation Handler
+  // ============================================================================
+  class CTAAnimationHandler {
+    constructor(section) {
+      this.ctaButtons = section.querySelectorAll(CONFIG.selectors.ctaButton);
+      this.init();
+    }
+
+    init() {
+      this.ctaButtons.forEach(button => {
+        // Mouse enter: trigger exit-enter animation
+        button.addEventListener('mouseenter', () => {
+          button.classList.remove('animate-exit');
+          button.classList.add('animate-enter');
+
+          setTimeout(() => {
+            button.classList.remove('animate-enter');
+          }, 800);
+        });
+
+        // Mouse leave: trigger exit-enter animation
+        button.addEventListener('mouseleave', () => {
+          button.classList.remove('animate-enter');
+          button.classList.add('animate-exit');
+
+          setTimeout(() => {
+            button.classList.remove('animate-exit');
+          }, 800);
+        });
+      });
+    }
+  }
+
+  // ============================================================================
   // Section Manager
   // ============================================================================
   class DiamensionFollowInstaSection {
     constructor(section) {
       this.section = section;
       this.parallaxHandler = null;
+      this.ctaHandler = null;
 
       this.init();
       this.bindEvents();
@@ -93,6 +129,9 @@
       if (window.innerWidth > CONFIG.breakpoints.desktop) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       }
+
+      // Initialize CTA animations
+      this.ctaHandler = new CTAAnimationHandler(this.section);
     }
 
     bindEvents() {
