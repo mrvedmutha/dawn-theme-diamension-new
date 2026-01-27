@@ -254,7 +254,7 @@
         "headline_line_2": "WITHOUT",
         "headline_line_3": "COMPROMISE",
         "cta_text": "Our story",
-        "cta_url": "shopify://pages/contact",
+        "cta_url": "shopify://pages/about",
         "product_image": "shopify://shop_images/CBR40092_Yg_F10_1_1.png",
         "paragraph_content": "Our diamonds are chemically, physically, and optically identical to mined diamonds — the only difference is the journey. Crafted with cutting-edge technology and ethical values, each stone delivers pure beauty without the environmental and financial cost.",
         "feature_1_icon": "shopify://shop_images/three-circle-union-icon.svg",
@@ -267,13 +267,45 @@
     },
     "custom_section_diamension_follow_insta_rz3x9q": {
       "type": "custom-section-diamension-follow-insta",
+      "blocks": {
+        "instagram_image_cLEMVa": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/diamension_insta_4.jpg",
+            "link_url": "https://www.instagram.com/p/DSuNf4Dkz8h/?img_index=1"
+          }
+        },
+        "instagram_image_q9Ytrz": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/diamension_insta_3.jpg",
+            "link_url": "https://www.instagram.com/p/DTNJ56FE5Hs/?img_index=1"
+          }
+        },
+        "instagram_image_9YkDX4": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/diamension_insta_2.jpg",
+            "link_url": "https://www.instagram.com/p/DThthb2k6dK/?img_index=1"
+          }
+        },
+        "instagram_image_bNFfGK": {
+          "type": "instagram_image",
+          "settings": {
+            "image": "shopify://shop_images/diamension_insta_1.jpg",
+            "link_url": "https://www.instagram.com/p/DTxTSMWEzop/?img_index=1"
+          }
+        }
+      },
+      "block_order": [
+        "instagram_image_cLEMVa",
+        "instagram_image_q9Ytrz",
+        "instagram_image_9YkDX4",
+        "instagram_image_bNFfGK"
+      ],
       "name": "Diamension Follow Instagram",
       "settings": {
         "headline_text": "FOLLOW US ON INSTAGRAM",
-        "image_1": "shopify://shop_images/Frame_1834_32a232d0-a97c-422c-ab7b-75ee04c6241c.png",
-        "image_2": "shopify://shop_images/Frame_31.png",
-        "image_3": "shopify://shop_images/Frame_32_1.png",
-        "image_4": "shopify://shop_images/Frame_33.png",
         "cta_text": "Instagram",
         "cta_url": "https://www.instagram.com/diamension.official/",
         "show_decorative_ellipse": true

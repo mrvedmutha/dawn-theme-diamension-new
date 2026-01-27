@@ -50,28 +50,12 @@
             "link": "shopify://pages/the-studio"
           }
         },
-        "mega_menu_column_JfgE9P": {
-          "type": "mega_menu_column",
-          "settings": {
-            "menu_id": "shop",
-            "heading": "Wrist",
-            "menu": "wrist"
-          }
-        },
         "mega_menu_column_yjjcRe": {
           "type": "mega_menu_column",
           "settings": {
             "menu_id": "shop",
             "heading": "Rings",
             "menu": "rings"
-          }
-        },
-        "mega_menu_column_MrFLki": {
-          "type": "mega_menu_column",
-          "settings": {
-            "menu_id": "shop",
-            "heading": "Necklace",
-            "menu": "necklace"
           }
         },
         "mega_menu_column_8JtXXR": {
@@ -81,6 +65,22 @@
             "heading": "Earrings",
             "menu": "earrings"
           }
+        },
+        "mega_menu_column_JfgE9P": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Bracelets",
+            "menu": "wrist"
+          }
+        },
+        "mega_menu_column_MrFLki": {
+          "type": "mega_menu_column",
+          "settings": {
+            "menu_id": "shop",
+            "heading": "Pendants",
+            "menu": "necklace"
+          }
         }
       },
       "block_order": [
@@ -88,10 +88,10 @@
         "mega_menu_card_item_73UYeQ",
         "mega_menu_featured_card_DniGYz",
         "mega_menu_featured_card_GRrQ7Y",
-        "mega_menu_column_JfgE9P",
         "mega_menu_column_yjjcRe",
-        "mega_menu_column_MrFLki",
-        "mega_menu_column_8JtXXR"
+        "mega_menu_column_8JtXXR",
+        "mega_menu_column_JfgE9P",
+        "mega_menu_column_MrFLki"
       ],
       "settings": {
         "announcement_text": "FREE STANDARD SHIPPING WITHIN THE EUROPEAN UNION ON ORDERS OVER Rs. 50k",
