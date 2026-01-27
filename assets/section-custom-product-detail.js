@@ -118,46 +118,40 @@
       return productData.media;
     }
 
-    // Get the ONE unique variant URL to search for
-    const targetVariantUrl = variantImageSrcs[0];
-    console.log('  🎯 Target Variant URL:', targetVariantUrl);
+    // Get ALL variant URLs from the entire product (all metal types)
+    const allProductVariantUrls = productData.variants
+      .map((v) => v.featured_image_src)
+      .filter((src) => src != null && typeof src === 'string');
+    const allNormalizedVariantUrls = [...new Set(allProductVariantUrls.map((url) => url.split('?')[0].replace(/^https?:/, '')))];
+    console.log('  🌍 All Product Variant URLs:', allNormalizedVariantUrls);
 
-    // Find where this URL matches in product.media[].src.src
+    // Normalize selected variant URLs for comparison
+    const normalizedSelectedVariantUrls = variantImageSrcs.map((url) => url.split('?')[0].replace(/^https?:/, ''));
+    console.log('  🎯 Selected Variant URLs:', normalizedSelectedVariantUrls);
+
+    // Find where the FIRST selected variant URL matches in product.media[]
     let matchStartIndex = -1;
     for (let i = 0; i < productData.media.length; i++) {
       const media = productData.media[i];
       if (media.media_type === 'image' && media.src && media.src.src) {
-        const mediaSrc = media.src.src;
-        // Direct URL comparison (ignoring query params)
-        const mediaUrl = mediaSrc.split('?')[0];
-        const variantUrl = targetVariantUrl.split('?')[0];
-
-        if (mediaUrl === variantUrl) {
+        const normalizedMediaUrl = media.src.src.split('?')[0].replace(/^https?:/, '');
+        if (normalizedSelectedVariantUrls.includes(normalizedMediaUrl)) {
           matchStartIndex = i;
-          console.log(`  ✅ MATCH FOUND at product.media[${i}]`);
-          console.log(`     Media URL: ${mediaSrc}`);
+          console.log(`  ✅ FIRST MATCH at position ${i}`);
           break;
         }
       }
     }
 
     if (matchStartIndex === -1) {
-      console.warn('  ⚠️ No media matched variant URL, showing all media');
+      console.warn('  ⚠️ No media matched selected variant URL, showing all media');
       return productData.media;
     }
 
-    // Extract base pattern from matched filename (everything before the last number)
-    const matchedFilename = productData.media[matchStartIndex].src.src.split('/').pop().split('?')[0];
-    console.log('  📁 Matched Filename:', matchedFilename);
-
-    // Extract pattern: remove file extension and last numeric part
-    // E.g., "CLR10427_R_1.jpg" -> "CLR10427_R_"
-    const basePattern = matchedFilename.replace(/\.(jpg|png|webp|jpeg)$/i, '').replace(/_\d+$/, '_');
-    console.log('  🔍 Extracted Pattern:', basePattern);
-
-    // Collect images sequentially starting from match position
+    // From match position, collect images sequentially
+    // Stop when hitting an image that matches a DIFFERENT variant URL
     const matchedImages = [];
-    console.log('  📦 Starting sequential collection from index', matchStartIndex);
+    console.log('  📦 Collecting images sequentially from position', matchStartIndex);
 
     for (let i = matchStartIndex; i < productData.media.length; i++) {
       const media = productData.media[i];
@@ -168,19 +162,36 @@
         continue;
       }
 
-      // Check if this image matches the pattern
-      const currentFilename = media.src.src.split('/').pop().split('?')[0];
-      const matchesPattern = currentFilename.includes(basePattern);
+      if (media.src && media.src.src) {
+        const mediaSrc = media.src.src;
+        const normalizedMediaUrl = mediaSrc.split('?')[0].replace(/^https?:/, '');
+        const filename = mediaSrc.split('/').pop().split('?')[0];
 
-      console.log(`  🔍 Position ${i}: ${currentFilename} -> ${matchesPattern ? '✅ MATCH' : '❌ NO MATCH'}`);
+        // Check if this image matches ANY variant URL (any metal type)
+        const matchesAnyVariant = allNormalizedVariantUrls.includes(normalizedMediaUrl);
 
-      if (matchesPattern) {
-        matchedImages.push(media);
-      } else {
-        // Hit a non-matching image, stop sequential collection
-        console.log(`  🛑 Stopping - hit non-matching image`);
-        break;
+        if (matchesAnyVariant) {
+          // Check if it's OUR selected variant or a DIFFERENT one
+          const matchesOurVariant = normalizedSelectedVariantUrls.includes(normalizedMediaUrl);
+
+          if (matchesOurVariant) {
+            console.log(`  ✅ Position ${i}: ${filename} -> MATCH (our variant)`);
+            matchedImages.push(media);
+          } else {
+            console.log(`  🛑 Position ${i}: ${filename} -> STOP (different variant)`);
+            break; // Hit a different variant, stop collecting
+          }
+        } else {
+          // Not a variant URL, so it's a generic/continuation image
+          console.log(`  ➕ Position ${i}: ${filename} -> COLLECT (continuation)`);
+          matchedImages.push(media);
+        }
       }
+    }
+
+    if (matchedImages.length === 0) {
+      console.warn('  ⚠️ No images collected, showing all media');
+      return productData.media;
     }
 
     console.log('  📊 Total Matched Images:', matchedImages.length);

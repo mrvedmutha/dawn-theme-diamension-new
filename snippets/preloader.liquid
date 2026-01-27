@@ -62,6 +62,14 @@
 
   <script>
     (function() {
+      // Force scroll to top immediately - before anything else
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
       const preloader = document.getElementById('preloader');
       const percentageEl = document.getElementById('preloader-percentage');
 
@@ -69,11 +77,27 @@
 
       // Prevent scrolling while preloader is active
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+
+      // Prevent scroll events and wheel events during preloader
+      const preventScroll = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      window.addEventListener('scroll', preventScroll, { passive: false });
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
 
       let currentProgress = 0;
       let targetProgress = 0;
       let animationFrame;
       let isComplete = false;
+
+      // Track viewport dimensions for reload on resize
+      let initialWidth = window.innerWidth;
+      let initialHeight = window.innerHeight;
 
       // Track loading resources
       const images = document.querySelectorAll('img:not(.preloader__image):not(.preloader__logo img)');
@@ -105,6 +129,11 @@
       function hidePreloader() {
         cancelAnimationFrame(animationFrame);
 
+        // Remove scroll prevention
+        window.removeEventListener('scroll', preventScroll);
+        window.removeEventListener('wheel', preventScroll);
+        window.removeEventListener('touchmove', preventScroll);
+
         // Use GSAP to animate preloader sliding up
         if (typeof gsap !== 'undefined') {
           gsap.to(preloader, {
@@ -115,6 +144,10 @@
               preloader.classList.add('is-hidden');
               preloader.style.display = 'none';
               document.body.style.overflow = '';
+              document.documentElement.style.overflow = '';
+
+              // Ensure we're at top after preloader hides
+              window.scrollTo(0, 0);
             }
           });
         } else {
@@ -125,6 +158,10 @@
             preloader.classList.add('is-hidden');
             preloader.style.display = 'none';
             document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+
+            // Ensure we're at top after preloader hides
+            window.scrollTo(0, 0);
           }, 800);
         }
       }
@@ -170,6 +207,25 @@
         // Ensure we reach 100%
         updateProgress(100);
         isComplete = true;
+      });
+
+      // Viewport resize detection - reload page if viewport size changes significantly
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          const currentWidth = window.innerWidth;
+          const currentHeight = window.innerHeight;
+
+          // Check if viewport changed significantly (more than 50px difference)
+          const widthDiff = Math.abs(currentWidth - initialWidth);
+          const heightDiff = Math.abs(currentHeight - initialHeight);
+
+          if (widthDiff > 50 || heightDiff > 50) {
+            // Reload the page
+            window.location.reload();
+          }
+        }, 300); // Debounce resize events
       });
 
       // Safety timeout - hide preloader after max time even if something fails
