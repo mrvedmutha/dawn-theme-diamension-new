@@ -283,6 +283,15 @@
   }
 }
 
+/* Image Link
+   ========================================================================== */
+.custom-section-diamension-follow-insta__image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
 /* Images
    ========================================================================== */
 .custom-section-diamension-follow-insta__image {

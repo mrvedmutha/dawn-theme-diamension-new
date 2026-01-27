@@ -4,10 +4,6 @@
   assign headline_text = section.settings.headline_text
   assign cta_text = section.settings.cta_text
   assign cta_url = section.settings.cta_url
-  assign image_1 = section.settings.image_1
-  assign image_2 = section.settings.image_2
-  assign image_3 = section.settings.image_3
-  assign image_4 = section.settings.image_4
   assign show_decorative_ellipse = section.settings.show_decorative_ellipse
 -%}
 
@@ -42,77 +38,46 @@
         Total grid width: 1144px, centered with 64px margins
       {%- endcomment -%}
       <div class="custom-section-diamension-follow-insta__images">
-        {%- comment -%} Image 1 (Odd, z-index: 2, left: 0) {%- endcomment -%}
-        {%- if image_1 != blank -%}
-          <div class="custom-section-diamension-follow-insta__image-wrapper custom-section-diamension-follow-insta__image-wrapper--1">
-            <img
-              src="{{ image_1 | image_url: width: 760 }}"
-              srcset="
-                {{ image_1 | image_url: width: 380 }} 380w,
-                {{ image_1 | image_url: width: 570 }} 570w,
-                {{ image_1 | image_url: width: 760 }} 760w
-              "
-              sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
-              alt="{{ image_1.alt | default: 'Instagram image 1' }}"
-              class="custom-section-diamension-follow-insta__image js-parallax-image"
-              loading="lazy"
-            >
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Image 2 (Even, z-index: 3, left: 272px) {%- endcomment -%}
-        {%- if image_2 != blank -%}
-          <div class="custom-section-diamension-follow-insta__image-wrapper custom-section-diamension-follow-insta__image-wrapper--2">
-            <img
-              src="{{ image_2 | image_url: width: 760 }}"
-              srcset="
-                {{ image_2 | image_url: width: 380 }} 380w,
-                {{ image_2 | image_url: width: 570 }} 570w,
-                {{ image_2 | image_url: width: 760 }} 760w
-              "
-              sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
-              alt="{{ image_2.alt | default: 'Instagram image 2' }}"
-              class="custom-section-diamension-follow-insta__image js-parallax-image"
-              loading="lazy"
-            >
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Image 3 (Odd, z-index: 4, left: 544px) {%- endcomment -%}
-        {%- if image_3 != blank -%}
-          <div class="custom-section-diamension-follow-insta__image-wrapper custom-section-diamension-follow-insta__image-wrapper--3">
-            <img
-              src="{{ image_3 | image_url: width: 760 }}"
-              srcset="
-                {{ image_3 | image_url: width: 380 }} 380w,
-                {{ image_3 | image_url: width: 570 }} 570w,
-                {{ image_3 | image_url: width: 760 }} 760w
-              "
-              sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
-              alt="{{ image_3.alt | default: 'Instagram image 3' }}"
-              class="custom-section-diamension-follow-insta__image js-parallax-image"
-              loading="lazy"
-            >
-          </div>
-        {%- endif -%}
-
-        {%- comment -%} Image 4 (Even, z-index: 5, left: 816px) {%- endcomment -%}
-        {%- if image_4 != blank -%}
-          <div class="custom-section-diamension-follow-insta__image-wrapper custom-section-diamension-follow-insta__image-wrapper--4">
-            <img
-              src="{{ image_4 | image_url: width: 760 }}"
-              srcset="
-                {{ image_4 | image_url: width: 380 }} 380w,
-                {{ image_4 | image_url: width: 570 }} 570w,
-                {{ image_4 | image_url: width: 760 }} 760w
-              "
-              sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
-              alt="{{ image_4.alt | default: 'Instagram image 4' }}"
-              class="custom-section-diamension-follow-insta__image js-parallax-image"
-              loading="lazy"
-            >
-          </div>
-        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'instagram_image' and block.settings.image != blank -%}
+            <div class="custom-section-diamension-follow-insta__image-wrapper custom-section-diamension-follow-insta__image-wrapper--{{ forloop.index }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.link_url != blank -%}
+                <a
+                  href="{{ block.settings.link_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="custom-section-diamension-follow-insta__image-link"
+                >
+                  <img
+                    src="{{ block.settings.image | image_url: width: 760 }}"
+                    srcset="
+                      {{ block.settings.image | image_url: width: 380 }} 380w,
+                      {{ block.settings.image | image_url: width: 570 }} 570w,
+                      {{ block.settings.image | image_url: width: 760 }} 760w
+                    "
+                    sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
+                    alt="{{ block.settings.image.alt | default: 'Instagram image' }}"
+                    class="custom-section-diamension-follow-insta__image js-parallax-image"
+                    loading="lazy"
+                  >
+                </a>
+              {%- else -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 760 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 380 }} 380w,
+                    {{ block.settings.image | image_url: width: 570 }} 570w,
+                    {{ block.settings.image | image_url: width: 760 }} 760w
+                  "
+                  sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
+                  alt="{{ block.settings.image.alt | default: 'Instagram image' }}"
+                  class="custom-section-diamension-follow-insta__image js-parallax-image"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
       {%- comment -%} CTA Link {%- endcomment -%}
@@ -137,6 +102,7 @@
   "name": "Diamension Instagram",
   "tag": "section",
   "class": "section-diamension-follow-insta",
+  "max_blocks": 4,
   "settings": [
     {
       "type": "header",
@@ -148,38 +114,6 @@
       "label": "Headline Text",
       "default": "FOLLOW US ON\nINSTAGRAM",
       "info": "Use line break for two lines (FOLLOW US ON / INSTAGRAM)"
-    },
-    {
-      "type": "header",
-      "content": "Instagram Images"
-    },
-    {
-      "type": "paragraph",
-      "content": "Upload 4 square images (1:1 ratio). Recommended size: 1000×1000px or larger. Desktop layout creates an asymmetric masonry grid with 56px overlapping images."
-    },
-    {
-      "type": "image_picker",
-      "id": "image_1",
-      "label": "Image 1",
-      "info": "First image (odd - top to bottom parallax on desktop)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_2",
-      "label": "Image 2",
-      "info": "Second image (even - bottom to top parallax on desktop)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_3",
-      "label": "Image 3",
-      "info": "Third image (odd - top to bottom parallax on desktop)"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_4",
-      "label": "Image 4",
-      "info": "Fourth image (even - bottom to top parallax on desktop)"
     },
     {
       "type": "header",
@@ -210,9 +144,44 @@
       "info": "Display decorative background ellipse on desktop. Hidden on tablet/mobile."
     }
   ],
+  "blocks": [
+    {
+      "type": "instagram_image",
+      "name": "Instagram Post",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Instagram Image",
+          "info": "Upload a square image (1:1 ratio). Recommended size: 1000×1000px or larger."
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Instagram Post URL",
+          "info": "Link to the Instagram post. Opens in a new tab when clicked."
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Diamension Follow Instagram"
+      "name": "Diamension Follow Instagram",
+      "blocks": [
+        {
+          "type": "instagram_image"
+        },
+        {
+          "type": "instagram_image"
+        },
+        {
+          "type": "instagram_image"
+        },
+        {
+          "type": "instagram_image"
+        }
+      ]
     }
   ]
 }
