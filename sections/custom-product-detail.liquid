@@ -43,9 +43,19 @@
                 {% elsif media.media_type == 'video' or media.media_type == 'external_video' %}
                   <div class="custom-product-detail__thumbnail-video">
                     {% if media.preview_image %}
-                      {{ media.preview_image | image_url: width: 100 | image_tag: loading: 'lazy', alt: 'Video thumbnail' }}
+                      {{
+                        media.preview_image
+                        | image_url: width: 100
+                        | image_tag: loading: 'lazy', alt: 'Video thumbnail'
+                      }}
                     {% endif %}
-                    <svg class="custom-product-detail__thumbnail-play-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <svg
+                      class="custom-product-detail__thumbnail-play-icon"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
                       <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.9)"/>
                       <path d="M10 8L16 12L10 16V8Z" fill="currentColor"/>
                     </svg>
@@ -734,8 +744,20 @@
   <!-- Image/Video Modal -->
   <div class="custom-product-detail__modal" id="imageModal-{{ section.id }}" data-media-modal>
     <span class="custom-product-detail__modal-close">&times;</span>
-    <img class="custom-product-detail__modal-image" id="modalImage-{{ section.id }}" src="" alt="Product image" data-modal-image>
-    <video class="custom-product-detail__modal-video" id="modalVideo-{{ section.id }}" controls data-modal-video style="display: none;">
+    <img
+      class="custom-product-detail__modal-image"
+      id="modalImage-{{ section.id }}"
+      src=""
+      alt="Product image"
+      data-modal-image
+    >
+    <video
+      class="custom-product-detail__modal-video"
+      id="modalVideo-{{ section.id }}"
+      controls
+      data-modal-video
+      style="display: none;"
+    >
       <source src="" type="video/mp4">
       Your browser does not support the video tag.
     </video>
