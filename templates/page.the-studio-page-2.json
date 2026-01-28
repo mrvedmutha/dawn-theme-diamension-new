@@ -13,13 +13,13 @@
       "type": "custom-section-image-hero-diamension-the-studio",
       "name": "Custom Image Hero - The Studio",
       "settings": {
-        "image": "shopify://shop_images/image-corporate-comeback-new.jpg",
-        "heading": "Metropolitan Vibes",
-        "heading_size": 60,
-        "heading_size_tablet": 48,
-        "heading_size_mobile": 36,
-        "font_family": "neue-haas",
-        "cta_text": "Explore",
+        "image": "shopify://shop_images/image-corporate-comeback.png",
+        "heading": "Corporate Vibes",
+        "heading_size": 180,
+        "heading_size_tablet": 60,
+        "heading_size_mobile": 60,
+        "font_family": "bickham-script",
+        "cta_text": "",
         "cta_link": "#"
       }
     },
@@ -34,8 +34,8 @@
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/image-metopolis-image-2.png",
-        "image_1_overlay_text": "",
+        "image_1": "shopify://shop_images/jew-with-typewriter.png",
+        "image_1_overlay_text": "Beauty",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
         "image_1_overlay_text_size_mobile": 60,
@@ -43,46 +43,35 @@
         "image_2_overlay_text_size_desktop": 160,
         "image_2_overlay_text_size_tablet": 100,
         "image_2_overlay_text_size_mobile": 60,
-        "tagline": "",
+        "tagline": "Sleek. Minimal. Commanding.",
         "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
       }
     },
-    "custom_section_product_showcase_studio_HYwPx8": {
-      "type": "custom-section-product-showcase-studio",
-      "name": "Product Showcase Studio",
+    "custom_section_two_image_hero_studio_bXbAXF": {
+      "type": "custom-section-two-image-hero-studio",
+      "name": "Two Image Hero - The Studio",
       "settings": {
-        "background_color": "#fffaf5",
-        "image_left": "shopify://shop_images/image-metropolis-content.png",
-        "image_left_alt": "Product image",
-        "image_right": "shopify://shop_images/Artboard4.webp",
-        "image_right_alt": "Product image",
-        "heading": "For the Ones Who Define Success",
-        "heading_width": 216,
+        "left_image": "shopify://shop_images/lady-hand-jewellery-in-red-top.png",
+        "right_background_image": "shopify://shop_images/neck-bracelet-in-red-background.png",
+        "background_color": "#c8102e",
+        "tagline": "For the Ones Who Define Success",
         "cta_text": "Explore",
-        "cta_url": ""
+        "cta_link": "#",
+        "heading": "Sleek Minimal",
+        "text_color": "#fffaf5"
       }
     },
-    "custom_section_diamension_quote_gallery_DdhPHE": {
-      "type": "custom-section-diamension-quote-gallery",
-      "name": "Diamension Quote Gallery",
+    "custom_section_rich_text_diamension_BcGeTw": {
+      "type": "custom-section-rich-text-diamension",
+      "custom_css": [],
+      "name": "Custom Rich Text Diamension",
       "settings": {
-        "image_1": "shopify://shop_images/image-metopolis-image-2.png",
-        "image_2": "shopify://shop_images/image-corporate-comeback.png",
-        "image_3": "shopify://shop_images/Artboard3.webp",
-        "image_4": "shopify://shop_images/Frame_31.png",
-        "image_5": "shopify://shop_images/Frame_1834_32a232d0-a97c-422c-ab7b-75ee04c6241c.png",
-        "quote_text": "Glamour is a condition, not a commodity.",
+        "headline": "For the Ones Who Define Success",
+        "subtext": "Because brilliance belongs not just in moments of celebration,  but in every meeting, every pitch, every victory — big or small.",
+        "headline_color": "#183754",
+        "subtext_color": "#3e6282",
         "background_color": "#fffaf5",
-        "enable_parallax": true
-      }
-    },
-    "custom_section_gap_CJUJHq": {
-      "type": "custom-section-gap",
-      "name": "Custom Section Gap",
-      "settings": {
-        "gap_top": 90,
-        "gap_bottom": 90,
-        "background_color": "#fffaf5"
+        "enable_animation": true
       }
     },
     "custom_section_hero_five_product_CfbYHF": {
@@ -90,23 +79,80 @@
       "name": "Hero + 5 Products",
       "settings": {
         "hero_image": "shopify://shop_images/D._Website_banner-08.jpg",
-        "show_logo": false,
-        "hero_quote": "",
+        "show_logo": true,
+        "hero_quote": "\"Glamour is a condition, not a commodity.\"",
         "collection": "custom-collections"
       }
     },
-    "custom_section_collection_image_overlay_EdQnPK": {
-      "type": "custom-section-collection-image-overlay",
-      "name": "Collection Image Overlay",
+    "custom_section_dynamic_hero_studio_6EBrcw": {
+      "type": "custom-section-dynamic-hero-studio",
+      "name": "Dynamic Hero - Studio",
       "settings": {
-        "background_image": "shopify://shop_images/image-corporate-comeback.png",
-        "overlay_color": "#703f14c7",
-        "left_image": "shopify://shop_images/image-metopolis-image-2.png",
-        "explore_text": "Explore",
-        "explore_link": "#",
-        "right_image": "shopify://shop_images/Artboard6.webp",
-        "logo_image": "shopify://shop_images/diamension-logo-light.svg",
-        "collection_text": "CORPORATE COLLECTION"
+        "image_1": "shopify://shop_images/lady-holding-red-phone-wearing-jewellery.png",
+        "image_1_overlay_text": "Beauty",
+        "image_1_overlay_text_size_desktop": 160,
+        "image_1_overlay_text_size_tablet": 100,
+        "image_1_overlay_text_size_mobile": 60,
+        "image_2": "shopify://shop_images/lady-holding-mirror-looking-at-herself.png",
+        "image_2_overlay_text": "Beauty",
+        "image_2_overlay_text_size_desktop": 160,
+        "image_2_overlay_text_size_tablet": 100,
+        "image_2_overlay_text_size_mobile": 60,
+        "tagline": "Sleek. Minimal. Commanding.",
+        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+      }
+    },
+    "custom_section_glamor_collection_studio_RdX44n": {
+      "type": "custom-section-glamor-collection-studio",
+      "blocks": {
+        "product_card_6JwJ6F": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_kMpfJU": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_4wNQR4": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1_58a9c924-ec26-4306-b90f-ed9bcd312944.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_CatwBU": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_6JwJ6F",
+        "product_card_kMpfJU",
+        "product_card_4wNQR4",
+        "product_card_CatwBU"
+      ],
+      "name": "Glamor Collection - Studio",
+      "settings": {
+        "background_image": "shopify://shop_images/glamor-collection-image.webp",
+        "heading_text": "Glamour",
+        "subtitle_text": "is a condition, not a commodity."
       }
     },
     "custom_rich_text_content_diamension_the_studio_xWWNKT": {
@@ -153,11 +199,28 @@
           }
         }
       },
-      "block_order": ["image_W8pjAa", "image_B4CD83", "image_XGcpwN", "image_mCHiXr", "image_BjTnAj"],
+      "block_order": [
+        "image_W8pjAa",
+        "image_B4CD83",
+        "image_XGcpwN",
+        "image_mCHiXr",
+        "image_BjTnAj"
+      ],
       "name": "Image Marquee",
       "settings": {
         "background_color": "#fffaf5",
         "pause_on_hover": true
+      }
+    },
+    "custom_section_editorial_hero_qBFJ7c": {
+      "type": "custom-section-editorial-hero",
+      "name": "Editorial Hero",
+      "settings": {
+        "background_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
+        "heading": "Jewellery",
+        "tagline": "will outlast fashion, and all of us.",
+        "cta_text": "Explore Collections",
+        "cta_link": "#"
       }
     }
   },
@@ -165,12 +228,13 @@
     "custom_section_image_hero_diamension_the_studio_NpX8f8",
     "custom_section_diamension_quote_htEpPc",
     "custom_section_dynamic_hero_studio_KwHRhL",
-    "custom_section_product_showcase_studio_HYwPx8",
-    "custom_section_diamension_quote_gallery_DdhPHE",
-    "custom_section_gap_CJUJHq",
+    "custom_section_two_image_hero_studio_bXbAXF",
+    "custom_section_rich_text_diamension_BcGeTw",
     "custom_section_hero_five_product_CfbYHF",
-    "custom_section_collection_image_overlay_EdQnPK",
+    "custom_section_dynamic_hero_studio_6EBrcw",
+    "custom_section_glamor_collection_studio_RdX44n",
     "custom_rich_text_content_diamension_the_studio_xWWNKT",
-    "custom_section_image_marquee_MQW87p"
+    "custom_section_image_marquee_MQW87p",
+    "custom_section_editorial_hero_qBFJ7c"
   ]
 }

@@ -54,7 +54,7 @@
         "newsletter_enable": true,
         "newsletter_heading": "NEWSLETTER",
         "newsletter_description": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories.",
-        "legal_menu": ""
+        "legal_menu": "footer-policies"
       }
     },
     "custom-diamension-footer-image": {

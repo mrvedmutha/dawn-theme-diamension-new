@@ -12,11 +12,12 @@
     "custom_rich_text": {
       "type": "custom-section-rich-text-diamension",
       "settings": {
-        "headline": "Luxury Within Reach. Brilliance Beyond Measure",
-        "subtext": "Backed by HVK Diamonds' 25-year heritage, we merge mastery in craftsmanship with next-gen innovation. Every piece is crafted in 14K gold, IGI certified, and designed to be cherished for a lifetime.",
+        "headline": "THE STUDIO",
+        "subtext": "Diamension’s Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance a quiet power that speaks volumes.",
         "headline_color": "#183754",
         "subtext_color": "#3e6282",
-        "background_color": "#fffaf5"
+        "background_color": "#fffaf5",
+        "enable_animation": true
       }
     },
     "custom_section_two_column_hero_diamension_YceGcH": {
@@ -29,7 +30,7 @@
             "heading": "METROPOLITAN VIBES",
             "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
             "button_text": "EXPLORE",
-            "button_link": "#"
+            "button_link": "shopify://pages/metropolitan-vibes"
           }
         },
         "image_block_ECPyKi": {
@@ -43,29 +44,12 @@
           }
         }
       },
-      "block_order": ["image_block_nQJdjM", "image_block_ECPyKi"],
+      "block_order": [
+        "image_block_nQJdjM",
+        "image_block_ECPyKi"
+      ],
       "name": "Two Column Hero - The Studio",
       "settings": {}
-    },
-    "custom_section_gap_KrNhfy": {
-      "type": "custom-section-gap",
-      "name": "Custom Section Gap",
-      "settings": {
-        "gap_top": 50,
-        "gap_bottom": 50,
-        "background_color": "#fffaf5"
-      }
-    },
-    "custom_section_image_hero_corporate_HCmWD4": {
-      "type": "custom-section-image-hero-corporate",
-      "name": "Image Hero - Corporate",
-      "settings": {
-        "hero_image": "shopify://shop_images/image-corporate-comeback.png",
-        "heading": "Corporate Comeback",
-        "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
-        "button_text": "EXPLORE",
-        "button_link": "#"
-      }
     },
     "custom_section_sleek_minimal_hero_XKJHVb": {
       "type": "custom-section-sleek-minimal-hero",
@@ -80,15 +64,15 @@
         "button_link": ""
       }
     },
-    "custom_section_image_hero_corporate_xtBKWY": {
+    "custom_section_image_hero_corporate_HCmWD4": {
       "type": "custom-section-image-hero-corporate",
       "name": "Image Hero - Corporate",
       "settings": {
-        "hero_image": "shopify://shop_images/image-corporate-comeback-new.jpg",
+        "hero_image": "shopify://shop_images/image-corporate-comeback.png",
         "heading": "Corporate Comeback",
         "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
         "button_text": "EXPLORE",
-        "button_link": "#"
+        "button_link": "shopify://pages/corporate-comeback"
       }
     },
     "custom_section_diamension_quote_p3WEHw": {
@@ -102,10 +86,8 @@
   "order": [
     "custom_rich_text",
     "custom_section_two_column_hero_diamension_YceGcH",
-    "custom_section_gap_KrNhfy",
-    "custom_section_image_hero_corporate_HCmWD4",
     "custom_section_sleek_minimal_hero_XKJHVb",
-    "custom_section_image_hero_corporate_xtBKWY",
+    "custom_section_image_hero_corporate_HCmWD4",
     "custom_section_diamension_quote_p3WEHw"
   ]
 }
