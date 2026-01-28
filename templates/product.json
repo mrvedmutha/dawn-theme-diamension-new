@@ -79,7 +79,8 @@
       ],
       "settings": {
         "enable_sticky_footer": true,
-        "footer_legal_text": "*Seamless delivery across India and the US, bringing luxury to your doorstep."
+        "footer_legal_text": "*Seamless delivery across India and the US, bringing luxury to your doorstep.",
+        "appointment_url": "shopify://pages/customization"
       }
     },
     "custom-related-products": {
@@ -91,5 +92,8 @@
       }
     }
   },
-  "order": ["main", "custom-related-products"]
+  "order": [
+    "main",
+    "custom-related-products"
+  ]
 }

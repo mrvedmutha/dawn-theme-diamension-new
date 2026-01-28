@@ -21,6 +21,33 @@
             "answer": "<p>A lab-grown diamond is a real diamond created using advanced technology that replicates the natural diamond-growing process. It has the same physical, chemical, and optical properties as a mined diamond—only grown in a controlled environment.</p>"
           }
         },
+        "faq_item_fU4ch4": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "Are lab grown diamonds real diamonds?",
+            "answer": "<p>Yes. Lab-grown diamonds are real diamonds with the same carbon structure and chemical composition as natural diamonds. The only difference is their origin—rather than being mined from the Earth, they are created in a laboratory.<br/><br/>They sparkle just like natural diamonds and have the same range of color, clarity, sizes, and shapes. Additionally, lab-grown diamonds offer excellent value, as they are typically more affordable than natural diamonds of similar quality and size.</p>"
+          }
+        },
+        "faq_item_JTwdJj": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "product",
+            "category_label": "PRODUCTS",
+            "question": "Are lab-grown diamonds more affordable?",
+            "answer": "<p>Yes. All our diamonds are SGL certified, ensuring authenticity, quality, and transparency for every piece you purchase.</p>"
+          }
+        },
+        "faq_item_Mazr9V": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "Why choose lab-grown diamonds?",
+            "answer": "<p>There are two key reasons to choose a lab-grown diamond: origin and value. You can be confident that your diamond is conflict-free and not associated with war-related funding, nor does it require environmentally destructive mining that leaves massive holes in the Earth.<br/><br/>From a quality perspective, diamonds grown above the Earth are often purer than mined diamonds. Unlike natural diamonds formed under extreme and chaotic underground conditions, lab-grown diamonds are created in controlled environments, resulting in fewer defects and less strain in the crystal structure.<br/><br/>Simply put, greater purity means a diamond that is brighter, whiter, and more brilliant.<br/><br/>Most of HOQ’s white lab-grown diamonds achieve the highest purity classification, Type IIa—an exceptional rating attained by fewer than 2% of mined diamonds.</p>"
+          }
+        },
         "faq_item_wrwjYx": {
           "type": "faq_item",
           "settings": {
@@ -28,6 +55,24 @@
             "category_label": "PRODUCT",
             "question": "What is the difference between natural and lab-grown diamonds?",
             "answer": "<p>The only difference is their origin. Natural diamonds are formed over millions of years beneath the earth, while lab-grown diamonds are created in laboratories using cutting-edge technology. Both are identical in appearance, quality, and brilliance.</p>"
+          }
+        },
+        "faq_item_Yg6XPn": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "product",
+            "category_label": "PRODUCT",
+            "question": "What are the 4Cs of lab-grown diamonds?",
+            "answer": "<p>Lab-grown diamonds are evaluated by independent gemological organizations using the same 4Cs as mined diamonds: Cut, Color, Clarity, and Carat Weight. Just like natural diamonds, lab-grown diamonds vary across these criteria and can range from lower to exceptional quality.<br/>Not all lab-grown diamonds are perfect, colorless, or flawless.</p>"
+          }
+        },
+        "faq_item_xzkcgV": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "product",
+            "category_label": "Product",
+            "question": "Why are lab-grown diamonds less expensive than natural diamonds?",
+            "answer": "<p>Lab-grown diamonds are created using advanced technology, while natural diamonds are mined from beneath the Earth’s surface. Lab-grown diamonds avoid the high costs associated with mining, transportation, and artificially created scarcity, which leads to significantly lower mark-ups.</p><p>Quite simply, they are diamonds that don’t cost the Earth.</p>"
           }
         },
         "faq_item_z7dLdG": {
@@ -39,13 +84,40 @@
             "answer": "<p>Yes. All our diamonds are SGL certified, ensuring authenticity, quality, and transparency for every piece you purchase.</p>"
           }
         },
-        "faq_item_JTwdJj": {
+        "faq_item_qac4B4": {
           "type": "faq_item",
           "settings": {
             "category_id": "product",
-            "category_label": "PRODUCTS",
-            "question": "Are lab-grown diamonds more affordable?",
-            "answer": "<p>Yes. All our diamonds are SGL certified, ensuring authenticity, quality, and transparency for every piece you purchase.</p>"
+            "category_label": "PRODUCT",
+            "question": "Why are there many doubts about lab-grown diamonds?",
+            "answer": "<p>The simple reason is that the traditional mined diamond industry—from large-scale miners to retailers—fears the disruption posed by laboratory-grown diamonds.<br/><br/>The diamond mining oligopoly has long relied on artificial scarcity and continues to resist the growth of this new generation of diamonds. As part of this resistance, fear, uncertainty, and doubt are often spread around lab-grown diamonds.</p>"
+          }
+        },
+        "faq_item_EcyfBQ": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "ORDERS",
+            "question": "How do I place an order on Diamension?",
+            "answer": "<p>Placing an order on <a href=\"https://diamensions.world\" title=\"https://diamensions.world\">diamensions.world</a> is simple and secure. Once you select a product, click “Buy Now” and follow the on-screen instructions. Your order will only be confirmed at the final step of the checkout process, where you will be asked to choose your payment method.<br/><br/>You can also place an order over the phone by calling or messaging us on WhatsApp at [phone-number].</p>"
+          }
+        },
+        "faq_item_6mP6J6": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "ORDERS",
+            "question": "What payment methods does Diamensions accept?",
+            "answer": "<p>Diamensions accepts all major credit cards, debit cards, and net banking. For any further assistance, please contact our Customer Care team at [Phone-Number].</p>"
+          }
+        },
+        "faq_item_t9mML3": {
+          "type": "faq_item",
+          "settings": {
+            "category_id": "orders",
+            "category_label": "ORDERS",
+            "question": "How long does it take for an order to be delivered?",
+            "answer": "<p>Each item is customized and made to order. Manufacturing typically takes up to 12 days, followed by 2–3 days for free PAN India shipping. Select gifting items that are readily available in stock can be delivered within 3 days.</p>"
           }
         },
         "faq_item_4QMAVi": {
@@ -61,7 +133,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "CONTACT US",
-            "menu_link": "shopify://pages/contact-v1",
+            "menu_link": "shopify://pages/contact",
             "is_active": false
           }
         },
@@ -69,7 +141,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "FAQS",
-            "menu_link": "shopify://pages/faq-v1",
+            "menu_link": "#",
             "is_active": true
           }
         },
@@ -77,7 +149,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "RETURN & REFUND",
-            "menu_link": "shopify://pages/returns-v1",
+            "menu_link": "shopify://pages/returns",
             "is_active": false
           }
         },
@@ -85,16 +157,24 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "SHIPPING",
-            "menu_link": "shopify://pages/shipping-v1",
+            "menu_link": "shopify://pages/shipping",
             "is_active": false
           }
         }
       },
       "block_order": [
         "faq_item_zEcxka",
-        "faq_item_wrwjYx",
-        "faq_item_z7dLdG",
+        "faq_item_fU4ch4",
         "faq_item_JTwdJj",
+        "faq_item_Mazr9V",
+        "faq_item_wrwjYx",
+        "faq_item_Yg6XPn",
+        "faq_item_xzkcgV",
+        "faq_item_z7dLdG",
+        "faq_item_qac4B4",
+        "faq_item_EcyfBQ",
+        "faq_item_6mP6J6",
+        "faq_item_t9mML3",
         "faq_item_4QMAVi",
         "info_menu_item_Un6JUV",
         "info_menu_item_yFMWm7",

@@ -20,7 +20,7 @@
             "menu_id": "brand",
             "image": "shopify://shop_images/APF_6013.jpg",
             "heading": "OUR STORY",
-            "link": "shopify://pages/about-v1"
+            "link": "shopify://pages/about"
           }
         },
         "mega_menu_card_item_73UYeQ": {
@@ -37,8 +37,8 @@
           "settings": {
             "menu_id": "shop",
             "image": "shopify://shop_images/glamor-collection-image.webp",
-            "heading": "Sleek Minimal",
-            "link": "shopify://pages/studio-page-two"
+            "heading": "Metropolitan Vibes",
+            "link": "shopify://pages/metropolitan-vibes"
           }
         },
         "mega_menu_featured_card_GRrQ7Y": {

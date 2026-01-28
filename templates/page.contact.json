@@ -16,7 +16,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "CONTACT",
-            "menu_link": "",
+            "menu_link": "#",
             "is_active": true
           }
         },
@@ -24,7 +24,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "FAQS",
-            "menu_link": "",
+            "menu_link": "shopify://pages/faqs",
             "is_active": false
           }
         },
@@ -32,7 +32,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "RETURN & REFUNDS",
-            "menu_link": "",
+            "menu_link": "shopify://pages/returns",
             "is_active": false
           }
         },
@@ -40,7 +40,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "SHIPPING",
-            "menu_link": "",
+            "menu_link": "shopify://pages/shipping",
             "is_active": false
           }
         },
@@ -94,5 +94,7 @@
       }
     }
   },
-  "order": ["contact_page"]
+  "order": [
+    "contact_page"
+  ]
 }
