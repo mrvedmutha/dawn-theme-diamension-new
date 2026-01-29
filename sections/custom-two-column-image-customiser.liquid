@@ -7,6 +7,8 @@
 {% endcomment %}
 
 {{ 'section-two-column-image-customiser.css' | asset_url | stylesheet_tag }}
+{{ 'section-two-column-image-customiser-modal.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-two-column-image-customiser-modal.js' | asset_url }}" defer></script>
 
 {% liquid
   assign section_id = section.id
@@ -18,6 +20,9 @@
   assign button_2_link = section.settings.button_2_link
   assign image = section.settings.image
   assign background_color = section.settings.background_color
+  assign whatsapp_number = section.settings.whatsapp_number
+  assign success_message = section.settings.success_message
+  assign error_message = section.settings.error_message
 %}
 
 <div
@@ -47,29 +52,21 @@
         {% if button_1_text != blank or button_2_text != blank %}
           <div class="custom-section-two-column-image-customiser__buttons">
             {% if button_1_text != blank %}
-              <a
-                href="{{ button_1_link | default: '#' }}"
+              <button
+                type="button"
                 class="custom-section-two-column-image-customiser__button custom-section-two-column-image-customiser__button--primary"
-                {% if button_1_link == blank %}
-                  aria-disabled="true"
-                  tabindex="-1"
-                {% endif %}
               >
                 {{ button_1_text | escape }}
-              </a>
+              </button>
             {% endif %}
 
             {% if button_2_text != blank %}
-              <a
-                href="{{ button_2_link | default: '#' }}"
+              <button
+                type="button"
                 class="custom-section-two-column-image-customiser__button custom-section-two-column-image-customiser__button--secondary"
-                {% if button_2_link == blank %}
-                  aria-disabled="true"
-                  tabindex="-1"
-                {% endif %}
               >
                 {{ button_2_text | escape }}
-              </a>
+              </button>
             {% endif %}
           </div>
         {% endif %}
@@ -88,6 +85,8 @@
             {{ image | image_url: width: 1920 }} 1920w
           "
           sizes="(max-width: 767px) 100vw, 50vw"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
           alt="{{ image.alt | default: heading | escape }}"
           loading="lazy"
           class="custom-section-two-column-image-customiser__image"
@@ -96,6 +95,228 @@
         {% comment %} Fallback placeholder if no image {% endcomment %}
         <div class="custom-section-two-column-image-customiser__placeholder"></div>
       {% endif %}
+    </div>
+  </div>
+
+  {% comment %} Virtual Appointment Modal {% endcomment %}
+  <div
+    id="modal-virtual-{{ section_id }}"
+    class="modal-overlay"
+    data-whatsapp-number="{{ whatsapp_number }}"
+  >
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-close-wrapper">
+          <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+        </div>
+        <h3 class="modal-title">Virtual Appointment</h3>
+      </div>
+      <div class="modal-body">
+        {% comment %} Error Message {% endcomment %}
+        <div class="modal-error">
+          <p class="modal-error-text">{{ error_message | default: 'Something went wrong. Please try again.' }}</p>
+        </div>
+
+        {% comment %} Form {% endcomment %}
+        <form class="modal-form">
+          <div class="modal-form-row">
+            <div class="modal-form-group">
+              <label for="virtual-first-name-{{ section_id }}" class="modal-label modal-label-required">First Name</label>
+              <input
+                type="text"
+                id="virtual-first-name-{{ section_id }}"
+                name="first_name"
+                class="modal-input"
+                placeholder="Enter your first name"
+                required
+              >
+            </div>
+            <div class="modal-form-group">
+              <label for="virtual-last-name-{{ section_id }}" class="modal-label modal-label-required">Last Name</label>
+              <input
+                type="text"
+                id="virtual-last-name-{{ section_id }}"
+                name="last_name"
+                class="modal-input"
+                placeholder="Enter your last name"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="modal-form-row">
+            <div class="modal-form-group">
+              <label for="virtual-date-{{ section_id }}" class="modal-label modal-label-required">Date</label>
+              <input
+                type="date"
+                id="virtual-date-{{ section_id }}"
+                name="date"
+                class="modal-input"
+                required
+              >
+            </div>
+            <div class="modal-form-group">
+              <label for="virtual-time-{{ section_id }}" class="modal-label modal-label-required">Time</label>
+              <input
+                type="time"
+                id="virtual-time-{{ section_id }}"
+                name="time"
+                class="modal-input"
+                step="3600"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="modal-form-group">
+            <label for="virtual-message-{{ section_id }}" class="modal-label">Message</label>
+            <textarea
+              id="virtual-message-{{ section_id }}"
+              name="message"
+              class="modal-textarea"
+              placeholder="Tell us about your requirements (optional)"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="modal-submit">Proceed to Virtual Appointment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Request A Callback Modal {% endcomment %}
+  <div
+    id="modal-callback-{{ section_id }}"
+    class="modal-overlay"
+  >
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-close-wrapper">
+          <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+        </div>
+        <h3 class="modal-title">Request A Callback</h3>
+      </div>
+      <div class="modal-body">
+        {% comment %} Error Message {% endcomment %}
+        <div class="modal-error">
+          <p class="modal-error-text">{{ error_message | default: 'Something went wrong. Please try again.' }}</p>
+        </div>
+
+        {% comment %} Success Message {% endcomment %}
+        <div class="modal-success">
+          <div class="modal-success-icon">✓</div>
+          <h4 class="modal-success-title">Thank You!</h4>
+          <p class="modal-success-text">{{ success_message | default: 'Thank you for your request. Our team will get back to you shortly.' }}</p>
+        </div>
+
+        {% comment %} Form {% endcomment %}
+        <form class="modal-form">
+          <div class="modal-form-row">
+            <div class="modal-form-group">
+              <label for="callback-first-name-{{ section_id }}" class="modal-label modal-label-required">First Name</label>
+              <input
+                type="text"
+                id="callback-first-name-{{ section_id }}"
+                name="first_name"
+                class="modal-input"
+                placeholder="Enter your first name"
+                required
+              >
+            </div>
+            <div class="modal-form-group">
+              <label for="callback-last-name-{{ section_id }}" class="modal-label modal-label-required">Last Name</label>
+              <input
+                type="text"
+                id="callback-last-name-{{ section_id }}"
+                name="last_name"
+                class="modal-input"
+                placeholder="Enter your last name"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="modal-form-group">
+            <label for="callback-email-{{ section_id }}" class="modal-label modal-label-required">Email Address</label>
+            <input
+              type="email"
+              id="callback-email-{{ section_id }}"
+              name="email"
+              class="modal-input"
+              placeholder="your.email@example.com"
+              required
+            >
+          </div>
+
+          <div class="modal-form-group phone-group">
+            <div>
+              <label for="callback-country-code-{{ section_id }}" class="modal-label modal-label-required">Country Code</label>
+              <div class="country-code-wrapper">
+                <input
+                  type="text"
+                  id="callback-country-code-{{ section_id }}"
+                  class="modal-input country-code-input"
+                  placeholder="Search country code..."
+                  value="+91"
+                  autocomplete="off"
+                  readonly
+                  onfocus="this.removeAttribute('readonly');"
+                >
+                <input type="hidden" name="country_code" value="+91">
+                <div class="country-code-results"></div>
+              </div>
+            </div>
+            <div>
+              <label for="callback-phone-{{ section_id }}" class="modal-label modal-label-required">Phone Number</label>
+              <input
+                type="tel"
+                id="callback-phone-{{ section_id }}"
+                name="phone"
+                class="modal-input"
+                placeholder="123456789"
+                pattern="[0-9]+"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="modal-form-row">
+            <div class="modal-form-group">
+              <label for="callback-date-{{ section_id }}" class="modal-label modal-label-required">Date</label>
+              <input
+                type="date"
+                id="callback-date-{{ section_id }}"
+                name="date"
+                class="modal-input"
+                required
+              >
+            </div>
+            <div class="modal-form-group">
+              <label for="callback-time-{{ section_id }}" class="modal-label modal-label-required">Time</label>
+              <input
+                type="time"
+                id="callback-time-{{ section_id }}"
+                name="time"
+                class="modal-input"
+                step="3600"
+                required
+              >
+            </div>
+          </div>
+
+          <div class="modal-form-group">
+            <label for="callback-message-{{ section_id }}" class="modal-label">Message</label>
+            <textarea
+              id="callback-message-{{ section_id }}"
+              name="message"
+              class="modal-textarea"
+              placeholder="Tell us about your requirements (optional)"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="modal-submit">Submit Request</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -166,6 +387,29 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#fffaf5"
+    },
+    {
+      "type": "header",
+      "content": "Modal Settings"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp Number",
+      "info": "Include country code (e.g., +971501234567). Used for Virtual Appointment button.",
+      "default": "+971501234567"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for your request. Our team will get back to you shortly."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error Message",
+      "default": "Something went wrong. Please try again."
     }
   ],
   "presets": [
