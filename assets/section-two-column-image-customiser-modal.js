@@ -478,41 +478,35 @@
       fullMessage += `\nMessage: ${message}`;
     }
 
-    // Prepare form data
-    const formData = new FormData();
-    formData.append('form_type', 'contact');
-    formData.append('utf8', '✓');
-    formData.append('contact[name]', `${firstName} ${lastName}`);
-    formData.append('contact[email]', email);
-    formData.append('contact[phone]', `${countryCode}${phone}`);
-    formData.append('contact[body]', fullMessage);
+    // Create hidden form for Shopify submission
+    const hiddenForm = document.createElement('form');
+    hiddenForm.method = 'POST';
+    hiddenForm.action = '/contact';
+    hiddenForm.style.display = 'none';
 
-    try {
-      // Submit to Shopify
-      const response = await fetch('/contact', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
+    // Add form fields
+    const fields = {
+      'form_type': 'contact',
+      'utf8': '✓',
+      'contact[name]': `${firstName} ${lastName}`,
+      'contact[email]': email,
+      'contact[phone]': `${countryCode}${phone}`,
+      'contact[body]': fullMessage
+    };
 
-      // Remove loading state
-      submitBtn.disabled = false;
-      submitBtn.classList.remove('loading');
+    Object.keys(fields).forEach(key => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = fields[key];
+      hiddenForm.appendChild(input);
+    });
 
-      // Check if successful (Shopify redirects or returns success)
-      if (response.ok || response.redirected) {
-        showSuccess(modalId);
-      } else {
-        showError(modalId, 'Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      submitBtn.disabled = false;
-      submitBtn.classList.remove('loading');
-      showError(modalId, 'Something went wrong. Please try again.');
-    }
+    // Append form to body and submit
+    document.body.appendChild(hiddenForm);
+
+    // Submit the form (will redirect to /contact page)
+    hiddenForm.submit();
   }
 
   /**
