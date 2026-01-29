@@ -87,22 +87,20 @@
 
         {%- if blog.articles.size > 0 -%}
           {%- for article in blog.articles -%}
-            <div class="custom-section-blog-journal__card" data-article-card data-article-index="{{ forloop.index }}" {% if forloop.index > articles_per_page %}style="display: none;"{% endif %}>
+            <a href="{{ article.url }}" class="custom-section-blog-journal__card" data-article-card data-article-index="{{ forloop.index }}" {% if forloop.index > articles_per_page %}style="display: none;"{% endif %}>
               <div class="custom-section-blog-journal__image-holder">
                 {%- if article.image -%}
-                  <a href="{{ article.url }}" class="custom-section-blog-journal__image-link">
-                    <img
-                      src="{{ article.image | image_url: width: 688 }}"
-                      srcset="
-                        {{ article.image | image_url: width: 344 }} 344w,
-                        {{ article.image | image_url: width: 688 }} 688w
-                      "
-                      sizes="(max-width: 767px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      alt="{{ article.image.alt | escape }}"
-                      class="custom-section-blog-journal__image"
-                      loading="lazy"
-                    >
-                  </a>
+                  <img
+                    src="{{ article.image | image_url: width: 688 }}"
+                    srcset="
+                      {{ article.image | image_url: width: 344 }} 344w,
+                      {{ article.image | image_url: width: 688 }} 688w
+                    "
+                    sizes="(max-width: 767px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    alt="{{ article.image.alt | escape }}"
+                    class="custom-section-blog-journal__image"
+                    loading="lazy"
+                  >
                 {%- else -%}
                   <div class="custom-section-blog-journal__image-placeholder"></div>
                 {%- endif -%}
@@ -117,7 +115,7 @@
 
                 {%- if article.title != blank -%}
                   <h3 class="custom-section-blog-journal__title">
-                    <a href="{{ article.url }}">{{ article.title }}</a>
+                    {{ article.title }}
                   </h3>
                 {%- endif -%}
 
@@ -126,8 +124,13 @@
                     {{ article.excerpt | strip_html | truncate: 150 }}
                   </div>
                 {%- endif -%}
+
+                <div class="custom-section-blog-journal__read-more">
+                  <span class="custom-section-blog-journal__read-more-text">Read More</span>
+                  <div class="custom-section-blog-journal__read-more-divider">&nbsp;</div>
+                </div>
               </div>
-            </div>
+            </a>
           {%- endfor -%}
         {%- else -%}
           <div class="custom-section-blog-journal__empty">

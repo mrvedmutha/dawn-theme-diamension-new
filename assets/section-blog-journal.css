@@ -4,7 +4,7 @@
 
 /* Wrapper - Background */
 .custom-section-blog-journal__wrapper {
-  background-color: #FFFAF5;
+  background-color: #fffaf5;
   width: 100%;
 }
 
@@ -77,7 +77,9 @@
   cursor: pointer;
   padding: 0;
   white-space: nowrap;
-  transition: color 0.3s ease, opacity 0.3s ease;
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
   flex-shrink: 0;
   display: inline-block;
 }
@@ -99,7 +101,10 @@
   background-color: #183754;
   width: 123px;
   opacity: 0;
-  transition: left 0.4s ease, width 0.4s ease, opacity 0.4s ease;
+  transition:
+    left 0.4s ease,
+    width 0.4s ease,
+    opacity 0.4s ease;
 }
 
 .custom-section-blog-journal__underline.is-visible {
@@ -113,7 +118,7 @@
 .custom-section-blog-journal__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 16px;
   margin-bottom: 128px;
 }
 
@@ -124,24 +129,25 @@
 .custom-section-blog-journal__card {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-blog-journal__card:hover {
+  opacity: 0.95;
 }
 
 .custom-section-blog-journal__image-holder {
   width: 100%;
   height: 500px;
-  background-color: #F0EFEA;
+  background-color: #f0efea;
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 18px;
-}
-
-.custom-section-blog-journal__image-link {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 .custom-section-blog-journal__image {
@@ -155,7 +161,7 @@
 .custom-section-blog-journal__image-placeholder {
   width: 100%;
   height: 100%;
-  background-color: #F0EFEA;
+  background-color: #f0efea;
 }
 
 /* Card Content */
@@ -170,7 +176,7 @@
   font-size: 14px;
   line-height: normal;
   color: #183754;
-  margin: 0 0 16px 0;
+  margin: 0 0 10px 0;
 }
 
 .custom-section-blog-journal__title {
@@ -179,17 +185,7 @@
   font-size: 20px;
   line-height: normal;
   color: #183754;
-  margin: 0 0 16px 0;
-}
-
-.custom-section-blog-journal__title a {
-  color: inherit;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
-}
-
-.custom-section-blog-journal__title a:hover {
-  opacity: 0.7;
+  margin: 0 0 10px 0;
 }
 
 .custom-section-blog-journal__excerpt {
@@ -198,7 +194,72 @@
   font-size: 16px;
   line-height: 1.5;
   color: #3e6282;
-  margin: 0;
+  margin: 0 0 10px 0;
+}
+
+/* Read More Button */
+.custom-section-blog-journal__read-more {
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.custom-section-blog-journal__read-more-text {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: #183754;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.custom-section-blog-journal__read-more-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #183754;
+  transform: scaleX(1);
+  transform-origin: left;
+  display: block;
+}
+
+/* On mouse enter - comes from left to right and stays */
+.custom-section-blog-journal__card:hover .custom-section-blog-journal__read-more-divider {
+  animation: divider-enter-left-to-right 0.4s ease forwards;
+}
+
+/* On mouse leave - exits right, then enters left to right and stays */
+.custom-section-blog-journal__card .custom-section-blog-journal__read-more-divider {
+  animation: divider-exit-and-reenter 0.8s ease forwards;
+}
+
+/* Enter from left to right animation */
+@keyframes divider-enter-left-to-right {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Exit right then enter left to right animation */
+@keyframes divider-exit-and-reenter {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 /* ============================================
@@ -239,12 +300,14 @@
   border: 1px solid #183754;
   padding: 16px 120px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .custom-section-blog-journal__load-more:hover {
   background-color: #183754;
-  color: #FFFAF5;
+  color: #fffaf5;
 }
 
 /* ============================================
@@ -348,6 +411,10 @@
   }
 
   .custom-section-blog-journal__excerpt {
+    font-size: 14px;
+  }
+
+  .custom-section-blog-journal__read-more-text {
     font-size: 14px;
   }
 
