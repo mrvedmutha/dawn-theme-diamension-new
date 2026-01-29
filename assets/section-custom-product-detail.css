@@ -555,8 +555,8 @@
 /* Size Dropdown Container */
 .custom-product-detail__size-dropdown {
   position: relative;
-  width: 100%;
-  max-width: 85px;
+  width: fit-content;
+  min-width: 85px;
 }
 
 /* Size Dropdown Button */
@@ -1683,7 +1683,7 @@
   }
 
   .custom-product-detail__size-dropdown {
-    max-width: 75px;
+    min-width: 75px;
   }
 
   .custom-product-detail__size-dropdown-btn {
