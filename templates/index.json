@@ -105,28 +105,28 @@
         "trust_badge_rQQhcL": {
           "type": "trust_badge",
           "settings": {
-            "badge_icon": "shopify://shop_images/badge-100percent-cert-jwellery.svg",
+            "badge_icon_json": "section-custom-trust-badge-icon-1.json",
             "badge_label": "100% certified jewellery"
           }
         },
         "trust_badge_KU4NFG": {
           "type": "trust_badge",
           "settings": {
-            "badge_icon": "shopify://shop_images/badge-easy-returns.svg",
+            "badge_icon_json": "section-custom-trust-badge-icon-2.json",
             "badge_label": "15 days easy return"
           }
         },
         "trust_badge_NQ77gz": {
           "type": "trust_badge",
           "settings": {
-            "badge_icon": "shopify://shop_images/badge-lifetime-exchange.svg",
+            "badge_icon_json": "section-custom-trust-badge-icon-3.json",
             "badge_label": "lifetime exchange"
           }
         },
         "trust_badge_mYgh3B": {
           "type": "trust_badge",
           "settings": {
-            "badge_icon": "shopify://shop_images/badge-lifetime-warranty.svg",
+            "badge_icon_json": "section-custom-trust-badge-icon-4.json",
             "badge_label": "lifetime warrenty"
           }
         }
