@@ -12,13 +12,13 @@
 
       <div class="custom-section-shop-collection-arch__content">
 
-        <!-- Decorative Ellipse (Desktop Only) -->
+        <!-- Decorative Ellipse Lottie Animation (Desktop Only) -->
         <div class="custom-section-shop-collection-arch__ellipse">
-          <img
-            src="{{ 'custom-section-shop-collection-arch/radiance-collection-circle-ellipse.svg' | asset_url }}"
-            alt=""
-            class="custom-section-shop-collection-arch__ellipse-svg"
-          />
+          <div
+            class="custom-section-shop-collection-arch__ellipse-lottie js-lottie-ellipse"
+            data-lottie-url="{{ 'section-shop-collection-arch-ellipse.json' | asset_url }}"
+            data-section-id="{{ section.id }}"
+          ></div>
         </div>
 
         <!-- Side Product Images -->
@@ -151,6 +151,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ 'section-shop-collection-arch.js' | asset_url }}" defer></script>
 
 {% schema %}

@@ -240,6 +240,70 @@
   }
 
   // ============================================================================
+  // Lottie Animation Handler
+  // ============================================================================
+  class LottieHandler {
+    constructor(section) {
+      this.section = section;
+      this.lottieContainer = section.querySelector('.js-lottie-ellipse');
+      this.animation = null;
+
+      if (this.lottieContainer) {
+        this.init();
+      }
+    }
+
+    init() {
+      // Check if Lottie is loaded
+      if (typeof lottie === 'undefined') {
+        console.error('Lottie library not loaded for Shop Collection Arch');
+        // Retry after a short delay
+        setTimeout(() => this.init(), 100);
+        return;
+      }
+
+      const lottieUrl = this.lottieContainer.dataset.lottieUrl;
+      const sectionId = this.lottieContainer.dataset.sectionId;
+
+      if (!lottieUrl) {
+        console.log('No lottie URL found for Shop Collection Arch section');
+        return;
+      }
+
+      // Load and play lottie animation
+      this.animation = lottie.loadAnimation({
+        container: this.lottieContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: lottieUrl,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid meet',
+          progressiveLoad: true,
+          hideOnTransparent: true,
+        },
+      });
+
+      // Log when animation is loaded
+      this.animation.addEventListener('DOMLoaded', () => {
+        console.log('Lottie ellipse animation loaded for section:', sectionId);
+      });
+
+      // Handle errors
+      this.animation.addEventListener('data_failed', (error) => {
+        console.error('Failed to load Lottie ellipse animation:', lottieUrl, error);
+      });
+    }
+
+    destroy() {
+      if (this.animation) {
+        this.animation.destroy();
+        this.animation = null;
+      }
+    }
+  }
+
+  // ============================================================================
   // Section Manager
   // ============================================================================
   class ShopCollectionArchSection {
@@ -248,6 +312,7 @@
       this.videoContainers = section.querySelectorAll(CONFIG.selectors.videoContainer);
       this.parallaxHandler = null;
       this.ctaHandler = null;
+      this.lottieHandler = null;
 
       this.init();
       this.bindEvents();
@@ -258,6 +323,9 @@
       this.videoContainers.forEach(container => {
         new VideoHandler(container);
       });
+
+      // Initialize lottie animation
+      this.lottieHandler = new LottieHandler(this.section);
 
       // Initialize parallax (desktop only)
       if (window.innerWidth > CONFIG.breakpoints.tablet) {
