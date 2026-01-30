@@ -1,4 +1,5 @@
 {{ 'section-image-with-product-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-image-with-product-hero.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign bg_image = section.settings.background_image
@@ -57,55 +58,6 @@
     {%- endif -%}
   </div>
 </section>
-
-<script>
-  (function() {
-    const section = document.querySelector('.image-hero-section');
-    if (!section) return;
-
-    // Intersection Observer for text reveal animation
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
-      }
-    );
-
-    observer.observe(section);
-
-    // CTA button underline animation
-    const ctaButton = section.querySelector('.image-hero-section__cta');
-    if (ctaButton) {
-      // Mouse enter: trigger exit-enter animation
-      ctaButton.addEventListener('mouseenter', () => {
-        ctaButton.classList.remove('animate-exit');
-        ctaButton.classList.add('animate-enter');
-
-        setTimeout(() => {
-          ctaButton.classList.remove('animate-enter');
-        }, 800);
-      });
-
-      // Mouse leave: trigger exit-enter animation
-      ctaButton.addEventListener('mouseleave', () => {
-        ctaButton.classList.remove('animate-enter');
-        ctaButton.classList.add('animate-exit');
-
-        setTimeout(() => {
-          ctaButton.classList.remove('animate-exit');
-        }, 800);
-      });
-    }
-  })();
-</script>
 
 {% schema %}
 {

@@ -1,14 +1,79 @@
 (function () {
   'use strict';
 
+  // Configuration
+  const CONFIG = {
+    breakpoint: 1025,
+    parallax: {
+      movement: 200, // Pixels of vertical movement
+      ease: 'none'
+    }
+  };
+
+  // Store parallax instances for cleanup
+  let parallaxInstances = [];
+
   // Check if desktop (1025px and above)
   function isDesktop() {
-    return window.innerWidth >= 1025;
+    return window.innerWidth >= CONFIG.breakpoint;
   }
 
   // Check if user prefers reduced motion
   function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // Initialize parallax effect using GSAP
+  function initParallax() {
+    // Exit early if not desktop or GSAP not available
+    if (!isDesktop() || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return;
+    }
+
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Find all sustainability hero sections
+    const sections = document.querySelectorAll('.sustainability-hero');
+
+    sections.forEach((section) => {
+      const image = section.querySelector('.sustainability-hero__image img');
+
+      if (!image) return;
+
+      // Create parallax effect for the image
+      const animation = gsap.fromTo(image,
+        {
+          y: -CONFIG.parallax.movement
+        },
+        {
+          y: CONFIG.parallax.movement,
+          ease: CONFIG.parallax.ease,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+
+      // Store instance for cleanup
+      parallaxInstances.push(animation);
+    });
+  }
+
+  // Cleanup parallax instances
+  function cleanupParallax() {
+    if (typeof ScrollTrigger !== 'undefined') {
+      parallaxInstances.forEach(animation => {
+        if (animation.scrollTrigger) {
+          animation.scrollTrigger.kill();
+        }
+        animation.kill();
+      });
+      parallaxInstances = [];
+    }
   }
 
   // Initialize animations only on desktop
@@ -52,25 +117,57 @@
     });
   }
 
+  // Initialize everything
+  function init() {
+    initAnimations();
+    initParallax();
+  }
+
   // Initialize on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAnimations);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    initAnimations();
+    init();
   }
 
   // Re-initialize on window resize (debounced)
   let resizeTimer;
+  let wasDesktop = isDesktop();
+
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      // Only reinit if crossing the desktop threshold
-      const animatedElements = document.querySelectorAll('.sustainability-hero .animate-on-scroll');
-      if (!isDesktop() && animatedElements.length > 0) {
+      const nowDesktop = isDesktop();
+
+      // Handle text animations on mobile
+      if (!nowDesktop) {
+        const animatedElements = document.querySelectorAll('.sustainability-hero .animate-on-scroll');
         animatedElements.forEach((el) => {
           el.classList.add('is-visible');
         });
       }
+
+      // Handle parallax on desktop/mobile switch
+      if (wasDesktop !== nowDesktop) {
+        if (nowDesktop) {
+          // Switched to desktop - init parallax
+          initParallax();
+        } else {
+          // Switched to mobile - cleanup parallax
+          cleanupParallax();
+        }
+        wasDesktop = nowDesktop;
+      }
     }, 250);
   });
+
+  // Re-initialize on Shopify section load (theme editor)
+  if (typeof Shopify !== 'undefined' && Shopify.designMode) {
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.target.querySelector('.sustainability-hero')) {
+        cleanupParallax();
+        init();
+      }
+    });
+  }
 })();

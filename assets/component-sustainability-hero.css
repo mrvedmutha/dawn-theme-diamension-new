@@ -44,6 +44,16 @@
   object-position: center;
 }
 
+/* Parallax effect - increase height for desktop (1024px+) */
+@media (min-width: 1025px) {
+  .sustainability-hero__image img {
+    height: 140%; /* Extra height for parallax movement */
+    top: -20%; /* Center the extra height */
+    position: relative;
+    will-change: transform; /* Optimize performance */
+  }
+}
+
 .sustainability-hero__image--placeholder {
   background-color: #f5f5f5;
   display: flex;
