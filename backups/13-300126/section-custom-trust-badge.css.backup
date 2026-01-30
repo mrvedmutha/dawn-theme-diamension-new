@@ -1,0 +1,136 @@
+/* ============================================
+   Custom Trust Badge Section Styles
+   ============================================ */
+
+/* Font Face Declarations */
+@import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro');
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables */
+:root {
+  --custom-trust-badge-text-color: #183754;
+  --custom-trust-badge-bg-color: #fffaf5;
+}
+
+/* Desktop Base - 1440px */
+.custom-section-trust-badge {
+  background-color: var(--custom-trust-badge-bg-color);
+  padding: 160px 150px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-section-trust-badge__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.custom-section-trust-badge__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;
+  justify-items: center;
+  align-items: center;
+}
+
+.custom-section-trust-badge__badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.custom-section-trust-badge__icon-wrapper {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.custom-section-trust-badge__icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+}
+
+.custom-section-trust-badge__label {
+  color: var(--custom-trust-badge-text-color);
+  text-align: center;
+  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+/* Large Desktop - 1441px+ */
+@media (min-width: 1441px) {
+  .custom-section-trust-badge {
+    padding: 160px 150px;
+  }
+}
+
+/* Tablet and Below - 1024px (Use 2 Column Layout) */
+@media (max-width: 1024px) {
+  .custom-section-trust-badge {
+    padding: 100px 80px;
+  }
+
+  .custom-section-trust-badge__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .custom-section-trust-badge__label {
+    font-size: 18px;
+    line-height: 18px;
+  }
+}
+
+/* Mobile - 767px (Keep 2 Column Layout) */
+@media (max-width: 767px) {
+  .custom-section-trust-badge__icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+  .custom-section-trust-badge__icon {
+    width: 60px;
+    height: 60px;
+  }
+  .custom-section-trust-badge {
+    padding: 60px 40px;
+  }
+
+  .custom-section-trust-badge__grid {
+    gap: 30px;
+  }
+
+  .custom-section-trust-badge__label {
+    font-size: 16px;
+    line-height: 16px;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .custom-section-trust-badge {
+    padding: 40px 20px;
+  }
+}

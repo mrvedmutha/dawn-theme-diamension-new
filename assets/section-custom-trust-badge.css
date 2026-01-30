@@ -57,6 +57,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .custom-section-trust-badge__icon {
@@ -64,6 +65,18 @@
   height: 80px;
   object-fit: contain;
   display: block;
+}
+
+.custom-section-trust-badge__lottie {
+  width: 80px;
+  height: 80px;
+  display: block;
+  overflow: hidden;
+}
+
+.custom-section-trust-badge__lottie svg {
+  width: 100%;
+  height: 100%;
 }
 
 .custom-section-trust-badge__label {
@@ -111,6 +124,10 @@
     height: 60px;
   }
   .custom-section-trust-badge__icon {
+    width: 60px;
+    height: 60px;
+  }
+  .custom-section-trust-badge__lottie {
     width: 60px;
     height: 60px;
   }

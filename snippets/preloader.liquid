@@ -9,56 +9,31 @@
   {{ 'section-preloader.css' | asset_url | stylesheet_tag }}
 
   <div class="preloader" id="preloader" aria-hidden="true">
-    {%- comment -%} Ellipse Arc - Behind everything {%- endcomment -%}
-    <div class="preloader__ellipse">&nbsp;</div>
+    {%- comment -%} Lottie Animation Canvas - Full screen background {%- endcomment -%}
+    <div class="preloader__canvas" id="preloader-canvas"></div>
 
-    <div class="preloader__container">
-      {%- comment -%} Logo {%- endcomment -%}
-      <div class="preloader__logo">
-        {%- if settings.preloader_logo != blank -%}
-          <img
-            src="{{ settings.preloader_logo | image_url: width: 648 }}"
-            srcset="{{ settings.preloader_logo | image_url: width: 324 }} 1x, {{ settings.preloader_logo | image_url: width: 648 }} 2x"
-            alt="{{ settings.preloader_logo.alt | default: shop.name }}"
-            width="324"
-            height="{{ 324 | divided_by: settings.preloader_logo.aspect_ratio | round }}"
-            loading="eager"
-          >
-        {%- else -%}
-          <span class="preloader__logo-text">{{ shop.name }}</span>
-        {%- endif -%}
-      </div>
-
-      {%- comment -%} Content Wrapper {%- endcomment -%}
-      <div class="preloader__content-wrapper">
-        {%- comment -%} Product Image {%- endcomment -%}
-        <div class="preloader__image-container">
-          {%- if settings.preloader_image != blank -%}
-            <img
-              class="preloader__image"
-              src="{{ settings.preloader_image | image_url: width: 688 }}"
-              srcset="{{ settings.preloader_image | image_url: width: 344 }} 1x, {{ settings.preloader_image | image_url: width: 688 }} 2x"
-              alt="{{ settings.preloader_image.alt | default: 'Loading' }}"
-              width="344"
-              height="144"
-              loading="eager"
-            >
-          {%- endif -%}
-        </div>
-
-        {%- comment -%} Tagline {%- endcomment -%}
-        {%- if settings.preloader_tagline != blank -%}
-          <p class="preloader__tagline">{{ settings.preloader_tagline }}</p>
-        {%- endif -%}
-
-        {%- comment -%} Divider Line {%- endcomment -%}
-        <div class="preloader__divider">&nbsp;</div>
-
-        {%- comment -%} Percentage Counter {%- endcomment -%}
-        <p class="preloader__percentage" id="preloader-percentage">0%</p>
-      </div>
+    {%- comment -%} Logo - Centered overlay {%- endcomment -%}
+    <div class="preloader__logo">
+      {%- if settings.preloader_logo != blank -%}
+        <img
+          src="{{ settings.preloader_logo | image_url: width: 648 }}"
+          srcset="{{ settings.preloader_logo | image_url: width: 324 }} 1x, {{ settings.preloader_logo | image_url: width: 648 }} 2x"
+          alt="{{ settings.preloader_logo.alt | default: shop.name }}"
+          width="324"
+          height="{{ 324 | divided_by: settings.preloader_logo.aspect_ratio | round }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="preloader__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
     </div>
+
+    {%- comment -%} Percentage Counter - Centered overlay {%- endcomment -%}
+    <p class="preloader__percentage" id="preloader-percentage">0%</p>
   </div>
+
+  {%- comment -%} Load Lottie Player {%- endcomment -%}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 
   <script>
     (function() {
@@ -71,9 +46,10 @@
       document.body.scrollTop = 0;
 
       const preloader = document.getElementById('preloader');
+      const canvasContainer = document.getElementById('preloader-canvas');
       const percentageEl = document.getElementById('preloader-percentage');
 
-      if (!preloader || !percentageEl) return;
+      if (!preloader || !canvasContainer || !percentageEl) return;
 
       // Prevent scrolling while preloader is active
       document.body.style.overflow = 'hidden';
@@ -94,18 +70,160 @@
       let targetProgress = 0;
       let animationFrame;
       let isComplete = false;
+      let lottieAnimation = null;
+      let startTime = Date.now();
+      let minDisplayTime = {{ settings.preloader_min_time | default: 3000 }}; // Minimum 3 seconds display
 
-      // Track viewport dimensions for reload on resize
-      let initialWidth = window.innerWidth;
-      let initialHeight = window.innerHeight;
+      // Initialize Lottie Animation
+      function initLottie() {
+        if (typeof lottie === 'undefined') {
+          console.error('Lottie library not loaded');
+          // Fallback: mark as ready anyway to allow progress
+          lottieReady = true;
+          calculateProgress();
+          return;
+        }
+
+        try {
+          lottieAnimation = lottie.loadAnimation({
+            container: canvasContainer,
+            renderer: 'canvas',
+            loop: true,
+            autoplay: true,
+            path: '{{ "section-preloader.json" | asset_url }}',
+            rendererSettings: {
+              preserveAspectRatio: 'xMidYMid slice', // This creates the cover effect
+              clearCanvas: true,
+              progressiveLoad: true,
+              hideOnTransparent: true
+            }
+          });
+
+          // Listen for Lottie animation data loaded
+          lottieAnimation.addEventListener('DOMLoaded', function() {
+            lottieReady = true;
+            calculateProgress();
+          });
+
+          // Fallback in case DOMLoaded doesn't fire
+          lottieAnimation.addEventListener('data_ready', function() {
+            if (!lottieReady) {
+              lottieReady = true;
+              calculateProgress();
+            }
+          });
+
+          // Additional fallback - mark as ready after timeout
+          setTimeout(function() {
+            if (!lottieReady) {
+              lottieReady = true;
+              calculateProgress();
+            }
+          }, 1000);
+
+          // Handle resize for responsive cover behavior
+          handleResize();
+          window.addEventListener('resize', handleResize);
+        } catch (error) {
+          console.error('Failed to initialize Lottie:', error);
+          // Fallback: mark as ready anyway to allow progress
+          lottieReady = true;
+          calculateProgress();
+        }
+      }
+
+      function handleResize() {
+        if (!lottieAnimation) return;
+
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+        const animWidth = 1920;
+        const animHeight = 1080;
+
+        const containerRatio = containerWidth / containerHeight;
+        const animRatio = animWidth / animHeight;
+
+        let scale;
+        if (containerRatio > animRatio) {
+          // Container is wider, scale to width
+          scale = containerWidth / animWidth;
+        } else {
+          // Container is taller, scale to height
+          scale = containerHeight / animHeight;
+        }
+
+        // Apply scaling
+        const scaledWidth = animWidth * scale;
+        const scaledHeight = animHeight * scale;
+        const offsetX = (containerWidth - scaledWidth) / 2;
+        const offsetY = (containerHeight - scaledHeight) / 2;
+
+        canvasContainer.style.width = scaledWidth + 'px';
+        canvasContainer.style.height = scaledHeight + 'px';
+        canvasContainer.style.left = offsetX + 'px';
+        canvasContainer.style.top = offsetY + 'px';
+
+        lottieAnimation.resize();
+      }
 
       // Track loading resources
-      const images = document.querySelectorAll('img:not(.preloader__image):not(.preloader__logo img)');
-      const totalResources = images.length + 1; // +1 for DOM ready
-      let loadedResources = 0;
+      let lottieReady = false;
+      let domReady = false;
+      let imagesLoaded = false;
+      let windowLoaded = false;
 
       function updateProgress(progress) {
         targetProgress = Math.min(progress, 100);
+      }
+
+      function calculateProgress() {
+        let progress = 0;
+
+        // Don't progress until Lottie animation is loaded
+        if (!lottieReady) {
+          updateProgress(0);
+          return;
+        }
+
+        // Lottie loaded: 0-30%
+        if (lottieReady) {
+          progress = 30;
+        }
+
+        // DOM ready: 30-50%
+        if (domReady) {
+          progress = 50;
+        }
+
+        // Images loaded: 50-80%
+        if (imagesLoaded) {
+          progress = 80;
+        }
+
+        // Window fully loaded: 80-95%
+        if (windowLoaded) {
+          progress = 95;
+        }
+
+        updateProgress(progress);
+
+        // Only mark complete when both page is loaded AND minimum time has elapsed
+        if (windowLoaded) {
+          var elapsed = Date.now() - startTime;
+          var remaining = minDisplayTime - elapsed;
+
+          if (remaining > 0) {
+            // Wait for minimum display time
+            setTimeout(function() {
+              updateProgress(100);
+              isComplete = true;
+            }, remaining);
+          } else {
+            // Minimum time already elapsed
+            updateProgress(100);
+            isComplete = true;
+          }
+        }
       }
 
       function animatePercentage() {
@@ -129,10 +247,17 @@
       function hidePreloader() {
         cancelAnimationFrame(animationFrame);
 
+        // Stop and cleanup Lottie animation
+        if (lottieAnimation) {
+          lottieAnimation.stop();
+          lottieAnimation.destroy();
+        }
+
         // Remove scroll prevention
         window.removeEventListener('scroll', preventScroll);
         window.removeEventListener('wheel', preventScroll);
         window.removeEventListener('touchmove', preventScroll);
+        window.removeEventListener('resize', handleResize);
 
         // Use GSAP to animate preloader sliding up
         if (typeof gsap !== 'undefined') {
@@ -166,73 +291,78 @@
         }
       }
 
-      function onResourceLoaded() {
-        loadedResources++;
-        const progress = (loadedResources / totalResources) * 100;
-        updateProgress(progress);
-
-        if (loadedResources >= totalResources) {
-          isComplete = true;
-        }
+      // Wait for Lottie to load, then initialize
+      function startPreloader() {
+        initLottie();
+        animatePercentage();
       }
 
-      // Start percentage animation
-      animatePercentage();
-
-      // Track DOM ready as first milestone (30% of progress)
-      if (document.readyState === 'complete') {
-        updateProgress(30);
-        loadedResources++;
+      // Check if Lottie is already loaded
+      if (typeof lottie !== 'undefined') {
+        startPreloader();
       } else {
+        // Wait for Lottie script to load
+        var checkLottie = setInterval(function() {
+          if (typeof lottie !== 'undefined') {
+            clearInterval(checkLottie);
+            startPreloader();
+          }
+        }, 50);
+
+        // Timeout after 2 seconds - start anyway
+        setTimeout(function() {
+          clearInterval(checkLottie);
+          if (typeof lottie === 'undefined') {
+            console.warn('Lottie not loaded, starting without animation');
+          }
+          startPreloader();
+        }, 2000);
+      }
+
+      // Progressive loading with smoother timing
+      // Stage 1: Initial load (0-40%) - starts after 500ms
+      setTimeout(function() {
+        domReady = true;
+        calculateProgress();
+      }, 500);
+
+      // Stage 2: DOM & Images (40-80%) - starts after 1200ms
+      if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
-          updateProgress(30);
-          loadedResources++;
+          setTimeout(function() {
+            imagesLoaded = true;
+            calculateProgress();
+          }, 700);
         });
+      } else {
+        // DOM already loaded
+        setTimeout(function() {
+          imagesLoaded = true;
+          calculateProgress();
+        }, 1200);
       }
 
-      // Track image loading
-      if (images.length > 0) {
-        images.forEach(function(img) {
-          if (img.complete) {
-            onResourceLoaded();
-          } else {
-            img.addEventListener('load', onResourceLoaded);
-            img.addEventListener('error', onResourceLoaded); // Count errors too to avoid stuck loader
-          }
-        });
-      }
-
-      // Window load event - everything is ready
+      // Stage 3: Window fully loaded (80-95%)
       window.addEventListener('load', function() {
-        // Ensure we reach 100%
-        updateProgress(100);
-        isComplete = true;
+        setTimeout(function() {
+          windowLoaded = true;
+          calculateProgress();
+        }, 300);
       });
 
-      // Viewport resize detection - reload page if viewport size changes significantly
-      let resizeTimeout;
-      window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-          const currentWidth = window.innerWidth;
-          const currentHeight = window.innerHeight;
+      // Fallback if window load takes too long - after 3 seconds
+      setTimeout(function() {
+        if (!windowLoaded) {
+          windowLoaded = true;
+          calculateProgress();
+        }
+      }, 3000);
 
-          // Check if viewport changed significantly (more than 50px difference)
-          const widthDiff = Math.abs(currentWidth - initialWidth);
-          const heightDiff = Math.abs(currentHeight - initialHeight);
-
-          if (widthDiff > 50 || heightDiff > 50) {
-            // Reload the page
-            window.location.reload();
-          }
-        }, 300); // Debounce resize events
-      });
-
-      // Safety timeout - hide preloader after max time even if something fails
+      // Safety timeout - force completion after max time
       setTimeout(function() {
         if (!preloader.classList.contains('is-hidden')) {
-          updateProgress(100);
-          isComplete = true;
+          windowLoaded = true;
+          calculateProgress();
         }
       }, {{ settings.preloader_max_time | default: 8000 }});
     })();

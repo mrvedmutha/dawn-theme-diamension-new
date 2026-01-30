@@ -1,0 +1,240 @@
+{% comment %}
+  Preloader Snippet
+  - Only renders on homepage when enabled
+  - Shows loading progress based on actual DOM/asset loading
+  - Slides up to reveal page when complete
+{% endcomment %}
+
+{%- if request.page_type == 'index' and settings.preloader_enabled -%}
+  {{ 'section-preloader.css' | asset_url | stylesheet_tag }}
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    {%- comment -%} Ellipse Arc - Behind everything {%- endcomment -%}
+    <div class="preloader__ellipse">&nbsp;</div>
+
+    <div class="preloader__container">
+      {%- comment -%} Logo {%- endcomment -%}
+      <div class="preloader__logo">
+        {%- if settings.preloader_logo != blank -%}
+          <img
+            src="{{ settings.preloader_logo | image_url: width: 648 }}"
+            srcset="{{ settings.preloader_logo | image_url: width: 324 }} 1x, {{ settings.preloader_logo | image_url: width: 648 }} 2x"
+            alt="{{ settings.preloader_logo.alt | default: shop.name }}"
+            width="324"
+            height="{{ 324 | divided_by: settings.preloader_logo.aspect_ratio | round }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <span class="preloader__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Content Wrapper {%- endcomment -%}
+      <div class="preloader__content-wrapper">
+        {%- comment -%} Product Image {%- endcomment -%}
+        <div class="preloader__image-container">
+          {%- if settings.preloader_image != blank -%}
+            <img
+              class="preloader__image"
+              src="{{ settings.preloader_image | image_url: width: 688 }}"
+              srcset="{{ settings.preloader_image | image_url: width: 344 }} 1x, {{ settings.preloader_image | image_url: width: 688 }} 2x"
+              alt="{{ settings.preloader_image.alt | default: 'Loading' }}"
+              width="344"
+              height="144"
+              loading="eager"
+            >
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Tagline {%- endcomment -%}
+        {%- if settings.preloader_tagline != blank -%}
+          <p class="preloader__tagline">{{ settings.preloader_tagline }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Divider Line {%- endcomment -%}
+        <div class="preloader__divider">&nbsp;</div>
+
+        {%- comment -%} Percentage Counter {%- endcomment -%}
+        <p class="preloader__percentage" id="preloader-percentage">0%</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Force scroll to top immediately - before anything else
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      const preloader = document.getElementById('preloader');
+      const percentageEl = document.getElementById('preloader-percentage');
+
+      if (!preloader || !percentageEl) return;
+
+      // Prevent scrolling while preloader is active
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+
+      // Prevent scroll events and wheel events during preloader
+      const preventScroll = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      window.addEventListener('scroll', preventScroll, { passive: false });
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+
+      let currentProgress = 0;
+      let targetProgress = 0;
+      let animationFrame;
+      let isComplete = false;
+
+      // Track viewport dimensions for reload on resize
+      let initialWidth = window.innerWidth;
+      let initialHeight = window.innerHeight;
+
+      // Track loading resources
+      const images = document.querySelectorAll('img:not(.preloader__image):not(.preloader__logo img)');
+      const totalResources = images.length + 1; // +1 for DOM ready
+      let loadedResources = 0;
+
+      function updateProgress(progress) {
+        targetProgress = Math.min(progress, 100);
+      }
+
+      function animatePercentage() {
+        if (currentProgress < targetProgress) {
+          // Smooth easing toward target
+          const diff = targetProgress - currentProgress;
+          const increment = Math.max(0.5, diff * 0.1);
+          currentProgress = Math.min(currentProgress + increment, targetProgress);
+          percentageEl.textContent = Math.round(currentProgress) + '%';
+        }
+
+        if (currentProgress < 100 || !isComplete) {
+          animationFrame = requestAnimationFrame(animatePercentage);
+        } else {
+          // Ensure we show 100% before hiding
+          percentageEl.textContent = '100%';
+          setTimeout(hidePreloader, 300);
+        }
+      }
+
+      function hidePreloader() {
+        cancelAnimationFrame(animationFrame);
+
+        // Remove scroll prevention
+        window.removeEventListener('scroll', preventScroll);
+        window.removeEventListener('wheel', preventScroll);
+        window.removeEventListener('touchmove', preventScroll);
+
+        // Use GSAP to animate preloader sliding up
+        if (typeof gsap !== 'undefined') {
+          gsap.to(preloader, {
+            yPercent: -100,
+            duration: 0.8,
+            ease: 'power3.inOut',
+            onComplete: function() {
+              preloader.classList.add('is-hidden');
+              preloader.style.display = 'none';
+              document.body.style.overflow = '';
+              document.documentElement.style.overflow = '';
+
+              // Ensure we're at top after preloader hides
+              window.scrollTo(0, 0);
+            }
+          });
+        } else {
+          // Fallback without GSAP
+          preloader.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
+          preloader.style.transform = 'translateY(-100%)';
+          setTimeout(function() {
+            preloader.classList.add('is-hidden');
+            preloader.style.display = 'none';
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+
+            // Ensure we're at top after preloader hides
+            window.scrollTo(0, 0);
+          }, 800);
+        }
+      }
+
+      function onResourceLoaded() {
+        loadedResources++;
+        const progress = (loadedResources / totalResources) * 100;
+        updateProgress(progress);
+
+        if (loadedResources >= totalResources) {
+          isComplete = true;
+        }
+      }
+
+      // Start percentage animation
+      animatePercentage();
+
+      // Track DOM ready as first milestone (30% of progress)
+      if (document.readyState === 'complete') {
+        updateProgress(30);
+        loadedResources++;
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          updateProgress(30);
+          loadedResources++;
+        });
+      }
+
+      // Track image loading
+      if (images.length > 0) {
+        images.forEach(function(img) {
+          if (img.complete) {
+            onResourceLoaded();
+          } else {
+            img.addEventListener('load', onResourceLoaded);
+            img.addEventListener('error', onResourceLoaded); // Count errors too to avoid stuck loader
+          }
+        });
+      }
+
+      // Window load event - everything is ready
+      window.addEventListener('load', function() {
+        // Ensure we reach 100%
+        updateProgress(100);
+        isComplete = true;
+      });
+
+      // Viewport resize detection - reload page if viewport size changes significantly
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+          const currentWidth = window.innerWidth;
+          const currentHeight = window.innerHeight;
+
+          // Check if viewport changed significantly (more than 50px difference)
+          const widthDiff = Math.abs(currentWidth - initialWidth);
+          const heightDiff = Math.abs(currentHeight - initialHeight);
+
+          if (widthDiff > 50 || heightDiff > 50) {
+            // Reload the page
+            window.location.reload();
+          }
+        }, 300); // Debounce resize events
+      });
+
+      // Safety timeout - hide preloader after max time even if something fails
+      setTimeout(function() {
+        if (!preloader.classList.contains('is-hidden')) {
+          updateProgress(100);
+          isComplete = true;
+        }
+      }, {{ settings.preloader_max_time | default: 8000 }});
+    })();
+  </script>
+{%- endif -%}

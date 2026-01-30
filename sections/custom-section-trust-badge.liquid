@@ -5,14 +5,13 @@
     <div class="custom-section-trust-badge__grid">
       {% for block in section.blocks %}
         <div class="custom-section-trust-badge__badge" {{ block.shopify_attributes }}>
-          {% if block.settings.badge_icon %}
+          {% if block.settings.badge_icon_json != blank %}
             <div class="custom-section-trust-badge__icon-wrapper">
-              <img
-                src="{{ block.settings.badge_icon | image_url: width: 120 }}"
-                alt="{{ block.settings.badge_label | escape }}"
-                class="custom-section-trust-badge__icon"
-                loading="lazy"
-              />
+              <div
+                class="custom-section-trust-badge__lottie"
+                data-lottie-url="{{ block.settings.badge_icon_json | asset_url }}"
+                data-block-id="{{ block.id }}"
+              ></div>
             </div>
           {% endif %}
           {% if block.settings.badge_label != blank %}
@@ -24,6 +23,9 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ 'custom-trust-badge.js' | asset_url }}"></script>
+
 {% schema %}
 {
   "name": "Custom Trust Badge",
@@ -34,9 +36,32 @@
       "name": "Trust Badge",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "badge_icon",
-          "label": "Badge Icon (PNG or SVG)"
+          "type": "select",
+          "id": "badge_icon_json",
+          "label": "Badge Icon Animation",
+          "options": [
+            {
+              "value": "",
+              "label": "None"
+            },
+            {
+              "value": "section-custom-trust-badge-icon-1.json",
+              "label": "Icon 1"
+            },
+            {
+              "value": "section-custom-trust-badge-icon-2.json",
+              "label": "Icon 2"
+            },
+            {
+              "value": "section-custom-trust-badge-icon-3.json",
+              "label": "Icon 3"
+            },
+            {
+              "value": "section-custom-trust-badge-icon-4.json",
+              "label": "Icon 4"
+            }
+          ],
+          "default": ""
         },
         {
           "type": "text",
@@ -56,24 +81,28 @@
         {
           "type": "trust_badge",
           "settings": {
+            "badge_icon_json": "section-custom-trust-badge-icon-1.json",
             "badge_label": "100% certified jewellery"
           }
         },
         {
           "type": "trust_badge",
           "settings": {
+            "badge_icon_json": "section-custom-trust-badge-icon-2.json",
             "badge_label": "15 days easy return"
           }
         },
         {
           "type": "trust_badge",
           "settings": {
+            "badge_icon_json": "section-custom-trust-badge-icon-3.json",
             "badge_label": "lifetime exchange"
           }
         },
         {
           "type": "trust_badge",
           "settings": {
+            "badge_icon_json": "section-custom-trust-badge-icon-4.json",
             "badge_label": "lifetime warrenty"
           }
         }
