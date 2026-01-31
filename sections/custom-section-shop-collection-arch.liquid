@@ -3,7 +3,6 @@
 <div class="custom-section-shop-collection-arch" id="shopCollectionArch-{{ section.id }}">
   <div class="custom-section-shop-collection-arch__wrapper">
     <div class="custom-section-shop-collection-arch__container">
-
       {% if section.settings.heading != blank %}
         <h2 class="custom-section-shop-collection-arch__heading">
           {{ section.settings.heading }}
@@ -11,7 +10,6 @@
       {% endif %}
 
       <div class="custom-section-shop-collection-arch__content">
-
         <!-- Decorative Ellipse Lottie Animation (Desktop Only) -->
         <div class="custom-section-shop-collection-arch__ellipse">
           <div
@@ -23,23 +21,27 @@
 
         <!-- Side Product Images -->
         <div class="custom-section-shop-collection-arch__images">
-
           <!-- Left Image -->
           {% if section.settings.left_image != blank %}
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--left">
               {% if section.settings.left_image_link != blank %}
-                <a href="{{ section.settings.left_image_link }}" class="custom-section-shop-collection-arch__image-link">
+                <a
+                  href="{{ section.settings.left_image_link }}"
+                  class="custom-section-shop-collection-arch__image-link"
+                >
               {% endif %}
-                <img
-                  src="{{ section.settings.left_image | image_url: width: 450 }}"
-                  srcset="{{ section.settings.left_image | image_url: width: 222 }} 222w,
-                          {{ section.settings.left_image | image_url: width: 444 }} 444w,
-                          {{ section.settings.left_image | image_url: width: 450 }} 450w"
-                  sizes="(min-width: 1024px) 222px, 150px"
-                  alt="{{ section.settings.left_image.alt | escape }}"
-                  loading="lazy"
-                  class="custom-section-shop-collection-arch__image-img js-parallax-image"
-                />
+              <img
+                src="{{ section.settings.left_image | image_url: width: 450 }}"
+                srcset="
+                  {{ section.settings.left_image | image_url: width: 222 }} 222w,
+                  {{ section.settings.left_image | image_url: width: 444 }} 444w,
+                  {{ section.settings.left_image | image_url: width: 450 }} 450w
+                "
+                sizes="(min-width: 1024px) 222px, 150px"
+                alt="{{ section.settings.left_image.alt | escape }}"
+                loading="lazy"
+                class="custom-section-shop-collection-arch__image-img js-parallax-image"
+              >
               {% if section.settings.left_image_link != blank %}
                 </a>
               {% endif %}
@@ -50,18 +52,23 @@
           {% if section.settings.right_image != blank %}
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--right">
               {% if section.settings.right_image_link != blank %}
-                <a href="{{ section.settings.right_image_link }}" class="custom-section-shop-collection-arch__image-link">
+                <a
+                  href="{{ section.settings.right_image_link }}"
+                  class="custom-section-shop-collection-arch__image-link"
+                >
               {% endif %}
-                <img
-                  src="{{ section.settings.right_image | image_url: width: 450 }}"
-                  srcset="{{ section.settings.right_image | image_url: width: 222 }} 222w,
-                          {{ section.settings.right_image | image_url: width: 444 }} 444w,
-                          {{ section.settings.right_image | image_url: width: 450 }} 450w"
-                  sizes="(min-width: 1024px) 222px, 150px"
-                  alt="{{ section.settings.right_image.alt | escape }}"
-                  loading="lazy"
-                  class="custom-section-shop-collection-arch__image-img js-parallax-image"
-                />
+              <img
+                src="{{ section.settings.right_image | image_url: width: 450 }}"
+                srcset="
+                  {{ section.settings.right_image | image_url: width: 222 }} 222w,
+                  {{ section.settings.right_image | image_url: width: 444 }} 444w,
+                  {{ section.settings.right_image | image_url: width: 450 }} 450w
+                "
+                sizes="(min-width: 1024px) 222px, 150px"
+                alt="{{ section.settings.right_image.alt | escape }}"
+                loading="lazy"
+                class="custom-section-shop-collection-arch__image-img js-parallax-image"
+              >
               {% if section.settings.right_image_link != blank %}
                 </a>
               {% endif %}
@@ -72,48 +79,55 @@
           {% if section.settings.bottom_image != blank %}
             <div class="custom-section-shop-collection-arch__image custom-section-shop-collection-arch__image--bottom">
               {% if section.settings.bottom_image_link != blank %}
-                <a href="{{ section.settings.bottom_image_link }}" class="custom-section-shop-collection-arch__image-link">
+                <a
+                  href="{{ section.settings.bottom_image_link }}"
+                  class="custom-section-shop-collection-arch__image-link"
+                >
               {% endif %}
-                <img
-                  src="{{ section.settings.bottom_image | image_url: width: 450 }}"
-                  srcset="{{ section.settings.bottom_image | image_url: width: 222 }} 222w,
-                          {{ section.settings.bottom_image | image_url: width: 444 }} 444w,
-                          {{ section.settings.bottom_image | image_url: width: 450 }} 450w"
-                  sizes="(min-width: 1024px) 222px, 150px"
-                  alt="{{ section.settings.bottom_image.alt | escape }}"
-                  loading="lazy"
-                  class="custom-section-shop-collection-arch__image-img js-parallax-image"
-                />
+              <img
+                src="{{ section.settings.bottom_image | image_url: width: 450 }}"
+                srcset="
+                  {{ section.settings.bottom_image | image_url: width: 222 }} 222w,
+                  {{ section.settings.bottom_image | image_url: width: 444 }} 444w,
+                  {{ section.settings.bottom_image | image_url: width: 450 }} 450w
+                "
+                sizes="(min-width: 1024px) 222px, 150px"
+                alt="{{ section.settings.bottom_image.alt | escape }}"
+                loading="lazy"
+                class="custom-section-shop-collection-arch__image-img js-parallax-image"
+              >
               {% if section.settings.bottom_image_link != blank %}
                 </a>
               {% endif %}
             </div>
           {% endif %}
-
         </div>
 
         <!-- Center Arch Frame -->
         <div class="custom-section-shop-collection-arch__center">
-
           <!-- Arch Clip Shape Container -->
           <div class="custom-section-shop-collection-arch__arch-container">
-
             <!-- Video or Image -->
-            <div class="custom-section-shop-collection-arch__media js-video-container" data-video-url="{{ section.settings.center_video }}">
+            <div
+              class="custom-section-shop-collection-arch__media js-video-container"
+              data-video-url="{{ section.settings.center_video }}"
+            >
               {% if section.settings.center_video != blank %}
                 <!-- Video will be injected by JavaScript -->
                 <div class="custom-section-shop-collection-arch__video-placeholder"></div>
               {% elsif section.settings.center_image_fallback != blank %}
                 <img
                   src="{{ section.settings.center_image_fallback | image_url: width: 950 }}"
-                  srcset="{{ section.settings.center_image_fallback | image_url: width: 472 }} 472w,
-                          {{ section.settings.center_image_fallback | image_url: width: 944 }} 944w,
-                          {{ section.settings.center_image_fallback | image_url: width: 950 }} 950w"
+                  srcset="
+                    {{ section.settings.center_image_fallback | image_url: width: 472 }} 472w,
+                    {{ section.settings.center_image_fallback | image_url: width: 944 }} 944w,
+                    {{ section.settings.center_image_fallback | image_url: width: 950 }} 950w
+                  "
                   sizes="(min-width: 1024px) 472px, 100vw"
                   alt="{{ section.settings.center_image_fallback.alt | escape }}"
                   loading="lazy"
                   class="custom-section-shop-collection-arch__fallback-image"
-                />
+                >
               {% endif %}
             </div>
 
@@ -123,7 +137,7 @@
                 src="{{ 'custom-section-shop-collection-arch/radiance-collection-inner-video-rectangle-arch-with-clip.svg' | asset_url }}"
                 alt=""
                 class="custom-section-shop-collection-arch__inner-rectangle-svg"
-              />
+              >
 
               <!-- CTA Button -->
               {% if section.settings.center_cta_text != blank %}
@@ -140,18 +154,13 @@
                 </div>
               {% endif %}
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ 'section-shop-collection-arch.js' | asset_url }}" defer></script>
 
 {% schema %}

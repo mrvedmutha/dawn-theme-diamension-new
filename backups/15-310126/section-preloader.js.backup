@@ -1,0 +1,475 @@
+/**
+ * Preloader Module
+ * Handles split-screen preloader with GSAP animations
+ * Waits for preloader's own assets (video, logo, fonts) before progressing
+ */
+
+const PreloaderModule = (function() {
+  'use strict';
+
+  let config = {
+    minDisplayTime: 3000,
+    maxDisplayTime: 8000,
+    staggerDelay: 300
+  };
+
+  let state = {
+    currentProgress: 0,
+    targetProgress: 0,
+    isComplete: false,
+    startTime: null,
+    animationFrame: null,
+    elements: {},
+    preloaderAssets: {
+      videoLoaded: false,
+      logoLoaded: false,
+      fontLoaded: false
+    }
+  };
+
+  /**
+   * Initialize the preloader
+   */
+  function init(options = {}) {
+    // Merge options with defaults
+    config = { ...config, ...options };
+
+    // Get DOM elements
+    state.elements = {
+      preloader: document.querySelector('[data-preloader]'),
+      counter: document.querySelector('[data-preloader-counter]'),
+      leftSide: document.querySelector('[data-preloader-left]'),
+      rightSide: document.querySelector('[data-preloader-right]'),
+      video: document.querySelector('.preloader__video'),
+      logo: document.querySelector('.preloader__logo img')
+    };
+
+    // Verify elements exist
+    if (!state.elements.preloader || !state.elements.counter) {
+      console.warn('Preloader elements not found');
+      return;
+    }
+
+    // Prevent scrolling
+    preventScrolling();
+
+    // Start tracking time
+    state.startTime = Date.now();
+
+    // Load preloader's own assets first
+    loadPreloaderAssets();
+
+    // Start progress tracking
+    trackProgress();
+
+    // Start percentage animation
+    animatePercentage();
+
+    // Set up safety timeout
+    setupSafetyTimeout();
+  }
+
+  /**
+   * Prevent page scrolling while preloader is active
+   */
+  function preventScrolling() {
+    // Force scroll to top
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Add class to body to prevent scrolling
+    document.body.classList.add('preloader-active');
+
+    // Prevent scroll events
+    const preventScroll = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    window.addEventListener('scroll', preventScroll, { passive: false });
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+
+    // Store cleanup function
+    state.cleanupScroll = () => {
+      window.removeEventListener('scroll', preventScroll);
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+      document.body.classList.remove('preloader-active');
+    };
+  }
+
+  /**
+   * Load and track preloader's own assets
+   */
+  function loadPreloaderAssets() {
+    // Track video loading (if exists)
+    if (state.elements.video) {
+      // Check if video is already loaded
+      if (state.elements.video.readyState >= 3) {
+        state.preloaderAssets.videoLoaded = true;
+        checkPreloaderAssetsReady();
+      } else {
+        // Wait for video to be loaded enough to play
+        state.elements.video.addEventListener('canplaythrough', () => {
+          state.preloaderAssets.videoLoaded = true;
+          checkPreloaderAssetsReady();
+        }, { once: true });
+
+        // Fallback timeout for video
+        setTimeout(() => {
+          if (!state.preloaderAssets.videoLoaded) {
+            console.warn('Video took too long to load, continuing anyway');
+            state.preloaderAssets.videoLoaded = true;
+            checkPreloaderAssetsReady();
+          }
+        }, 3000);
+      }
+    } else {
+      // No video on mobile or not provided
+      state.preloaderAssets.videoLoaded = true;
+    }
+
+    // Track logo image loading (if exists)
+    if (state.elements.logo) {
+      if (state.elements.logo.complete && state.elements.logo.naturalHeight !== 0) {
+        state.preloaderAssets.logoLoaded = true;
+        checkPreloaderAssetsReady();
+      } else {
+        state.elements.logo.addEventListener('load', () => {
+          state.preloaderAssets.logoLoaded = true;
+          checkPreloaderAssetsReady();
+        }, { once: true });
+
+        state.elements.logo.addEventListener('error', () => {
+          console.warn('Logo failed to load');
+          state.preloaderAssets.logoLoaded = true;
+          checkPreloaderAssetsReady();
+        }, { once: true });
+
+        // Fallback timeout for logo
+        setTimeout(() => {
+          if (!state.preloaderAssets.logoLoaded) {
+            state.preloaderAssets.logoLoaded = true;
+            checkPreloaderAssetsReady();
+          }
+        }, 2000);
+      }
+    } else {
+      state.preloaderAssets.logoLoaded = true;
+    }
+
+    // Track Ogg font loading
+    loadOggFont();
+  }
+
+  /**
+   * Load and track Ogg font
+   */
+  function loadOggFont() {
+    // Check if Font Loading API is available
+    if ('fonts' in document) {
+      // Try to load Ogg font family (checking common variations)
+      const fontPromises = [
+        document.fonts.load('400 125px Ogg'),
+        document.fonts.load('400 125px "Ogg:Roman"'),
+        document.fonts.load('normal 125px Ogg')
+      ];
+
+      Promise.race([
+        Promise.all(fontPromises),
+        new Promise(resolve => setTimeout(resolve, 2000)) // 2s timeout
+      ]).then(() => {
+        state.preloaderAssets.fontLoaded = true;
+        checkPreloaderAssetsReady();
+      }).catch(() => {
+        console.warn('Ogg font loading timeout or failed');
+        state.preloaderAssets.fontLoaded = true;
+        checkPreloaderAssetsReady();
+      });
+
+      // Additional check using document.fonts.ready
+      document.fonts.ready.then(() => {
+        if (!state.preloaderAssets.fontLoaded) {
+          state.preloaderAssets.fontLoaded = true;
+          checkPreloaderAssetsReady();
+        }
+      });
+    } else {
+      // Font Loading API not available, use timeout
+      setTimeout(() => {
+        state.preloaderAssets.fontLoaded = true;
+        checkPreloaderAssetsReady();
+      }, 1000);
+    }
+  }
+
+  /**
+   * Check if all preloader assets are ready
+   */
+  function checkPreloaderAssetsReady() {
+    const { videoLoaded, logoLoaded, fontLoaded } = state.preloaderAssets;
+
+    if (videoLoaded && logoLoaded && fontLoaded) {
+      // All preloader assets loaded, we can progress beyond 15%
+      console.log('All preloader assets loaded');
+    }
+  }
+
+  /**
+   * Track page loading progress
+   */
+  function trackProgress() {
+    let loadingStages = {
+      initial: false,
+      preloaderAssetsReady: false,
+      domReady: false,
+      imagesLoaded: false,
+      windowLoaded: false
+    };
+
+    // Stage 1: Initial (0-10%) - immediate
+    setTimeout(() => {
+      loadingStages.initial = true;
+      calculateProgress(loadingStages);
+    }, 100);
+
+    // Stage 2: Wait for preloader assets (10-15%)
+    // Keep checking until preloader assets are ready
+    const checkAssets = setInterval(() => {
+      const { videoLoaded, logoLoaded, fontLoaded } = state.preloaderAssets;
+      if (videoLoaded && logoLoaded && fontLoaded) {
+        clearInterval(checkAssets);
+        loadingStages.preloaderAssetsReady = true;
+        calculateProgress(loadingStages);
+      }
+    }, 100);
+
+    // Fallback - force progression after 3 seconds
+    setTimeout(() => {
+      if (!loadingStages.preloaderAssetsReady) {
+        clearInterval(checkAssets);
+        loadingStages.preloaderAssetsReady = true;
+        calculateProgress(loadingStages);
+      }
+    }, 3000);
+
+    // Stage 3: DOM Ready (15-50%)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          loadingStages.domReady = true;
+          calculateProgress(loadingStages);
+        }, 300);
+      });
+    } else {
+      setTimeout(() => {
+        loadingStages.domReady = true;
+        calculateProgress(loadingStages);
+      }, 500);
+    }
+
+    // Stage 4: Images Loaded (50-80%)
+    setTimeout(() => {
+      loadingStages.imagesLoaded = true;
+      calculateProgress(loadingStages);
+    }, 1500);
+
+    // Stage 5: Window Loaded (80-95%)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loadingStages.windowLoaded = true;
+        calculateProgress(loadingStages);
+      }, 300);
+    });
+
+    // Fallback if window load takes too long
+    setTimeout(() => {
+      if (!loadingStages.windowLoaded) {
+        loadingStages.windowLoaded = true;
+        calculateProgress(loadingStages);
+      }
+    }, 4000);
+  }
+
+  /**
+   * Calculate progress based on loading stages
+   */
+  function calculateProgress(stages) {
+    let progress = 0;
+
+    // Don't progress beyond 15% until preloader assets are ready
+    if (stages.initial) progress = 10;
+    if (stages.preloaderAssetsReady) progress = 15;
+
+    // Only progress further once preloader assets are ready
+    if (stages.preloaderAssetsReady) {
+      if (stages.domReady) progress = 50;
+      if (stages.imagesLoaded) progress = 80;
+      if (stages.windowLoaded) progress = 95;
+    }
+
+    updateProgress(progress);
+
+    // Check if we should complete
+    if (stages.windowLoaded && stages.preloaderAssetsReady) {
+      const elapsed = Date.now() - state.startTime;
+      const remaining = config.minDisplayTime - elapsed;
+
+      if (remaining > 0) {
+        // Wait for minimum display time
+        setTimeout(() => {
+          completePreloader();
+        }, remaining);
+      } else {
+        // Minimum time already elapsed
+        completePreloader();
+      }
+    }
+  }
+
+  /**
+   * Update target progress
+   */
+  function updateProgress(progress) {
+    state.targetProgress = Math.min(progress, 100);
+  }
+
+  /**
+   * Animate percentage counter smoothly
+   */
+  function animatePercentage() {
+    if (state.currentProgress < state.targetProgress) {
+      // Smooth easing toward target
+      const diff = state.targetProgress - state.currentProgress;
+      const increment = Math.max(0.5, diff * 0.1);
+      state.currentProgress = Math.min(state.currentProgress + increment, state.targetProgress);
+
+      if (state.elements.counter) {
+        state.elements.counter.textContent = Math.round(state.currentProgress) + '%';
+      }
+    }
+
+    if (state.currentProgress < 100 || !state.isComplete) {
+      state.animationFrame = requestAnimationFrame(animatePercentage);
+    } else {
+      // Ensure we show 100% before hiding
+      if (state.elements.counter) {
+        state.elements.counter.textContent = '100%';
+      }
+      setTimeout(hidePreloader, 300);
+    }
+  }
+
+  /**
+   * Mark preloader as complete
+   */
+  function completePreloader() {
+    updateProgress(100);
+    state.isComplete = true;
+  }
+
+  /**
+   * Hide preloader with GSAP staggered animation
+   */
+  function hidePreloader() {
+    if (typeof gsap === 'undefined') {
+      console.warn('GSAP not loaded, using fallback animation');
+      hidePreloaderFallback();
+      return;
+    }
+
+    // Cancel animation frame
+    if (state.animationFrame) {
+      cancelAnimationFrame(state.animationFrame);
+    }
+
+    // Clean up scroll prevention
+    if (state.cleanupScroll) {
+      state.cleanupScroll();
+    }
+
+    // GSAP Timeline for staggered exit
+    const tl = gsap.timeline({
+      onComplete: () => {
+        state.elements.preloader.classList.add('is-hidden');
+        state.elements.preloader.style.display = 'none';
+
+        // Ensure we're at top after preloader hides
+        window.scrollTo(0, 0);
+      }
+    });
+
+    // Animate left side first (slides up)
+    tl.to(state.elements.leftSide, {
+      yPercent: -100,
+      duration: 0.8,
+      ease: 'power3.inOut'
+    });
+
+    // Then animate right side (slides up with stagger delay)
+    tl.to(state.elements.rightSide, {
+      yPercent: -100,
+      duration: 0.8,
+      ease: 'power3.inOut'
+    }, `-=${0.8 - (config.staggerDelay / 1000)}`); // Overlap based on stagger delay
+  }
+
+  /**
+   * Fallback animation without GSAP
+   */
+  function hidePreloaderFallback() {
+    if (state.animationFrame) {
+      cancelAnimationFrame(state.animationFrame);
+    }
+
+    if (state.cleanupScroll) {
+      state.cleanupScroll();
+    }
+
+    const { leftSide, rightSide, preloader } = state.elements;
+
+    // Animate left side
+    leftSide.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
+    leftSide.style.transform = 'translateY(-100%)';
+
+    // Animate right side with delay
+    setTimeout(() => {
+      rightSide.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
+      rightSide.style.transform = 'translateY(-100%)';
+    }, config.staggerDelay);
+
+    // Clean up after animation
+    setTimeout(() => {
+      preloader.classList.add('is-hidden');
+      preloader.style.display = 'none';
+      window.scrollTo(0, 0);
+    }, 800 + config.staggerDelay);
+  }
+
+  /**
+   * Setup safety timeout to force hide
+   */
+  function setupSafetyTimeout() {
+    setTimeout(() => {
+      if (!state.elements.preloader.classList.contains('is-hidden')) {
+        completePreloader();
+      }
+    }, config.maxDisplayTime);
+  }
+
+  // Public API
+  return {
+    init
+  };
+})();
+
+// Export for use in Liquid template
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = PreloaderModule;
+}

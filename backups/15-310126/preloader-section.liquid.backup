@@ -1,0 +1,147 @@
+{% comment %}
+  Split-Screen Preloader Section
+  - Left: Background video (desktop only)
+  - Right: Logo + Percentage counter
+  - Mobile: Only shows right side (logo + counter)
+  - Exit animation: Left slides up, then right slides up (staggered)
+{% endcomment %}
+
+{{ 'section-preloader.css' | asset_url | stylesheet_tag }}
+
+{%- if request.page_type == 'index' and section.settings.enable_preloader -%}
+  <div class="preloader" id="preloader" data-preloader>
+    {%- comment -%} Left Side - Video (Desktop only) {%- endcomment -%}
+    <div class="preloader__video-container" data-preloader-left>
+      {%- if section.settings.preloader_video != blank -%}
+        <video
+          class="preloader__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="{{ section.settings.preloader_video }}" type="video/mp4">
+        </video>
+      {%- else -%}
+        <div class="preloader__video-placeholder"></div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right Side - Logo + Counter {%- endcomment -%}
+    <div class="preloader__content" data-preloader-right>
+      <div class="preloader__content-inner">
+        {%- if section.settings.preloader_logo != blank -%}
+          <div class="preloader__logo">
+            {{
+              section.settings.preloader_logo
+              | image_url: width: 400
+              | image_tag: loading: 'eager', widths: '200, 400', alt: section.settings.preloader_logo.alt | default: shop.name
+            }}
+          </div>
+        {%- endif -%}
+
+        <p class="preloader__percentage" data-preloader-counter>0%</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ 'section-preloader.js' | asset_url }}" defer></script>
+
+  <script>
+    // Initialize preloader when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPreloader);
+    } else {
+      initPreloader();
+    }
+
+    function initPreloader() {
+      if (typeof PreloaderModule !== 'undefined') {
+        PreloaderModule.init({
+          minDisplayTime: {{ section.settings.min_display_time | default: 3000 }},
+          maxDisplayTime: {{ section.settings.max_display_time | default: 8000 }},
+          staggerDelay: {{ section.settings.stagger_delay | default: 300 }}
+        });
+      }
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Preloader",
+  "tag": "section",
+  "class": "section-preloader",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Preloader Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_preloader",
+      "label": "Enable Preloader",
+      "default": true,
+      "info": "Show preloader on homepage"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "url",
+      "id": "preloader_video",
+      "label": "Background Video URL (Left Side)",
+      "info": "Upload video to Settings > Files, then paste the URL here. Video will only show on desktop."
+    },
+    {
+      "type": "image_picker",
+      "id": "preloader_logo",
+      "label": "Logo Icon"
+    },
+    {
+      "type": "header",
+      "content": "Timing Settings"
+    },
+    {
+      "type": "range",
+      "id": "min_display_time",
+      "min": 1000,
+      "max": 5000,
+      "step": 100,
+      "unit": "ms",
+      "label": "Minimum Display Time",
+      "default": 3000,
+      "info": "Minimum time to show preloader"
+    },
+    {
+      "type": "range",
+      "id": "max_display_time",
+      "min": 5000,
+      "max": 9500,
+      "step": 500,
+      "unit": "ms",
+      "label": "Maximum Display Time",
+      "default": 8000,
+      "info": "Force hide after this time"
+    },
+    {
+      "type": "range",
+      "id": "stagger_delay",
+      "min": 0,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "label": "Stagger Delay",
+      "default": 300,
+      "info": "Delay between left and right side exit animation"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preloader"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Preloader Section Styles
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Ogg';
+  src: url('Ogg-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeueMontreal';
+  src: url('NeueMontreal-Regular.woff2') format('woff2'), url('NeueMontreal-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Preloader Wrapper */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #fffaf5;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.preloader.is-hidden {
+  pointer-events: none;
+}
+
+/* Lottie Canvas Container - Full screen background */
+.preloader__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Logo - Top overlay */
+.preloader__logo {
+  position: absolute;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.preloader__logo img {
+  max-width: 324px;
+  height: auto;
+  display: block;
+}
+
+.preloader__logo-text {
+  font-family: 'Ogg', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: #183754;
+  text-align: center;
+  display: block;
+}
+
+/* Percentage Counter - Bottom overlay */
+.preloader__percentage {
+  font-family: 'Ogg', serif;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 50px;
+  color: #183754;
+  text-align: center;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Responsive Styles
+   ========================================================================== */
+
+@media screen and (max-width: 990px) {
+  .preloader__logo img {
+    max-width: 260px;
+  }
+
+  .preloader__percentage {
+    font-size: 48px;
+    line-height: 40px;
+    bottom: 10vh;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .preloader__logo {
+    top: 6vh;
+  }
+
+  .preloader__logo img {
+    max-width: 220px;
+  }
+
+  .preloader__percentage {
+    font-size: 42px;
+    line-height: 36px;
+    bottom: 8vh;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .preloader__logo {
+    top: 5vh;
+  }
+
+  .preloader__logo img {
+    max-width: 180px;
+  }
+
+  .preloader__logo-text {
+    font-size: 28px;
+  }
+
+  .preloader__percentage {
+    font-size: 36px;
+    line-height: 32px;
+    bottom: 6vh;
+  }
+}
+
+/* ==========================================================================
+   Height-based adjustments for smaller viewports
+   ========================================================================== */
+
+@media screen and (max-height: 700px) {
+  .preloader__logo {
+    top: 5vh;
+  }
+
+  .preloader__logo img {
+    max-width: 200px;
+  }
+
+  .preloader__percentage {
+    font-size: 42px;
+    line-height: 36px;
+    bottom: 8vh;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .preloader__logo {
+    top: 4vh;
+  }
+
+  .preloader__logo img {
+    max-width: 160px;
+  }
+
+  .preloader__logo-text {
+    font-size: 24px;
+  }
+
+  .preloader__percentage {
+    font-size: 36px;
+    line-height: 30px;
+    bottom: 6vh;
+  }
+}
