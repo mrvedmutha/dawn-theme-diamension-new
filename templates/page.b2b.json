@@ -12,10 +12,12 @@
     "two_image_hero_b2b": {
       "type": "custom-two-image-hero-b2b",
       "settings": {
+        "left_image": "shopify://shop_images/image-of-diamond-b2b.png",
         "left_heading": "Wholesale Excellence in CVD Lab-Grown Diamonds",
         "right_description": "Unlock wholesale pricing, real-time inventory, and seamless ordering for certified CVD lab-grown diamonds.",
         "cta_text": "Login",
-        "cta_link": "/account/login"
+        "cta_link": "/account/login",
+        "right_image": "shopify://shop_images/dashboard-image.png"
       }
     }
   },
