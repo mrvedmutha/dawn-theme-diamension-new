@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "two_image_hero_b2b": {
+      "type": "custom-two-image-hero-b2b",
+      "settings": {
+        "left_heading": "Wholesale Excellence in CVD Lab-Grown Diamonds",
+        "right_description": "Unlock wholesale pricing, real-time inventory, and seamless ordering for certified CVD lab-grown diamonds.",
+        "cta_text": "Login",
+        "cta_link": "/account/login"
+      }
+    }
+  },
+  "order": [
+    "two_image_hero_b2b"
+  ]
+}

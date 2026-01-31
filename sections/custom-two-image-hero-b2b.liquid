@@ -1,0 +1,149 @@
+{%- comment -%}
+  Section: Two Image Hero B2B
+  Description: Split hero section showcasing wholesale excellence with login CTA
+  Figma Node: 618:277
+  File Pattern: custom-two-image-hero-b2b
+{%- endcomment -%}
+
+{{ 'section-two-image-hero-b2b.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  # Assign section settings to variables
+  assign left_image = section.settings.left_image
+  assign left_heading = section.settings.left_heading
+  assign right_description = section.settings.right_description
+  assign cta_text = section.settings.cta_text
+  assign cta_link = section.settings.cta_link
+  assign right_image = section.settings.right_image
+-%}
+
+<section
+  class="custom-two-image-hero-b2b"
+  data-section-id="{{ section.id }}"
+  data-section-type="two-image-hero-b2b"
+>
+  <div class="custom-two-image-hero-b2b__wrapper">
+    {%- comment -%} Left Side - Product Image with Text Overlay {%- endcomment -%}
+    <div class="custom-two-image-hero-b2b__left">
+      {%- if left_image != blank -%}
+        <div class="custom-two-image-hero-b2b__left-image-wrapper">
+          {{-
+            left_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'eager',
+              widths: '600, 800, 1200, 1600',
+              sizes: '(max-width: 767px) 100vw, 50vw',
+              class: 'custom-two-image-hero-b2b__left-image',
+              alt: left_image.alt
+            | default: 'Wholesale Excellence'
+          -}}
+        </div>
+      {%- endif -%}
+
+      {%- if left_heading != blank -%}
+        <div class="custom-two-image-hero-b2b__left-content">
+          <h2 class="custom-two-image-hero-b2b__left-heading">
+            {{ left_heading }}
+          </h2>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right Side - Dark Background with CTA {%- endcomment -%}
+    <div class="custom-two-image-hero-b2b__right">
+      <div class="custom-two-image-hero-b2b__right-content">
+        {%- if right_description != blank -%}
+          <p class="custom-two-image-hero-b2b__right-description">
+            {{ right_description }}
+          </p>
+        {%- endif -%}
+
+        {%- if cta_text != blank and cta_link != blank -%}
+          <a
+            href="{{ cta_link }}"
+            class="custom-two-image-hero-b2b__cta"
+          >
+            {{ cta_text }}
+          </a>
+        {%- endif -%}
+
+        {%- if right_image != blank -%}
+          <div class="custom-two-image-hero-b2b__right-image-wrapper">
+            {{-
+              right_image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                widths: '400, 600, 800, 1200',
+                sizes: '(max-width: 767px) 100vw, 50vw',
+                class: 'custom-two-image-hero-b2b__right-image',
+                alt: right_image.alt
+              | default: 'B2B Platform'
+            -}}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'section-two-image-hero-b2b.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Two Image Hero B2B",
+  "tag": "section",
+  "class": "section-two-image-hero-b2b",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Side Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Background Image",
+      "info": "Recommended size: 1600x1600px. Image will cover the entire left side."
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Left Heading",
+      "default": "Wholesale Excellence in CVD Lab-Grown Diamonds"
+    },
+    {
+      "type": "header",
+      "content": "Right Side Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "right_description",
+      "label": "Description Text",
+      "default": "Unlock wholesale pricing, real-time inventory, and seamless ordering for certified CVD lab-grown diamonds."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Login"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Platform Image",
+      "info": "Recommended size: 1200x800px. Showcases B2B platform interface."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Image Hero B2B"
+    }
+  ]
+}
+{% endschema %}

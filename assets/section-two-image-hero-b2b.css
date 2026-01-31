@@ -1,0 +1,286 @@
+/* ============================================
+   Two Image Hero B2B Section
+   Description: Split hero section for wholesale B2B presentation
+   Figma Node: 618:277
+   ============================================ */
+
+/* Block */
+.custom-two-image-hero-b2b {
+  width: 100%;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Wrapper - Fixed Height, Fluid Width */
+.custom-two-image-hero-b2b__wrapper {
+  display: flex;
+  height: 690px;
+  width: 100%;
+}
+
+/* ============================================
+   Left Side - Product Image with Text Overlay
+   ============================================ */
+
+.custom-two-image-hero-b2b__left {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background-color: #fffaf5; /* Background while image loads */
+  overflow: hidden;
+}
+
+.custom-two-image-hero-b2b__left-image-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-two-image-hero-b2b__left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.custom-two-image-hero-b2b__left-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 47px 32px 47px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.custom-two-image-hero-b2b__left-heading {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #183754;
+  margin: 0;
+  max-width: 620px;
+  white-space: normal;
+  /* Initial state for GSAP animation */
+  opacity: 0;
+}
+
+/* ============================================
+   Right Side - Dark Background with CTA
+   ============================================ */
+
+.custom-two-image-hero-b2b__right {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background-color: #183754;
+  overflow: hidden;
+}
+
+.custom-two-image-hero-b2b__right-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-two-image-hero-b2b__right-description {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #fffaf5;
+  margin: 0 0 32px 0;
+  max-width: 438px;
+  padding: 0 20px;
+  /* Initial state for GSAP animation */
+  opacity: 0;
+}
+
+.custom-two-image-hero-b2b__cta {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  color: #fffaf5;
+  margin: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  /* Initial state for GSAP animation */
+  opacity: 0;
+}
+
+.custom-two-image-hero-b2b__cta:hover {
+  opacity: 0.8;
+}
+
+.custom-two-image-hero-b2b__right-image-wrapper {
+  position: absolute;
+  left: 120px;
+  top: calc(72px + 24px + 32px + 40px + 64px);
+  width: calc(100% - 120px + 200px);
+  height: auto;
+  max-height: calc(100% - (72px + 24px + 32px + 40px + 64px));
+  overflow: visible;
+}
+
+.custom-two-image-hero-b2b__right-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+}
+
+
+/* ============================================
+   Tablet - Maintain 50/50 but Resize Text
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .custom-two-image-hero-b2b__left-heading {
+    font-size: 24px;
+    line-height: 26px;
+    padding: 0 30px;
+  }
+
+  .custom-two-image-hero-b2b__left-content {
+    padding: 0 30px 28px 30px;
+  }
+
+  .custom-two-image-hero-b2b__right-description {
+    font-size: 14px;
+    line-height: 20px;
+    max-width: 360px;
+  }
+
+  .custom-two-image-hero-b2b__cta {
+    font-size: 18px;
+    line-height: 36px;
+  }
+
+  .custom-two-image-hero-b2b__right-image-wrapper {
+    left: 80px;
+    width: calc(100% - 80px + 150px);
+  }
+}
+
+/* ============================================
+   Mobile - Stack Vertically (Left First, Right Second)
+   ============================================ */
+
+@media (max-width: 767px) {
+  .custom-two-image-hero-b2b__wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .custom-two-image-hero-b2b__left {
+    display: block;
+    flex: 0 0 auto;
+    height: 400px;
+    order: 1;
+    width: 100%;
+  }
+
+  .custom-two-image-hero-b2b__left-heading {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .custom-two-image-hero-b2b__left-content {
+    padding: 0 20px 24px 20px;
+  }
+
+  .custom-two-image-hero-b2b__right {
+    display: block;
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 500px;
+    order: 2;
+    width: 100%;
+  }
+
+  .custom-two-image-hero-b2b__right-content {
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  .custom-two-image-hero-b2b__right-description {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 24px;
+    max-width: 100%;
+    padding: 0 30px;
+  }
+
+  .custom-two-image-hero-b2b__cta {
+    font-size: 16px;
+    line-height: 32px;
+    margin-bottom: 40px;
+  }
+
+  .custom-two-image-hero-b2b__right-image-wrapper {
+    position: relative;
+    left: 0;
+    top: auto;
+    width: 100%;
+    max-height: none;
+    padding: 0 20px;
+  }
+
+  .custom-two-image-hero-b2b__right-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================
+   Small Mobile - Fine Tuning
+   ============================================ */
+
+@media (max-width: 375px) {
+  .custom-two-image-hero-b2b__left {
+    height: 350px;
+  }
+
+  .custom-two-image-hero-b2b__left-heading {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .custom-two-image-hero-b2b__left-content {
+    padding: 0 15px 20px 15px;
+  }
+
+  .custom-two-image-hero-b2b__right-content {
+    padding-top: 40px;
+    padding-bottom: 30px;
+  }
+
+  .custom-two-image-hero-b2b__right-description {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 0 20px;
+  }
+
+  .custom-two-image-hero-b2b__cta {
+    font-size: 15px;
+    margin-bottom: 30px;
+  }
+}
