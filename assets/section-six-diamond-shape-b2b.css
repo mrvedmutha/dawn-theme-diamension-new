@@ -1,0 +1,428 @@
+/* ========================================
+   Six Diamond Shape B2B Section
+   ======================================== */
+
+/* Font Face */
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Display';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+       url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Wrapper */
+.custom-section-six-diamond-shape-b2b {
+  background-color: #fffaf5;
+  width: 100%;
+}
+
+/* Animation States */
+.custom-section-six-diamond-shape-b2b__heading,
+.custom-section-six-diamond-shape-b2b__cta {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.custom-section-six-diamond-shape-b2b__heading.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.custom-section-six-diamond-shape-b2b__cta.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+/* Diamond section - Ready for Lottie animations */
+.custom-section-six-diamond-shape-b2b__content {
+  /* Structure ready for Lottie integration */
+}
+
+/* Container */
+.custom-section-six-diamond-shape-b2b__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 45px 45px 45px;
+}
+
+/* Header Section */
+.custom-section-six-diamond-shape-b2b__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 141px;
+}
+
+.custom-section-six-diamond-shape-b2b__heading {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 45px;
+  color: #183754;
+  margin: 0;
+  max-width: 524px;
+  word-wrap: break-word;
+  text-transform: uppercase;
+}
+
+.custom-section-six-diamond-shape-b2b__cta {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #183754;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+
+.custom-section-six-diamond-shape-b2b__cta:hover {
+  opacity: 0.7;
+}
+
+/* Content Section */
+.custom-section-six-diamond-shape-b2b__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Diamond Containers */
+.custom-section-six-diamond-shape-b2b__diamonds {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.custom-section-six-diamond-shape-b2b__diamonds--left,
+.custom-section-six-diamond-shape-b2b__diamonds--right {
+  flex: 0 0 auto;
+}
+
+/* Diamond Item */
+.custom-section-six-diamond-shape-b2b__diamond-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 130px;
+}
+
+.custom-section-six-diamond-shape-b2b__diamond-image {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.custom-section-six-diamond-shape-b2b__diamond-placeholder {
+  width: 130px;
+  height: 130px;
+  background-color: #f0efea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.custom-section-six-diamond-shape-b2b__diamond-placeholder svg {
+  width: 60px;
+  height: 60px;
+  opacity: 0.3;
+}
+
+.custom-section-six-diamond-shape-b2b__diamond-text {
+  font-family: 'Neue Haas Display', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #183754;
+  text-align: center;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Certificate Card */
+.custom-section-six-diamond-shape-b2b__certificate {
+  flex: 0 0 auto;
+  background-color: #f0efea;
+  padding: 16px;
+  border: 1px solid #183754;
+}
+
+.custom-section-six-diamond-shape-b2b__certificate-inner {
+  position: relative;
+  width: 293px;
+  min-height: 368px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.custom-section-six-diamond-shape-b2b__certificate-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-section-six-diamond-shape-b2b__certificate-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(24, 55, 84, 0.05);
+}
+
+.custom-section-six-diamond-shape-b2b__certificate-placeholder svg {
+  width: 80px;
+  height: 80px;
+  opacity: 0.3;
+}
+
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+
+/* Large Desktop - Center content, don't stretch beyond 1440px */
+@media (min-width: 1441px) {
+  .custom-section-six-diamond-shape-b2b__container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+/* Medium Desktop - Scale down to prevent overflow (1290px - 1350px) */
+@media (max-width: 1350px) {
+  .custom-section-six-diamond-shape-b2b__heading {
+    font-size: 36px;
+    line-height: 42px;
+    max-width: 480px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__cta {
+    font-size: 18px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__content {
+    gap: 28px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamonds {
+    gap: 28px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-item {
+    width: 115px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-image,
+  .custom-section-six-diamond-shape-b2b__diamond-placeholder {
+    width: 115px;
+    height: 115px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__certificate-inner {
+    width: 260px;
+    min-height: 330px;
+  }
+}
+
+/* Small Desktop - Further scale down (1025px - 1290px) */
+@media (max-width: 1290px) {
+  .custom-section-six-diamond-shape-b2b__heading {
+    font-size: 34px;
+    line-height: 40px;
+    max-width: 450px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__cta {
+    font-size: 18px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__content {
+    gap: 24px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamonds {
+    gap: 24px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-item {
+    width: 105px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-image,
+  .custom-section-six-diamond-shape-b2b__diamond-placeholder {
+    width: 105px;
+    height: 105px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__certificate-inner {
+    width: 240px;
+    min-height: 300px;
+  }
+}
+
+/* Tablet - Switch to vertical layout */
+@media (max-width: 1024px) {
+  .custom-section-six-diamond-shape-b2b__container {
+    padding: 80px 40px 40px 40px;
+  }
+
+  /* Header - Stack vertically, center text */
+  .custom-section-six-diamond-shape-b2b__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    margin-bottom: 100px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__heading {
+    font-size: 32px;
+    line-height: 38px;
+    max-width: 420px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__cta {
+    font-size: 18px;
+    align-self: center;
+  }
+
+  /* Content - Stack vertically: 3 diamonds, certificate, 3 diamonds */
+  .custom-section-six-diamond-shape-b2b__content {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamonds {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-item {
+    width: 110px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-image,
+  .custom-section-six-diamond-shape-b2b__diamond-placeholder {
+    width: 110px;
+    height: 110px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__certificate-inner {
+    width: 260px;
+    min-height: 330px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .custom-section-six-diamond-shape-b2b__container {
+    padding: 60px 24px 40px 24px;
+  }
+
+  /* Header - Stack vertically, center text */
+  .custom-section-six-diamond-shape-b2b__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    margin-bottom: 80px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__heading {
+    font-size: 28px;
+    line-height: 34px;
+    max-width: 360px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__cta {
+    font-size: 16px;
+    line-height: 32px;
+    align-self: center;
+  }
+
+  /* Content - Stack: 3 diamonds, certificate, 3 diamonds */
+  .custom-section-six-diamond-shape-b2b__content {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamonds {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-item {
+    width: 90px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-image,
+  .custom-section-six-diamond-shape-b2b__diamond-placeholder {
+    width: 90px;
+    height: 90px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-text {
+    font-size: 12px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__certificate-inner {
+    width: 200px;
+    min-height: 250px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .custom-section-six-diamond-shape-b2b__container {
+    padding: 50px 20px 30px 20px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__heading {
+    font-size: 24px;
+    line-height: 30px;
+    max-width: 300px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__cta {
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-item {
+    width: 80px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__diamond-image,
+  .custom-section-six-diamond-shape-b2b__diamond-placeholder {
+    width: 80px;
+    height: 80px;
+  }
+
+  .custom-section-six-diamond-shape-b2b__certificate-inner {
+    width: 180px;
+    min-height: 220px;
+  }
+}

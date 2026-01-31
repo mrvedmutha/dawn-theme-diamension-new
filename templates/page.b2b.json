@@ -19,9 +19,64 @@
         "cta_link": "/account/login",
         "right_image": "shopify://shop_images/dashboard-image.png"
       }
+    },
+    "six_diamond_shape_b2b": {
+      "type": "custom-section-six-diamond-shape-b2b",
+      "blocks": {
+        "diamond_1": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Round"
+          }
+        },
+        "diamond_2": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Cushion"
+          }
+        },
+        "diamond_3": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Oval"
+          }
+        },
+        "diamond_4": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Emerald"
+          }
+        },
+        "diamond_5": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Radiant"
+          }
+        },
+        "diamond_6": {
+          "type": "diamond_shape",
+          "settings": {
+            "diamond_text": "Princess"
+          }
+        }
+      },
+      "block_order": [
+        "diamond_1",
+        "diamond_2",
+        "diamond_3",
+        "diamond_4",
+        "diamond_5",
+        "diamond_6"
+      ],
+      "settings": {
+        "heading": "Comprehensive Range of Precision-Cut CVD Diamonds.",
+        "cta_text": "Login to see all shapes",
+        "cta_link": ""
+      }
     }
   },
   "order": [
-    "two_image_hero_b2b"
+    "two_image_hero_b2b",
+    "six_diamond_shape_b2b"
   ]
 }
