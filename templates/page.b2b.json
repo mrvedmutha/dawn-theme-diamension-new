@@ -85,14 +85,25 @@
       "type": "custom-section-lab-grown-hero-b2b",
       "settings": {
         "heading": "Leading The Evolution of Lab-Grown Brilliance",
-        "image": "shopify://shop_images/APF_9991_2.png",
+        "image": "shopify://shop_images/lab-grown-diamond-piece.png",
         "content": "<p>At Diamensions, we manufacture and supply an extensive selection of CVD lab-grown diamonds, ranging from <strong>0.003 to 2.00 carats</strong> in a variety of shapes, cuts, and grades to meet global demand.</p><p>Our diamonds are <strong>chemically, physically, and optically identical to mined diamonds</strong>, offering the same natural brilliance, clarity, and durability, without the environmental or ethical compromise. Each stone is eco-friendly, responsibly grown, and <strong>100% conflict-free</strong>, embodying the next generation of sustainable luxury.</p>"
+      }
+    },
+    "custom_section_image_hero_8QN7m4": {
+      "type": "custom-section-image-hero",
+      "name": "Image Hero",
+      "settings": {
+        "background_image": "shopify://shop_images/lab-grown-diamond-final-stage-collecting.jpg",
+        "heading": "",
+        "text_color": "#FFFAF5",
+        "overlay_opacity": 0
       }
     }
   },
   "order": [
     "two_image_hero_b2b",
     "six_diamond_shape_b2b",
-    "lab_grown_hero_b2b"
+    "lab_grown_hero_b2b",
+    "custom_section_image_hero_8QN7m4"
   ]
 }
