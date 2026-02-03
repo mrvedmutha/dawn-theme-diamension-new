@@ -1,0 +1,428 @@
+/* =============================================================================
+   Lab-Grown Hero B2B Section
+   Figma Node: 620-78
+   ============================================================================= */
+
+/* =============================================================================
+   Font Face Declarations
+   ============================================================================= */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Medium.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================================================
+   Section Wrapper
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b {
+  position: relative;
+  width: 100%;
+  background-color: #fffaf5;
+  overflow: hidden; /* Hide overflow to prevent scrollbar from logo extending beyond edges */
+  padding: 180px 0 120px 0;
+}
+
+/* =============================================================================
+   Background Fluid Logo
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__background {
+  position: absolute;
+  top: 50%;
+  right: -368px; /* 50% of logo width (736px / 2) - half visible, half cut off */
+  transform: translateY(-50%);
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.custom-section-lab-grown-hero-b2b__logo {
+  width: 736px;
+  height: 1175px;
+  transform: rotate(-136.59deg);
+  opacity: 0; /* Hidden by default, GSAP will animate to 0.03 */
+  fill: #183754;
+}
+
+/* =============================================================================
+   Container
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__container {
+  position: relative;
+  max-width: 1030px;
+  margin: 0 auto;
+  padding: 0 40px;
+  z-index: 1;
+}
+
+/* =============================================================================
+   Heading Wrapper & Split Heading
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__heading-wrapper {
+  position: relative;
+  width: 100%;
+  height: 261px;
+  margin-bottom: 32px;
+}
+
+.custom-section-lab-grown-hero-b2b__heading {
+  position: relative;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 80px;
+  line-height: 86.229px;
+  color: #183754;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  /* Hide the original text, JS will create spans */
+  color: transparent;
+  user-select: none;
+}
+
+/* Split heading lines - positioned absolutely */
+.custom-section-lab-grown-hero-b2b__heading-line {
+  position: absolute;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 300;
+  font-size: 80px;
+  line-height: 86.229px;
+  color: #183754;
+  text-transform: uppercase;
+  white-space: nowrap;
+  left: 50%;
+  max-width: calc(100vw - 80px); /* Prevent touching screen edges */
+  overflow: visible;
+  opacity: 0; /* Hidden by default, GSAP will animate */
+}
+
+/* Line 1: "Leading The" - slightly left aligned */
+.custom-section-lab-grown-hero-b2b__heading-line--1 {
+  top: 0;
+  transform: translateX(calc(-50% - 55px));
+}
+
+/* Line 2: "Evolution of" - right aligned */
+.custom-section-lab-grown-hero-b2b__heading-line--2 {
+  top: 87px;
+  transform: translateX(calc(-50% + 248px));
+}
+
+/* Line 3: "Lab-Grown Brilliance" - center-ish aligned */
+.custom-section-lab-grown-hero-b2b__heading-line--3 {
+  top: 174px;
+  transform: translateX(calc(-50% - 55px));
+}
+
+/* =============================================================================
+   Two-Column Content Row
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__content-row {
+  display: flex;
+  gap: 133px;
+  align-items: flex-end;
+}
+
+/* =============================================================================
+   Image Column
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__image-column {
+  flex: 0 0 auto;
+  width: 395px;
+}
+
+.custom-section-lab-grown-hero-b2b__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0; /* Hidden by default, GSAP will animate */
+}
+
+/* =============================================================================
+   Text Content Column
+   ============================================================================= */
+
+.custom-section-lab-grown-hero-b2b__text-column {
+  flex: 0 0 auto;
+  width: 496px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.custom-section-lab-grown-hero-b2b__richtext {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #183754;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.custom-section-lab-grown-hero-b2b__richtext p {
+  margin: 0 0 14px 0;
+  line-height: 30px;
+  opacity: 0; /* Hidden by default, GSAP will animate */
+}
+
+.custom-section-lab-grown-hero-b2b__richtext p:last-child {
+  margin-bottom: 0;
+}
+
+.custom-section-lab-grown-hero-b2b__richtext strong {
+  font-weight: 700;
+}
+
+/* =============================================================================
+   Responsive Styles
+   ============================================================================= */
+
+/* Large Tablet (1200px and below) - Reduce offsets slightly */
+@media screen and (max-width: 1200px) {
+  .custom-section-lab-grown-hero-b2b__heading-line--1 {
+    transform: translateX(calc(-50% - 40px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--2 {
+    transform: translateX(calc(-50% + 180px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--3 {
+    transform: translateX(calc(-50% - 40px));
+  }
+}
+
+/* Tablet (1024px and below) */
+@media screen and (max-width: 1024px) {
+  .custom-section-lab-grown-hero-b2b {
+    padding: 140px 0 100px 0;
+  }
+
+  .custom-section-lab-grown-hero-b2b__container {
+    max-width: 900px;
+    padding: 0 30px;
+  }
+
+  /* Keep logo 50% visible on tablet */
+  .custom-section-lab-grown-hero-b2b__background {
+    right: -368px; /* Same 50% offset for tablet */
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-wrapper {
+    height: 220px;
+    margin-bottom: 28px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading,
+  .custom-section-lab-grown-hero-b2b__heading-line {
+    font-size: 68px;
+    line-height: 73px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--1 {
+    transform: translateX(calc(-50% - 35px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--2 {
+    top: 73px;
+    transform: translateX(calc(-50% + 150px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--3 {
+    top: 147px;
+    transform: translateX(calc(-50% - 35px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__content-row {
+    gap: 100px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__image-column {
+    width: 340px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__text-column {
+    width: 430px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext p {
+    line-height: 28px;
+    margin-bottom: 12px;
+  }
+}
+
+/* Small Tablet (900px and below) - Further reduce offsets */
+@media screen and (max-width: 900px) {
+  .custom-section-lab-grown-hero-b2b__heading,
+  .custom-section-lab-grown-hero-b2b__heading-line {
+    font-size: 56px;
+    line-height: 62px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-wrapper {
+    height: 190px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--1 {
+    transform: translateX(calc(-50% - 25px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--2 {
+    top: 62px;
+    transform: translateX(calc(-50% + 100px));
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-line--3 {
+    top: 124px;
+    transform: translateX(calc(-50% - 25px));
+  }
+}
+
+/* Mobile (767px and below) */
+@media screen and (max-width: 767px) {
+  .custom-section-lab-grown-hero-b2b {
+    padding: 100px 0 80px 0;
+  }
+
+  .custom-section-lab-grown-hero-b2b__container {
+    padding: 0 20px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading-wrapper {
+    height: auto;
+    margin-bottom: 40px;
+  }
+
+  /* Reset heading to normal flow on mobile */
+  .custom-section-lab-grown-hero-b2b__heading {
+    position: static;
+    color: #183754;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    word-break: normal;
+    hyphens: none;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  /* Hide split lines on mobile */
+  .custom-section-lab-grown-hero-b2b__heading-line {
+    display: none;
+  }
+
+  .custom-section-lab-grown-hero-b2b__content-row {
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+
+  /* Image first on mobile */
+  .custom-section-lab-grown-hero-b2b__image-column {
+    width: 100%;
+    max-width: 395px;
+    order: 1;
+  }
+
+  /* Content below on mobile */
+  .custom-section-lab-grown-hero-b2b__text-column {
+    width: 100%;
+    order: 2;
+    align-self: auto;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext p {
+    line-height: 26px;
+    margin-bottom: 14px;
+  }
+
+  /* Scale down background logo on mobile and keep 50% visible */
+  .custom-section-lab-grown-hero-b2b__background {
+    right: -225px; /* 50% of mobile logo width (450px / 2) */
+  }
+
+  .custom-section-lab-grown-hero-b2b__logo {
+    width: 450px;
+    height: 720px;
+  }
+}
+
+/* Small mobile (479px and below) */
+@media screen and (max-width: 479px) {
+  .custom-section-lab-grown-hero-b2b {
+    padding: 80px 0 60px 0;
+  }
+
+  .custom-section-lab-grown-hero-b2b__heading {
+    font-size: 32px;
+    line-height: 38px;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .custom-section-lab-grown-hero-b2b__richtext p {
+    line-height: 24px;
+  }
+}
