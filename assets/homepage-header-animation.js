@@ -200,13 +200,11 @@
 
     window.addEventListener('resize', function () {
       const currentWidth = window.innerWidth;
-      const currentHeight = window.innerHeight;
 
       // Check if it's a significant viewport change (not just browser chrome showing/hiding)
       const widthChanged = Math.abs(currentWidth - initialWidth) > 50;
-      const heightChanged = Math.abs(currentHeight - initialHeight) > 100;
 
-      if (widthChanged || heightChanged) {
+      if (widthChanged) {
         // Clear existing timer
         clearTimeout(resizeTimer);
 

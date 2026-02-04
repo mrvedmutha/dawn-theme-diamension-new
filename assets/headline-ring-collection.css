@@ -309,19 +309,21 @@
   }
 
   .headline-ring-collection__container {
-    padding: 0 40px;
+    padding: 0 20px;
   }
 
   .headline-ring-collection__headline {
-    font-size: 56px;
-    line-height: calc(56px * 0.86229);
+    font-size: 44px;
+    line-height: calc(44px * 0.86229);
     text-align: center;
   }
 
   .headline-ring-collection__cta {
-    margin-top: 8px;
-    margin-bottom: 16px;
+    display: block;
+    margin: 8px auto 16px;
     font-size: 16px;
+    text-align: center;
+    width: fit-content;
   }
 
   .headline-ring-collection__image-wrapper {
@@ -374,9 +376,13 @@
 
 /* Small Mobile */
 @media (max-width: 375px) {
+  .headline-ring-collection__container {
+    padding: 0 16px;
+  }
+
   .headline-ring-collection__headline {
-    font-size: 48px;
-    line-height: calc(48px * 0.86229);
+    font-size: 36px;
+    line-height: calc(36px * 0.86229);
   }
 
   .headline-ring-collection__image-wrapper {

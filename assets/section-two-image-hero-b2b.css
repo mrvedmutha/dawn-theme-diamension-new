@@ -115,18 +115,51 @@
   font-size: 20px;
   line-height: 40px;
   text-align: center;
-  text-decoration: underline;
-  text-decoration-style: solid;
+  text-decoration: none;
   color: #fffaf5;
   margin: 0;
-  transition: opacity 0.3s ease;
   cursor: pointer;
+  position: relative;
   /* Initial state for GSAP animation */
   opacity: 0;
 }
 
-.custom-two-image-hero-b2b__cta:hover {
-  opacity: 0.8;
+/* Animated underline */
+.custom-two-image-hero-b2b__cta::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Animation for both mouse enter and leave (exit right, re-enter left) */
+@keyframes underline-exit-enter-b2b-hero {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.custom-two-image-hero-b2b__cta.animate-enter::after,
+.custom-two-image-hero-b2b__cta.animate-exit::after {
+  animation: underline-exit-enter-b2b-hero 0.8s ease forwards;
 }
 
 .custom-two-image-hero-b2b__right-image-wrapper {

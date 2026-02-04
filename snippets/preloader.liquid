@@ -215,13 +215,11 @@
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
           const currentWidth = window.innerWidth;
-          const currentHeight = window.innerHeight;
 
           // Check if viewport changed significantly (more than 50px difference)
           const widthDiff = Math.abs(currentWidth - initialWidth);
-          const heightDiff = Math.abs(currentHeight - initialHeight);
 
-          if (widthDiff > 50 || heightDiff > 50) {
+          if (widthDiff > 50) {
             // Reload the page
             window.location.reload();
           }

@@ -71,10 +71,40 @@
     console.log('Six Diamond Shape B2B: Lottie animations ready to be implemented');
   }
 
+  // Initialize CTA underline animation
+  function initCTAAnimation() {
+    const section = document.querySelector('.custom-section-six-diamond-shape-b2b');
+    if (!section) return;
+
+    const cta = section.querySelector('.custom-section-six-diamond-shape-b2b__cta');
+    if (!cta) return;
+
+    // Mouse enter: trigger exit-enter animation
+    cta.addEventListener('mouseenter', function() {
+      cta.classList.remove('animate-exit');
+      cta.classList.add('animate-enter');
+
+      setTimeout(function() {
+        cta.classList.remove('animate-enter');
+      }, 800);
+    });
+
+    // Mouse leave: trigger exit-enter animation
+    cta.addEventListener('mouseleave', function() {
+      cta.classList.remove('animate-enter');
+      cta.classList.add('animate-exit');
+
+      setTimeout(function() {
+        cta.classList.remove('animate-exit');
+      }, 800);
+    });
+  }
+
   // Initialize section
   function init() {
     initScrollAnimations();
     initLottieAnimations();
+    initCTAAnimation();
   }
 
   // Initialize when DOM is ready

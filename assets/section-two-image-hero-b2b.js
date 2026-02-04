@@ -80,22 +80,24 @@
         duration: 0.8
       }, 0.7); // Start after 0.7s
 
-    // Optional: Add hover animation to CTA
+    // Add underline animation to CTA
     if (cta) {
       cta.addEventListener('mouseenter', function() {
-        gsap.to(cta, {
-          scale: 1.05,
-          duration: 0.3,
-          ease: 'power2.out'
-        });
+        cta.classList.remove('animate-exit');
+        cta.classList.add('animate-enter');
+
+        setTimeout(function() {
+          cta.classList.remove('animate-enter');
+        }, 800);
       });
 
       cta.addEventListener('mouseleave', function() {
-        gsap.to(cta, {
-          scale: 1,
-          duration: 0.3,
-          ease: 'power2.out'
-        });
+        cta.classList.remove('animate-enter');
+        cta.classList.add('animate-exit');
+
+        setTimeout(function() {
+          cta.classList.remove('animate-exit');
+        }, 800);
       });
     }
   }
