@@ -89,7 +89,7 @@
       "type": "custom-section-hero-five-product",
       "name": "Hero + 5 Products",
       "settings": {
-        "hero_image": "shopify://shop_images/D._Website_banner-08.jpg",
+        "hero_image": "shopify://shop_images/the-studio-metropolitian-vibes-hero-produt-img.jpg",
         "show_logo": false,
         "hero_quote": "",
         "collection": "custom-collections"
@@ -153,7 +153,13 @@
           }
         }
       },
-      "block_order": ["image_W8pjAa", "image_B4CD83", "image_XGcpwN", "image_mCHiXr", "image_BjTnAj"],
+      "block_order": [
+        "image_W8pjAa",
+        "image_B4CD83",
+        "image_XGcpwN",
+        "image_mCHiXr",
+        "image_BjTnAj"
+      ],
       "name": "Image Marquee",
       "settings": {
         "background_color": "#fffaf5",

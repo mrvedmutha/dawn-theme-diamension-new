@@ -14,7 +14,7 @@
       "name": "Custom Image Hero - The Studio",
       "settings": {
         "image": "shopify://shop_images/image-corporate-comeback.png",
-        "heading": "Corporate Vibes",
+        "heading": "Sleek Minimal",
         "heading_size": 180,
         "heading_size_tablet": 60,
         "heading_size_mobile": 60,
@@ -217,7 +217,7 @@
       "name": "Rich Text Content - The Studio",
       "settings": {
         "heading": "",
-        "description": "“My two decades as a colourist guides me as a jeweller, especially when working with multicoloured gemstones. For me, the quality of gemstones is a given, but the beauty of jewellery-making is in disrupting the hierarchy of precious stones and mixing them in a fierce amalgamation of modernity and traditionalism.\"",
+        "description": "\"My two decades as a colourist guides me as a jeweller, especially when working with multicoloured gemstones. For me, the quality of gemstones is a given, but the beauty of jewellery-making is in disrupting the hierarchy of precious stones and mixing them in a fierce amalgamation of modernity and traditionalism.\"",
         "text_color": "#183754",
         "background_color": "#fffaf5"
       }
