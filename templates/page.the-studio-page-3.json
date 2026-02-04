@@ -13,7 +13,7 @@
       "type": "custom-section-image-hero-diamension-the-studio",
       "name": "Custom Image Hero - The Studio",
       "settings": {
-        "image": "shopify://shop_images/image-corporate-comeback.png",
+        "image": "shopify://shop_images/sleek-luxury-images.png",
         "heading": "Sleek Minimal",
         "heading_size": 180,
         "heading_size_tablet": 60,
@@ -34,7 +34,7 @@
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/jew-with-typewriter.png",
+        "image_1": "shopify://shop_images/sleek-luxury-image-potrait.png",
         "image_1_overlay_text": "Beauty",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
@@ -51,8 +51,8 @@
       "type": "custom-section-two-image-hero-studio",
       "name": "Two Image Hero - The Studio",
       "settings": {
-        "left_image": "shopify://shop_images/lady-hand-jewellery-in-red-top.png",
-        "right_background_image": "shopify://shop_images/neck-bracelet-in-red-background.png",
+        "left_image": "shopify://shop_images/sleek-luxury-image-3.png",
+        "right_background_image": "shopify://shop_images/sleek-minimal-image-4.png",
         "background_color": "#c8102e",
         "tagline": "For the Ones Who Define Success",
         "cta_text": "Explore",
@@ -78,7 +78,7 @@
       "type": "custom-section-hero-five-product",
       "name": "Hero + 5 Products",
       "settings": {
-        "hero_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
+        "hero_image": "shopify://shop_images/sleek-luxury-images.png",
         "show_logo": true,
         "hero_quote": "\"Glamour is a condition, not a commodity.\"",
         "collection": "custom-collections"
@@ -88,7 +88,7 @@
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/lady-holding-red-phone-wearing-jewellery.png",
+        "image_1": "shopify://shop_images/sleek-luxury-image-4.png",
         "image_1_overlay_text": "Beauty",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
@@ -226,7 +226,7 @@
       "type": "custom-section-editorial-hero",
       "name": "Editorial Hero",
       "settings": {
-        "background_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
+        "background_image": "shopify://shop_images/sleek-luxury-images.png",
         "heading": "Jewellery",
         "tagline": "will outlast fashion, and all of us.",
         "cta_text": "Explore Collections",
