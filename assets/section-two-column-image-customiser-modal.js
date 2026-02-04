@@ -154,6 +154,13 @@
         setDefaultDateTime(form);
       }
 
+      // Reset submit button state
+      const submitBtn = modal.querySelector('.modal-submit');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+      }
+
       // Hide error/success messages
       const error = modal.querySelector('.modal-error');
       const success = modal.querySelector('.modal-success');
@@ -337,6 +344,8 @@
     const modal = document.getElementById(modalId);
     if (!modal) return;
 
+    const submitBtn = modal.querySelector('.modal-submit');
+
     // Get form data
     const firstName = modal.querySelector('input[name="first_name"]').value.trim();
     const lastName = modal.querySelector('input[name="last_name"]').value.trim();
@@ -358,6 +367,12 @@
 
     clearMessages(modalId);
 
+    // Show loading state
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
+
     // Format date for message
     const dateObj = new Date(date + 'T' + time);
     const formattedDate = dateObj.toLocaleDateString('en-US', {
@@ -372,11 +387,15 @@
       hour12: true
     });
 
-    // Construct WhatsApp message
-    let whatsappMessage = `Hello Team, My name is ${firstName} ${lastName} and I would like to book a virtual appointment on ${formattedDate} at ${formattedTime}.`;
+    // Construct WhatsApp message for VIRTUAL APPOINTMENT
+    let whatsappMessage = `*VIRTUAL APPOINTMENT REQUEST*\n\n`;
+    whatsappMessage += `Hello Team,\n\n`;
+    whatsappMessage += `My name is *${firstName} ${lastName}* and I would like to book an immediate virtual appointment.\n\n`;
+    whatsappMessage += `*Preferred Date & Time:*\n`;
+    whatsappMessage += `${formattedDate} at ${formattedTime}`;
 
     if (message) {
-      whatsappMessage += ` Here are my concerns: ${message}`;
+      whatsappMessage += `\n\n*My Requirements:*\n${message}`;
     }
 
     // Get WhatsApp number from data attribute
@@ -402,9 +421,9 @@
   }
 
   /**
-   * Handle Callback Request Form Submission (Shopify Form)
+   * Handle Callback Request Form Submission (WhatsApp)
    */
-  async function handleCallbackRequest(sectionId) {
+  function handleCallbackRequest(sectionId) {
     const modalId = `modal-callback-${sectionId}`;
     const modal = document.getElementById(modalId);
     if (!modal) return;
@@ -450,8 +469,10 @@
     clearMessages(modalId);
 
     // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.classList.add('loading');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+    }
 
     // Format date for message
     const dateObj = new Date(date + 'T' + time);
@@ -467,46 +488,41 @@
       hour12: true
     });
 
-    // Construct message for Shopify
-    let fullMessage = `Callback Request\n\n`;
-    fullMessage += `Name: ${firstName} ${lastName}\n`;
-    fullMessage += `Email: ${email}\n`;
-    fullMessage += `Phone: ${countryCode}${phone}\n`;
-    fullMessage += `Preferred Date & Time: ${formattedDate} at ${formattedTime}\n`;
+    // Construct WhatsApp message for CALLBACK REQUEST
+    let whatsappMessage = `*CALLBACK REQUEST*\n\n`;
+    whatsappMessage += `Hello Team,\n\n`;
+    whatsappMessage += `I would like to schedule a future appointment for a callback.\n\n`;
+    whatsappMessage += `*My Details:*\n`;
+    whatsappMessage += `Name: ${firstName} ${lastName}\n`;
+    whatsappMessage += `Email: ${email}\n`;
+    whatsappMessage += `Phone: ${countryCode}${phone}\n\n`;
+    whatsappMessage += `*Preferred Date & Time:*\n`;
+    whatsappMessage += `${formattedDate} at ${formattedTime}`;
 
     if (message) {
-      fullMessage += `\nMessage: ${message}`;
+      whatsappMessage += `\n\n*Additional Details:*\n${message}`;
     }
 
-    // Create hidden form for Shopify submission
-    const hiddenForm = document.createElement('form');
-    hiddenForm.method = 'POST';
-    hiddenForm.action = '/contact';
-    hiddenForm.style.display = 'none';
+    // Get WhatsApp number from data attribute
+    const whatsappNumber = modal.dataset.whatsappNumber || '';
 
-    // Add form fields
-    const fields = {
-      'form_type': 'contact',
-      'utf8': '✓',
-      'contact[name]': `${firstName} ${lastName}`,
-      'contact[email]': email,
-      'contact[phone]': `${countryCode}${phone}`,
-      'contact[body]': fullMessage
-    };
+    if (!whatsappNumber) {
+      showError(modalId, 'WhatsApp number not configured. Please contact support.');
+      return;
+    }
 
-    Object.keys(fields).forEach(key => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = fields[key];
-      hiddenForm.appendChild(input);
-    });
+    // Construct WhatsApp URL
+    const cleanNumber = whatsappNumber.replace(/\D/g, '');
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
 
-    // Append form to body and submit
-    document.body.appendChild(hiddenForm);
+    // Redirect to WhatsApp
+    window.open(whatsappUrl, '_blank');
 
-    // Submit the form (will redirect to /contact page)
-    hiddenForm.submit();
+    // Close modal after short delay
+    setTimeout(() => {
+      closeModal(modalId);
+    }, 500);
   }
 
   /**
