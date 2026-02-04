@@ -17,14 +17,38 @@
         "padding_bottom": 28
       }
     },
-    "custom_section_image_hero_CBFDqJ": {
-      "type": "custom-section-image-hero",
-      "name": "Image Hero",
+    "video_hero_iMU8KF": {
+      "type": "video-hero",
+      "name": "Video Hero",
       "settings": {
-        "background_image": "shopify://shop_images/hero-image-about-us.png",
-        "heading": "Innovation and artistry, perfected by Diamension.",
-        "text_color": "#fffaf5",
-        "overlay_opacity": 0
+        "video_type": "upload",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/da1a8b8529d14c04becdcf9a416e2b80.mp4",
+        "vimeo_url": "",
+        "show_overlay": true,
+        "overlay_opacity": 30,
+        "heading": "INNOVATION AND ARTISTRY, PERFECTED BY DIAMENSION.",
+        "subheading": "",
+        "text_position": "middle-center",
+        "text_alignment": "center",
+        "content_width": 850,
+        "content_gap": 24,
+        "heading_color": "#FFFFFF",
+        "heading_size_desktop": 56,
+        "heading_size_tablet": 48,
+        "heading_size_mobile": 32,
+        "subheading_color": "#FFFFFF",
+        "subheading_size_desktop": 20,
+        "subheading_size_tablet": 18,
+        "subheading_size_mobile": 16,
+        "button_text": "",
+        "button_link": "",
+        "button_bg_color": "#000000",
+        "button_text_color": "#FFFFFF",
+        "button_radius": 4,
+        "button_padding_vertical": 12,
+        "button_padding_horizontal": 32,
+        "max_height": 800,
+        "mobile_height": 80
       }
     },
     "custom_section_rtc_quote_6xziPn": {
@@ -84,7 +108,7 @@
   },
   "order": [
     "main",
-    "custom_section_image_hero_CBFDqJ",
+    "video_hero_iMU8KF",
     "custom_section_rtc_quote_6xziPn",
     "custom_section_brand_story_38EUKL",
     "custom_section_bespoke_creations_mHkd4Y",

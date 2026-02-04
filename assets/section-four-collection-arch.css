@@ -10,9 +10,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  background-color: #FFFAF5;
-  margin-top: 56px;
-  margin-bottom: 56px;
+  background-color: #fffaf5;
 }
 
 /* Section Header
@@ -109,7 +107,7 @@
   font-size: clamp(24px, 2.8vw, 40px);
   line-height: 1.25;
   text-transform: uppercase;
-  color: var(--card-text-color, #FFFAF5);
+  color: var(--card-text-color, #fffaf5);
   letter-spacing: normal;
 }
 
@@ -127,12 +125,14 @@
   font-weight: 400;
   font-size: clamp(14px, 1.4vw, 20px);
   line-height: 2;
-  color: var(--card-text-color, #FFFAF5);
+  color: var(--card-text-color, #fffaf5);
   text-decoration: underline;
   text-decoration-style: solid;
   text-underline-offset: 25%;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 
 /* Desktop Hover Effects
