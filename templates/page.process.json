@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "process_hero": {
+      "type": "process-hero",
+      "settings": {
+        "heading": "Welcome to the process",
+        "text_color": "#183754"
+      }
+    }
+  },
+  "order": [
+    "process_hero"
+  ]
+}

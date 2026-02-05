@@ -16,6 +16,15 @@
     }
 
     gsap.registerPlugin(ScrollTrigger);
+
+    // Register ScrollToPlugin if available
+    if (typeof ScrollToPlugin !== 'undefined') {
+      gsap.registerPlugin(ScrollToPlugin);
+      console.log('ScrollToPlugin registered');
+    } else {
+      console.warn('ScrollToPlugin not loaded');
+    }
+
     initBrillance3D();
   }
 
@@ -51,6 +60,7 @@
       this.paragraph = section.querySelector('[data-paragraph]');
       this.cta = section.querySelector('[data-cta]');
       this.spacer = section.querySelector('[data-spacer]');
+      this.heading = section.querySelector('.brillance-3d__heading');
 
       // State
       this.backgroundImages = [];
@@ -78,6 +88,9 @@
 
       // Setup animations after images are ready
       this.setupScrollTrigger();
+
+      // Setup CTA click handler
+      this.setupCTAHandler();
     }
 
     /**
@@ -225,6 +238,142 @@
 
       // Refresh ScrollTrigger
       ScrollTrigger.refresh();
+
+      // Store ScrollTrigger instance for CTA handler
+      this.scrollTriggerInstance = ScrollTrigger.getById(mainTimeline.scrollTrigger.vars.id);
+    }
+
+    /**
+     * Setup CTA click handler with auto-scroll and page transition
+     */
+    setupCTAHandler() {
+      if (!this.cta) return;
+
+      this.cta.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetUrl = this.cta.href;
+
+        // Get all ScrollTriggers and find ours
+        const allTriggers = ScrollTrigger.getAll();
+        console.log('All ScrollTriggers:', allTriggers.length);
+
+        const st = allTriggers.find(trigger => trigger.trigger === this.pinnedContainer);
+
+        if (!st) {
+          console.error('ScrollTrigger not found for pinned container');
+          console.log('Looking for:', this.pinnedContainer);
+          console.log('Available triggers:', allTriggers.map(t => ({ trigger: t.trigger, start: t.start, end: t.end })));
+          return;
+        }
+
+        const currentProgress = st.progress;
+        const currentScrollY = window.scrollY;
+
+        // Calculate the exact end scroll position
+        // The end position should be: start + the full scroll distance
+        const scrollDistance = st.end - st.start;
+        const targetScrollPosition = st.start + scrollDistance;
+
+        // Check if we're at the correct position (within 10px tolerance)
+        const isAtCorrectPosition = Math.abs(currentScrollY - targetScrollPosition) < 10;
+
+        // We need to scroll if:
+        // 1. Progress is not at 99% yet (mid-animation), OR
+        // 2. User has scrolled past the correct position
+        const needsScroll = currentProgress < 0.99 || !isAtCorrectPosition;
+
+        console.log('📊 CTA Click Debug:', {
+          currentProgress: (currentProgress * 100).toFixed(1) + '%',
+          currentScrollY,
+          targetScrollPosition,
+          scrollDistance,
+          scrollTriggerStart: st.start,
+          scrollTriggerEnd: st.end,
+          isAtCorrectPosition,
+          needsScroll,
+          scrollDifference: currentScrollY - targetScrollPosition
+        });
+
+        if (needsScroll) {
+          // Check if ScrollToPlugin is available
+          if (typeof ScrollToPlugin === 'undefined') {
+            console.error('ScrollToPlugin not available, falling back to native scroll');
+            window.scrollTo({
+              top: targetScrollPosition,
+              behavior: 'smooth'
+            });
+
+            // Wait for scroll to complete (approximate)
+            setTimeout(() => {
+              this.startPageTransition(targetUrl);
+            }, 1500);
+            return;
+          }
+
+          // Determine scroll direction for better UX messaging
+          const scrollDirection = currentScrollY > targetScrollPosition ? '⬆️ UP' : '⬇️ DOWN';
+          console.log(`🔄 Auto-scrolling ${scrollDirection} to last frame...`);
+
+          gsap.to(window, {
+            scrollTo: { y: targetScrollPosition, autoKill: false },
+            duration: 1.5,
+            ease: 'power2.inOut',
+            onUpdate: () => {
+              const newProgress = st.progress;
+              const currentY = window.scrollY;
+              console.log(`Scrolling... Y: ${Math.round(currentY)} → ${Math.round(targetScrollPosition)} | Progress: ${(newProgress * 100).toFixed(1)}%`);
+            },
+            onComplete: () => {
+              console.log('✅ Scroll complete, starting transition');
+              this.startPageTransition(targetUrl);
+            }
+          });
+        } else {
+          console.log('✅ Already at correct position, starting transition immediately');
+          this.startPageTransition(targetUrl);
+        }
+      });
+    }
+
+    /**
+     * Start page transition animation
+     * Animates the existing ::before ellipse to expand and fill screen
+     */
+    startPageTransition(targetUrl) {
+      console.log('🎬 Starting page transition to:', targetUrl);
+
+      // We'll animate by adding a class that scales the ::before ellipse
+      // But GSAP can't directly animate pseudo-elements, so we'll use CSS variables
+
+      // Add CSS variable to the pinned container for animation
+      this.pinnedContainer.style.setProperty('--ellipse-scale', '1');
+
+      // Create timeline for exit animation
+      const exitTimeline = gsap.timeline({
+        onComplete: () => {
+          console.log('✅ Exit animation complete, navigating to:', targetUrl);
+          window.location.href = targetUrl;
+        }
+      });
+
+      // 1. Fade out heading and CTA
+      exitTimeline.to([this.heading, this.cta], {
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      }, 0);
+
+      // 2. Expand ellipse to fill screen by animating CSS variable
+      exitTimeline.to(this.pinnedContainer, {
+        '--ellipse-scale': 5,
+        duration: 1.2,
+        ease: 'power2.inOut',
+        onUpdate: () => {
+          // Apply the scale via CSS variable
+          const scale = gsap.getProperty(this.pinnedContainer, '--ellipse-scale');
+          console.log('Ellipse scale:', scale);
+        }
+      }, 0.3);
     }
   }
 
