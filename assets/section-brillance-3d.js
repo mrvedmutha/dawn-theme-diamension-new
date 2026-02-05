@@ -211,43 +211,29 @@
         }
       });
 
-      // Paragraph - visible 0-20%, fades out 20-25%
+      // Paragraph Animation: 0-5% fade in from bottom, 20-25% fade out
       if (this.paragraph) {
-        // Set initial visible state (OUTSIDE timeline)
-        gsap.set(this.paragraph, { opacity: 1, y: 0 });
+        // Fade in from bottom (0% to 5%)
+        mainTimeline.fromTo(this.paragraph,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.05, ease: 'power2.out' },
+          0 // Start at 0%
+        );
 
-        // Fade out from 20% to 25%
+        // Fade out (20% to 25%)
         mainTimeline.to(this.paragraph,
           { opacity: 0, duration: 0.05, ease: 'power2.in' },
-          0.2
+          0.2 // Start at 20%
         );
       }
 
-      // CTA - hidden until 55%, then reveal
+      // CTA Animation: Fade in at 55% and stay visible
       if (this.cta) {
-        console.log('🎯 CTA: Should be hidden until 55%');
-
-        // Single tween starting at 55%, with immediateRender: false
+        // Fade in at 55%
         mainTimeline.fromTo(this.cta,
           { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.1,
-            ease: 'power2.out',
-            immediateRender: false, // Don't render until tween actually starts
-            onStart: () => console.log('🚀 CTA reveal at 55%')
-          },
-          0.55
-        );
-      }
-
-      // CTA reveal (0% - 30%)
-      if (this.cta) {
-        mainTimeline.fromTo(this.cta,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' },
-          0 // Start immediately at beginning
+          { opacity: 1, y: 0, duration: 0.1, ease: 'power2.out' },
+          0.55 // Start at 55%
         );
       }
 

@@ -26,7 +26,7 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
-  background-color: var(--color-background, #fffcf9);
+  background-color: #f2f2f2;
 }
 
 /* ==========================================
@@ -43,6 +43,20 @@
   z-index: 2;
   pointer-events: none;
   overflow: hidden;
+}
+
+/* Ellipse background behind canvas */
+.brillance-3d__pinned::before {
+  content: '\00a0';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
+  height: 40vw;
+  background-color: #fffcf9;
+  border-radius: 50%;
+  z-index: 0;
 }
 
 /* ==========================================
@@ -92,7 +106,12 @@
 
 /* Heading - Always Visible */
 .brillance-3d__heading {
-  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-weight: 300;
   font-size: 120px;
   line-height: 125px;
@@ -112,18 +131,28 @@
   width: 100%;
   max-width: 615px;
   padding: 0 20px;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
 }
 
 .brillance-3d__paragraph {
-  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-weight: 400;
   font-size: 30px;
   line-height: 35px;
   text-align: center;
   color: var(--color-text, #183754);
   margin: 0;
-  opacity: 1;
+  padding: 0;
+  opacity: 0;
   white-space: pre-wrap;
+  width: 100%;
 }
 
 /* CTA - Positioned at bottom */
@@ -133,10 +162,18 @@
   left: 50%;
   transform: translateX(-50%);
   pointer-events: all;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
 }
 
 .brillance-3d__cta {
-  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 40px;
@@ -146,7 +183,8 @@
   text-underline-offset: 4px;
   opacity: 0;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  margin: 0;
+  padding: 0;
 }
 
 .brillance-3d__cta:hover {
