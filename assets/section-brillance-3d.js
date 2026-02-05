@@ -2,7 +2,7 @@
  * Brilliance 3D Section
  * - Canvas-based frame rendering (dual layer)
  * - GSAP ScrollTrigger animations
- * - Progressive image loading
+ * - Full image preloading for seamless playback
  */
 
 (function() {
@@ -69,50 +69,36 @@
     }
 
     async init() {
-      // Load critical frames first (first 30)
-      await this.loadCriticalFrames();
-
-      // Setup animations
-      this.setupScrollTrigger();
-
-      // Load remaining frames in background
-      this.loadRemainingFrames();
-    }
-
-    /**
-     * Load first 30 frames for immediate playback
-     */
-    async loadCriticalFrames() {
-      const criticalCount = Math.min(30, this.totalFrames);
-      const promises = [];
-
-      for (let i = 0; i < criticalCount; i++) {
-        promises.push(this.loadBothFrames(i));
+      // Load all images (already preloading via <link rel="preload"> in HTML)
+      try {
+        await this.preloadAllFrames();
+      } catch (error) {
+        console.error('Error loading frames:', error);
       }
 
-      await Promise.all(promises);
-      console.log('Critical frames loaded:', criticalCount);
-
-      // Draw first frame
-      this.drawFrame(0);
+      // Setup animations after images are ready
+      this.setupScrollTrigger();
     }
 
     /**
-     * Load remaining frames in background
+     * Preload ALL frames before animation starts for seamless experience
      */
-    async loadRemainingFrames() {
-      const criticalCount = Math.min(30, this.totalFrames);
+    async preloadAllFrames() {
+      console.log('Loading 3D animation frames...');
 
-      for (let i = criticalCount; i < this.totalFrames; i++) {
+      for (let i = 0; i < this.totalFrames; i++) {
         await this.loadBothFrames(i);
 
-        // Every 10 images, allow other tasks to run
-        if (i % 10 === 0) {
+        // Allow other tasks to run every 5 images
+        if (i % 5 === 0) {
           await new Promise(resolve => setTimeout(resolve, 0));
         }
       }
 
-      console.log('All frames loaded');
+      console.log('All frames loaded:', this.totalFrames);
+
+      // Draw first frame
+      this.drawFrame(0);
     }
 
     /**

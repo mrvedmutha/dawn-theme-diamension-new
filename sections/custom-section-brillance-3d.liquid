@@ -53,12 +53,26 @@
     {%- comment -%} Spacer for Scroll Distance {%- endcomment -%}
     <div class="brillance-3d__spacer" data-spacer>&nbsp;</div>
 
-    {%- comment -%} Preload Image Data {%- endcomment -%}
+    {%- comment -%} Preload ALL images during page load for seamless animation {%- endcomment -%}
+    <div class="brillance-3d__preload" hidden aria-hidden="true">
+      {%- assign max_frame = section.settings.frame_count | minus: 1 -%}
+      {%- comment -%} Background images {%- endcomment -%}
+      {%- for i in (0..max_frame) -%}
+        {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
+        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}">
+      {%- endfor -%}
+      {%- comment -%} Foreground images {%- endcomment -%}
+      {%- for i in (0..max_frame) -%}
+        {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
+        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}">
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Image Data for JavaScript {%- endcomment -%}
     <script>
       window.brillance3dData = window.brillance3dData || {};
       window.brillance3dData['{{ section.id }}'] = {
         backgroundUrls: [
-          {%- assign max_frame = section.settings.frame_count | minus: 1 -%}
           {%- for i in (0..max_frame) -%}
             {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
             "{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}

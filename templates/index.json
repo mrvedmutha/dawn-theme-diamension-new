@@ -265,6 +265,19 @@
         "badge_2_image": "shopify://shop_images/image_395.png"
       }
     },
+    "custom_section_brillance_3d_GVr8xz": {
+      "type": "custom-section-brillance-3d",
+      "name": "Brilliance 3D Animation",
+      "settings": {
+        "heading": "Brilliance Made by Us.",
+        "paragraph": "At Diamensions, we manufacture every lab-grown diamond. This control over the journey — from creation to craftsmanship — ensures purity, sustainability, and perfection you can trust.",
+        "cta_text": "Explore the Journey",
+        "cta_url": "shopify://collections/all",
+        "frame_count": 260,
+        "background_color": "#fffcf9",
+        "text_color": "#183754"
+      }
+    },
     "custom_section_diamension_follow_insta_rz3x9q": {
       "type": "custom-section-diamension-follow-insta",
       "blocks": {
@@ -333,6 +346,7 @@
     "image_with_product_hero_AyTzGC",
     "custom_section_four_collection_arch_e3WPan",
     "headline_ring_collection_gdTW6r",
+    "custom_section_brillance_3d_GVr8xz",
     "custom_section_diamension_follow_insta_rz3x9q",
     "custom_diamension_before_footer_hero_dmVzVR"
   ]
