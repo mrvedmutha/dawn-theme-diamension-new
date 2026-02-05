@@ -338,12 +338,10 @@
     /**
      * Start page transition animation
      * Animates the existing ::before ellipse to expand and fill screen
+     * Then navigates AFTER ellipse is fully expanded (seamless loading)
      */
     startPageTransition(targetUrl) {
       console.log('🎬 Starting page transition to:', targetUrl);
-
-      // We'll animate by adding a class that scales the ::before ellipse
-      // But GSAP can't directly animate pseudo-elements, so we'll use CSS variables
 
       // Add CSS variable to the pinned container for animation
       this.pinnedContainer.style.setProperty('--ellipse-scale', '1');
@@ -351,7 +349,14 @@
       // Create timeline for exit animation
       const exitTimeline = gsap.timeline({
         onComplete: () => {
-          console.log('✅ Exit animation complete, navigating to:', targetUrl);
+          console.log('✅ Ellipse fully expanded, navigating to:', targetUrl);
+          console.log('Next page will show same state (no blank screen)');
+
+          // Set flag to indicate coming from brillance-3d transition
+          sessionStorage.setItem('fromBrillanceTransition', 'true');
+          console.log('🏷️ Set transition flag in sessionStorage');
+
+          // Navigate after ellipse is fully expanded
           window.location.href = targetUrl;
         }
       });
@@ -369,11 +374,15 @@
         duration: 1.2,
         ease: 'power2.inOut',
         onUpdate: () => {
-          // Apply the scale via CSS variable
           const scale = gsap.getProperty(this.pinnedContainer, '--ellipse-scale');
-          console.log('Ellipse scale:', scale);
+          if (scale >= 4.9) {
+            console.log('🔵 Ellipse fully expanded (scale: ' + scale + ')');
+          }
         }
       }, 0.3);
+
+      // 3. Small pause at full expansion before navigation
+      exitTimeline.to({}, { duration: 0.2 }); // 0.2s pause so user sees full expansion
     }
   }
 

@@ -1,7 +1,7 @@
 {{ 'process-hero.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Process Hero Section {%- endcomment -%}
-<div class="process-hero" data-section-id="{{ section.id }}">
+{%- comment -%} Process Hero Section - Initial state matches exit animation {%- endcomment -%}
+<div class="process-hero" data-section-id="{{ section.id }}" data-process-hero>
   {%- comment -%} Last frame background layers {%- endcomment -%}
   <div class="process-hero__background">
     <img
@@ -32,6 +32,7 @@
 </div>
 
 <script src="{{ 'process-hero.js' | asset_url }}" defer></script>
+<script src="{{ 'process-page-header.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

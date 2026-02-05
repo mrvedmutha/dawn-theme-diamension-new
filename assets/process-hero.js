@@ -34,27 +34,40 @@
       this.heading = section.querySelector('[data-heading]');
       this.transitionOverlay = section.querySelector('[data-transition-overlay]');
 
-      console.log('Initializing Process Hero');
+      console.log('🎬 Initializing Process Hero');
+      console.log('Initial state: Ellipse expanded, covering screen (seamless from exit animation)');
 
-      // Start enter animation
+      // Start enter animation after a brief moment
       this.playEnterAnimation();
     }
 
     /**
      * Play enter animation when page loads
+     * Animates FROM the expanded ellipse state (seamless loading)
      */
     playEnterAnimation() {
-      console.log('Starting enter animation');
+      console.log('🎭 Starting enter animation from expanded state');
+
+      // Add loaded class to section
+      this.section.classList.add('process-hero--loaded');
 
       // Create timeline for enter animation
+      // Starting from: ellipse at 200vw (expanded), heading hidden
       const enterTimeline = gsap.timeline({
-        delay: 0.3, // Small delay to ensure page is ready
+        delay: 0.5, // Brief delay so user sees the seamless transition
+        onStart: () => {
+          console.log('Ellipse starts shrinking...');
+        },
         onComplete: () => {
-          console.log('Enter animation complete');
+          console.log('✅ Enter animation complete');
+          // Remove overlay from DOM after animation
+          if (this.transitionOverlay) {
+            this.transitionOverlay.style.display = 'none';
+          }
         }
       });
 
-      // 1. Shrink and fade out ellipse
+      // 1. Shrink and fade out ellipse from its expanded state
       enterTimeline.to(this.transitionOverlay, {
         width: 0,
         height: 0,

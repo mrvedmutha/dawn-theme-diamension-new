@@ -19,6 +19,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: red; /* TEMP: Red to test positioning */
+  /* background-color: #fffcf9; - Original color */
 }
 
 /* ==========================================
@@ -34,7 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f2f2f2;
+  background-color: #fffcf9; /* Match ellipse color */
 }
 
 .process-hero__bg-layer {
@@ -90,9 +92,10 @@
 }
 
 /* ==========================================
-   TRANSITION OVERLAY
+   TRANSITION OVERLAY - INITIAL STATE
    ========================================== */
 
+/* Initial state: Ellipse expanded covering entire screen */
 .process-hero__transition-overlay {
   position: fixed;
   top: 50%;
@@ -105,6 +108,11 @@
   z-index: 10000;
   pointer-events: none;
   opacity: 1;
+}
+
+/* After JS loads, this will be animated */
+.process-hero--loaded .process-hero__transition-overlay {
+  /* JS will animate to width: 0, height: 0, opacity: 0 */
 }
 
 /* ==========================================
