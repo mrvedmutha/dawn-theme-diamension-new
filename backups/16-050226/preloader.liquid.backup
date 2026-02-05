@@ -2,30 +2,26 @@
   Preloader Snippet
   - Only renders on homepage when enabled
   - Shows loading progress based on actual DOM/asset loading
-  - Slides down to reveal page when complete
+  - Slides up to reveal page when complete
 {% endcomment %}
 
 {%- if request.page_type == 'index' and settings.preloader_enabled -%}
   {{ 'section-preloader.css' | asset_url | stylesheet_tag }}
 
-  <style>
-    :root {
-      --preloader-logo-max-width: {{ settings.preloader_logo_max_width | default: 120 }}px;
-    }
-  </style>
-
   <div class="preloader" id="preloader" aria-hidden="true">
+    {%- comment -%} Ellipse Arc - Behind everything {%- endcomment -%}
+    <div class="preloader__ellipse">&nbsp;</div>
+
     <div class="preloader__container">
       {%- comment -%} Logo {%- endcomment -%}
       <div class="preloader__logo">
         {%- if settings.preloader_logo != blank -%}
-          {%- assign logo_width = settings.preloader_logo_max_width | default: 120 -%}
           <img
-            src="{{ settings.preloader_logo | image_url: width: 1200 }}"
-            srcset="{{ settings.preloader_logo | image_url: width: 600 }} 1x, {{ settings.preloader_logo | image_url: width: 1200 }} 2x"
+            src="{{ settings.preloader_logo | image_url: width: 648 }}"
+            srcset="{{ settings.preloader_logo | image_url: width: 324 }} 1x, {{ settings.preloader_logo | image_url: width: 648 }} 2x"
             alt="{{ settings.preloader_logo.alt | default: shop.name }}"
-            width="{{ logo_width }}"
-            height="{{ logo_width | divided_by: settings.preloader_logo.aspect_ratio | round }}"
+            width="324"
+            height="{{ 324 | divided_by: settings.preloader_logo.aspect_ratio | round }}"
             loading="eager"
           >
         {%- else -%}
@@ -33,12 +29,33 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Tagline Text - Stagger Animation {%- endcomment -%}
-      <div class="preloader__tagline" id="preloader-tagline">
-        <span class="word">Grown</span>
-        <span class="word">Smart.</span>
-        <span class="word">Styled</span>
-        <span class="word">Fast</span>
+      {%- comment -%} Content Wrapper {%- endcomment -%}
+      <div class="preloader__content-wrapper">
+        {%- comment -%} Product Image {%- endcomment -%}
+        <div class="preloader__image-container">
+          {%- if settings.preloader_image != blank -%}
+            <img
+              class="preloader__image"
+              src="{{ settings.preloader_image | image_url: width: 688 }}"
+              srcset="{{ settings.preloader_image | image_url: width: 344 }} 1x, {{ settings.preloader_image | image_url: width: 688 }} 2x"
+              alt="{{ settings.preloader_image.alt | default: 'Loading' }}"
+              width="344"
+              height="144"
+              loading="eager"
+            >
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Tagline {%- endcomment -%}
+        {%- if settings.preloader_tagline != blank -%}
+          <p class="preloader__tagline">{{ settings.preloader_tagline }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Divider Line {%- endcomment -%}
+        <div class="preloader__divider">&nbsp;</div>
+
+        {%- comment -%} Percentage Counter {%- endcomment -%}
+        <p class="preloader__percentage" id="preloader-percentage">0%</p>
       </div>
     </div>
   </div>
@@ -54,13 +71,9 @@
       document.body.scrollTop = 0;
 
       const preloader = document.getElementById('preloader');
-      const taglineEl = document.getElementById('preloader-tagline');
+      const percentageEl = document.getElementById('preloader-percentage');
 
-      if (!preloader || !taglineEl) return;
-
-      // Get all word elements
-      const words = taglineEl.querySelectorAll('.word');
-      const totalWords = words.length;
+      if (!preloader || !percentageEl) return;
 
       // Prevent scrolling while preloader is active
       document.body.style.overflow = 'hidden';
@@ -87,7 +100,7 @@
       let initialHeight = window.innerHeight;
 
       // Track loading resources
-      const images = document.querySelectorAll('img:not(.preloader__logo img)');
+      const images = document.querySelectorAll('img:not(.preloader__image):not(.preloader__logo img)');
       const totalResources = images.length + 1; // +1 for DOM ready
       let loadedResources = 0;
 
@@ -95,61 +108,21 @@
         targetProgress = Math.min(progress, 100);
       }
 
-      function trackProgress() {
+      function animatePercentage() {
         if (currentProgress < targetProgress) {
           // Smooth easing toward target
           const diff = targetProgress - currentProgress;
           const increment = Math.max(0.5, diff * 0.1);
           currentProgress = Math.min(currentProgress + increment, targetProgress);
+          percentageEl.textContent = Math.round(currentProgress) + '%';
         }
 
         if (currentProgress < 100 || !isComplete) {
-          animationFrame = requestAnimationFrame(trackProgress);
+          animationFrame = requestAnimationFrame(animatePercentage);
         } else {
-          // Page is loaded - trigger animation sequence
-          setTimeout(startAnimationSequence, 300);
-        }
-      }
-
-      function startAnimationSequence() {
-        // Use GSAP if available, otherwise use CSS transitions
-        if (typeof gsap !== 'undefined') {
-          const tl = gsap.timeline({
-            onComplete: hidePreloader
-          });
-
-          // 1. Animate text words stagger - TO full opacity
-          tl.to(words, {
-            opacity: 1,
-            duration: 0.3,
-            ease: 'power1.out',
-            stagger: { each: 0.15 }
-          });
-
-          // 2. Scale logo in - TO scale 1
-          const logo = document.querySelector('.preloader__logo');
-          tl.to(logo, {
-            scale: 1,
-            duration: 0.6,
-            ease: 'power2.out'
-          }, '+=0.15'); // Slight delay after text finishes
-
-        } else {
-          // Fallback without GSAP
-          words.forEach((word, index) => {
-            setTimeout(() => {
-              word.style.transition = 'opacity 0.3s ease-out';
-              word.style.opacity = '1';
-            }, index * 150);
-          });
-
-          const logo = document.querySelector('.preloader__logo');
-          setTimeout(() => {
-            logo.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-            logo.style.transform = 'scale(1)';
-          }, totalWords * 150 - 200);
-
-          setTimeout(hidePreloader, totalWords * 150 + 800);
+          // Ensure we show 100% before hiding
+          percentageEl.textContent = '100%';
+          setTimeout(hidePreloader, 300);
         }
       }
 
@@ -161,10 +134,10 @@
         window.removeEventListener('wheel', preventScroll);
         window.removeEventListener('touchmove', preventScroll);
 
-        // Use GSAP to animate preloader sliding down
+        // Use GSAP to animate preloader sliding up
         if (typeof gsap !== 'undefined') {
           gsap.to(preloader, {
-            yPercent: 100,
+            yPercent: -100,
             duration: 0.8,
             ease: 'power3.inOut',
             onComplete: function() {
@@ -180,7 +153,7 @@
         } else {
           // Fallback without GSAP
           preloader.style.transition = 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
-          preloader.style.transform = 'translateY(100%)';
+          preloader.style.transform = 'translateY(-100%)';
           setTimeout(function() {
             preloader.classList.add('is-hidden');
             preloader.style.display = 'none';
@@ -203,8 +176,8 @@
         }
       }
 
-      // Start progress tracking
-      trackProgress();
+      // Start percentage animation
+      animatePercentage();
 
       // Track DOM ready as first milestone (30% of progress)
       if (document.readyState === 'complete') {

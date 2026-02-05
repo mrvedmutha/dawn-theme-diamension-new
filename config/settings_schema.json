@@ -1420,6 +1420,17 @@
         "info": "Upload your brand logo (includes DIAMENSION + JEWELLERY text). Recommended width: 324px"
       },
       {
+        "type": "range",
+        "id": "preloader_logo_max_width",
+        "label": "Logo Max Width (Desktop)",
+        "info": "Maximum width of the logo on desktop in pixels",
+        "min": 16,
+        "max": 600,
+        "step": 8,
+        "unit": "px",
+        "default": 120
+      },
+      {
         "type": "header",
         "content": "Image"
       },

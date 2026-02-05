@@ -1,18 +1,10 @@
 /* ==========================================================================
-   Preloader Section Styles
+   Preloader Section Styles - Simplified
    ========================================================================== */
 
 @font-face {
   font-family: 'Ogg';
   src: url('Ogg-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'NeueMontreal';
-  src: url('NeueMontreal-Regular.woff2') format('woff2'), url('NeueMontreal-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -42,137 +34,60 @@
 .preloader__container {
   width: 100%;
   max-width: 1440px;
-  height: 100%;
   margin: 0 auto;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-/* Logo - 64px from top = ~8vh based on 801px */
+/* Logo */
 .preloader__logo {
-  position: absolute;
-  top: 8vh;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: var(--preloader-logo-max-width, 120px);
+  transform: scale(0);
+  transform-origin: center;
 }
 
 .preloader__logo img {
-  max-width: 324px;
+  width: 100%;
   height: auto;
   display: block;
 }
 
-/* Content Wrapper - Positioned below logo */
-.preloader__content-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  position: absolute;
-  top: calc(12vh + 60px + 12vh); /* logo top + logo height (~60px) + 96px gap = 12vh */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  box-sizing: border-box;
-}
-
-/* Image Container */
-.preloader__image-container {
-  position: relative;
-  width: 100%;
-  max-width: 344px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.preloader__image {
-  width: 100%;
-  max-width: 344px;
-  aspect-ratio: 344 / 144;
-  object-fit: contain;
-  display: block;
-  position: relative;
-  z-index: 2;
-}
-
-/* Ellipse Arc - Semi-circle spanning viewport, aligned with image */
-.preloader__ellipse {
-  position: fixed;
-  width: 1660.383px;
-  height: 1263.354px;
-  left: 50%;
-  top: calc(8vh + 60px + 12vh + 72px); /* Aligns with middle of image (image height ~144px, so +72px) */
-  transform: translateX(-50%);
-  border: 1px solid #183754;
-  border-radius: 50%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Large screens - ellipse should touch viewport edges */
-@media screen and (min-width: 1441px) {
-  .preloader__ellipse {
-    width: 115vw;
-    height: calc(115vw * 0.76);
-  }
-}
-
-@media screen and (min-width: 1800px) {
-  .preloader__ellipse {
-    width: 120vw;
-    height: calc(120vw * 0.76);
-  }
-}
-
-/* Tagline - 12px below image = ~1.5vh */
-.preloader__tagline {
-  font-family: 'NeueMontreal', var(--font-body-family), sans-serif;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 30px;
-  color: #183754;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 1.5vh;
-  max-width: 360px;
-  letter-spacing: 0.02em;
-  position: relative;
-  z-index: 2;
-}
-
-/* Divider Line - Grows to fill available space, 40px gap = ~5vh */
-.preloader__divider {
-  width: 1px;
-  min-height: 5vh;
-  flex: 1;
-  background-color: #183754;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-  position: relative;
-  z-index: 2;
-}
-
-/* Percentage Counter - 40px gap from divider = ~5vh */
-.preloader__percentage {
+.preloader__logo-text {
   font-family: 'Ogg', serif;
-  font-size: 60px;
+  font-size: 32px;
   font-weight: 400;
-  line-height: 50px;
   color: #183754;
   text-align: center;
-  text-transform: uppercase;
-  margin-top: auto;
-  margin-bottom: 12vh; /* ~96px from bottom based on 801px */
-  position: relative;
-  z-index: 2;
+}
+
+/* Tagline - Stagger Text Animation */
+.preloader__tagline {
+  font-family: 'Ogg', serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #183754;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3em;
+  max-width: 800px;
+}
+
+.preloader__tagline .word {
+  opacity: 0.2;
+  transition: opacity 0.3s ease-out;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -180,162 +95,69 @@
    ========================================================================== */
 
 @media screen and (max-width: 990px) {
-  .preloader__logo img {
-    max-width: 260px;
+  .preloader__logo {
+    max-width: calc(var(--preloader-logo-max-width, 120px) * 0.8);
   }
 
   .preloader__tagline {
-    font-size: 24px;
-    line-height: 24px;
-    max-width: 300px;
-  }
-
-  .preloader__percentage {
     font-size: 48px;
-    line-height: 40px;
-    margin-bottom: 10vh;
+    max-width: 600px;
   }
 
-  .preloader__divider {
-    min-height: 4vh;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
-  }
-
-  .preloader__ellipse {
-    width: 1400px;
-    height: 1100px;
+  .preloader__logo-text {
+    font-size: 40px;
   }
 }
 
 @media screen and (max-width: 750px) {
-  .preloader__logo {
-    top: 6vh;
+  .preloader__container {
+    padding: 0 24px;
   }
 
-  .preloader__content-wrapper {
-    top: calc(6vh + 50px + 18vh); /* Increased gap to push content down to touch ellipse */
+  .preloader__logo {
+    max-width: calc(var(--preloader-logo-max-width, 120px) * 0.625);
+    margin-bottom: 32px;
   }
 
   .preloader__tagline {
-    font-size: 20px;
-    line-height: 22px;
-    max-width: 260px;
-  }
-
-  .preloader__percentage {
     font-size: 36px;
-    line-height: 32px;
-    margin-bottom: 8vh;
+    max-width: 450px;
   }
 
-  .preloader__divider {
-    min-height: 3vh;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
-  }
-
-  .preloader__ellipse {
-    height: 850px;
-    top: calc(6vh + 50px + 18vh + 50px); /* Align with image center */
+  .preloader__logo-text {
+    font-size: 32px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .preloader__container {
-    padding: 0 16px;
+    padding: 0 20px;
   }
 
   .preloader__logo {
-    top: 5vh;
-  }
-
-  .preloader__content-wrapper {
-    top: calc(5vh + 40px + 16vh); /* Increased gap to push content down to touch ellipse */
-  }
-
-  .preloader__image {
-    max-width: 240px;
+    max-width: calc(var(--preloader-logo-max-width, 120px) * 0.5);
+    margin-bottom: 32px;
   }
 
   .preloader__tagline {
-    font-size: 18px;
-    line-height: 18px;
-    max-width: 260px;
+    font-size: 28px;
+    max-width: 340px;
+    gap: 0.25em;
   }
 
-  .preloader__percentage {
-    font-size: 32px;
-    line-height: 24px;
-    margin-bottom: 6vh;
-  }
-
-  .preloader__divider {
-    min-height: 2vh;
-    margin-top: 3vh;
-    margin-bottom: 3vh;
-  }
-
-  .preloader__ellipse {
-    width: 800px;
-    top: calc(5vh + 40px + 16vh + 40px); /* Align with image center */
+  .preloader__logo-text {
+    font-size: 28px;
   }
 }
 
-/* ==========================================================================
-   Height-based adjustments for smaller viewports
-   ========================================================================== */
-
-@media screen and (max-height: 700px) {
-  .preloader__logo {
-    top: 5vh;
-  }
-
-  .preloader__content-wrapper {
-    top: calc(5vh + 50px + 8vh);
-  }
-
-  .preloader__divider {
-    min-height: 3vh;
-    margin-top: 3vh;
-    margin-bottom: 3vh;
-  }
-
-  .preloader__percentage {
-    margin-bottom: 8vh;
-  }
-}
-
+/* Small height adjustments */
 @media screen and (max-height: 600px) {
   .preloader__logo {
-    top: 4vh;
-  }
-
-  .preloader__logo img {
-    max-width: 180px;
-  }
-
-  .preloader__content-wrapper {
-    top: calc(4vh + 45px + 6vh);
-  }
-
-  .preloader__image {
-    max-width: 200px;
+    max-width: calc(var(--preloader-logo-max-width, 120px) * 0.5625);
+    margin-bottom: 24px;
   }
 
   .preloader__tagline {
-    font-size: 14px;
-    margin-top: 1vh;
-  }
-
-  .preloader__divider {
-    min-height: 2vh;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-  }
-
-  .preloader__percentage {
     font-size: 32px;
-    margin-bottom: 6vh;
   }
 }

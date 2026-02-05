@@ -19,8 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: red; /* TEMP: Red to test positioning */
-  /* background-color: #fffcf9; - Original color */
+  background-color: #fffaf5; /* Match ellipse color for seamless loading */
 }
 
 /* ==========================================
