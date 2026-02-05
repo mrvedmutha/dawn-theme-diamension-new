@@ -1,0 +1,249 @@
+/* ==========================================
+   BRILLIANCE 3D SECTION
+   ========================================== */
+
+/* Reset Shopify section defaults */
+.section-brillance-3d {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Outer wrapper - full width */
+.brillance-3d__wrapper {
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.brillance-3d {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background, #fffcf9);
+}
+
+/* ==========================================
+   PINNED CONTAINER
+   ========================================== */
+
+.brillance-3d__pinned {
+  position: relative;
+  width: 100vw !important;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ==========================================
+   CANVAS LAYERS
+   ========================================== */
+
+.brillance-3d__canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1920px;
+  height: 1080px;
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.brillance-3d__canvas--background {
+  z-index: 1;
+}
+
+.brillance-3d__canvas--foreground {
+  z-index: 2;
+  mix-blend-mode: darken;
+}
+
+/* ==========================================
+   CONTENT OVERLAY
+   ========================================== */
+
+.brillance-3d__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 40px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Heading - Always Visible */
+.brillance-3d__heading {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 300;
+  font-size: 120px;
+  line-height: 125px;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-text, #183754);
+  margin: 0;
+  max-width: 1440px;
+}
+
+/* Paragraph - Same position as CTA */
+.brillance-3d__paragraph-wrapper {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 615px;
+  padding: 0 20px;
+}
+
+.brillance-3d__paragraph {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 35px;
+  text-align: center;
+  color: var(--color-text, #183754);
+  margin: 0;
+  opacity: 1;
+  white-space: pre-wrap;
+}
+
+/* CTA - Positioned at bottom */
+.brillance-3d__cta-wrapper {
+  position: absolute;
+  bottom: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: all;
+}
+
+.brillance-3d__cta {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  color: var(--color-text, #183754);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.brillance-3d__cta:hover {
+  opacity: 0.7;
+}
+
+/* ==========================================
+   SPACER
+   ========================================== */
+
+.brillance-3d__spacer {
+  height: 300vh;
+  position: relative;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ==========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================== */
+
+/* Tablet - 1024px */
+@media (max-width: 1024px) {
+  .brillance-3d__heading {
+    font-size: 80px;
+    line-height: 90px;
+  }
+
+  .brillance-3d__paragraph {
+    font-size: 24px;
+    line-height: 30px;
+    max-width: 500px;
+  }
+
+  .brillance-3d__cta {
+    font-size: 18px;
+  }
+
+  .brillance-3d__content {
+    padding: 60px 30px;
+  }
+}
+
+/* Mobile - 767px */
+@media (max-width: 767px) {
+  .brillance-3d__heading {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .brillance-3d__paragraph {
+    font-size: 18px;
+    line-height: 24px;
+    max-width: 400px;
+  }
+
+  .brillance-3d__cta {
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .brillance-3d__content {
+    padding: 40px 20px;
+  }
+
+  .brillance-3d__spacer {
+    height: 200vh;
+  }
+}
+
+/* Small Mobile - 375px */
+@media (max-width: 375px) {
+  .brillance-3d__heading {
+    font-size: 36px;
+    line-height: 42px;
+  }
+
+  .brillance-3d__paragraph {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .brillance-3d__content {
+    padding: 30px 15px;
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .brillance-3d__canvas {
+    will-change: auto;
+  }
+
+  .brillance-3d__cta {
+    transition: none;
+  }
+}
