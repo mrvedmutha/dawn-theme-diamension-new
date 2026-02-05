@@ -14,6 +14,7 @@
   assign feature_2_text = section.settings.feature_2_text
   assign badge_1_image = section.settings.badge_1_image
   assign badge_2_image = section.settings.badge_2_image
+  assign badge_3_image = section.settings.badge_3_image
 -%}
 
 <section
@@ -137,6 +138,16 @@
               loading: 'lazy',
               class: 'headline-ring-collection__badge-image',
               alt: badge_2_image.alt | default: 'Certification badge'
+            -}}
+          </div>
+        {%- endif -%}
+
+        {%- if badge_3_image != blank -%}
+          <div class="headline-ring-collection__badge">
+            {{- badge_3_image | image_url: width: 200 | image_tag:
+              loading: 'lazy',
+              class: 'headline-ring-collection__badge-image',
+              alt: badge_3_image.alt | default: 'Certification badge'
             -}}
           </div>
         {%- endif -%}
@@ -264,6 +275,12 @@
       "id": "badge_2_image",
       "label": "Badge 2 (GIA)",
       "info": "Second certification badge image"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_3_image",
+      "label": "Badge 3",
+      "info": "Third certification badge image"
     }
   ],
   "presets": [

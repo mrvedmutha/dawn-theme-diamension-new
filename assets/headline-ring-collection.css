@@ -364,8 +364,9 @@
   }
 
   .headline-ring-collection__badges {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 16px;
   }
 
