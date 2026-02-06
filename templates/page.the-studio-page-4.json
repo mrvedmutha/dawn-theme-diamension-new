@@ -1,0 +1,251 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_section_image_hero_diamension_the_studio_NpX8f8": {
+      "type": "custom-section-image-hero-diamension-the-studio",
+      "name": "Custom Image Hero - The Studio",
+      "settings": {
+        "image": "shopify://shop_images/pexels-rdne-7686304.jpg",
+        "heading": "Celebrations",
+        "heading_size": 180,
+        "heading_size_tablet": 60,
+        "heading_size_mobile": 60,
+        "font_family": "bickham-script",
+        "cta_text": "",
+        "cta_link": "#"
+      }
+    },
+    "custom_section_diamension_quote_htEpPc": {
+      "type": "custom-section-diamension-quote",
+      "name": "Diamension Quote",
+      "settings": {
+        "quote_text": "<p>From cherished milestones to heartfelt gifting, Diamension’s Celebration Line transforms every occasion into something unforgettable. Each jewel radiates refined brilliance that honors the joy behind the moment.</p>"
+      }
+    },
+    "custom_section_dynamic_hero_studio_KwHRhL": {
+      "type": "custom-section-dynamic-hero-studio",
+      "name": "Dynamic Hero - Studio",
+      "settings": {
+        "image_1": "shopify://shop_images/celebration-jewellery-2.jpg",
+        "image_1_overlay_text": "Beauty",
+        "image_1_overlay_text_size_desktop": 160,
+        "image_1_overlay_text_size_tablet": 100,
+        "image_1_overlay_text_size_mobile": 60,
+        "image_2_overlay_text": "",
+        "image_2_overlay_text_size_desktop": 160,
+        "image_2_overlay_text_size_tablet": 100,
+        "image_2_overlay_text_size_mobile": 60,
+        "tagline": "Festivity. Jubilation. Revelry.",
+        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+      }
+    },
+    "custom_section_two_image_hero_studio_bXbAXF": {
+      "type": "custom-section-two-image-hero-studio",
+      "name": "Two Image Hero - The Studio",
+      "settings": {
+        "left_image": "shopify://shop_images/Generated_Image_January_19_2026_-_1_53PM.png",
+        "right_background_image": "shopify://shop_images/sleek-minimal-image-4.png",
+        "background_color": "#c8102e",
+        "tagline": "For the Ones Who Define Success",
+        "cta_text": "Explore",
+        "cta_link": "#",
+        "heading": "Sleek Minimal",
+        "text_color": "#fffaf5"
+      }
+    },
+    "custom_section_rich_text_diamension_BcGeTw": {
+      "type": "custom-section-rich-text-diamension",
+      "custom_css": [],
+      "name": "Custom Rich Text Diamension",
+      "settings": {
+        "headline": "For the Ones Who Define Success",
+        "subtext": "Because brilliance belongs not just in moments of celebration,  but in every meeting, every pitch, every victory — big or small.",
+        "headline_color": "#183754",
+        "subtext_color": "#3e6282",
+        "background_color": "#fffaf5",
+        "enable_animation": true
+      }
+    },
+    "custom_section_hero_five_product_CfbYHF": {
+      "type": "custom-section-hero-five-product",
+      "name": "Hero + 5 Products",
+      "settings": {
+        "hero_image": "shopify://shop_images/celebration-jewellery-2.jpg",
+        "show_logo": true,
+        "hero_quote": "\"Glamour is a condition, not a commodity.\"",
+        "collection": "custom-collections"
+      }
+    },
+    "custom_section_dynamic_hero_studio_6EBrcw": {
+      "type": "custom-section-dynamic-hero-studio",
+      "name": "Dynamic Hero - Studio",
+      "settings": {
+        "image_1": "shopify://shop_images/sleek-luxury-image-4.png",
+        "image_1_overlay_text": "Beauty",
+        "image_1_overlay_text_size_desktop": 160,
+        "image_1_overlay_text_size_tablet": 100,
+        "image_1_overlay_text_size_mobile": 60,
+        "image_2": "shopify://shop_images/lady-holding-mirror-looking-at-herself.png",
+        "image_2_overlay_text": "Beauty",
+        "image_2_overlay_text_size_desktop": 160,
+        "image_2_overlay_text_size_tablet": 100,
+        "image_2_overlay_text_size_mobile": 60,
+        "tagline": "Sleek. Minimal. Commanding.",
+        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+      }
+    },
+    "custom_section_glamor_collection_studio_RdX44n": {
+      "type": "custom-section-glamor-collection-studio",
+      "blocks": {
+        "product_card_6JwJ6F": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_kMpfJU": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_4wNQR4": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1_58a9c924-ec26-4306-b90f-ed9bcd312944.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        },
+        "product_card_CatwBU": {
+          "type": "product_card",
+          "settings": {
+            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
+            "product_name": "Product Name",
+            "cta_text": "View",
+            "cta_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_card_6JwJ6F",
+        "product_card_kMpfJU",
+        "product_card_4wNQR4",
+        "product_card_CatwBU"
+      ],
+      "name": "Glamor Collection - Studio",
+      "settings": {
+        "background_image": "shopify://shop_images/glamor-collection-image.webp",
+        "heading_text": "Glamour",
+        "subtitle_text": "is a condition, not a commodity."
+      }
+    },
+    "custom_rich_text_content_diamension_the_studio_xWWNKT": {
+      "type": "custom-rich-text-content-diamension-the-studio",
+      "name": "Rich Text Content - The Studio",
+      "settings": {
+        "heading": "Elevated for the Boardroom",
+        "description": "Crafted for professionals who value precision, presence, and quiet confidence.",
+        "text_color": "#183754",
+        "background_color": "#fffaf5"
+      }
+    },
+    "custom_section_image_marquee_MQW87p": {
+      "type": "custom-section-image-marquee",
+      "blocks": {
+        "image_W8pjAa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image-metopolis-image-2.png"
+          }
+        },
+        "image_B4CD83": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image-corporate-comeback.png"
+          }
+        },
+        "image_XGcpwN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Artboard1.webp"
+          }
+        },
+        "image_mCHiXr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Frame_32.png"
+          }
+        },
+        "image_BjTnAj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/LAB09697_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_W8pjAa",
+        "image_B4CD83",
+        "image_XGcpwN",
+        "image_mCHiXr",
+        "image_BjTnAj"
+      ],
+      "name": "Image Marquee",
+      "settings": {
+        "background_color": "#fffaf5",
+        "pause_on_hover": true
+      }
+    },
+    "custom_rich_text_content_diamension_the_studio_HyTX4t": {
+      "type": "custom-rich-text-content-diamension-the-studio",
+      "name": "Rich Text Content - The Studio",
+      "settings": {
+        "heading": "",
+        "description": "\"My two decades as a colourist guides me as a jeweller, especially when working with multicoloured gemstones. For me, the quality of gemstones is a given, but the beauty of jewellery-making is in disrupting the hierarchy of precious stones and mixing them in a fierce amalgamation of modernity and traditionalism.\"",
+        "text_color": "#183754",
+        "background_color": "#fffaf5"
+      }
+    },
+    "custom_section_editorial_hero_qBFJ7c": {
+      "type": "custom-section-editorial-hero",
+      "name": "Editorial Hero",
+      "settings": {
+        "background_image": "shopify://shop_images/sleek-luxury-images.png",
+        "heading": "Jewellery",
+        "tagline": "will outlast fashion, and all of us.",
+        "cta_text": "Explore Collections",
+        "cta_link": "#"
+      }
+    }
+  },
+  "order": [
+    "custom_section_image_hero_diamension_the_studio_NpX8f8",
+    "custom_section_diamension_quote_htEpPc",
+    "custom_section_dynamic_hero_studio_KwHRhL",
+    "custom_section_two_image_hero_studio_bXbAXF",
+    "custom_section_rich_text_diamension_BcGeTw",
+    "custom_section_hero_five_product_CfbYHF",
+    "custom_section_dynamic_hero_studio_6EBrcw",
+    "custom_section_glamor_collection_studio_RdX44n",
+    "custom_rich_text_content_diamension_the_studio_xWWNKT",
+    "custom_section_image_marquee_MQW87p",
+    "custom_rich_text_content_diamension_the_studio_HyTX4t",
+    "custom_section_editorial_hero_qBFJ7c"
+  ]
+}

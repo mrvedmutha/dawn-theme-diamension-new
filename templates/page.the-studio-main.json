@@ -27,16 +27,16 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/image-metropolis-content.png",
-            "heading": "METROPOLITAN VIBES",
-            "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
+            "heading": "CELEBRATIONS",
+            "description": "<p>Diamension’s Celebration Line turns life’s biggest moments into timeless memories. Whether marking a milestone, honoring success, or gifting someone special, each piece shines with understated brilliance.</p>",
             "button_text": "EXPLORE",
-            "button_link": "shopify://pages/metropolitan-vibes"
+            "button_link": "shopify://pages/celebrations"
           }
         },
         "image_block_ECPyKi": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/image-metopolis-image-2.png",
+            "image": "shopify://shop_images/celebration-jewellery-2.jpg",
             "heading": "",
             "description": "",
             "button_text": "",
