@@ -349,13 +349,35 @@
       // Create timeline for exit animation
       const exitTimeline = gsap.timeline({
         onComplete: () => {
-          console.log('✅ Ellipse fully expanded, navigating to:', targetUrl);
-          console.log('Next page will show same state (no blank screen)');
+          console.log('✅ Ellipse fully expanded, capturing snapshot...');
 
-          // Set flag to indicate coming from brillance-3d transition
-          sessionStorage.setItem('fromBrillanceTransition', 'true');
-          console.log('🏷️ Set transition flag in sessionStorage');
+          // Capture canvas snapshots as data URLs for seamless page transition
+          try {
+            const bgSnapshot = this.canvasBg.toDataURL('image/webp', 0.8);
+            const fgSnapshot = this.canvasFg.toDataURL('image/webp', 0.8);
 
+            console.log('📸 Canvas snapshots captured:', {
+              bgSize: (bgSnapshot.length / 1024).toFixed(1) + 'KB',
+              fgSize: (fgSnapshot.length / 1024).toFixed(1) + 'KB'
+            });
+
+            // Store transition state in sessionStorage
+            sessionStorage.setItem('fromBrillanceTransition', 'true');
+            sessionStorage.setItem('transitionBgSnapshot', bgSnapshot);
+            sessionStorage.setItem('transitionFgSnapshot', fgSnapshot);
+            sessionStorage.setItem('transitionEllipseScale', '5');
+
+            // Store colors for matching background
+            const computedStyle = window.getComputedStyle(this.pinnedContainer);
+            const ellipseColor = computedStyle.getPropertyValue('--ellipse-color').trim() || '#fffcf9';
+            sessionStorage.setItem('transitionEllipseColor', ellipseColor);
+
+            console.log('✅ Transition state saved to sessionStorage');
+          } catch (error) {
+            console.error('Failed to capture snapshots:', error);
+          }
+
+          console.log('🔄 Navigating to:', targetUrl);
           // Navigate after ellipse is fully expanded
           window.location.href = targetUrl;
         }

@@ -1,0 +1,73 @@
+{%- comment -%}
+  Page Transition Overlay Script
+  This snippet is rendered INLINE in theme.liquid head to prevent flash during page transitions
+  from the Brillance 3D section
+{%- endcomment -%}
+
+<script>
+  (function() {
+    'use strict';
+    var fromTransition = sessionStorage.getItem('fromBrillanceTransition');
+    if (!fromTransition) return;
+
+    console.log('🎬 Transition detected - Creating seamless overlay');
+
+    var bgSnapshot = sessionStorage.getItem('transitionBgSnapshot');
+    var fgSnapshot = sessionStorage.getItem('transitionFgSnapshot');
+    var ellipseScale = sessionStorage.getItem('transitionEllipseScale') || '5';
+    var ellipseColor = sessionStorage.getItem('transitionEllipseColor') || '#fffcf9';
+
+    if (!bgSnapshot || !fgSnapshot) {
+      console.warn('Snapshots not found');
+      return;
+    }
+
+    var overlay = document.createElement('div');
+    overlay.id = 'brillance-transition-overlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:999999;pointer-events:none;overflow:hidden;transition:opacity 0.6s ease;';
+
+    var ellipse = document.createElement('div');
+    ellipse.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale('+ellipseScale+');width:40vw;height:40vw;background-color:'+ellipseColor+';border-radius:50%;z-index:1;';
+
+    var bgImage = document.createElement('img');
+    bgImage.src = bgSnapshot;
+    bgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1920px;height:1080px;max-width:100%;max-height:100vh;object-fit:contain;z-index:2;';
+
+    var fgImage = document.createElement('img');
+    fgImage.src = fgSnapshot;
+    fgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1920px;height:1080px;max-width:100%;max-height:100vh;object-fit:contain;z-index:3;mix-blend-mode:darken;';
+
+    overlay.appendChild(ellipse);
+    overlay.appendChild(bgImage);
+    overlay.appendChild(fgImage);
+    document.documentElement.appendChild(overlay);
+
+    console.log('✅ Overlay created');
+
+    function fadeOut() {
+      console.log('🎭 Fading out overlay');
+      overlay.style.opacity = '0';
+      setTimeout(function() {
+        if (overlay.parentNode) overlay.remove();
+        sessionStorage.removeItem('fromBrillanceTransition');
+        sessionStorage.removeItem('transitionBgSnapshot');
+        sessionStorage.removeItem('transitionFgSnapshot');
+        sessionStorage.removeItem('transitionEllipseScale');
+        sessionStorage.removeItem('transitionEllipseColor');
+        console.log('🧹 Cleaned up');
+      }, 600);
+    }
+
+    var domReady = false, minTimeElapsed = false;
+    setTimeout(function() { minTimeElapsed = true; check(); }, 400);
+
+    function onReady() { domReady = true; check(); }
+    function check() { if (domReady && minTimeElapsed) fadeOut(); }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onReady);
+    } else {
+      onReady();
+    }
+  })();
+</script>

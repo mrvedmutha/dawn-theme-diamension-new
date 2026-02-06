@@ -44,6 +44,7 @@
   pointer-events: none;
   overflow: hidden;
   --ellipse-scale: 1;
+  --ellipse-color: #fffcf9;
 }
 
 /* Ellipse background behind canvas */
@@ -55,7 +56,7 @@
   transform: translate(-50%, -50%) scale(var(--ellipse-scale));
   width: 40vw;
   height: 40vw;
-  background-color: #fffcf9;
+  background-color: var(--ellipse-color);
   border-radius: 50%;
   z-index: 0;
   transition: transform 0.3s ease;
