@@ -184,6 +184,93 @@
 }
 
 /* ============================================
+   Skeleton Loaders
+   ============================================ */
+
+/* Skeleton Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+
+/* Skeleton Card */
+.custom-section-shop-by-price__skeleton-card {
+  width: 225px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Skeleton Image Container */
+.custom-section-shop-by-price__skeleton-image {
+  width: 225px;
+  height: 333px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0px,
+    #e0e0e0 40px,
+    #f0f0f0 80px
+  );
+  background-size: 468px 333px;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* Skeleton Shimmer Effect */
+.custom-section-shop-by-price__skeleton-shimmer {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+/* Skeleton Wishlist Button */
+.custom-section-shop-by-price__skeleton-wishlist {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Skeleton Title */
+.custom-section-shop-by-price__skeleton-title {
+  width: 180px;
+  height: 30px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0px,
+    #e0e0e0 40px,
+    #f0f0f0 80px
+  );
+  background-size: 468px 30px;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+/* Skeleton Price */
+.custom-section-shop-by-price__skeleton-price {
+  width: 120px;
+  height: 20px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0px,
+    #e0e0e0 40px,
+    #f0f0f0 80px
+  );
+  background-size: 468px 20px;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+  border-radius: 4px;
+}
+
+/* ============================================
    Product Card
    ============================================ */
 
@@ -513,6 +600,39 @@
     min-height: 300px;
   }
 
+  /* Skeleton Loader - Mobile */
+  .custom-section-shop-by-price__skeleton-card {
+    width: calc((100% - 10px) / 2);
+    min-width: 150px;
+    max-width: 180px;
+  }
+
+  .custom-section-shop-by-price__skeleton-image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 148%;
+    background-size: 300px 100%;
+  }
+
+  .custom-section-shop-by-price__skeleton-title {
+    width: 90%;
+    height: 24px;
+    background-size: 300px 24px;
+  }
+
+  .custom-section-shop-by-price__skeleton-price {
+    width: 80px;
+    height: 18px;
+    background-size: 300px 18px;
+  }
+
+  .custom-section-shop-by-price__skeleton-wishlist {
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 12px;
+  }
+
   .custom-section-shop-by-price__product-card {
     width: calc((100% - 10px) / 2);
     min-width: 150px;
@@ -631,6 +751,22 @@
 
   .custom-section-shop-by-price__loading {
     min-height: 280px;
+  }
+
+  .custom-section-shop-by-price__skeleton-card {
+    min-width: 140px;
+    max-width: 160px;
+  }
+
+  .custom-section-shop-by-price__skeleton-title {
+    height: 20px;
+    background-size: 250px 20px;
+  }
+
+  .custom-section-shop-by-price__skeleton-price {
+    width: 70px;
+    height: 16px;
+    background-size: 250px 16px;
   }
 
   .custom-section-shop-by-price__product-card {

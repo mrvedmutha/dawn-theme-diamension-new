@@ -105,6 +105,20 @@
     },
   };
 
+  // Skeleton Card Renderer
+  const renderSkeletonCard = () => {
+    return `
+      <div class="custom-section-shop-by-price__product-card custom-section-shop-by-price__skeleton-card">
+        <div class="custom-section-shop-by-price__image-container custom-section-shop-by-price__skeleton-image">
+          <div class="custom-section-shop-by-price__skeleton-shimmer">&nbsp;</div>
+          <div class="custom-section-shop-by-price__skeleton-wishlist">&nbsp;</div>
+        </div>
+        <div class="custom-section-shop-by-price__skeleton-title">&nbsp;</div>
+        <div class="custom-section-shop-by-price__skeleton-price">&nbsp;</div>
+      </div>
+    `;
+  };
+
   // Product Card Renderer
   const renderProductCard = (product) => {
     // Handle image URLs - Shopify API returns images as objects with 'src' property
@@ -293,6 +307,7 @@
       this.ctaContainer = section.querySelector('.custom-section-shop-by-price__cta');
       this.shopAllLink = section.querySelector('[data-shop-all-link]');
       this.carousel = null;
+      this.isFirstLoad = true;
 
       this.init();
     }
@@ -378,21 +393,32 @@
       // Animate underline
       this.animateUnderline(tab);
 
-      // Fade out current products
-      await this.fadeOutProducts();
-
-      // Show loading state
-      this.showLoading();
+      if (this.isFirstLoad) {
+        // First load: Replace loading text with skeletons (no fade needed)
+        this.showLoading();
+      } else {
+        // Tab switch: Fade out current products, then show skeletons
+        await this.fadeOutProducts();
+        this.showLoading();
+      }
 
       // Fetch and display new products
       const result = await ProductFetcher.fetchByPriceRange(minPrice, maxPrice);
+
+      // Render products (replaces skeletons)
       this.renderProducts(result.products);
 
       // Update Shop All button with total count (not just displayed products)
       this.updateShopAllButton(result.totalCount, minPrice, maxPrice);
 
-      // Fade in new products
-      this.fadeInProducts();
+      // Fade in new products only on first load, otherwise they appear instantly
+      if (this.isFirstLoad) {
+        this.fadeInProducts();
+        this.isFirstLoad = false;
+      } else {
+        // Products appear instantly (container already visible)
+        this.productsContainer.style.opacity = '1';
+      }
 
       // Reset carousel position
       if (this.carousel) {
@@ -401,7 +427,24 @@
     }
 
     showLoading() {
-      this.productsContainer.innerHTML = '<div class="custom-section-shop-by-price__loading">Loading products...</div>';
+      // Show skeleton loaders based on viewport
+      const skeletonCount = this.getSkeletonCount();
+      const skeletonsHtml = Array.from({ length: skeletonCount }, () => renderSkeletonCard()).join('');
+      this.productsContainer.innerHTML = skeletonsHtml;
+
+      // Make sure container is visible after inserting skeletons
+      this.productsContainer.style.opacity = '1';
+    }
+
+    getSkeletonCount() {
+      const width = window.innerWidth;
+      if (width <= 767) {
+        return 2; // Mobile
+      } else if (width <= 1024) {
+        return 4; // Tablet
+      } else {
+        return 5; // Desktop
+      }
     }
 
     animateUnderline(tab) {
@@ -471,6 +514,7 @@
         return;
       }
 
+      // Render products (this automatically replaces skeletons)
       const html = products.map((product) => renderProductCard(product)).join('');
       this.productsContainer.innerHTML = html;
 
