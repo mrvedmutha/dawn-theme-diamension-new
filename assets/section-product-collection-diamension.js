@@ -320,8 +320,6 @@ class SortPanelDiamension {
 
     // Update UI
     this.updateSortedUI(productsToSort.length);
-
-    console.log(`Products sorted by: ${sortType}, showing ${productsToSort.length} products`);
   }
 
   restoreDefaultState() {
@@ -444,10 +442,9 @@ class FilterPanelDiamension {
     this.dynamicProducts = []; // Track dynamically created product cards
 
     this.filters = {
-      style: [],
-      collections: [],
-      shape: [],
       categories: [],
+      subcategories: [],
+      fromthestudio: [],
       priceMin: this.actualMinPrice,
       priceMax: this.actualMaxPrice
     };
@@ -467,6 +464,7 @@ class FilterPanelDiamension {
     this.initializeAccordions();
     this.initializePriceSlider();
     this.updateCheckboxStates();
+    this.autoCheckAvailableFilters();
     this.setupAreaBasedScrolling();
   }
 
@@ -480,21 +478,20 @@ class FilterPanelDiamension {
       const response = await fetch(`/collections/${this.collectionHandle}/products.json?limit=250`);
       const data = await response.json();
 
-      this.allProductsData = data.products.map(product => ({
-        id: product.id.toString(),
-        title: product.title || '',
-        price: parseFloat(product.variants[0]?.price || 0),
-        tags: (product.tags || []).map(tag => tag.trim().toLowerCase()),
-        type: (product.type || '').toLowerCase().trim(),
-        url: product.url || '',
-        image: product.images[0]?.src || '',
-        inDOM: false // Track if product card is already in DOM
-      }));
+      this.allProductsData = data.products.map(product => {
+        // Try to find this product in DOM to get its type
+        const domProduct = this.products.find(p => p.id === product.id.toString());
 
-      // Mark products that are already in DOM
-      this.products.forEach(domProduct => {
-        const match = this.allProductsData.find(p => p.id === domProduct.id);
-        if (match) match.inDOM = true;
+        return {
+          id: product.id.toString(),
+          title: product.title || '',
+          price: parseFloat(product.variants[0]?.price || 0),
+          tags: (product.tags || []).map(tag => tag.trim().toLowerCase()),
+          type: domProduct ? domProduct.type : (product.product_type || product.type || '').toLowerCase().trim(),
+          url: product.url || '',
+          image: product.images[0]?.src || '',
+          inDOM: !!domProduct // Track if product card is already in DOM
+        };
       });
 
       this.allProductsLoaded = true;
@@ -540,8 +537,6 @@ class FilterPanelDiamension {
     });
 
     this.totalProducts = this.products.length;
-
-    console.log(`Products in DOM: ${this.totalProducts}, Price range: ₹${this.actualMinPrice} - ₹${this.actualMaxPrice}`);
   }
 
   /**
@@ -559,12 +554,81 @@ class FilterPanelDiamension {
       if (category === 'categories') {
         // Check product.type
         hasMatch = this.products.some(product => product.type === value);
-      } else {
-        // Check tags
+      } else if (category === 'subcategories' || category === 'fromthestudio') {
+        // Check tags for sub-categories and from the studio
         hasMatch = this.products.some(product => product.tags.includes(value));
       }
 
+      // Don't override disabled state for "From The Studio" if already disabled by Liquid
+      if (category === 'fromthestudio' && checkbox.disabled) {
+        // Keep it disabled (set by collection-specific logic in Liquid)
+        return;
+      }
+
       checkbox.disabled = !hasMatch;
+    });
+  }
+
+  /**
+   * Auto-check checkboxes for filters that are available in the collection
+   */
+  autoCheckAvailableFilters() {
+    if (!this.allProductsLoaded) return;
+
+    // Get all unique types and tags from the collection
+    const availableTypes = new Set();
+    const availableTags = new Set();
+
+    this.allProductsData.forEach(product => {
+      if (product.type) {
+        availableTypes.add(product.type);
+      }
+      product.tags.forEach(tag => {
+        availableTags.add(tag);
+      });
+    });
+
+    // Auto-check category checkboxes
+    const categoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="categories"]');
+    categoryCheckboxes.forEach(checkbox => {
+      const value = checkbox.value.toLowerCase().trim();
+      if (availableTypes.has(value) && !checkbox.disabled) {
+        checkbox.checked = true;
+        if (!this.filters.categories.includes(value)) {
+          this.filters.categories.push(value);
+        }
+      }
+    });
+
+    // Update sub-category visibility based on auto-checked categories
+    this.updateSubcategoryVisibility();
+
+    // Auto-check sub-category checkboxes (only for visible ones)
+    const subcategoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="subcategories"]');
+    subcategoryCheckboxes.forEach(checkbox => {
+      const value = checkbox.value.toLowerCase().trim();
+      const parentOption = checkbox.closest('[data-parent-category]');
+
+      // Only check if visible and tag exists in collection
+      if (parentOption && parentOption.style.display !== 'none' &&
+          availableTags.has(value) && !checkbox.disabled) {
+        checkbox.checked = true;
+        if (!this.filters.subcategories.includes(value)) {
+          this.filters.subcategories.push(value);
+        }
+      }
+    });
+
+    // Auto-check "From The Studio" checkboxes
+    const studioCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="fromthestudio"]');
+    studioCheckboxes.forEach(checkbox => {
+      const value = checkbox.value.toLowerCase().trim();
+      if (availableTags.has(value) && !checkbox.disabled) {
+        checkbox.checked = true;
+        if (!this.filters.fromthestudio.includes(value)) {
+          this.filters.fromthestudio.push(value);
+        }
+      }
     });
   }
 
@@ -598,8 +662,16 @@ class FilterPanelDiamension {
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', (e) => {
         this.handleCheckboxChange(e.target);
+
+        // If it's a category checkbox, update sub-category visibility
+        if (e.target.dataset.filterCheckbox === 'categories') {
+          this.updateSubcategoryVisibility();
+        }
       });
     });
+
+    // Initialize sub-category visibility on load
+    this.updateSubcategoryVisibility();
   }
 
   /**
@@ -701,6 +773,61 @@ class FilterPanelDiamension {
   }
 
   /**
+   * Update sub-category visibility based on selected categories
+   */
+  updateSubcategoryVisibility() {
+    const subcategoryGroup = this.filterPanel.querySelector('[data-subcategories-group]');
+    if (!subcategoryGroup) return;
+
+    const categoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="categories"]');
+    const subcategoryOptions = this.filterPanel.querySelectorAll('[data-parent-category]');
+
+    // Get selected categories
+    const selectedCategories = [];
+    categoryCheckboxes.forEach(cb => {
+      if (cb.checked) {
+        selectedCategories.push(cb.value.toLowerCase());
+      }
+    });
+
+    // Show/hide sub-categories based on selected parent categories
+    subcategoryOptions.forEach(option => {
+      const parentCategory = option.dataset.parentCategory;
+      const checkbox = option.querySelector('input[type="checkbox"]');
+
+      if (selectedCategories.length === 0) {
+        // No categories selected - hide all sub-categories
+        option.style.display = 'none';
+        if (checkbox) {
+          checkbox.checked = false;
+          // Remove from filter state
+          const value = checkbox.value.toLowerCase().trim();
+          this.filters.subcategories = this.filters.subcategories.filter(v => v !== value);
+        }
+      } else if (selectedCategories.includes(parentCategory)) {
+        // Parent category is selected - show this sub-category
+        option.style.display = '';
+      } else {
+        // Parent category not selected - hide and uncheck
+        option.style.display = 'none';
+        if (checkbox && checkbox.checked) {
+          checkbox.checked = false;
+          // Remove from filter state
+          const value = checkbox.value.toLowerCase().trim();
+          this.filters.subcategories = this.filters.subcategories.filter(v => v !== value);
+        }
+      }
+    });
+
+    // Hide the entire sub-categories group if no categories selected
+    if (selectedCategories.length === 0) {
+      subcategoryGroup.style.display = 'none';
+    } else {
+      subcategoryGroup.style.display = '';
+    }
+  }
+
+  /**
    * Create product card HTML dynamically
    */
   createProductCard(product) {
@@ -770,30 +897,26 @@ class FilterPanelDiamension {
     this.allProductsData.forEach(product => {
       let matches = true;
 
-      // Style filter (tags)
-      if (this.filters.style.length > 0) {
-        const hasStyle = this.filters.style.some(style => product.tags.includes(style));
-        if (!hasStyle) matches = false;
-      }
-
-      // Collections filter (tags)
-      if (this.filters.collections.length > 0) {
-        const hasCollection = this.filters.collections.some(collection =>
-          product.tags.includes(collection)
-        );
-        if (!hasCollection) matches = false;
-      }
-
-      // Shape filter (tags)
-      if (this.filters.shape.length > 0) {
-        const hasShape = this.filters.shape.some(shape => product.tags.includes(shape));
-        if (!hasShape) matches = false;
-      }
-
       // Categories filter (product.type)
       if (this.filters.categories.length > 0) {
         const hasCategory = this.filters.categories.includes(product.type);
         if (!hasCategory) matches = false;
+      }
+
+      // Sub-categories filter (tags)
+      if (this.filters.subcategories.length > 0) {
+        const hasSubcategory = this.filters.subcategories.some(subcategory =>
+          product.tags.includes(subcategory)
+        );
+        if (!hasSubcategory) matches = false;
+      }
+
+      // From The Studio filter (tags)
+      if (this.filters.fromthestudio.length > 0) {
+        const hasStudio = this.filters.fromthestudio.some(studio =>
+          product.tags.includes(studio)
+        );
+        if (!hasStudio) matches = false;
       }
 
       // Price filter
@@ -837,10 +960,9 @@ class FilterPanelDiamension {
 
     // Check if any filters are active
     this.filtersActive =
-      this.filters.style.length > 0 ||
-      this.filters.collections.length > 0 ||
-      this.filters.shape.length > 0 ||
       this.filters.categories.length > 0 ||
+      this.filters.subcategories.length > 0 ||
+      this.filters.fromthestudio.length > 0 ||
       this.filters.priceMin > this.actualMinPrice ||
       this.filters.priceMax < this.actualMaxPrice;
 
@@ -854,30 +976,26 @@ class FilterPanelDiamension {
     this.allProductsData.forEach(product => {
       let matches = true;
 
-      // Style filter (tags)
-      if (this.filters.style.length > 0) {
-        const hasStyle = this.filters.style.some(style => product.tags.includes(style));
-        if (!hasStyle) matches = false;
-      }
-
-      // Collections filter (tags)
-      if (this.filters.collections.length > 0) {
-        const hasCollection = this.filters.collections.some(collection =>
-          product.tags.includes(collection)
-        );
-        if (!hasCollection) matches = false;
-      }
-
-      // Shape filter (tags)
-      if (this.filters.shape.length > 0) {
-        const hasShape = this.filters.shape.some(shape => product.tags.includes(shape));
-        if (!hasShape) matches = false;
-      }
-
       // Categories filter (product.type)
       if (this.filters.categories.length > 0) {
         const hasCategory = this.filters.categories.includes(product.type);
         if (!hasCategory) matches = false;
+      }
+
+      // Sub-categories filter (tags)
+      if (this.filters.subcategories.length > 0) {
+        const hasSubcategory = this.filters.subcategories.some(subcategory =>
+          product.tags.includes(subcategory)
+        );
+        if (!hasSubcategory) matches = false;
+      }
+
+      // From The Studio filter (tags)
+      if (this.filters.fromthestudio.length > 0) {
+        const hasStudio = this.filters.fromthestudio.some(studio =>
+          product.tags.includes(studio)
+        );
+        if (!hasStudio) matches = false;
       }
 
       // Price filter
@@ -927,8 +1045,6 @@ class FilterPanelDiamension {
     if (this.container.collectionDiamension) {
       this.container.collectionDiamension.initWishlist();
     }
-
-    console.log(`Matching products: ${totalMatchingProducts} (${this.dynamicProducts.length} loaded dynamically)`);
 
     // Update UI based on total matching products
     this.updateFilteredUI(totalMatchingProducts);
@@ -999,10 +1115,9 @@ class FilterPanelDiamension {
 
     // Reset filter state to actual collection min/max
     this.filters = {
-      style: [],
-      collections: [],
-      shape: [],
       categories: [],
+      subcategories: [],
+      fromthestudio: [],
       priceMin: this.actualMinPrice,
       priceMax: this.actualMaxPrice
     };
@@ -1033,6 +1148,9 @@ class FilterPanelDiamension {
       product.visible = true;
       product.element.style.display = '';
     });
+
+    // Reset sub-category visibility
+    this.updateSubcategoryVisibility();
 
     // Reinitialize wishlist after clearing
     if (this.container.collectionDiamension) {
