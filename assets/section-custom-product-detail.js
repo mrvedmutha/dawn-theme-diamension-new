@@ -33,37 +33,20 @@
       initBuyNow(section, productData);
       initSizeGuide(section, sectionId);
       formatInitialPrice(section);
+      reorderOptionElements(section, productData);
 
       // Initialize media filtering based on default selected metal type
-      console.log('🔍 DEBUG: Starting initial media filtering');
       try {
         const defaultMetalOption = section.querySelector('.custom-product-detail__metal-option--selected');
-        console.log('🔍 DEBUG: Default metal option:', defaultMetalOption);
-        console.log('🔍 DEBUG: Product data media:', productData.media);
 
         if (defaultMetalOption && productData.media && productData.media.length > 0) {
           const defaultMetalType = defaultMetalOption.dataset.value;
-          console.log('🎬 Initial media filter for:', defaultMetalType);
-          console.log('🔍 DEBUG: Total media count:', productData.media.length);
 
           const filteredMedia = filterMediaByVariant(productData, defaultMetalType);
-          console.log('🔍 DEBUG: Filtered media result:', filteredMedia);
-          console.log('🔍 DEBUG: Filtered media count:', filteredMedia?.length);
 
           if (filteredMedia && filteredMedia.length > 0) {
-            console.log('🔍 DEBUG: About to update media display');
-            console.log(
-              '🔍 DEBUG: Filtered media array:',
-              filteredMedia.map((m, i) => ({
-                position: i,
-                type: m.media_type,
-                id: m.id,
-              })),
-            );
             updateMediaDisplay(section, sectionId, filteredMedia);
           }
-        } else {
-          console.log('⏭️ Skipping media filtering (no metal option selected or no media available)');
         }
       } catch (error) {
         console.error('❌ Error during initial media filtering:', error);
@@ -84,21 +67,14 @@
    * 5. Append remaining videos at the end
    */
   function filterMediaByVariant(productData, selectedMetalType) {
-    console.log('🎯 FILTERING MEDIA BY VARIANT (SEQUENTIAL LOGIC)');
-    console.log('  Selected Metal Type:', selectedMetalType);
-    console.log('  Total Media:', productData.media?.length);
-
     if (!productData.media || !selectedMetalType) {
-      console.warn('  ⚠️ No media or metal type provided');
       return productData.media || [];
     }
 
     // Get all variants with the selected metal type (option2)
     const matchingVariants = productData.variants.filter((v) => v.option2 === selectedMetalType);
-    console.log('  Matching variants for', selectedMetalType + ':', matchingVariants.length);
 
     if (matchingVariants.length === 0) {
-      console.warn('  ⚠️ No matching variants found, showing all media');
       return productData.media;
     }
 
@@ -110,11 +86,7 @@
     // Remove duplicates - multiple size variants may share the same image
     const variantImageSrcs = [...new Set(allVariantImageSrcs)];
 
-    console.log('  All Variant URLs (with duplicates):', allVariantImageSrcs.length, allVariantImageSrcs);
-    console.log('  Unique Variant URL:', variantImageSrcs.length, variantImageSrcs);
-
     if (variantImageSrcs.length === 0) {
-      console.warn('  ⚠️ No variant images found, showing all media');
       return productData.media;
     }
 
@@ -123,11 +95,9 @@
       .map((v) => v.featured_image_src)
       .filter((src) => src != null && typeof src === 'string');
     const allNormalizedVariantUrls = [...new Set(allProductVariantUrls.map((url) => url.split('?')[0].replace(/^https?:/, '')))];
-    console.log('  🌍 All Product Variant URLs:', allNormalizedVariantUrls);
 
     // Normalize selected variant URLs for comparison
     const normalizedSelectedVariantUrls = variantImageSrcs.map((url) => url.split('?')[0].replace(/^https?:/, ''));
-    console.log('  🎯 Selected Variant URLs:', normalizedSelectedVariantUrls);
 
     // Find where the FIRST selected variant URL matches in product.media[]
     let matchStartIndex = -1;
@@ -137,35 +107,30 @@
         const normalizedMediaUrl = media.src.src.split('?')[0].replace(/^https?:/, '');
         if (normalizedSelectedVariantUrls.includes(normalizedMediaUrl)) {
           matchStartIndex = i;
-          console.log(`  ✅ FIRST MATCH at position ${i}`);
           break;
         }
       }
     }
 
     if (matchStartIndex === -1) {
-      console.warn('  ⚠️ No media matched selected variant URL, showing all media');
       return productData.media;
     }
 
     // From match position, collect images sequentially
     // Stop when hitting an image that matches a DIFFERENT variant URL
     const matchedImages = [];
-    console.log('  📦 Collecting images sequentially from position', matchStartIndex);
 
     for (let i = matchStartIndex; i < productData.media.length; i++) {
       const media = productData.media[i];
 
       // Only process images
       if (media.media_type !== 'image') {
-        console.log(`  ⏭️  Position ${i}: Skipping (not an image)`);
         continue;
       }
 
       if (media.src && media.src.src) {
         const mediaSrc = media.src.src;
         const normalizedMediaUrl = mediaSrc.split('?')[0].replace(/^https?:/, '');
-        const filename = mediaSrc.split('/').pop().split('?')[0];
 
         // Check if this image matches ANY variant URL (any metal type)
         const matchesAnyVariant = allNormalizedVariantUrls.includes(normalizedMediaUrl);
@@ -175,30 +140,23 @@
           const matchesOurVariant = normalizedSelectedVariantUrls.includes(normalizedMediaUrl);
 
           if (matchesOurVariant) {
-            console.log(`  ✅ Position ${i}: ${filename} -> MATCH (our variant)`);
             matchedImages.push(media);
           } else {
-            console.log(`  🛑 Position ${i}: ${filename} -> STOP (different variant)`);
             break; // Hit a different variant, stop collecting
           }
         } else {
           // Not a variant URL, so it's a generic/continuation image
-          console.log(`  ➕ Position ${i}: ${filename} -> COLLECT (continuation)`);
           matchedImages.push(media);
         }
       }
     }
 
     if (matchedImages.length === 0) {
-      console.warn('  ⚠️ No images collected, showing all media');
       return productData.media;
     }
 
-    console.log('  📊 Total Matched Images:', matchedImages.length);
-
     // Separate videos from all media
     const allVideos = productData.media.filter((m) => m.media_type === 'video' || m.media_type === 'external_video');
-    console.log('  📹 Total Videos:', allVideos.length);
 
     // Build final filtered media array
     let filteredMedia = [...matchedImages];
@@ -207,34 +165,17 @@
     const firstVideo = allVideos.length > 0 ? allVideos[0] : null;
     const remainingVideos = allVideos.slice(1);
 
-    console.log('  🎬 First Video (for pos 3):', firstVideo ? `ID ${firstVideo.id}` : 'None');
-    console.log('  🎬 Remaining Videos:', remainingVideos.length);
-
     // Insert first video at position 3 (index 2) if we have enough images
     if (firstVideo && filteredMedia.length >= 2) {
       filteredMedia.splice(2, 0, firstVideo);
-      console.log('  ✅ Inserted video at position 3 (index 2)');
     } else if (firstVideo) {
       filteredMedia.push(firstVideo);
-      console.log('  ✅ Appended video at end (less than 2 images)');
     }
 
     // Append remaining videos at the end
     if (remainingVideos.length > 0) {
       filteredMedia = filteredMedia.concat(remainingVideos);
-      console.log(`  ✅ Appended ${remainingVideos.length} remaining videos at end`);
     }
-
-    console.log('  📊 FINAL Filtered Media Count:', filteredMedia.length);
-    console.log(
-      '  🎯 FINAL FILTERED ARRAY:',
-      filteredMedia.map((m, i) => ({
-        position: i + 1,
-        type: m.media_type,
-        id: m.id,
-        filename: m.media_type === 'image' ? m.src.src.split('/').pop().split('?')[0] : 'video',
-      })),
-    );
 
     return filteredMedia;
   }
@@ -244,9 +185,6 @@
    */
   function updateMediaDisplay(section, sectionId, filteredMedia) {
     try {
-      console.log('🖼️ UPDATING MEDIA DISPLAY');
-      console.log('  Media Count:', filteredMedia.length);
-
       const thumbnailsWrapper = section.querySelector('[data-thumbnails-wrapper]');
       const mainMedia = section.querySelector('[data-main-media]');
 
@@ -256,24 +194,14 @@
       }
 
       if (!filteredMedia || filteredMedia.length === 0) {
-        console.warn('  ⚠️ No filtered media to display');
         return;
       }
 
       // Clear existing thumbnails
-      console.log('🔍 DEBUG: Clearing existing thumbnails');
-      const oldThumbnailCount = thumbnailsWrapper.querySelectorAll('.custom-product-detail__thumbnail').length;
-      console.log('🔍 DEBUG: Old thumbnail count:', oldThumbnailCount);
       thumbnailsWrapper.innerHTML = '';
 
       // Create new thumbnails
-      console.log('🔍 DEBUG: Creating new thumbnails for', filteredMedia.length, 'media items');
       filteredMedia.forEach((media, index) => {
-        console.log(`🔍 DEBUG: Creating thumbnail ${index}:`, {
-          type: media.media_type,
-          id: media.id,
-          hasSrc: !!media.src,
-        });
         const thumbnailDiv = document.createElement('div');
         thumbnailDiv.className = 'custom-product-detail__thumbnail';
         if (index === 0) {
@@ -317,16 +245,9 @@
         }
 
         thumbnailsWrapper.appendChild(thumbnailDiv);
-        console.log(`  ✅ Added thumbnail ${index} to wrapper`);
       });
 
-      console.log(
-        '🔍 DEBUG: All thumbnails created. New count:',
-        thumbnailsWrapper.querySelectorAll('.custom-product-detail__thumbnail').length,
-      );
-
       // Update main media with first item
-      console.log('🔍 DEBUG: Updating main media with first item:', filteredMedia[0]);
       updateMainMedia(section, sectionId, filteredMedia[0]);
 
       // Reinitialize thumbnail click handlers
@@ -334,8 +255,6 @@
 
       // Update arrow states
       updateThumbnailArrowStates(section);
-
-      console.log('  ✅ Media display updated');
     } catch (error) {
       console.error('❌ Error updating media display:', error);
       // Continue without updating media display
@@ -362,8 +281,6 @@
         }
       });
     });
-
-    console.log('  ✅ Thumbnail click handlers initialized for', thumbnails.length, 'thumbnails');
   }
 
   /**
@@ -397,23 +314,14 @@
    * Update the main media (image or video)
    */
   function updateMainMedia(section, sectionId, media) {
-    console.log('🔍 DEBUG: updateMainMedia called with media:', {
-      type: media?.media_type,
-      id: media?.id,
-      src: media?.src || 'N/A',
-      hasPreviewImage: !!media?.preview_image,
-    });
-
     const mainMediaContainer = section.querySelector('.custom-product-detail__image-wrapper');
     const imageLoader = section.querySelector('[data-image-loader]');
     const imageOverlay = section.querySelector('[data-image-overlay]');
 
     if (!mainMediaContainer) {
-      console.error('🔍 DEBUG: Main media container not found!');
+      console.error('Main media container not found');
       return;
     }
-
-    console.log('🔍 DEBUG: Main media container found');
 
     // Show loading state
     if (imageOverlay) imageOverlay.classList.add('custom-product-detail__image-overlay--active');
@@ -458,16 +366,13 @@
       };
       tempImage.src = imageSrc.replace(/width=\d+/, 'width=800');
     } else if (media.media_type === 'video' || media.media_type === 'external_video') {
-      console.log('🔍 DEBUG: Switching to VIDEO');
       // Switch to video
       if (mainMedia && mainMedia.tagName === 'IMG') {
-        console.log('🔍 DEBUG: Removing existing IMG element');
         mainMedia.remove();
         mainMedia = null;
       }
 
       if (!mainMedia || mainMedia.tagName !== 'VIDEO') {
-        console.log('🔍 DEBUG: Creating new VIDEO element');
         const video = document.createElement('video');
         video.id = `mainMedia-${sectionId}`;
         video.className = 'custom-product-detail__image custom-product-detail__video';
@@ -482,15 +387,12 @@
           mainMediaContainer.querySelector('.custom-product-detail__wishlist-btn'),
         );
         mainMedia = video;
-        console.log('🔍 DEBUG: VIDEO element created and inserted');
       }
 
       // Clear and add sources
-      console.log('🔍 DEBUG: Adding video sources. Source count:', media.sources?.length || 0);
       mainMedia.innerHTML = '';
       if (media.sources && media.sources.length > 0) {
         media.sources.forEach((source) => {
-          console.log('🔍 DEBUG: Adding source:', source.url);
           const sourceEl = document.createElement('source');
           sourceEl.src = source.url;
           sourceEl.type = source.mime_type;
@@ -498,7 +400,6 @@
         });
       }
 
-      console.log('🔍 DEBUG: Loading and playing video');
       mainMedia.load();
       mainMedia.play().catch((err) => console.warn('Auto-play prevented:', err));
 
@@ -506,7 +407,6 @@
       mainMedia.addEventListener(
         'loadeddata',
         () => {
-          console.log('🔍 DEBUG: Video loaded successfully');
           setTimeout(() => {
             if (imageOverlay) imageOverlay.classList.remove('custom-product-detail__image-overlay--active');
             if (imageLoader) imageLoader.classList.remove('custom-product-detail__image-loader--active');
@@ -514,8 +414,6 @@
         },
         { once: true },
       );
-
-      console.log('🔍 DEBUG: Video setup complete');
     }
   }
 
@@ -1175,23 +1073,9 @@
         }
 
         // Filter media based on selected metal type
-        console.log('🔍 DEBUG: Metal type changed, filtering media');
         try {
           const selectedMetalType = this.dataset.value;
-          console.log('🔍 DEBUG: Selected metal type:', selectedMetalType);
-
           const filteredMedia = filterMediaByVariant(productData, selectedMetalType);
-          console.log('🔍 DEBUG: Filtered media for metal type:', filteredMedia);
-          console.log(
-            '🔍 DEBUG: Filtered array breakdown:',
-            filteredMedia.map((m, i) => ({
-              position: i,
-              type: m.media_type,
-              id: m.id,
-              hasVideo: m.media_type === 'video' || m.media_type === 'external_video',
-            })),
-          );
-
           updateMediaDisplay(section, sectionId, filteredMedia);
         } catch (error) {
           console.error('❌ Error filtering media on metal type change:', error);
@@ -1843,6 +1727,91 @@
       if (cents) {
         priceElement.textContent = formatMoney(parseInt(cents));
       }
+    }
+  }
+
+  // Reorder option elements based on sorted product data
+  function reorderOptionElements(section, productData) {
+    if (!productData.options) return;
+
+    let needsVariantUpdate = false;
+
+    productData.options.forEach((option) => {
+      if (option.name === 'Purity') {
+        // Reorder purity options
+        const purityContainer = section.querySelector('[data-option-index="1"]');
+        if (!purityContainer) return;
+
+        const sortedValues = option.values;
+
+        // Get all purity option elements
+        const purityOptions = Array.from(purityContainer.querySelectorAll('.custom-product-detail__purity-option'));
+
+        // Remove all selected classes first
+        purityOptions.forEach(opt => opt.classList.remove('custom-product-detail__purity-option--selected'));
+
+        // Reorder based on sorted values
+        sortedValues.forEach((value, index) => {
+          const optionElement = purityOptions.find(el => el.dataset.value === value);
+          if (optionElement) {
+            purityContainer.appendChild(optionElement);
+
+            // Select the first option (index 0)
+            if (index === 0) {
+              optionElement.classList.add('custom-product-detail__purity-option--selected');
+              // Update label
+              const label = section.querySelector('[data-selected-value="1"]');
+              if (label) {
+                label.textContent = value;
+              }
+              needsVariantUpdate = true;
+            }
+          }
+        });
+      }
+
+      if (option.name === 'Size') {
+        // Reorder size options in dropdown
+        const sizeDropdownMenu = section.querySelector('[data-size-dropdown-menu]');
+        if (!sizeDropdownMenu) return;
+
+        const sortedValues = option.values;
+
+        // Get all size option elements
+        const sizeOptions = Array.from(sizeDropdownMenu.querySelectorAll('.custom-product-detail__size-option'));
+
+        // Remove all selected classes first
+        sizeOptions.forEach(opt => opt.classList.remove('custom-product-detail__size-option--selected'));
+
+        // Reorder based on sorted values
+        sortedValues.forEach((value, index) => {
+          const optionElement = sizeOptions.find(el => el.dataset.value === value);
+          if (optionElement) {
+            sizeDropdownMenu.appendChild(optionElement);
+
+            // Select the first option (index 0)
+            if (index === 0) {
+              optionElement.classList.add('custom-product-detail__size-option--selected');
+              // Update dropdown button text
+              const dropdownValue = section.querySelector('[data-size-dropdown-value]');
+              if (dropdownValue) {
+                dropdownValue.textContent = value;
+              }
+              // Update label
+              const label = section.querySelector('[data-selected-value="3"]');
+              if (label) {
+                label.textContent = value;
+              }
+              needsVariantUpdate = true;
+            }
+          }
+        });
+      }
+    });
+
+    // Update the selected variant after reordering
+    if (needsVariantUpdate) {
+      updateSelectedVariant(section, productData, section.dataset.sectionId);
     }
   }
 

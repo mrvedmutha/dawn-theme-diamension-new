@@ -899,6 +899,28 @@
       featured_image: {{ product.featured_image | json }},
       selected_variant_id: {{ current_variant.id | json }}
     };
+
+    // Sort option values numerically for Purity and Size
+    if (window.productData['product-{{ section.id }}'].options) {
+      window.productData['product-{{ section.id }}'].options.forEach(option => {
+        if (option.name === 'Purity') {
+          // Sort purity numerically (e.g., "9k" before "14k")
+          option.values.sort((a, b) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+            return numA - numB;
+          });
+        } else if (option.name === 'Size') {
+          // Sort size numerically
+          option.values.sort((a, b) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+            return numA - numB;
+          });
+        }
+      });
+    }
+
     console.log('✅ Product data loaded successfully:', window.productData['product-{{ section.id }}']);
   } catch (error) {
     console.error('❌ Error loading product data:', error);

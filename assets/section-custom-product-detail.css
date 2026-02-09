@@ -391,7 +391,8 @@
 
 .custom-product-detail__price-container {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--cpd-spacing-sm);
 }
 
 .custom-product-detail__price {
@@ -2103,6 +2104,10 @@
 
 /* 5. Small Mobile Devices (up to 375px) */
 @media screen and (max-width: 375px) {
+  .custom-product-detail__price-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .custom-product-detail__wrapper {
     padding: 20px 12px 0;
     gap: 16px;
@@ -2151,7 +2156,7 @@
   }
 
   .custom-product-detail__price {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .custom-product-detail__tax-info {
