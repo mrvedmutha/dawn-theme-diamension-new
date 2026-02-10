@@ -244,42 +244,50 @@
     }
 
     addToTimeline(timeline) {
-      // Line grows from START to INTRO_MASK_OUT_END (0% to 9% scroll progress)
-      // Grows during intro text reveal period (auto-play) to intro mask-out (scroll)
+      // Line grows LEFT to RIGHT throughout ENTIRE scroll (0% → 100%)
+      // Tracks the whole scroll progress, not just intro phase
       timeline.fromTo(this.progressLine,
         { width: '0%' },
-        { width: '100%', duration: PROGRESS.INTRO_MASK_OUT_END - 0, ease: 'power1.out' },
-        0 // Start at very beginning of scroll timeline
+        { width: '100%', duration: 1, ease: 'none' }, // duration: 1 = full timeline length
+        0 // Start at beginning, end at 1.0 (100% scroll)
       );
 
-      // Dot 1: travels right→left (0% → 75%) during Phase 1 (fast)
-      // Starts AFTER line is fully grown
+      // Dot 1: at right: 75% (= left: 25%)
+      // Fills with blue color when line reaches ~25% width (25% scroll progress)
       if (this.dots[0]) {
-        timeline.set(this.dots[0], { opacity: 1 }, PROGRESS.PHASE1_MASK_IN_START);
-        timeline.fromTo(this.dots[0],
-          { right: '0%' },
-          { right: '75%', duration: PROGRESS.PHASE1_ACTIVE_END - PROGRESS.PHASE1_MASK_IN_START, ease: 'power1.out' },
-          PROGRESS.PHASE1_MASK_IN_START
+        timeline.to(this.dots[0],
+          {
+            color: '#183754', // Fill with blue color
+            duration: 0.05, // Quick color transition
+            ease: 'power1.out'
+          },
+          0.25 // Trigger at 25% scroll
         );
       }
 
-      // Dot 2: travels right→left (0% → 50%) during Phase 2 (medium)
+      // Dot 2: at right: 50% (= left: 50%)
+      // Fills with blue color when line reaches ~50% width (50% scroll progress)
       if (this.dots[1]) {
-        timeline.set(this.dots[1], { opacity: 1 }, PROGRESS.PHASE2_MASK_IN_START);
-        timeline.fromTo(this.dots[1],
-          { right: '0%' },
-          { right: '50%', duration: PROGRESS.PHASE2_ACTIVE_END - PROGRESS.PHASE2_MASK_IN_START, ease: 'power1.out' },
-          PROGRESS.PHASE2_MASK_IN_START
+        timeline.to(this.dots[1],
+          {
+            color: '#183754',
+            duration: 0.05,
+            ease: 'power1.out'
+          },
+          0.50 // Trigger at 50% scroll
         );
       }
 
-      // Dot 3: travels right→left (0% → 25%) during Phase 3 (slow)
+      // Dot 3: at right: 25% (= left: 75%)
+      // Fills with blue color when line reaches ~75% width (75% scroll progress)
       if (this.dots[2]) {
-        timeline.set(this.dots[2], { opacity: 1 }, PROGRESS.PHASE3_MASK_IN_START);
-        timeline.fromTo(this.dots[2],
-          { right: '0%' },
-          { right: '25%', duration: PROGRESS.PHASE3_ACTIVE_END - PROGRESS.PHASE3_MASK_IN_START, ease: 'power1.out' },
-          PROGRESS.PHASE3_MASK_IN_START
+        timeline.to(this.dots[2],
+          {
+            color: '#183754',
+            duration: 0.05,
+            ease: 'power1.out'
+          },
+          0.75 // Trigger at 75% scroll
         );
       }
     }

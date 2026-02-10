@@ -57,11 +57,12 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(8);
+  transform: translate(-50%, -50%) rotate(72deg);
   z-index: 2;
   opacity: 0.05;
   color: var(--text-color, #183754);
   pointer-events: none;
+  width: 120%;
 }
 
 .process-hero__logo svg {
@@ -179,6 +180,12 @@
   visibility: hidden;
 }
 
+.process-hero__phase-counter-container {
+  position: absolute;
+  top: 80px;
+  right: 10%;
+}
+
 .process-hero__phase-left {
   width: 25%;
 }
@@ -192,7 +199,6 @@
   font-size: 14px;
   letter-spacing: 0.2em;
   opacity: 0.6;
-  margin-bottom: 10px;
 }
 
 .process-hero__phase-title {
@@ -241,25 +247,26 @@
   position: relative;
   width: 90%;
   height: 2px;
+  background: rgba(24, 55, 84, 0.2); /* Grey background line always visible */
 }
 
 .process-hero__progress-line {
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0; /* Left-to-right fill */
   height: 100%;
   width: 0%;
-  background: var(--text-color, #183754);
-  opacity: 0.3;
+  background: var(--text-color, #183754); /* Blue growing line */
+  opacity: 1;
 }
 
 .process-hero__progress-dot {
   position: absolute;
   top: 50%;
   right: 100%;
-  transform: translate(50%, -50%);
-  color: var(--text-color, #183754);
-  opacity: 0;
+  transform: translate(50%, -50%); /* No scaling */
+  color: rgba(24, 55, 84, 0.2); /* Start grey (same as line background) */
+  opacity: 1;
 }
 
 .process-hero__progress-dot svg {
@@ -268,15 +275,15 @@
   height: 12px;
 }
 
-.process-hero__progress-dot[data-dot="1"] {
+.process-hero__progress-dot[data-dot='1'] {
   right: 75%;
 }
 
-.process-hero__progress-dot[data-dot="2"] {
+.process-hero__progress-dot[data-dot='2'] {
   right: 50%;
 }
 
-.process-hero__progress-dot[data-dot="3"] {
+.process-hero__progress-dot[data-dot='3'] {
   right: 25%;
 }
 
@@ -363,11 +370,7 @@
   height: 100%;
   z-index: 50;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 0%,
-    var(--bg-color, #fffaf5) 100%
-  );
+  background: radial-gradient(ellipse at center, transparent 0%, var(--bg-color, #fffaf5) 100%);
   opacity: 0;
   visibility: hidden;
 }
