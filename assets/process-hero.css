@@ -144,19 +144,23 @@
 
 .process-hero__intro-small {
   display: block;
-  font-size: 16px;
+  font-size: clamp(12px, 1.2vw, 16px);
   font-weight: 400;
-  line-height: 20px;
+  line-height: 1.25;
   color: var(--text-color, #183754);
+  white-space: nowrap;
 }
 
 .process-hero__intro-large {
   display: block;
-  font-size: 70px;
+  font-size: clamp(32px, 5vw, 70px);
   font-weight: 400;
   text-transform: uppercase;
-  line-height: 125px;
+  line-height: 1.2;
   color: var(--text-color, #183754);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ========================================
@@ -197,24 +201,27 @@
 .process-hero__phase-counter {
   display: block;
   color: #183754;
-  font-size: 24px;
+  font-size: clamp(18px, 1.8vw, 24px);
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-weight: 400;
-  line-height: 40px;
-  word-wrap: break-word;
+  line-height: 1.67;
+  white-space: nowrap;
 }
 
 .process-hero__phase-title {
   display: block;
-  font-size: 48px;
+  font-size: clamp(28px, 3.5vw, 48px);
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .process-hero__phase-description {
   display: block;
-  font-size: 16px;
+  font-size: clamp(14px, 1.2vw, 16px);
   line-height: 1.6;
   opacity: 0.8;
 }
@@ -390,6 +397,103 @@
 .process-hero__spacer {
   width: 100%;
   pointer-events: none;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Tablet and below: Allow wrapping for descriptions */
+@media (max-width: 1024px) {
+  .process-hero__intro {
+    padding: 0 5%;
+  }
+
+  .process-hero__phase {
+    padding: 0 5%;
+  }
+
+  .process-hero__intro-left-col,
+  .process-hero__intro-right-col,
+  .process-hero__phase-left,
+  .process-hero__phase-right {
+    width: 30%;
+  }
+
+  .process-hero__phase-description {
+    white-space: normal;
+  }
+
+  .process-hero__progress-container {
+    left: 5%;
+    right: 5%;
+  }
+
+  .process-hero__phase-counter-container {
+    left: 5%;
+  }
+}
+
+/* Mobile: Stack vertically and allow wrapping */
+@media (max-width: 768px) {
+  .process-hero__intro {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 5%;
+    gap: 32px;
+  }
+
+  .process-hero__intro-left-col,
+  .process-hero__intro-right-col {
+    width: 100%;
+  }
+
+  .process-hero__intro-large {
+    white-space: normal;
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.1;
+  }
+
+  .process-hero__phase {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 5%;
+    gap: 24px;
+  }
+
+  .process-hero__phase-left,
+  .process-hero__phase-right {
+    width: 100%;
+  }
+
+  .process-hero__phase-title {
+    white-space: normal;
+    font-size: clamp(24px, 6vw, 36px);
+  }
+
+  .process-hero__phase-counter-container {
+    top: 60px;
+  }
+
+  .process-hero__progress-container {
+    bottom: 60px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .process-hero__progress-line-col {
+    width: 100%;
+  }
+
+  .process-hero__progress-scroll-col {
+    width: 100%;
+  }
+
+  .process-hero__cards-viewport {
+    bottom: 100px;
+  }
 }
 
 /* ========================================
