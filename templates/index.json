@@ -177,6 +177,30 @@
     },
     "image_with_product_hero_AyTzGC": {
       "type": "image-with-product-hero",
+      "blocks": {
+        "product_pointer_kqwr3X": {
+          "type": "product_pointer",
+          "settings": {
+            "product": "linear-trinity-emerald-cut-ring",
+            "x_position": "55",
+            "y_position": "90",
+            "label": "02"
+          }
+        },
+        "product_pointer_KjFABw": {
+          "type": "product_pointer",
+          "settings": {
+            "product": "cascading-laurel-wrap-ring",
+            "x_position": "50",
+            "y_position": "70",
+            "label": "01"
+          }
+        }
+      },
+      "block_order": [
+        "product_pointer_kqwr3X",
+        "product_pointer_KjFABw"
+      ],
       "name": "Image Hero with Product",
       "settings": {
         "background_image": "shopify://shop_images/jewellery_back_showcase.jpg",

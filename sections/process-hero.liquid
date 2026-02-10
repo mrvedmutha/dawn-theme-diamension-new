@@ -1,38 +1,183 @@
 {{ 'process-hero.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} Process Hero Section - Initial state matches exit animation {%- endcomment -%}
+{%- comment -%} Process Hero Section - Scroll-driven storytelling experience {%- endcomment -%}
 <div class="process-hero" data-section-id="{{ section.id }}" data-process-hero>
-  {%- comment -%} Last frame background layers {%- endcomment -%}
-  <div class="process-hero__background">
-    <img
-      class="process-hero__bg-layer process-hero__bg-layer--background"
-      src="{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f0260Output.webp' | asset_url }}"
-      alt=""
-      loading="eager"
-    >
-    <img
-      class="process-hero__bg-layer process-hero__bg-layer--foreground"
-      src="{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f0260Output.webp' | asset_url }}"
-      alt=""
-      loading="eager"
-    >
+  {%- comment -%} Pinned Container - ScrollTrigger pins this {%- endcomment -%}
+  <div class="process-hero__pinned" data-pinned-container style="--bg-color: {{ section.settings.background_color }}; --text-color: {{ section.settings.text_color }};">
+
+    {%- comment -%} Layer 1: Background Color {%- endcomment -%}
+    <div class="process-hero__bg">&nbsp;</div>
+
+    {%- comment -%} Layer 2: Diamension Logo (low opacity) {%- endcomment -%}
+    <div class="process-hero__logo" aria-hidden="true">
+      <svg width="46" height="74" viewBox="0 0 46 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M45.6851 30.3104C45.3849 29.7577 44.8971 29.3927 44.3035 29.287C43.2153 29.0891 42.0077 29.0686 40.8376 29.0516C39.9404 29.0345 39.0159 29.0209 38.1801 28.9254C31.5109 28.1578 26.8577 25.8074 23.9478 21.741C21.3893 18.1659 20.0316 13.1273 19.6734 5.89175C19.6529 5.46874 19.6768 4.92975 19.7041 4.36346C19.7484 3.40146 19.7962 2.40874 19.6291 1.68212C19.3971 0.662118 18.5067 -0.0167427 17.4014 0.000314203C16.2552 0.0139597 15.3341 0.761051 15.109 1.86634C14.9111 2.84881 14.9248 4.29523 14.935 5.6939C14.9452 6.67637 14.9521 7.60427 14.8941 8.34113C14.7576 10.0263 14.2971 14.3827 13.0076 18.3979C11.6669 22.5631 9.87935 25.0876 7.69607 25.8995C6.61125 26.302 5.47526 26.302 4.45526 25.9404V5.50968H0V57.4205H4.45526V37.0103C6.17119 36.4201 8.05085 36.9762 9.34717 38.1088C14.7235 42.7994 15.01 56.2607 15.1806 64.3047C15.1977 65.0996 15.2147 65.8364 15.2318 66.5119C15.2454 66.986 15.2181 67.6069 15.1909 68.2653C15.1363 69.5412 15.0817 70.8614 15.2761 71.7244C15.5252 72.8263 16.5997 73.3687 17.5856 73.3687C17.6777 73.3687 17.7664 73.3653 17.8586 73.3551C20.267 73.1026 19.9463 69.8925 19.7553 67.9787C19.7143 67.5762 19.6802 67.2317 19.6768 66.9929L19.67 66.4539C19.5677 58.8431 19.4278 48.4214 23.3168 42.0148C26.9533 36.0244 34.2809 34.2948 39.7903 33.9025C40.07 33.8821 40.4964 33.8957 40.9467 33.9094C42.7172 33.9639 45.1461 34.0356 45.7909 32.5073C46.0843 31.8182 46.0433 30.979 45.6885 30.324L45.6851 30.3104ZM17.4014 43.7239C17.2854 43.3759 17.1763 43.0382 17.0671 42.7005C16.3337 40.4319 15.6991 38.4738 13.9252 36.2086C12.3014 34.1379 10.2478 32.7836 7.98603 32.3026C6.82957 32.057 5.62878 32.0502 4.45526 32.2617V30.6822C7.18095 31.1768 9.97145 30.4093 12.2741 28.4546C15.1772 25.9882 16.1222 23.1942 17.1251 20.2298C17.2206 19.9432 17.3195 19.6532 17.4219 19.3633C19.3288 24.5861 23.2178 28.6456 28.7613 31.1666C28.9864 31.269 29.2253 31.3542 29.4572 31.4361C23.8796 33.4352 19.3698 38.0337 17.4048 43.7239H17.4014Z" fill="currentColor"/>
+        <path d="M22.6723 11.4039C23.1192 11.5199 23.6274 11.6495 23.8287 11.7246C29.5087 13.8771 33.558 18.5917 34.9396 24.6571C35.018 25.0084 35.0692 25.3598 35.1169 25.718L35.192 26.2911H39.9099L39.811 25.544C38.5624 16.1866 31.402 8.378 22.4028 6.55291L21.6113 6.39258V11.1242L22.1026 11.2538C22.2834 11.3015 22.4812 11.3527 22.6791 11.4039H22.6723Z" fill="currentColor"/>
+        <path d="M35.1467 36.8187C35.1262 36.9927 35.1057 37.1735 35.0852 37.3441C35.0443 37.692 35.0034 38.0536 34.9693 38.2071C33.4955 44.7433 28.9721 49.6557 22.5621 51.6855L22.1016 51.8321V56.533L22.9135 56.342C31.8444 54.2338 38.8105 46.2682 39.8543 36.9756L39.9362 36.2422H35.2183L35.1467 36.8187Z" fill="currentColor"/>
+      </svg>
+    </div>
+
+    {%- comment -%} Layer 3 & 4: Canvas layers (100% width, 1920x1080) {%- endcomment -%}
+    <canvas
+      class="process-hero__canvas process-hero__canvas--bg"
+      data-canvas-bg
+      width="1920"
+      height="1080"
+      aria-label="Process 3D background animation"
+    ></canvas>
+    <canvas
+      class="process-hero__canvas process-hero__canvas--fg"
+      data-canvas-fg
+      width="1920"
+      height="1080"
+      aria-label="Process 3D foreground animation"
+    ></canvas>
+
+    {%- comment -%} Layer 5: Content Overlay {%- endcomment -%}
+    <div class="process-hero__content">
+
+      {%- comment -%} Intro Text (masked reveals) {%- endcomment -%}
+      <div class="process-hero__intro" data-intro>
+        {%- comment -%} Left Column: Small text + FROM SEED {%- endcomment -%}
+        <div class="process-hero__intro-left-col">
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-small">{{ section.settings.intro_small_text }}</span>
+          </div>
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-large">{{ section.settings.intro_left_text }}</span>
+          </div>
+        </div>
+
+        {%- comment -%} Right Column: TO SPARKLE {%- endcomment -%}
+        <div class="process-hero__intro-right-col">
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-large">{{ section.settings.intro_right_text }}</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Phase Text Containers (3 phases, absolutely stacked) {%- endcomment -%}
+      {%- assign phases = section.blocks | where: 'type', 'phase' | slice: 0, 3 -%}
+      {%- for phase in phases -%}
+        {%- assign phase_num = forloop.index -%}
+        {%- assign step_num = phase.settings.step_number_override | default: phase_num -%}
+        <div class="process-hero__phase" data-phase="{{ phase_num }}">
+          {%- comment -%} Left Column: Counter + Title {%- endcomment -%}
+          <div class="process-hero__phase-left">
+            <div class="process-hero__mask">
+              <span class="process-hero__phase-counter">({{ step_num | prepend: '0' | slice: -2, 2 }}/03)</span>
+            </div>
+            <div class="process-hero__mask">
+              <span class="process-hero__phase-title">{{ phase.settings.title }}</span>
+            </div>
+          </div>
+
+          {%- comment -%} Right Column: Description {%- endcomment -%}
+          <div class="process-hero__phase-right">
+            <div class="process-hero__mask">
+              <span class="process-hero__phase-description">{{ phase.settings.description }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- comment -%} Progress Line + Diamond Dots + (KEEP SCROLLING) {%- endcomment -%}
+      <div class="process-hero__progress-container" data-progress>
+        {%- comment -%} Line Column (90%) {%- endcomment -%}
+        <div class="process-hero__progress-line-col">
+          <div class="process-hero__progress-line">&nbsp;</div>
+          {%- for i in (1..3) -%}
+            <div class="process-hero__progress-dot" data-dot="{{ i }}">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.8591 6.0095C7.97808 7.06216 7.06216 7.9781 6.0095 11.8591C5.9935 11.9181 5.90982 11.9181 5.89382 11.8591C4.84116 7.97808 3.92522 7.06216 0.0442346 6.0095C-0.0147449 5.9935 -0.0147449 5.90982 0.0442346 5.89382C3.92524 4.84116 4.84116 3.92522 5.89382 0.0442346C5.90982 -0.0147449 5.9935 -0.0147449 6.0095 0.0442346C7.06216 3.92524 7.9781 4.84116 11.8591 5.89382C11.9181 5.90982 11.9181 5.99352 11.8591 6.0095Z" fill="currentColor"/>
+              </svg>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Scroll Hint Column (10%) {%- endcomment -%}
+        <div class="process-hero__progress-scroll-col">
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-scroll" data-scroll-hint>{{ section.settings.intro_scroll_text }}</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Image Cards Viewport {%- endcomment -%}
+      <div class="process-hero__cards-viewport">
+        {%- for i in (1..3) -%}
+          <div class="process-hero__cards-track" data-track="{{ i }}">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'card' and block.settings.phase_number == i -%}
+                <div class="process-hero__card">
+                  {%- if block.settings.image != blank -%}
+                    <div class="process-hero__card-media">
+                      <img
+                        src="{{ block.settings.image | image_url: width: 800 }}"
+                        alt="{{ block.settings.title | escape }}"
+                        loading="lazy"
+                        width="400"
+                        height="225"
+                      >
+                      {%- if block.settings.title != blank -%}
+                        <p class="process-hero__card-title">{{ block.settings.title }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- elsif block.settings.video_url != blank -%}
+                    <div class="process-hero__card-media">
+                      <video
+                        src="{{ block.settings.video_url }}"
+                        muted
+                        loop
+                        playsinline
+                        width="400"
+                        height="225"
+                      ></video>
+                      {%- if block.settings.title != blank -%}
+                        <p class="process-hero__card-title">{{ block.settings.title }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} Transition Overlay (enter animation) {%- endcomment -%}
+    <div class="process-hero__transition-overlay" data-transition-overlay>&nbsp;</div>
   </div>
 
-  {%- comment -%} Content Overlay {%- endcomment -%}
-  <div class="process-hero__content">
-    {%- if section.settings.heading != blank -%}
-      <h1 class="process-hero__heading" data-heading>
-        {{ section.settings.heading }}
-      </h1>
-    {%- endif -%}
-  </div>
+  {%- comment -%} Spacer for scroll distance {%- endcomment -%}
+  <div class="process-hero__spacer" data-spacer style="height: {{ section.settings.scroll_distance }}vh;">&nbsp;</div>
 
-  {%- comment -%} Page Transition Overlay - Enter Animation {%- endcomment -%}
-  <div class="process-hero__transition-overlay" data-transition-overlay>&nbsp;</div>
+  {%- comment -%} Frame URLs for JavaScript {%- endcomment -%}
+  <script>
+    window.processHeroData = window.processHeroData || {};
+    {%- assign max_frame = section.settings.frame_count | minus: 1 -%}
+    window.processHeroData['{{ section.id }}'] = {
+      backgroundUrls: [
+        {%- for i in (0..max_frame) -%}
+          {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
+          "{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+      foregroundUrls: [
+        {%- for i in (0..max_frame) -%}
+          {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
+          "{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    };
+  </script>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 <script src="{{ 'process-hero.js' | asset_url }}" defer></script>
-<script src="{{ 'process-page-header.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -41,17 +186,65 @@
   "settings": [
     {
       "type": "header",
-      "content": "Content"
+      "content": "Intro Text"
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Welcome to the process"
+      "id": "intro_small_text",
+      "label": "Small Text",
+      "default": "The Making of a CVD Diamond"
+    },
+    {
+      "type": "text",
+      "id": "intro_left_text",
+      "label": "Left Text",
+      "default": "FROM SEED"
+    },
+    {
+      "type": "text",
+      "id": "intro_right_text",
+      "label": "Right Text",
+      "default": "TO SPARKLE"
+    },
+    {
+      "type": "text",
+      "id": "intro_scroll_text",
+      "label": "Scroll Hint",
+      "default": "(KEEP SCROLLING)"
+    },
+    {
+      "type": "header",
+      "content": "Animation Settings"
+    },
+    {
+      "type": "range",
+      "id": "frame_count",
+      "label": "Total Frames",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "default": 260,
+      "info": "Number of frames in animation sequence"
+    },
+    {
+      "type": "range",
+      "id": "scroll_distance",
+      "label": "Scroll Distance (vh)",
+      "min": 500,
+      "max": 3000,
+      "step": 100,
+      "default": 1500,
+      "info": "Total scroll height for the animation"
     },
     {
       "type": "header",
       "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fffaf5"
     },
     {
       "type": "color",
@@ -60,9 +253,95 @@
       "default": "#183754"
     }
   ],
+  "blocks": [
+    {
+      "type": "phase",
+      "name": "Phase",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Phase Title",
+          "default": "ORIGIN"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Phase Description",
+          "default": "The journey begins with a tiny diamond seed placed in a controlled chamber."
+        },
+        {
+          "type": "range",
+          "id": "step_number_override",
+          "label": "Step Number (optional)",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1,
+          "info": "Leave at 1 to use automatic numbering"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Image Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (optional)",
+          "info": "If provided, overrides image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title"
+        },
+        {
+          "type": "range",
+          "id": "phase_number",
+          "label": "Phase Number",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1,
+          "info": "Which phase this card belongs to"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Process Hero"
+      "name": "Process Hero",
+      "blocks": [
+        {
+          "type": "phase",
+          "settings": {
+            "title": "ORIGIN",
+            "description": "The journey begins with a tiny diamond seed placed in a controlled chamber."
+          }
+        },
+        {
+          "type": "phase",
+          "settings": {
+            "title": "THE REVEAL",
+            "description": "Carbon atoms bond layer by layer, growing the diamond over weeks."
+          }
+        },
+        {
+          "type": "phase",
+          "settings": {
+            "title": "THE CUT",
+            "description": "Master cutters shape the raw diamond into brilliant perfection."
+          }
+        }
+      ]
     }
   ]
 }

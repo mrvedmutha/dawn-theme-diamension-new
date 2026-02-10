@@ -1,166 +1,398 @@
-/* ==========================================
-   PROCESS HERO SECTION
-   ========================================== */
+/**
+ * Process Hero Section
+ * Scroll-driven storytelling with canvas animation
+ * Z-index: All layers stay below header (max z:50)
+ */
 
-/* Reset Shopify section defaults */
+/* ========================================
+   RESET SECTION DEFAULTS
+   ======================================== */
+
 .section-process-hero {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* Main container - Full viewport */
+/* ========================================
+   BASE CONTAINER
+   ======================================== */
+
 .process-hero {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fffaf5; /* Match ellipse color for seamless loading */
+  width: 100%;
+  background: var(--bg-color, #fffaf5);
 }
 
-/* ==========================================
-   BACKGROUND LAYERS
-   ========================================== */
+/* ========================================
+   PINNED CONTAINER (ScrollTrigger target)
+   ======================================== */
 
-.process-hero__background {
+.process-hero__pinned {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-color, #fffaf5);
+}
+
+/* ========================================
+   LAYER 1: BACKGROUND (z:1)
+   ======================================== */
+
+.process-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color, #fffaf5);
+  z-index: 1;
+}
+
+/* ========================================
+   LAYER 2: DIAMENSION LOGO (z:2)
+   ======================================== */
+
+.process-hero__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(8);
+  z-index: 2;
+  opacity: 0.05;
+  color: var(--text-color, #183754);
+  pointer-events: none;
+}
+
+.process-hero__logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ========================================
+   LAYER 3 & 4: CANVAS (z:3, z:4)
+   100% width, behind content
+   ======================================== */
+
+.process-hero__canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.process-hero__canvas--bg {
+  z-index: 3;
+}
+
+.process-hero__canvas--fg {
+  z-index: 4;
+}
+
+/* ========================================
+   LAYER 5: CONTENT OVERLAY (z:5)
+   2 columns of 25% each, spaced evenly
+   ======================================== */
+
+.process-hero__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ========================================
+   INTRO TEXT (two columns, space-between)
+   ======================================== */
+
+.process-hero__intro {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  background-color: #fffcf9; /* Match ellipse color */
+  padding: 0 10%;
+  color: var(--text-color, #183754);
 }
 
-.process-hero__bg-layer {
+.process-hero__intro-left-col {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.process-hero__intro-right-col {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.process-hero__intro-small {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--text-color, #183754);
+}
+
+.process-hero__intro-large {
+  display: block;
+  font-size: 70px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 125px;
+  color: var(--text-color, #183754);
+}
+
+/* ========================================
+   PHASE TEXT (3 phases, absolutely stacked)
+   Left 25%: counter + title
+   Right 25%: description
+   ======================================== */
+
+.process-hero__phase {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  max-width: 1920px;
-  max-height: 1080px;
-  object-fit: contain;
-}
-
-.process-hero__bg-layer--background {
-  z-index: 1;
-}
-
-.process-hero__bg-layer--foreground {
-  z-index: 2;
-  mix-blend-mode: darken;
-}
-
-/* ==========================================
-   CONTENT OVERLAY
-   ========================================== */
-
-.process-hero__content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 1440px;
-  padding: 0 40px;
-  text-align: center;
-}
-
-.process-hero__heading {
-  font-family:
-    'Neue Haas Grotesk Display Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  font-weight: 300;
-  font-size: 120px;
-  line-height: 125px;
-  text-align: center;
-  text-transform: uppercase;
-  color: var(--color-text, #183754);
-  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  color: var(--text-color, #183754);
   opacity: 0;
-  transform: translateY(-30px);
+  visibility: hidden;
 }
 
-/* ==========================================
-   TRANSITION OVERLAY - INITIAL STATE
-   ========================================== */
+.process-hero__phase-left {
+  width: 25%;
+}
 
-/* Initial state: Ellipse expanded covering entire screen */
+.process-hero__phase-right {
+  width: 25%;
+}
+
+.process-hero__phase-counter {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.process-hero__phase-title {
+  display: block;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.process-hero__phase-description {
+  display: block;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ========================================
+   MASK EFFECT (vertical slide reveal)
+   ======================================== */
+
+.process-hero__mask {
+  overflow: hidden;
+}
+
+.process-hero__mask > span {
+  display: block;
+  transform: translateY(100%);
+}
+
+/* ========================================
+   PROGRESS LINE + DIAMOND DOTS + SCROLL HINT
+   ======================================== */
+
+.process-hero__progress-container {
+  position: absolute;
+  bottom: 80px;
+  left: 10%;
+  right: 10%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.process-hero__progress-line-col {
+  position: relative;
+  width: 90%;
+  height: 2px;
+}
+
+.process-hero__progress-line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--text-color, #183754);
+  opacity: 0.3;
+}
+
+.process-hero__progress-dot {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translate(50%, -50%);
+  color: var(--text-color, #183754);
+  opacity: 0;
+}
+
+.process-hero__progress-dot svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+
+.process-hero__progress-dot[data-dot="1"] {
+  right: 75%;
+}
+
+.process-hero__progress-dot[data-dot="2"] {
+  right: 50%;
+}
+
+.process-hero__progress-dot[data-dot="3"] {
+  right: 25%;
+}
+
+.process-hero__progress-scroll-col {
+  width: 10%;
+}
+
+.process-hero__intro-scroll {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--text-color, #183754);
+}
+
+/* ========================================
+   IMAGE CARDS (horizontal scroll)
+   ======================================== */
+
+.process-hero__cards-viewport {
+  position: absolute;
+  bottom: 120px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10; /* Ensure cards are above other content */
+}
+
+.process-hero__cards-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  padding: 0 10%;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__card {
+  flex-shrink: 0;
+  width: 400px;
+}
+
+.process-hero__card-media {
+  position: relative;
+  width: 100%;
+  height: 225px; /* 16:9 aspect ratio */
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.process-hero__card-media img,
+.process-hero__card-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.process-hero__card-title {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  margin: 0;
+  font-size: 14px;
+  color: #fffaf5;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   TRANSITION OVERLAY (z:50)
+   Enter animation ellipse
+   ======================================== */
+
 .process-hero__transition-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200vw;
-  height: 200vw;
-  background-color: #fffcf9;
-  border-radius: 50%;
-  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
   pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    var(--bg-color, #fffaf5) 100%
+  );
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__transition-overlay.active {
   opacity: 1;
+  visibility: visible;
 }
 
-/* After JS loads, this will be animated */
-.process-hero--loaded .process-hero__transition-overlay {
-  /* JS will animate to width: 0, height: 0, opacity: 0 */
+/* ========================================
+   SPACER (creates scroll distance)
+   ======================================== */
+
+.process-hero__spacer {
+  width: 100%;
+  pointer-events: none;
 }
 
-/* ==========================================
-   RESPONSIVE BREAKPOINTS
-   ========================================== */
-
-/* Tablet - 1024px */
-@media (max-width: 1024px) {
-  .process-hero__heading {
-    font-size: 80px;
-    line-height: 90px;
-  }
-
-  .process-hero__content {
-    padding: 0 30px;
-  }
-}
-
-/* Mobile - 767px */
-@media (max-width: 767px) {
-  .process-hero__heading {
-    font-size: 48px;
-    line-height: 56px;
-  }
-
-  .process-hero__content {
-    padding: 0 20px;
-  }
-}
-
-/* Small Mobile - 375px */
-@media (max-width: 375px) {
-  .process-hero__heading {
-    font-size: 36px;
-    line-height: 42px;
-  }
-
-  .process-hero__content {
-    padding: 0 15px;
-  }
-}
-
-/* ==========================================
-   ACCESSIBILITY
-   ========================================== */
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .process-hero__heading {
-    transition: none;
+  .process-hero__mask > span {
+    transform: none;
   }
 
   .process-hero__transition-overlay {
