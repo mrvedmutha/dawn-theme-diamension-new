@@ -179,6 +179,9 @@
   </script>
 </div>
 
+{%- comment -%} Load header behavior script first (no defer - needs to run immediately) {%- endcomment -%}
+<script src="{{ 'process-page-header.js' | asset_url }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 <script src="{{ 'process-hero.js' | asset_url }}" defer></script>

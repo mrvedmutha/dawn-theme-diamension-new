@@ -183,7 +183,7 @@
 .process-hero__phase-counter-container {
   position: absolute;
   top: 80px;
-  right: 10%;
+  left: 10%;
 }
 
 .process-hero__phase-left {
@@ -196,9 +196,12 @@
 
 .process-hero__phase-counter {
   display: block;
-  font-size: 14px;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
+  color: #183754;
+  font-size: 24px;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  line-height: 40px;
+  word-wrap: break-word;
 }
 
 .process-hero__phase-title {
@@ -271,8 +274,8 @@
 
 .process-hero__progress-dot svg {
   display: block;
-  width: 12px;
-  height: 12px;
+  width: 24px;
+  height: 24px;
 }
 
 .process-hero__progress-dot[data-dot='1'] {
