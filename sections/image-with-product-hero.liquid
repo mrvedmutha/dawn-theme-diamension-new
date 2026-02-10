@@ -35,6 +35,8 @@
       class="image-hero-section__background"
       loading="eager"
       fetchpriority="high"
+      width="1440"
+      height="1040"
     >
   {%- endif -%}
 
@@ -57,7 +59,67 @@
       </a>
     {%- endif -%}
   </div>
+
+  {%- comment -%} Product Pointers - Desktop Only {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <div class="image-hero-section__pointers">
+      {%- for block in section.blocks limit: 6 -%}
+        {%- liquid
+          assign product = block.settings.product
+          assign x_pos = block.settings.x_position
+          assign y_pos = block.settings.y_position
+          assign label = block.settings.label | default: forloop.index | prepend: '0' | slice: -2, 2
+        -%}
+
+        {%- if product != blank -%}
+          {%- render 'product-pointer-card',
+            product: product,
+            x_pos: x_pos,
+            y_pos: y_pos,
+            label: label,
+            index: forloop.index
+          -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 </section>
+
+{%- comment -%} Mobile Grid - Product Cards {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <div class="image-hero-section__mobile-grid">
+    {%- for block in section.blocks limit: 6 -%}
+      {%- liquid
+        assign product = block.settings.product
+      -%}
+
+      {%- if product != blank -%}
+        <a href="{{ product.url }}" class="image-hero-section__mobile-card" {{ block.shopify_attributes }}>
+          {%- if product.featured_image != blank -%}
+            <div class="image-hero-section__mobile-card-image">
+              <img
+                src="{{ product.featured_image | image_url: width: 308 }}"
+                srcset="
+                  {{ product.featured_image | image_url: width: 154 }} 1x,
+                  {{ product.featured_image | image_url: width: 308 }} 2x
+                "
+                alt="{{ product.featured_image.alt | escape }}"
+                loading="lazy"
+                width="154"
+                height="154"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="image-hero-section__mobile-card-content">
+            <h3 class="image-hero-section__mobile-card-title">{{ product.title }}</h3>
+            <p class="image-hero-section__mobile-card-cta">View Now</p>
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -125,6 +187,41 @@
       "unit": "%",
       "default": 0,
       "info": "0% = no overlay, 100% = full overlay"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_pointer",
+      "name": "Product Pointer",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "x_position",
+          "label": "X Position (%)",
+          "default": "50",
+          "info": "Horizontal position from left (0-100)"
+        },
+        {
+          "type": "text",
+          "id": "y_position",
+          "label": "Y Position (%)",
+          "default": "50",
+          "info": "Vertical position from top (0-100)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pointer Label",
+          "default": "01",
+          "info": "Text displayed on the pointer (e.g., 01, 02, 03)"
+        }
+      ]
     }
   ],
   "presets": [

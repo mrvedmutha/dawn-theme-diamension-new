@@ -316,3 +316,308 @@
     animation: none;
   }
 }
+
+/* ============================================
+   PRODUCT POINTERS - DESKTOP ONLY
+   ============================================ */
+
+/* Pointers Container */
+.image-hero-section__pointers {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Individual Pointer */
+.product-pointer {
+  position: absolute;
+  left: var(--pointer-x, 50%);
+  top: var(--pointer-y, 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: all;
+}
+
+/* Pointer Circles Container */
+.product-pointer__circles {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+/* Individual Circle */
+.product-pointer__circle {
+  position: absolute;
+  border-radius: 50%;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Inner Circle - Always Visible */
+.product-pointer__circle--inner {
+  width: 32px;
+  height: 32px;
+  background-color: #FFFAF5;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer Circle - Hover Only */
+.product-pointer__circle--outer {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 250, 245, 0.6);
+  border: 1px solid rgba(255, 250, 245, 0.3);
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.67);
+}
+
+/* Pointer Label */
+.product-pointer__label {
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #183754;
+  text-align: center;
+}
+
+/* Hover State - Show Outer Circle */
+.product-pointer:hover .product-pointer__circle--outer {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Keep inner circle above outer circle on hover */
+.product-pointer:hover .product-pointer__circle--inner {
+  z-index: 3;
+}
+
+/* Product Card - Hidden by Default */
+.product-pointer__card {
+  position: absolute;
+  width: 327px;
+  height: 175px;
+  background-color: #FFFAF5;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  text-decoration: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Show Card on Hover */
+.product-pointer:hover .product-pointer__card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* Card Inner Layout */
+.product-pointer__card-inner {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  padding: 11px 10px;
+  box-sizing: border-box;
+}
+
+/* Product Image Container */
+.product-pointer__card-image {
+  flex-shrink: 0;
+  width: 154px;
+  height: 154px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-pointer__card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product Content */
+.product-pointer__card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 12px;
+  min-width: 0;
+}
+
+/* Product Title */
+.product-pointer__card-title {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #183754;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* View Now CTA */
+.product-pointer__card-cta {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 40px;
+  color: #183754;
+  text-decoration: underline;
+}
+
+/* Smart Positioning - Default (Right) */
+.product-pointer__card {
+  top: 50%;
+  left: calc(100% + 16px);
+  transform: translateY(-50%);
+}
+
+/* Position Left */
+.product-pointer__card.position-left {
+  left: auto;
+  right: calc(100% + 16px);
+}
+
+/* Position Bottom */
+.product-pointer__card.position-bottom {
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Position Top */
+.product-pointer__card.position-top {
+  top: auto;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ============================================
+   MOBILE GRID - TABLET & MOBILE ONLY
+   ============================================ */
+
+/* Hide pointers on mobile */
+@media (max-width: 989px) {
+  .image-hero-section__pointers {
+    display: none;
+  }
+}
+
+/* Mobile Grid Container */
+.image-hero-section__mobile-grid {
+  display: none;
+  gap: 16px;
+  padding: 32px 16px;
+  background-color: #f2f2f2;
+}
+
+/* Tablet: 2 columns */
+@media (max-width: 989px) and (min-width: 768px) {
+  .image-hero-section__mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile & XS: 1 column */
+@media (max-width: 767px) {
+  .image-hero-section__mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile Card */
+.image-hero-section__mobile-card {
+  display: flex;
+  align-items: stretch;
+  background-color: #FFFAF5;
+  text-decoration: none;
+  overflow: hidden;
+  min-height: 175px;
+}
+
+/* Mobile Card Image */
+.image-hero-section__mobile-card-image {
+  flex-shrink: 0;
+  width: 154px;
+  height: 154px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 11px 0 11px 10px;
+}
+
+.image-hero-section__mobile-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile Card Content */
+.image-hero-section__mobile-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 10px 16px 12px;
+  min-width: 0;
+}
+
+/* Mobile Card Title */
+.image-hero-section__mobile-card-title {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #183754;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Mobile Card CTA */
+.image-hero-section__mobile-card-cta {
+  margin: 0;
+  padding: 0;
+  font-family: 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 40px;
+  color: #183754;
+  text-decoration: underline;
+}
+
+/* Hide mobile grid on desktop */
+@media (min-width: 990px) {
+  .image-hero-section__mobile-grid {
+    display: none;
+  }
+}

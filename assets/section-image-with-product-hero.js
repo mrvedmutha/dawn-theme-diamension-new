@@ -13,7 +13,10 @@
     selectors: {
       section: '.image-hero-section',
       background: '.image-hero-section__background',
-      ctaButton: '.image-hero-section__cta'
+      ctaButton: '.image-hero-section__cta',
+      pointer: '.product-pointer',
+      pointerCard: '.product-pointer__card',
+      pointersContainer: '.image-hero-section__pointers'
     },
     breakpoints: {
       tablet: 1024
@@ -21,6 +24,11 @@
     parallax: {
       movement: 200, // Pixels of vertical movement (increased for more dramatic effect)
       ease: 'none'
+    },
+    card: {
+      width: 327,
+      height: 175,
+      offset: 16 // Gap between pointer and card
     }
   };
 
@@ -42,7 +50,7 @@
       // Register ScrollTrigger plugin
       gsap.registerPlugin(ScrollTrigger);
 
-      // Create parallax effect for background image
+      // Create parallax effect for background image only
       // The image moves slower than the scroll, creating depth
       gsap.fromTo(this.background,
         {
@@ -108,6 +116,128 @@
   }
 
   // ============================================================================
+  // Product Pointer Smart Positioning Handler
+  // ============================================================================
+  class ProductPointerHandler {
+    constructor(section) {
+      this.section = section;
+      this.pointers = section.querySelectorAll(CONFIG.selectors.pointer);
+      this.isDesktop = window.innerWidth > CONFIG.breakpoints.tablet;
+      this.activePointer = null;
+      this.activeCard = null;
+      this.scrollRAF = null;
+
+      if (this.isDesktop && this.pointers.length > 0) {
+        this.init();
+      }
+    }
+
+    init() {
+      this.pointers.forEach(pointer => {
+        const card = pointer.querySelector(CONFIG.selectors.pointerCard);
+
+        if (!card) return;
+
+        // Position card on mouseenter
+        pointer.addEventListener('mouseenter', () => {
+          this.activePointer = pointer;
+          this.activeCard = card;
+          this.positionCard(pointer, card);
+        });
+
+        // Clear active pointer on mouseleave
+        pointer.addEventListener('mouseleave', () => {
+          if (this.activePointer === pointer) {
+            this.activePointer = null;
+            this.activeCard = null;
+          }
+        });
+      });
+
+      // Reposition card on scroll (for parallax)
+      this.handleScroll = this.handleScroll.bind(this);
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
+    }
+
+    handleScroll() {
+      // Use RAF for performance
+      if (this.scrollRAFPending) return;
+
+      this.scrollRAFPending = true;
+      requestAnimationFrame(() => {
+        if (this.activePointer && this.activeCard) {
+          this.positionCard(this.activePointer, this.activeCard);
+        }
+        this.scrollRAFPending = false;
+      });
+    }
+
+    positionCard(pointer, card) {
+      // Get pointer position relative to viewport
+      const pointerRect = pointer.getBoundingClientRect();
+      const pointerCenterX = pointerRect.left + (pointerRect.width / 2);
+      const pointerCenterY = pointerRect.top + (pointerRect.height / 2);
+
+      // Get viewport dimensions
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Calculate available space in each direction
+      const spaceRight = viewportWidth - pointerCenterX;
+      const spaceLeft = pointerCenterX;
+      const spaceBottom = viewportHeight - pointerCenterY;
+      const spaceTop = pointerCenterY;
+
+      // Calculate required space for card (including offset)
+      const cardWidthNeeded = CONFIG.card.width + CONFIG.card.offset;
+      const cardHeightNeeded = CONFIG.card.height + CONFIG.card.offset;
+
+      // Remove all position classes
+      card.classList.remove('position-right', 'position-left', 'position-bottom', 'position-top');
+
+      // Determine best position based on available space
+      // Priority: right → left → bottom → top
+      if (spaceRight >= cardWidthNeeded) {
+        // Default position (right) - no class needed
+        return;
+      } else if (spaceLeft >= cardWidthNeeded) {
+        card.classList.add('position-left');
+      } else if (spaceBottom >= cardHeightNeeded) {
+        card.classList.add('position-bottom');
+      } else if (spaceTop >= cardHeightNeeded) {
+        card.classList.add('position-top');
+      } else {
+        // Fallback: position where there's most space
+        const maxSpace = Math.max(spaceRight, spaceLeft, spaceBottom, spaceTop);
+
+        if (maxSpace === spaceLeft) {
+          card.classList.add('position-left');
+        } else if (maxSpace === spaceBottom) {
+          card.classList.add('position-bottom');
+        } else if (maxSpace === spaceTop) {
+          card.classList.add('position-top');
+        }
+        // else keep default (right)
+      }
+    }
+
+    destroy() {
+      // Remove scroll listener
+      window.removeEventListener('scroll', this.handleScroll);
+
+      // Clear active references
+      this.activePointer = null;
+      this.activeCard = null;
+
+      // Clean up event listeners if needed
+      this.pointers.forEach(pointer => {
+        const newPointer = pointer.cloneNode(true);
+        pointer.parentNode.replaceChild(newPointer, pointer);
+      });
+    }
+  }
+
+  // ============================================================================
   // Section Manager
   // ============================================================================
   class ImageHeroSection {
@@ -115,6 +245,7 @@
       this.section = section;
       this.parallaxHandler = null;
       this.ctaHandler = null;
+      this.pointerHandler = null;
 
       this.init();
       this.bindEvents();
@@ -128,6 +259,11 @@
 
       // Initialize CTA animations
       this.ctaHandler = new CTAAnimationHandler(this.section);
+
+      // Initialize product pointers (desktop only)
+      if (window.innerWidth > CONFIG.breakpoints.tablet) {
+        this.pointerHandler = new ProductPointerHandler(this.section);
+      }
 
       // Add visible class for text reveal
       this.initTextReveal();
@@ -185,6 +321,14 @@
       } else if (!isDesktop && this.parallaxHandler) {
         this.parallaxHandler.destroy();
         this.parallaxHandler = null;
+      }
+
+      // Reinitialize product pointers on desktop, destroy on mobile
+      if (isDesktop && !this.pointerHandler) {
+        this.pointerHandler = new ProductPointerHandler(this.section);
+      } else if (!isDesktop && this.pointerHandler) {
+        this.pointerHandler.destroy();
+        this.pointerHandler = null;
       }
     }
   }

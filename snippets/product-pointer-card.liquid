@@ -1,0 +1,57 @@
+{%- comment -%}
+  Product Pointer Card Snippet
+
+  Parameters:
+  - product: Product object
+  - x_pos: X position percentage (0-100)
+  - y_pos: Y position percentage (0-100)
+  - label: Pointer label text
+  - index: Unique index for pointer
+{%- endcomment -%}
+
+{%- liquid
+  assign product_url = product.url | default: '#'
+  assign product_title = product.title | default: ''
+  assign product_image = product.featured_image | default: ''
+  assign pointer_id = 'pointer-' | append: index
+-%}
+
+<div
+  class="product-pointer"
+  data-pointer-id="{{ pointer_id }}"
+  style="--pointer-x: {{ x_pos }}%; --pointer-y: {{ y_pos }}%;"
+>
+  {%- comment -%} Pointer Circles {%- endcomment -%}
+  <div class="product-pointer__circles">
+    <div class="product-pointer__circle product-pointer__circle--outer">&nbsp;</div>
+    <div class="product-pointer__circle product-pointer__circle--inner">
+      <span class="product-pointer__label">{{ label }}</span>
+    </div>
+  </div>
+
+  {%- comment -%} Product Card {%- endcomment -%}
+  <a href="{{ product_url }}" class="product-pointer__card" aria-label="{{ product_title }}">
+    <div class="product-pointer__card-inner">
+      {%- if product_image != blank -%}
+        <div class="product-pointer__card-image">
+          <img
+            src="{{ product_image | image_url: width: 308 }}"
+            srcset="
+              {{ product_image | image_url: width: 154 }} 1x,
+              {{ product_image | image_url: width: 308 }} 2x
+            "
+            alt="{{ product_image.alt | escape }}"
+            loading="lazy"
+            width="154"
+            height="154"
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="product-pointer__card-content">
+        <h3 class="product-pointer__card-title">{{ product_title }}</h3>
+        <p class="product-pointer__card-cta">View Now</p>
+      </div>
+    </div>
+  </a>
+</div>
