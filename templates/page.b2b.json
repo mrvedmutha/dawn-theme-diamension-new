@@ -26,43 +26,43 @@
         "diamond_1": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_397.png",
+            "diamond_image": "shopify://shop_images/1.png",
             "diamond_text": "Round"
           }
         },
         "diamond_2": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_399.png",
+            "diamond_image": "shopify://shop_images/2.png",
             "diamond_text": "Cushion"
           }
         },
         "diamond_3": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_400.png",
+            "diamond_image": "shopify://shop_images/3.png",
             "diamond_text": "Oval"
           }
         },
         "diamond_4": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_401.png",
+            "diamond_image": "shopify://shop_images/4_a66aa4e5-9df1-4362-86ea-7430c01f899d.png",
             "diamond_text": "Emerald"
           }
         },
         "diamond_5": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_402_7467abed-dfcb-48cf-bc7d-9b07ad8ca61a.png",
+            "diamond_image": "shopify://shop_images/8.png",
             "diamond_text": "Radiant"
           }
         },
         "diamond_6": {
           "type": "diamond_shape",
           "settings": {
-            "diamond_image": "shopify://shop_images/image_403.png",
-            "diamond_text": "Princess"
+            "diamond_image": "shopify://shop_images/6.png",
+            "diamond_text": "Heart"
           }
         }
       },
@@ -78,7 +78,7 @@
         "heading": "Comprehensive Range of Precision-Cut CVD Diamonds.",
         "cta_text": "Login to see all shapes",
         "cta_link": "",
-        "certificate_image": "shopify://shop_images/certificate-image.png"
+        "certificate_image": "shopify://shop_images/center_frame_with_text.png"
       }
     },
     "lab_grown_hero_b2b": {
@@ -95,7 +95,7 @@
       "settings": {
         "background_image": "shopify://shop_images/lab-grown-diamond-final-stage-collecting.jpg",
         "heading": "",
-        "text_color": "#FFFAF5",
+        "text_color": "#fffaf5",
         "overlay_opacity": 0
       }
     }
