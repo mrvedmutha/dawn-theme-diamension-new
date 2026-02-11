@@ -378,13 +378,13 @@
 
 @media (max-width: 1249px) and (min-width: 1025px) {
   .custom-section-feature-slider-with-left-image__sidebar {
-    flex: 0 0 50vw;
+    flex: 1;
     width: 50vw;
     height: 100vh;
   }
 
   .custom-section-feature-slider-with-left-image__content {
-    flex: 0 0 50vw;
+    flex: 1;
     width: 50vw;
     padding: 60px 30px;
   }

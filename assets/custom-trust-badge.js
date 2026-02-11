@@ -1,4 +1,4 @@
-(function() {
+(function () {
   const trustBadgeAnimations = new Map();
 
   function initTrustBadgeLottie() {
@@ -45,13 +45,13 @@
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid meet',
           progressiveLoad: true,
-          hideOnTransparent: true
-        }
+          hideOnTransparent: true,
+        },
       });
 
       // Store animation reference
       trustBadgeAnimations.set(blockId, {
-        animation: animation
+        animation: animation,
       });
 
       // Log when animation is loaded
@@ -79,7 +79,7 @@
 
   // Reinitialize for Shopify theme editor
   if (window.Shopify && window.Shopify.designMode) {
-    document.addEventListener('shopify:section:load', function(event) {
+    document.addEventListener('shopify:section:load', function (event) {
       // Clear existing animations
       trustBadgeAnimations.forEach((data) => {
         if (data.animation) {
