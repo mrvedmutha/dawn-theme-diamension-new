@@ -47,7 +47,7 @@
    ============================================================================ */
 .custom-section-shop-collection-arch__heading {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: var(--sca-heading-size);
   line-height: var(--sca-heading-line-height);
   color: var(--sca-color-text-primary);
@@ -220,7 +220,7 @@
    ============================================================================ */
 .custom-section-shop-collection-arch__cta-wrapper {
   position: absolute;
-  bottom: 24px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
@@ -229,7 +229,7 @@
 
 .custom-section-shop-collection-arch__cta {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--sca-cta-size);
   line-height: var(--sca-cta-line-height);
   color: var(--sca-color-text-light);

@@ -416,8 +416,23 @@
   z-index: 10;
 }
 
+/* Invisible bridge to maintain hover state when moving from pointer to card */
+.product-pointer__card::before {
+  content: '';
+  position: absolute;
+  pointer-events: all;
+  z-index: -1;
+}
+
 /* Show Card on Hover */
 .product-pointer:hover .product-pointer__card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* Keep Card visible when hovering the card itself (including the invisible bridge) */
+.product-pointer__card:hover {
   opacity: 1;
   visibility: visible;
   pointer-events: all;
@@ -494,10 +509,27 @@
   transform: translateY(-50%);
 }
 
+/* Bridge for right position (default) - extends left toward pointer */
+.product-pointer__card::before {
+  top: 0;
+  right: 100%;
+  width: calc(16px + 24px); /* gap + overlap with pointer */
+  height: 100%;
+}
+
 /* Position Left */
 .product-pointer__card.position-left {
   left: auto;
   right: calc(100% + 16px);
+}
+
+/* Bridge for left position - extends right toward pointer */
+.product-pointer__card.position-left::before {
+  top: 0;
+  left: 100%;
+  right: auto;
+  width: calc(16px + 24px);
+  height: 100%;
 }
 
 /* Position Bottom */
@@ -507,12 +539,32 @@
   transform: translateX(-50%);
 }
 
+/* Bridge for bottom position - extends up toward pointer */
+.product-pointer__card.position-bottom::before {
+  bottom: 100%;
+  left: 0;
+  right: auto;
+  top: auto;
+  width: 100%;
+  height: calc(16px + 24px);
+}
+
 /* Position Top */
 .product-pointer__card.position-top {
   top: auto;
   bottom: calc(100% + 16px);
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Bridge for top position - extends down toward pointer */
+.product-pointer__card.position-top::before {
+  top: 100%;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  height: calc(16px + 24px);
 }
 
 /* ============================================

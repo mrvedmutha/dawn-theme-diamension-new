@@ -10,7 +10,7 @@
 
 /* Outer wrapper - full width */
 .brillance-3d__wrapper {
-  width: 100vw;
+  width: 100%;
   margin: 0;
   padding: 0;
   position: relative;

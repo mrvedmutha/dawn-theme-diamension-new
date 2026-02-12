@@ -193,28 +193,6 @@
       }
     });
 
-    // Hard refresh on viewport change (debounced)
-    let resizeTimer;
-    let initialWidth = window.innerWidth;
-    let initialHeight = window.innerHeight;
-
-    window.addEventListener('resize', function () {
-      const currentWidth = window.innerWidth;
-
-      // Check if it's a significant viewport change (not just browser chrome showing/hiding)
-      const widthChanged = Math.abs(currentWidth - initialWidth) > 50;
-
-      if (widthChanged) {
-        // Clear existing timer
-        clearTimeout(resizeTimer);
-
-        // Set new timer for hard refresh
-        resizeTimer = setTimeout(function () {
-          window.location.reload();
-        }, 500); // Wait 500ms after resize stops
-      }
-    });
-
     // Handle scroll on page load
     handleScroll();
   }

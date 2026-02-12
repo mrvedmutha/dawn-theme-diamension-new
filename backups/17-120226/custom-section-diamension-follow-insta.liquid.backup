@@ -34,9 +34,8 @@
 
       {%- comment -%}
         Asymmetric Masonry Grid - Image Grid
-        Images: 360px × 360px with 72px horizontal overlap (288px spacing)
-        Vertical: 180px overlap (50% of image height)
-        Total grid: 1224px width × 540px height, centered in 1440px container
+        Images overlap by 56px (328px - 56px = 272px spacing)
+        Total grid width: 1144px, centered with 64px margins
       {%- endcomment -%}
       <div class="custom-section-diamension-follow-insta__images">
         {%- for block in section.blocks -%}
@@ -50,13 +49,13 @@
                   class="custom-section-diamension-follow-insta__image-link"
                 >
                   <img
-                    src="{{ block.settings.image | image_url: width: 720 }}"
+                    src="{{ block.settings.image | image_url: width: 760 }}"
                     srcset="
-                      {{ block.settings.image | image_url: width: 360 }} 360w,
-                      {{ block.settings.image | image_url: width: 540 }} 540w,
-                      {{ block.settings.image | image_url: width: 720 }} 720w
+                      {{ block.settings.image | image_url: width: 380 }} 380w,
+                      {{ block.settings.image | image_url: width: 570 }} 570w,
+                      {{ block.settings.image | image_url: width: 760 }} 760w
                     "
-                    sizes="(max-width: 767px) 50vw, (max-width: 1024px) 50vw, 360px"
+                    sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
                     alt="{{ block.settings.image.alt | default: 'Instagram image' }}"
                     class="custom-section-diamension-follow-insta__image js-parallax-image"
                     loading="lazy"
@@ -64,13 +63,13 @@
                 </a>
               {%- else -%}
                 <img
-                  src="{{ block.settings.image | image_url: width: 720 }}"
+                  src="{{ block.settings.image | image_url: width: 760 }}"
                   srcset="
-                    {{ block.settings.image | image_url: width: 360 }} 360w,
-                    {{ block.settings.image | image_url: width: 540 }} 540w,
-                    {{ block.settings.image | image_url: width: 720 }} 720w
+                    {{ block.settings.image | image_url: width: 380 }} 380w,
+                    {{ block.settings.image | image_url: width: 570 }} 570w,
+                    {{ block.settings.image | image_url: width: 760 }} 760w
                   "
-                  sizes="(max-width: 767px) 50vw, (max-width: 1024px) 50vw, 360px"
+                  sizes="(max-width: 767px) 50vw, (max-width: 1024px) 328px, 380px"
                   alt="{{ block.settings.image.alt | default: 'Instagram image' }}"
                   class="custom-section-diamension-follow-insta__image js-parallax-image"
                   loading="lazy"
@@ -157,7 +156,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Instagram Image",
-          "info": "Upload a square image (1:1 ratio). Recommended size: 720×720px or larger for best quality."
+          "info": "Upload a square image (1:1 ratio). Recommended size: 1000×1000px or larger."
         },
         {
           "type": "url",

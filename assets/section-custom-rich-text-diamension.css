@@ -5,7 +5,8 @@
 /* Font Face Declarations */
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
+  src:
+    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
     url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
@@ -14,7 +15,8 @@
 
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+  src:
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
     url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
@@ -45,14 +47,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 33.958px;
+  gap: 32px;
   width: 100%;
 }
 
 .custom-section-rich-text-diamension__headline {
   color: var(--custom-rich-text-headline-color);
   text-align: center;
-  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family:
+    'Neue Haas Display',
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
     sans-serif;
   font-size: 40px;
   font-style: normal;
@@ -67,11 +74,16 @@
 .custom-section-rich-text-diamension__subtext {
   color: var(--custom-rich-text-subtext-color);
   text-align: center;
-  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family:
+    'Neue Haas Display',
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
     sans-serif;
   font-size: 20px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 30px; /* 150% */
   margin: 0;
   max-width: 477.15px;

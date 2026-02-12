@@ -5,7 +5,8 @@
 /* Font Face - Neue Haas Grotesk Display Pro */
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+  src:
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
     url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
@@ -14,7 +15,8 @@
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
+  src:
+    url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff2') format('woff2'),
     url('fonts/neue-haas-display/NeueHaasDisplay-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
@@ -98,7 +100,10 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   left: 0;
   right: 0;
   z-index: 999;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
   transform: translateY(0);
 }
 
@@ -134,7 +139,9 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 .diamension-header__announcement {
   text-align: center;
   padding: 15.66px 40px;
-  transition: background-color 0.3s ease, border-bottom-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    border-bottom-color 0.3s ease;
   border-bottom: 1px solid rgba(255, 250, 245, 0.5);
 }
 
@@ -158,11 +165,10 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 
 .diamension-header__announcement-text {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   line-height: normal;
   text-transform: uppercase;
-  /* letter-spacing: 0.24px; */
   margin: 0;
 }
 
@@ -229,11 +235,10 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
 
 .diamension-header__nav-link {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
   line-height: normal;
   text-transform: uppercase;
-  letter-spacing: 0.24px;
   text-decoration: none;
   color: inherit;
   transition: opacity 0.2s ease;

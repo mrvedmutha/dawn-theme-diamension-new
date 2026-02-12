@@ -35,9 +35,9 @@
 
 .headline-ring-collection__headline {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 100px;
-  line-height: 86.229px;
+  line-height: 86px;
   color: #183754;
   text-transform: uppercase;
   margin: 0;
@@ -76,7 +76,7 @@
   top: calc(184px + 86.229px + 86.229px + 43px);
   left: 160px;
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   line-height: 20px;
   color: #183754;
@@ -157,7 +157,7 @@
 
 .headline-ring-collection__paragraph {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   line-height: 30px;
   color: #183754;
@@ -198,7 +198,7 @@
 
 .headline-ring-collection__feature-text {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
   line-height: 20px;
   color: #183754;

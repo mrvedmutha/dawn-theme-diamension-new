@@ -7,7 +7,8 @@
 
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
+  src:
+    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
     url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
@@ -82,11 +83,16 @@
 .custom-section-trust-badge__label {
   color: var(--custom-trust-badge-text-color);
   text-align: center;
-  font-family: 'Neue Haas Display', 'Neue Haas Grotesk Display Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family:
+    'Neue Haas Display',
+    'Neue Haas Grotesk Display Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
     sans-serif;
   font-size: 20px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 20px;
   margin: 0;
   width: 100%;

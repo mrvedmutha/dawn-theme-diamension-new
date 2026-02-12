@@ -1,8 +1,6 @@
 /**
  * Diamension Follow Instagram Section - JavaScript
  * Handles parallax effects for asymmetric masonry grid using GSAP
- * Layout: 360px images, 72px horizontal overlap (288px spacing), 180px vertical overlap (50%)
- * Grid: 1224px × 540px, centered in 1440px container
  * Desktop only (>1024px)
  */
 

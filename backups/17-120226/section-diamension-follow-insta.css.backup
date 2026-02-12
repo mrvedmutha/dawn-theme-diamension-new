@@ -58,28 +58,30 @@
   }
 }
 
-/* Container - Max-width 1440px, edge-to-edge (no padding)
-   Desktop: 0 padding
-   Tablet: 0 padding
-   Mobile: 0 padding (edge-to-edge)
+/* Container - Max-width 1440px with 64px side margins
+   Desktop: 64px side margins
+   Tablet: 40px side margins
+   Mobile: 0 (edge-to-edge)
    ========================================================================== */
 .custom-section-diamension-follow-insta__container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 64px;
   position: relative;
-  min-height: 540px;
+  min-height: 800px;
 }
 
 @media (max-width: 1024px) {
   .custom-section-diamension-follow-insta__container {
     min-height: auto;
+    padding: 0;
   }
 }
 
 @media (max-width: 767px) {
   .custom-section-diamension-follow-insta__container {
     min-height: auto;
+    padding: 0;
   }
 }
 
@@ -150,8 +152,8 @@
 }
 
 /* Image Grid - Asymmetric Masonry Layout
-   Desktop: Centered grid with 72px overlapping images
-   Tablet: 2x2 Grid
+   Desktop: Centered grid with 56px overlapping images (1144px total width)
+   Tablet: Horizontal row
    Mobile: 2x2 Grid
    ========================================================================== */
 .custom-section-diamension-follow-insta__images {
@@ -160,31 +162,17 @@
 }
 
 /* Desktop: Positioned masonry layout
-   Grid width: 1224px (4 images × 360px with 72px overlap = 288px spacing)
-   Calculation: 0, 288px, 576px, 864px + 360px = 1224px
-   Height: 540px (360px + 180px vertical overlap)
-   Centered within 1440px container with margin: 0 auto
+   Grid width: 1352px (4 images × 380px with 56px overlap = 324px spacing)
+   Calculation: 0, 324px, 648px, 972px + 380px = 1352px
+   Centered within container
+   Note: No position: relative - images position relative to container
    ========================================================================== */
-@media (min-width: 1225px) {
+@media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__images {
-    width: 1224px;
+    width: 1352px;
     max-width: 100%;
     margin: 0 auto;
-    height: 540px;
-    min-height: 540px;
-  }
-}
-
-/* Responsive squeeze: 1224px - 1025px
-   Container adapts to viewport, bottom images squeeze towards left
-   ========================================================================== */
-@media (min-width: 1025px) and (max-width: 1224px) {
-  .custom-section-diamension-follow-insta__images {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    height: 540px;
-    min-height: 540px;
+    min-height: 900px;
   }
 }
 
@@ -213,15 +201,15 @@
 }
 
 /* Image Wrappers - Base Styles
-   Desktop: Absolute positioning for masonry (360px images)
-   Tablet: Grid items
+   Desktop: Absolute positioning for masonry (380px images)
+   Tablet: Flex items
    Mobile: Grid items
    ========================================================================== */
 @media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__image-wrapper {
     position: absolute;
-    width: 360px;
-    height: 360px;
+    width: 380px;
+    height: 380px;
     overflow: hidden;
   }
 }
@@ -241,86 +229,59 @@
 }
 
 /* Desktop Masonry Positioning - Image 1
-   Type: Top-left (top-aligned)
-   Position: Top 0px, Left 0px (stays at left edge in all desktop sizes)
+   Type: Odd (top-aligned)
+   Position: 400px from wrapper top = 400px - 144px padding = 256px from container top
+   Left: 0
    Z-Index: 2
    ========================================================================== */
 @media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__image-wrapper--1 {
-    top: 0;
+    top: 256px;
     left: 0;
     z-index: 2;
   }
 }
 
 /* Desktop Masonry Positioning - Image 2
-   Type: Bottom-left (50% vertical overlap with Image 1)
-   Position: Top 180px (50% of 360px), Left 288px (360px - 72px overlap)
+   Type: Even (bottom-aligned)
+   Increased vertical offset for more dramatic stagger
+   Position: Bottom 100px from container (lower position for better separation)
+   Left: 324px (380px - 56px overlap)
    Z-Index: 3 (overlaps Image 1)
    ========================================================================== */
-@media (min-width: 1225px) {
+@media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__image-wrapper--2 {
-    top: 180px;
-    left: 288px;
-    z-index: 3;
-  }
-}
-
-/* Responsive squeeze: 1224px - 1025px
-   Image 2 moves closer to left as viewport shrinks
-   ========================================================================== */
-@media (min-width: 1025px) and (max-width: 1224px) {
-  .custom-section-diamension-follow-insta__image-wrapper--2 {
-    top: 180px;
-    left: calc(23.5% - 20px);
+    bottom: 100px;
+    left: 324px;
     z-index: 3;
   }
 }
 
 /* Desktop Masonry Positioning - Image 3
-   Type: Top-right (top-aligned)
-   Position: Top 0px, Left 576px (288px × 2)
+   Type: Odd (top-aligned)
+   Position: 400px from wrapper top = 400px - 144px padding = 256px from container top
+   Left: 648px (324px × 2)
    Z-Index: 4 (overlaps Image 2)
    ========================================================================== */
-@media (min-width: 1225px) {
+@media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__image-wrapper--3 {
-    top: 0;
-    left: 576px;
-    z-index: 4;
-  }
-}
-
-/* Responsive squeeze: 1224px - 1025px
-   Image 3 stays proportional to viewport
-   ========================================================================== */
-@media (min-width: 1025px) and (max-width: 1224px) {
-  .custom-section-diamension-follow-insta__image-wrapper--3 {
-    top: 0;
-    left: calc(47% - 10px);
+    top: 256px;
+    left: 648px;
     z-index: 4;
   }
 }
 
 /* Desktop Masonry Positioning - Image 4
-   Type: Bottom-right (50% vertical overlap with Image 3)
-   Position: Top 180px (50% of 360px), Left 864px (288px × 3)
+   Type: Even (bottom-aligned)
+   Increased vertical offset for more dramatic stagger
+   Position: Bottom 100px from container (lower position for better separation)
+   Left: 972px (324px × 3)
    Z-Index: 5 (highest in image stack, overlaps Image 3)
    ========================================================================== */
-@media (min-width: 1225px) {
+@media (min-width: 1025px) {
   .custom-section-diamension-follow-insta__image-wrapper--4 {
-    top: 180px;
-    left: 864px;
-    z-index: 5;
-  }
-}
-
-/* Responsive squeeze: 1224px - 1025px
-   Image 4 moves closer to left as viewport shrinks
-   ========================================================================== */
-@media (min-width: 1025px) and (max-width: 1224px) {
-  .custom-section-diamension-follow-insta__image-wrapper--4 {
-    top: 180px;
-    left: calc(70.6% - 20px);
+    bottom: 100px;
+    left: 972px;
     z-index: 5;
   }
 }

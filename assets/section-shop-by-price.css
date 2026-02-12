@@ -33,7 +33,7 @@
 
 .custom-section-shop-by-price__title {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 40px;
   line-height: 45px;
   color: #183754;
@@ -43,7 +43,7 @@
 
 .custom-section-shop-by-price__tagline {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 20px;
   line-height: 30px;
   color: #183754;
@@ -197,7 +197,6 @@
   }
 }
 
-
 /* Skeleton Card */
 .custom-section-shop-by-price__skeleton-card {
   width: 225px;
@@ -209,12 +208,7 @@
 .custom-section-shop-by-price__skeleton-image {
   width: 225px;
   height: 333px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 468px 333px;
   animation: skeleton-shimmer 1.5s infinite ease-in-out;
   position: relative;
@@ -243,12 +237,7 @@
 .custom-section-shop-by-price__skeleton-title {
   width: 180px;
   height: 30px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 468px 30px;
   animation: skeleton-shimmer 1.5s infinite ease-in-out;
   margin-bottom: 8px;
@@ -259,12 +248,7 @@
 .custom-section-shop-by-price__skeleton-price {
   width: 120px;
   height: 20px;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0px,
-    #e0e0e0 40px,
-    #f0f0f0 80px
-  );
+  background: linear-gradient(90deg, #f0f0f0 0px, #e0e0e0 40px, #f0f0f0 80px);
   background-size: 468px 20px;
   animation: skeleton-shimmer 1.5s infinite ease-in-out;
   border-radius: 4px;
@@ -370,7 +354,7 @@
 /* Product Info */
 .custom-section-shop-by-price__product-title {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 20px;
   line-height: 30px;
   color: #183754;
