@@ -57,7 +57,7 @@
   aspect-ratio: 16 / 9;
   margin-bottom: 40px;
   overflow: hidden;
-  background-color: #f0efea;
+  background-color: #f0f0f0;
   display: none;
 }
 
@@ -193,7 +193,7 @@
   width: 280px;
   height: 414px;
   overflow: hidden;
-  background-color: #f0efea;
+  background-color: #f0f0f0;
   position: relative;
 }
 
@@ -211,9 +211,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0efea;
+  background-color: #f0f0f0;
+}
+
+.custom-section-feature-slider-with-left-image__card-image-placeholder span {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
   color: #183754;
-  font-size: 14px;
+  text-transform: uppercase;
 }
 
 /* ========================================
@@ -236,11 +243,14 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
-  margin: 0 0 4px 0;
+  margin: 0 0 8px 0;
   text-align: left;
   width: 100%;
   color: #183754;
   text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .custom-section-feature-slider-with-left-image__card-title-link {
@@ -319,8 +329,7 @@
 }
 
 .custom-section-feature-slider-with-left-image__wishlist-button--active {
-  background-color: #183754;
-  color: #fffaf5;
+  background-color: #fffaf5;
 }
 
 .custom-section-feature-slider-with-left-image__wishlist-button:hover {
@@ -419,6 +428,7 @@
   .custom-section-feature-slider-with-left-image__card-title {
     font-size: 18px;
     line-height: 26px;
+    margin-bottom: 8px;
   }
 }
 
@@ -448,6 +458,11 @@
   .custom-section-feature-slider-with-left-image__header {
     padding: 0 40px;
   }
+
+  .custom-section-feature-slider-with-left-image__nav-buttons {
+    margin-right: 0;
+  }
+
   .custom-section-feature-slider-with-left-image__carousel-wrapper {
     padding-left: 20px;
   }
@@ -485,6 +500,7 @@
   .custom-section-feature-slider-with-left-image__card-title {
     font-size: 18px;
     line-height: 26px;
+    margin-bottom: 8px;
   }
 }
 
@@ -544,7 +560,7 @@
   .custom-section-feature-slider-with-left-image__card-title {
     font-size: 16px;
     line-height: 24px;
-    margin: 0 0 3px 0;
+    margin: 0 0 8px 0;
   }
 
   .custom-section-feature-slider-with-left-image__card-price {
@@ -562,6 +578,11 @@
   .custom-section-feature-slider-with-left-image__wishlist-button svg {
     width: 16px;
     height: 16px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-placeholder span {
+    font-size: 14px;
+    line-height: 18px;
   }
 }
 
@@ -582,10 +603,16 @@
   .custom-section-feature-slider-with-left-image__card-title {
     font-size: 14px;
     line-height: 20px;
+    margin-bottom: 6px;
   }
 
   .custom-section-feature-slider-with-left-image__card-price {
     font-size: 11px;
+  }
+
+  .custom-section-feature-slider-with-left-image__card-image-placeholder span {
+    font-size: 12px;
+    line-height: 16px;
   }
 }
 

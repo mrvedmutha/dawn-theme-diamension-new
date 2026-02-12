@@ -31,12 +31,20 @@
    */
   const initCardHover = (card, sectionId) => {
     const cta = card.querySelector('.custom-section-four-collection-arch__card-cta');
+    const overlay = card.querySelector('.custom-section-four-collection-arch__card-overlay');
 
-    if (!cta) return;
+    if (!cta || !overlay) return;
 
     // Mouse enter handler
     const handleMouseEnter = () => {
       if (!isDesktop()) return;
+
+      // Overlay animation: fade in
+      gsap.to(overlay, {
+        opacity: 1,
+        duration: CONFIG.CTA_DURATION,
+        ease: CONFIG.EASING,
+      });
 
       // CTA animation: fade in while moving up
       gsap.fromTo(
@@ -50,13 +58,20 @@
           y: 0,
           duration: CONFIG.CTA_DURATION,
           ease: CONFIG.EASING,
-        }
+        },
       );
     };
 
     // Mouse leave handler
     const handleMouseLeave = () => {
       if (!isDesktop()) return;
+
+      // Fade out overlay
+      gsap.to(overlay, {
+        opacity: 0,
+        duration: CONFIG.CTA_DURATION,
+        ease: CONFIG.EASING,
+      });
 
       // Fade out CTA
       gsap.to(cta, {
@@ -88,10 +103,16 @@
       delete card._hoverHandlers;
     }
 
-    // Reset CTA styles
+    // Reset CTA and overlay styles
     const cta = card.querySelector('.custom-section-four-collection-arch__card-cta');
+    const overlay = card.querySelector('.custom-section-four-collection-arch__card-overlay');
+
     if (cta) {
       gsap.set(cta, { opacity: isDesktop() ? 0 : 1, y: 0 });
+    }
+
+    if (overlay) {
+      gsap.set(overlay, { opacity: isDesktop() ? 0 : 1 });
     }
   };
 

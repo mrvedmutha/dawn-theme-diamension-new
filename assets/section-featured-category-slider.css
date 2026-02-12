@@ -201,7 +201,7 @@
   position: absolute;
   font-family: var(--font-body);
   font-size: var(--font-size-button);
-  line-height: var(--line-height-button);
+  line-height: 1;
   color: var(--color-button-text);
   text-decoration: underline;
   text-underline-offset: 25%;

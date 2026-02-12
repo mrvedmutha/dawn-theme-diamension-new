@@ -124,6 +124,7 @@
     // Handle image URLs - Shopify API returns images as objects with 'src' property
     const primaryImage = product.images?.[0]?.src || product.images?.[0] || '';
     const hoverImage = product.images?.[1]?.src || product.images?.[1] || product.images?.[0]?.src || product.images?.[0] || '';
+    const hasImage = !!primaryImage;
     const price = product.variants[0]?.price || 0;
     const formattedPrice = `₹ ${parseFloat(price).toLocaleString('en-IN')}`;
     const isLiked = WishlistManager.has(product.id.toString());
@@ -132,6 +133,9 @@
       <div class="custom-section-shop-by-price__product-card" data-product-id="${product.id}">
         <div class="custom-section-shop-by-price__image-container">
           <a href="/products/${product.handle}" class="custom-section-shop-by-price__product-link">
+            ${
+              hasImage
+                ? `
             <img
               src="${primaryImage}"
               alt="${product.title}"
@@ -141,14 +145,21 @@
             ${
               hoverImage !== primaryImage
                 ? `
-              <img
-                src="${hoverImage}"
-                alt="${product.title}"
-                class="custom-section-shop-by-price__product-image custom-section-shop-by-price__product-image--hover"
-                loading="lazy"
-              >
+            <img
+              src="${hoverImage}"
+              alt="${product.title}"
+              class="custom-section-shop-by-price__product-image custom-section-shop-by-price__product-image--hover"
+              loading="lazy"
+            >
             `
                 : ''
+            }
+            `
+                : `
+            <div class="custom-section-shop-by-price__no-image">
+              <span>No Image</span>
+            </div>
+            `
             }
           </a>
           <button

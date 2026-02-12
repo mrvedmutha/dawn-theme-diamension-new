@@ -449,20 +449,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const containerRect = categoryNamesContainer.getBoundingClientRect();
       const categoryRect = categoryElement.getBoundingClientRect();
 
-      // Calculate offset from center of category names container
+      // Calculate offset to align button top with category top edge
       const containerCenter = containerRect.top + containerRect.height / 2;
-      const categoryCenter = categoryRect.top + categoryRect.height / 2;
-      const offsetFromCenter = categoryCenter - containerCenter;
+      const categoryTop = categoryRect.top;
+      const offsetFromCenter = categoryTop - containerCenter;
 
       this.shopNowBtns.forEach((btn) => {
+        const btnRect = btn.getBoundingClientRect();
+        // Add half button height to position button top at category top
+        const finalOffset = offsetFromCenter + btnRect.height / 2;
+
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           gsap.to(btn, {
-            y: offsetFromCenter,
+            y: finalOffset,
             duration: 0.5,
             ease: 'power2.inOut',
           });
         } else {
-          btn.style.transform = `translateY(calc(-50% + ${offsetFromCenter}px))`;
+          btn.style.transform = `translateY(calc(-50% + ${finalOffset}px))`;
         }
       });
     }

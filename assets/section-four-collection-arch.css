@@ -62,19 +62,37 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  z-index: 1;
+}
+
+/* Card Overlay
+   ========================================================================== */
+
+.custom-section-four-collection-arch__card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .custom-section-four-collection-arch__card-content {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 
 .custom-section-four-collection-arch__card-link {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   text-decoration: none;
 }
 
@@ -143,6 +161,10 @@
     border-radius: 1000px 1000px 0 0;
   }
 
+  .custom-section-four-collection-arch__card:hover .custom-section-four-collection-arch__card-overlay {
+    /* Overlay animation applied via GSAP */
+  }
+
   .custom-section-four-collection-arch__card:hover .custom-section-four-collection-arch__card-cta {
     /* CTA animation applied via GSAP */
   }
@@ -164,7 +186,11 @@
     height: 544px;
   }
 
-  /* Show CTA on tablet */
+  /* Show overlay and CTA on tablet */
+  .custom-section-four-collection-arch__card-overlay {
+    opacity: 1;
+  }
+
   .custom-section-four-collection-arch__card-cta {
     opacity: 1;
   }
@@ -198,6 +224,11 @@
     font-size: 28px;
     line-height: 32px;
     padding: 0 20px;
+  }
+
+  /* Show overlay and CTA on mobile */
+  .custom-section-four-collection-arch__card-overlay {
+    opacity: 1;
   }
 
   .custom-section-four-collection-arch__card-cta {
