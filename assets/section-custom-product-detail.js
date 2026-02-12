@@ -344,7 +344,7 @@
         img.className = 'custom-product-detail__image';
         img.dataset.mainMedia = '';
         img.dataset.mediaType = 'image';
-        mainMediaContainer.insertBefore(img, mainMediaContainer.querySelector('.custom-product-detail__wishlist-btn'));
+        mainMediaContainer.insertBefore(img, mainMediaContainer.querySelector('[data-wishlist-toggle]'));
         mainMedia = img;
       }
 
@@ -384,7 +384,7 @@
         video.playsInline = true;
         mainMediaContainer.insertBefore(
           video,
-          mainMediaContainer.querySelector('.custom-product-detail__wishlist-btn'),
+          mainMediaContainer.querySelector('[data-wishlist-toggle]'),
         );
         mainMedia = video;
       }
@@ -927,112 +927,11 @@
 
   // ===== 4. WISHLIST =====
 
-  // Storage Manager for wishlist
-  const WishlistStorage = {
-    STORAGE_KEY: 'project_wishlist_items',
-
-    get() {
-      try {
-        const data = localStorage.getItem(this.STORAGE_KEY);
-        return data ? JSON.parse(data) : [];
-      } catch (error) {
-        console.error('Error reading wishlist storage:', error);
-        return [];
-      }
-    },
-
-    add(itemId) {
-      const wishlist = this.get();
-      if (!wishlist.includes(itemId)) {
-        wishlist.push(itemId);
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(wishlist));
-      }
-    },
-
-    remove(itemId) {
-      const wishlist = this.get();
-      const filtered = wishlist.filter((id) => id !== itemId);
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(filtered));
-    },
-
-    has(itemId) {
-      return this.get().includes(itemId);
-    },
-
-    toggle(itemId) {
-      if (this.has(itemId)) {
-        this.remove(itemId);
-        return false; // Not liked anymore
-      } else {
-        this.add(itemId);
-        return true; // Now liked
-      }
-    },
-  };
-
-  // GSAP animation for wishlist button
-  function animateWishlistButton(button) {
-    if (!window.gsap) {
-      console.warn('GSAP not loaded, skipping animation');
-      return;
-    }
-
-    const timeline = gsap.timeline();
-
-    // Step 1: Scale down (press effect)
-    timeline.to(button, {
-      scale: 0.85,
-      duration: 0.1,
-      ease: 'power2.in',
-    });
-
-    // Step 2: Spring back with bounce
-    timeline.to(button, {
-      scale: 1,
-      duration: 0.15,
-      ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
-    });
-  }
-
   function initWishlist(section, productData) {
-    const wishlistBtn = section.querySelector('.custom-product-detail__wishlist-btn');
-
-    if (!wishlistBtn) return;
-
-    const productId = productData.id;
-
-    // Check if already in wishlist
-    if (WishlistStorage.has(productId)) {
-      wishlistBtn.classList.add('custom-product-detail__wishlist-btn--active');
+    // Initialize wishlist buttons using global WishlistManager
+    if (window.WishlistManager) {
+      window.WishlistManager.initializeButtons();
     }
-
-    wishlistBtn.addEventListener('click', function (e) {
-      e.preventDefault();
-
-      // Toggle wishlist state
-      const isNowLiked = WishlistStorage.toggle(productId);
-
-      // Trigger animation
-      animateWishlistButton(this);
-
-      // Update button visual state
-      if (isNowLiked) {
-        this.classList.add('custom-product-detail__wishlist-btn--active');
-      } else {
-        this.classList.remove('custom-product-detail__wishlist-btn--active');
-      }
-
-      // Dispatch custom event for other parts of theme
-      document.dispatchEvent(
-        new CustomEvent('wishlist:updated', {
-          detail: {
-            wishlist: WishlistStorage.get(),
-            productId: productId,
-            isLiked: isNowLiked,
-          },
-        }),
-      );
-    });
   }
 
   // ===== 5. VARIANT SELECTION =====

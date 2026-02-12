@@ -77,83 +77,9 @@ class CollectionDiamension {
    * Initialize wishlist functionality
    */
   initWishlist() {
-    const wishlistButtons = this.container.querySelectorAll('[data-wishlist-toggle]');
-
-    wishlistButtons.forEach(btn => {
-      // Remove existing listeners by cloning
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-
-      const productId = newBtn.dataset.productId;
-
-      // Check if in wishlist
-      if (this.isInWishlist(productId)) {
-        newBtn.classList.add('is-active');
-      }
-
-      // Add click handler
-      newBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        this.toggleWishlist(newBtn, productId);
-      });
-    });
-  }
-
-  /**
-   * Toggle product in wishlist
-   */
-  toggleWishlist(btn, productId) {
-    const wishlist = this.getWishlist();
-    const index = wishlist.indexOf(productId);
-
-    if (index > -1) {
-      // Remove from wishlist
-      wishlist.splice(index, 1);
-      btn.classList.remove('is-active');
-    } else {
-      // Add to wishlist
-      wishlist.push(productId);
-      btn.classList.add('is-active');
+    if (window.WishlistManager) {
+      window.WishlistManager.initializeButtons();
     }
-
-    this.saveWishlist(wishlist);
-    this.animateWishlist(btn);
-  }
-
-  /**
-   * Get wishlist from localStorage
-   */
-  getWishlist() {
-    const stored = localStorage.getItem('diamension_wishlist');
-    return stored ? JSON.parse(stored) : [];
-  }
-
-  /**
-   * Save wishlist to localStorage
-   */
-  saveWishlist(wishlist) {
-    localStorage.setItem('diamension_wishlist', JSON.stringify(wishlist));
-  }
-
-  /**
-   * Check if product is in wishlist
-   */
-  isInWishlist(productId) {
-    const wishlist = this.getWishlist();
-    return wishlist.includes(productId);
-  }
-
-  /**
-   * Animate wishlist button
-   */
-  animateWishlist(btn) {
-    btn.style.transform = 'scale(0.85)';
-    btn.style.transition = 'transform 0.15s ease';
-
-    setTimeout(() => {
-      btn.style.transform = 'scale(1)';
-    }, 150);
   }
 }
 

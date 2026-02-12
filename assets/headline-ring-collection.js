@@ -83,7 +83,7 @@
       const headlineTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.section,
-          start: 'top 80%',
+          start: '30% 80%',
           once: true,
         },
         delay: 0.4,
@@ -147,7 +147,7 @@
           ease: 'power3.out',
           scrollTrigger: {
             trigger: this.section,
-            start: 'top 75%',
+            start: '30% 75%',
             once: true,
           },
         });
@@ -164,7 +164,7 @@
           ease: 'power3.out',
           scrollTrigger: {
             trigger: this.section,
-            start: 'top 70%',
+            start: '30% 70%',
             once: true,
           },
         });
@@ -182,7 +182,7 @@
           ease: 'power3.out',
           scrollTrigger: {
             trigger: this.section,
-            start: 'top 80%',
+            start: '30% 80%',
             once: true,
           },
         });
@@ -216,7 +216,7 @@
             stagger: 0.15,
             scrollTrigger: {
               trigger: this.section,
-              start: 'top 80%',
+              start: '30% 80%',
               once: true,
             },
           });
@@ -251,7 +251,7 @@
             stagger: 0.1,
             scrollTrigger: {
               trigger: this.section,
-              start: 'top 80%',
+              start: '30% 80%',
               once: true,
             },
           });

@@ -16,8 +16,12 @@ class RelatedProductsCarousel {
 
   init() {
     this.setupCarousel();
-    this.setupWishlist();
     this.updateArrowVisibility();
+
+    // Initialize wishlist buttons using global WishlistManager
+    if (window.WishlistManager) {
+      window.WishlistManager.initializeButtons();
+    }
   }
 
   setupCarousel() {
@@ -80,29 +84,6 @@ class RelatedProductsCarousel {
     }
   }
 
-  setupWishlist() {
-    // Attach individual listeners to each button
-    this.wishlistButtons.forEach((button) => {
-      button.addEventListener(
-        'click',
-        (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-
-          // Toggle the active class
-          button.classList.toggle('is-active');
-
-          // Add animation
-          button.style.transform = 'scale(0.85)';
-          setTimeout(() => {
-            button.style.transform = 'scale(1)';
-          }, 150);
-        },
-        { capture: true }
-      );
-    });
-  }
 }
 
 // Initialize on DOM ready

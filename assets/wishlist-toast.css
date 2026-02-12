@@ -1,0 +1,137 @@
+/* ============================================
+   Wishlist Toast Notification
+   ============================================ */
+
+.wishlist-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background-color: #183754;
+  color: #fffaf5;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(24, 55, 84, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+    opacity 0.3s ease;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.wishlist-toast[hidden] {
+  display: flex; /* Keep in DOM for animation */
+  pointer-events: none;
+}
+
+.wishlist-toast.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wishlist-toast__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.wishlist-toast__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #fffaf5;
+}
+
+.wishlist-toast__icon path {
+  stroke: #fffaf5 !important;
+  fill: none !important;
+  stroke-width: 1.5;
+}
+
+.wishlist-toast__message {
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fffaf5;
+}
+
+.wishlist-toast__link {
+  color: #fffaf5;
+  text-decoration: underline;
+  font-family: 'Neue Montreal', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.wishlist-toast__link:hover {
+  opacity: 0.8;
+}
+
+.wishlist-toast__close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fffaf5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.wishlist-toast__close:hover {
+  opacity: 0.7;
+}
+
+.wishlist-toast__close:focus-visible {
+  outline: 2px solid #fffaf5;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.wishlist-toast__close svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .wishlist-toast {
+    bottom: 20px;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .wishlist-toast__content {
+    gap: 10px;
+  }
+
+  .wishlist-toast__message,
+  .wishlist-toast__link {
+    font-size: 14px;
+  }
+
+  .wishlist-toast__icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .wishlist-toast {
+    bottom: 30px;
+  }
+}

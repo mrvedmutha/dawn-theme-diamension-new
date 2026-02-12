@@ -1,0 +1,105 @@
+{{ 'section-wishlist.css' | asset_url | stylesheet_tag }}
+{{ 'section-product-collection-diamension.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-section-wishlist" data-section-id="{{ section.id }}">
+  <div class="custom-section-wishlist__container">
+    {%- comment -%} Header with title and count {%- endcomment -%}
+    <div class="custom-section-wishlist__header">
+      <h1 class="custom-section-wishlist__title">{{ section.settings.heading }}</h1>
+      <p class="custom-section-wishlist__count" data-wishlist-count hidden>
+        <span data-wishlist-count-number>0</span> items
+      </p>
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    <div
+      class="custom-section-wishlist__grid"
+      data-wishlist-products
+    >
+      {%- comment -%} Products will be loaded dynamically via JavaScript {%- endcomment -%}
+    </div>
+
+    {%- comment -%} Empty State {%- endcomment -%}
+    <div
+      class="custom-section-wishlist__empty"
+      data-empty-state="visible"
+    >
+      <svg class="custom-section-wishlist__empty-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_empty)">
+          <mask id="mask0_empty" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+            <path d="M24 0H0V24H24V0Z" fill="white"/>
+          </mask>
+          <g mask="url(#mask0_empty)">
+            <path d="M20.59 4.96961C21.47 5.95961 22 7.25961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8196C12.28 20.9396 11.72 20.9396 11.38 20.8196C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="clip0_empty">
+            <rect width="24" height="24" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+      <h2 class="custom-section-wishlist__empty-title">{{ section.settings.empty_title }}</h2>
+      <p class="custom-section-wishlist__empty-text">{{ section.settings.empty_text }}</p>
+      <a href="{{ section.settings.empty_button_link }}" class="custom-section-wishlist__empty-button">
+        {{ section.settings.empty_button_text }}
+      </a>
+    </div>
+
+    {%- comment -%} Loading State {%- endcomment -%}
+    <div class="custom-section-wishlist__loading" data-loading-state hidden>
+      <p>Loading your wishlist...</p>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'section-wishlist.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "tag": "section",
+  "class": "section-wishlist",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Wishlist"
+    },
+    {
+      "type": "header",
+      "content": "Empty State"
+    },
+    {
+      "type": "text",
+      "id": "empty_title",
+      "label": "Empty Title",
+      "default": "Your wishlist is empty"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Empty Text",
+      "default": "You haven't added any products to your wishlist yet. Browse our collections and save your favorites!"
+    },
+    {
+      "type": "text",
+      "id": "empty_button_text",
+      "label": "Empty Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "empty_button_link",
+      "label": "Empty Button Link",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist"
+    }
+  ]
+}
+{% endschema %}
