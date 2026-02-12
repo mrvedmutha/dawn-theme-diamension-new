@@ -180,6 +180,7 @@
       "blocks": {
         "product_pointer_kqwr3X": {
           "type": "product_pointer",
+          "disabled": true,
           "settings": {
             "product": "linear-trinity-emerald-cut-ring",
             "x_position": "55",
@@ -189,6 +190,7 @@
         },
         "product_pointer_KjFABw": {
           "type": "product_pointer",
+          "disabled": true,
           "settings": {
             "product": "cascading-laurel-wrap-ring",
             "x_position": "50",

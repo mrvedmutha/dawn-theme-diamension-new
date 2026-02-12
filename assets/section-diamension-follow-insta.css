@@ -127,7 +127,7 @@
    ========================================================================== */
 .custom-section-diamension-follow-insta__ellipse {
   position: absolute;
-  top: 50%;
+  top: 62%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -170,6 +170,7 @@
     width: 1224px;
     max-width: 100%;
     margin: 0 auto;
+    margin-top: 200px;
     height: 540px;
     min-height: 540px;
   }
@@ -272,7 +273,7 @@
 @media (min-width: 1025px) and (max-width: 1224px) {
   .custom-section-diamension-follow-insta__image-wrapper--2 {
     top: 180px;
-    left: calc(23.5% - 20px);
+    left: calc(20.5% - 20px);
     z-index: 3;
   }
 }
@@ -410,9 +411,13 @@
   text-align: center;
   position: relative;
   z-index: 6;
+  margin-top: 160px;
 }
 
 @media (max-width: 1024px) {
+  .custom-section-diamension-follow-insta__cta-wrapper {
+    margin-top: 0px;
+  }
   .custom-section-diamension-follow-insta__cta {
     font-size: 18px;
     margin-top: 40px;

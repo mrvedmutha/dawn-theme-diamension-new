@@ -117,7 +117,7 @@
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
     "currency_code_enabled": true,
-    "preloader_enabled": true,
+    "preloader_enabled": false,
     "preloader_logo": "shopify://shop_images/diamension-logo.svg",
     "preloader_logo_max_width": 56,
     "preloader_image": "shopify://shop_images/ring-image.png",
