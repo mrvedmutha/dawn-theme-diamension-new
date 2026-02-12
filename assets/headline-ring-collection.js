@@ -95,7 +95,7 @@
           this.headlineLine1,
           {
             clipPath: 'inset(0 0% 0 0)',
-            duration: 0.8,
+            duration: 1.5,
             ease: 'power3.out',
           },
           0,
@@ -108,7 +108,7 @@
           this.headlineLine2,
           {
             clipPath: 'inset(0 0 0 0%)',
-            duration: 0.8,
+            duration: 1.5,
             ease: 'power3.out',
           },
           0.2,
@@ -121,7 +121,7 @@
           this.headlineLine3,
           {
             clipPath: 'inset(0 0% 0 0)',
-            duration: 0.8,
+            duration: 1.5,
             ease: 'power3.out',
           },
           0.4,

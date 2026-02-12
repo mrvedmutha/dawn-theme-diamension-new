@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: 'Neue Montreal';
-  src: url('NeueMontreal-Regular.woff2') format('woff2'),
+  src:
+    url('NeueMontreal-Regular.woff2') format('woff2'),
     url('NeueMontreal-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
@@ -200,7 +201,7 @@
 .custom-diamension-footer__newsletter-description {
   font-family: 'Neue Montreal', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   text-transform: capitalize;
   color: var(--footer-text-primary);
   margin: 0 0 48px 0;
@@ -297,7 +298,7 @@
 .custom-diamension-footer__bottom-credit {
   font-family: 'Neue Montreal', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   text-transform: capitalize;
   color: var(--footer-text-secondary);
   margin: 0;
@@ -319,7 +320,7 @@
 .custom-diamension-footer__bottom-copyright {
   font-family: 'Neue Montreal', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   text-transform: capitalize;
   color: var(--footer-text-secondary);
   margin: 0;
