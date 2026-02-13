@@ -145,14 +145,24 @@
   display: block;
 }
 
-/* Paragraph Content
+/* Content and Features Wrapper
    ========================================================================== */
-.headline-ring-collection__content {
+.headline-ring-collection__content-features-wrapper {
   position: absolute;
   top: 536px;
   right: 240px;
-  max-width: 496px;
+  width: 496px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
   z-index: 1;
+}
+
+/* Paragraph Content
+   ========================================================================== */
+.headline-ring-collection__content {
+  position: relative;
+  max-width: 496px;
 }
 
 .headline-ring-collection__paragraph {
@@ -167,10 +177,7 @@
 /* Feature Icons
    ========================================================================== */
 .headline-ring-collection__features {
-  position: absolute;
-  top: calc(536px + 150px + 72px);
-  left: 704px;
-  z-index: 1;
+  position: relative;
 }
 
 .headline-ring-collection__feature {
@@ -224,7 +231,8 @@
 
 .headline-ring-collection__badge-image {
   max-width: 100px;
-  height: auto;
+  height: 42px;
+  object-fit: contain;
   display: block;
 }
 
@@ -286,15 +294,23 @@
     transform: rotate(3deg);
   }
 
-  .headline-ring-collection__content {
+  .headline-ring-collection__content-features-wrapper {
     position: static;
-    max-width: 100%;
+    width: 100%;
+    right: auto;
+    top: auto;
     margin-bottom: 40px;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .headline-ring-collection__content {
+    max-width: 100%;
+    margin-bottom: 0;
   }
 
   .headline-ring-collection__features {
-    position: static;
-    margin-bottom: 40px;
+    margin-bottom: 0;
   }
 
   .headline-ring-collection__badges {
@@ -332,17 +348,18 @@
     margin: 16px auto 8px;
   }
 
-  .headline-ring-collection__content {
+  .headline-ring-collection__content-features-wrapper {
     margin-bottom: 32px;
+    gap: 32px;
+  }
+
+  .headline-ring-collection__content {
+    margin-bottom: 0;
   }
 
   .headline-ring-collection__paragraph {
     font-size: 16px;
     line-height: 24px;
-  }
-
-  .headline-ring-collection__features {
-    margin-bottom: 32px;
   }
 
   .headline-ring-collection__feature {
@@ -372,6 +389,7 @@
 
   .headline-ring-collection__badge-image {
     max-width: 80px;
+    height: 36px;
   }
 }
 

@@ -68,55 +68,60 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Paragraph Content {%- endcomment -%}
-      {%- if paragraph_content != blank -%}
-        <div class="headline-ring-collection__content">
-          <p class="headline-ring-collection__paragraph">
-            {{ paragraph_content }}
-          </p>
+      {%- comment -%} Content and Features Wrapper {%- endcomment -%}
+      <div class="headline-ring-collection__content-features-wrapper">
+
+        {%- comment -%} Paragraph Content {%- endcomment -%}
+        {%- if paragraph_content != blank -%}
+          <div class="headline-ring-collection__content">
+            <p class="headline-ring-collection__paragraph">
+              {{ paragraph_content }}
+            </p>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Feature Icons {%- endcomment -%}
+        <div class="headline-ring-collection__features">
+
+          {%- if feature_1_icon != blank or feature_1_text != blank -%}
+            <div class="headline-ring-collection__feature">
+              {%- if feature_1_icon != blank -%}
+                <div class="headline-ring-collection__feature-icon">
+                  {{- feature_1_icon | image_url: width: 100 | image_tag:
+                    loading: 'lazy',
+                    class: 'headline-ring-collection__icon',
+                    alt: 'Quality craftmanship icon'
+                  -}}
+                </div>
+              {%- endif -%}
+              {%- if feature_1_text != blank -%}
+                <p class="headline-ring-collection__feature-text">
+                  {{ feature_1_text }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if feature_2_icon != blank or feature_2_text != blank -%}
+            <div class="headline-ring-collection__feature">
+              {%- if feature_2_icon != blank -%}
+                <div class="headline-ring-collection__feature-icon">
+                  {{- feature_2_icon | image_url: width: 100 | image_tag:
+                    loading: 'lazy',
+                    class: 'headline-ring-collection__icon',
+                    alt: 'Sustainability icon'
+                  -}}
+                </div>
+              {%- endif -%}
+              {%- if feature_2_text != blank -%}
+                <p class="headline-ring-collection__feature-text">
+                  {{ feature_2_text }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
         </div>
-      {%- endif -%}
-
-      {%- comment -%} Feature Icons {%- endcomment -%}
-      <div class="headline-ring-collection__features">
-
-        {%- if feature_1_icon != blank or feature_1_text != blank -%}
-          <div class="headline-ring-collection__feature">
-            {%- if feature_1_icon != blank -%}
-              <div class="headline-ring-collection__feature-icon">
-                {{- feature_1_icon | image_url: width: 100 | image_tag:
-                  loading: 'lazy',
-                  class: 'headline-ring-collection__icon',
-                  alt: 'Quality craftmanship icon'
-                -}}
-              </div>
-            {%- endif -%}
-            {%- if feature_1_text != blank -%}
-              <p class="headline-ring-collection__feature-text">
-                {{ feature_1_text }}
-              </p>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        {%- if feature_2_icon != blank or feature_2_text != blank -%}
-          <div class="headline-ring-collection__feature">
-            {%- if feature_2_icon != blank -%}
-              <div class="headline-ring-collection__feature-icon">
-                {{- feature_2_icon | image_url: width: 100 | image_tag:
-                  loading: 'lazy',
-                  class: 'headline-ring-collection__icon',
-                  alt: 'Sustainability icon'
-                -}}
-              </div>
-            {%- endif -%}
-            {%- if feature_2_text != blank -%}
-              <p class="headline-ring-collection__feature-text">
-                {{ feature_2_text }}
-              </p>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
 
       </div>
 

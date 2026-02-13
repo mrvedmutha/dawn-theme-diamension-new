@@ -60,7 +60,7 @@
     "custom-diamension-footer-image": {
       "type": "custom-diamension-footer-image",
       "settings": {
-        "footer_image": "shopify://shop_images/masked-lady-wearing-jewelery-rings.jpg"
+        "footer_image": "shopify://shop_images/footer-home.jpg"
       }
     }
   },

@@ -11,7 +11,7 @@
 .custom-section-shop-by-price__container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 120px 56px;
+  padding: 60px 56px;
 }
 
 /* Large Desktop: Center content, don't stretch beyond 1440px */
@@ -431,7 +431,7 @@
 
 @media (max-width: 1024px) {
   .custom-section-shop-by-price__container {
-    padding: 80px 40px;
+    padding: 40px;
   }
 
   .custom-section-shop-by-price__header {
@@ -524,7 +524,7 @@
 
 @media (max-width: 767px) {
   .custom-section-shop-by-price__container {
-    padding: 60px 20px;
+    padding: 40px 20px;
   }
 
   .custom-section-shop-by-price__header {
@@ -726,7 +726,7 @@
 
 @media (max-width: 375px) {
   .custom-section-shop-by-price__container {
-    padding: 40px 15px;
+    padding: 30px 15px;
   }
 
   .custom-section-shop-by-price__title {
