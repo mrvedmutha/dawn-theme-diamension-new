@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: 'Bickham Script Pro';
-  src: url('fonts/Bickham Script Pro/Bickham Script Pro Regular.woff') format('woff');
+  src: url('Bickham Script Pro Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -17,8 +17,8 @@
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff2') format('woff2'),
-    url('fonts/neue-haas-display/NeueHaasDisplay-Light.woff') format('woff');
+  src: url('NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('NeueHaasDisplay-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -26,8 +26,8 @@
 
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff2') format('woff2'),
-    url('fonts/neue-haas-display/NeueHaasDisplay-Roman.woff') format('woff');
+  src: url('NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
