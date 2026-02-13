@@ -5,8 +5,9 @@
 /* Font Face Declarations */
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Light.woff2') format('woff2'),
-       url('NeueHaasDisplay-Light.woff') format('woff');
+  src:
+    url('NeueHaasDisplay-Light.woff2') format('woff2'),
+    url('NeueHaasDisplay-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -14,8 +15,9 @@
 
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Roman.woff2') format('woff2'),
-       url('NeueHaasDisplay-Roman.woff') format('woff');
+  src:
+    url('NeueHaasDisplay-Roman.woff2') format('woff2'),
+    url('NeueHaasDisplay-Roman.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -23,8 +25,9 @@
 
 @font-face {
   font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Bold.woff2') format('woff2'),
-       url('NeueHaasDisplay-Bold.woff') format('woff');
+  src:
+    url('NeueHaasDisplay-Bold.woff2') format('woff2'),
+    url('NeueHaasDisplay-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -37,7 +40,7 @@
 .custom-section-image-hero {
   position: relative;
   width: 100%;
-  height: 800px;
+  height: 900px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,7 +123,7 @@
 /* Tablet - Adjust layout */
 @media (max-width: 1024px) {
   .custom-section-image-hero {
-    height: 600px;
+    height: 900px;
   }
 
   .custom-section-image-hero__content {

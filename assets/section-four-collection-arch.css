@@ -22,7 +22,7 @@
 }
 
 .custom-section-four-collection-arch__heading {
-  font-family: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-weight: 400;
   font-size: clamp(28px, 3vw, 40px);
   line-height: 1.125;
