@@ -109,7 +109,7 @@
 /* Tablet and Below - 1024px (Use 2 Column Layout) */
 @media (max-width: 1024px) {
   .custom-section-trust-badge {
-    padding: 100px 80px;
+    padding: 60px 80px;
   }
 
   .custom-section-trust-badge__grid {
@@ -138,7 +138,7 @@
     height: 60px;
   }
   .custom-section-trust-badge {
-    padding: 60px 40px;
+    padding: 45px;
   }
 
   .custom-section-trust-badge__grid {

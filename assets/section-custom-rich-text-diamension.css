@@ -131,7 +131,7 @@
 /* Tablet and Below - 1024px (Use Mobile Layout) */
 @media (max-width: 1024px) {
   .custom-section-rich-text-diamension {
-    padding: 100px 200px;
+    padding: 60px 200px;
   }
 
   .custom-section-rich-text-diamension__container {
@@ -156,7 +156,7 @@
   /* Mobile layout is now handled by 1024px breakpoint */
   /* This breakpoint can be used for additional mobile-specific adjustments if needed */
   .custom-section-rich-text-diamension {
-    padding: 90px 50px;
+    padding: 45px;
   }
 }
 

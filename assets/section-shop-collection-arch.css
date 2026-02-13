@@ -359,7 +359,7 @@
    ============================================================================ */
 @media screen and (max-width: 767px) {
   .custom-section-shop-collection-arch__container {
-    padding: 40px var(--sca-container-padding-mobile);
+    padding: 45px var(--sca-container-padding-mobile);
   }
 
   .custom-section-shop-collection-arch__heading {

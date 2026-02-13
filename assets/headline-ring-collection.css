@@ -230,7 +230,7 @@
 }
 
 .headline-ring-collection__badge-image {
-  max-width: 100px;
+  width: auto;
   height: 42px;
   object-fit: contain;
   display: block;
@@ -321,7 +321,7 @@
 /* Mobile */
 @media (max-width: 767px) {
   .headline-ring-collection__wrapper {
-    padding: 40px 0;
+    padding: 45px 0;
   }
 
   .headline-ring-collection__container {
@@ -388,8 +388,9 @@
   }
 
   .headline-ring-collection__badge-image {
-    max-width: 80px;
+    width: auto;
     height: 36px;
+    object-fit: contain;
   }
 }
 

@@ -188,8 +188,8 @@
   }
 
   .custom-diamension-before-footer-hero__quote {
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 28px;
+    line-height: 34px;
   }
 
   .custom-diamension-before-footer-hero__caption-wrapper {
@@ -197,8 +197,8 @@
   }
 
   .custom-diamension-before-footer-hero__caption {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 28px;
   }
 
   .custom-diamension-before-footer-hero__image-wrapper {
@@ -217,6 +217,16 @@
   .custom-diamension-before-footer-hero__quote-wrapper {
     width: 384px;
   }
+
+  .custom-diamension-before-footer-hero__quote {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 18px;
+    line-height: 26px;
+  }
 }
 
 /* Mobile Small - Below 480px
@@ -224,6 +234,16 @@
 @media (max-width: 479px) {
   .custom-diamension-before-footer-hero__quote-wrapper {
     width: 320px;
+  }
+
+  .custom-diamension-before-footer-hero__quote {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .custom-diamension-before-footer-hero__caption {
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .custom-diamension-before-footer-hero__image-wrapper {
@@ -241,13 +261,13 @@
   }
 
   .custom-diamension-before-footer-hero__quote {
-    font-size: 28px;
-    line-height: 36px;
+    font-size: 22px;
+    line-height: 28px;
   }
 
   .custom-diamension-before-footer-hero__caption {
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 14px;
+    line-height: 22px;
   }
 }
 

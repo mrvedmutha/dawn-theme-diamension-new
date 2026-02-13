@@ -54,7 +54,7 @@
 
 @media (max-width: 767px) {
   .custom-section-diamension-follow-insta__wrapper {
-    padding: 40px 0;
+    padding: 45px 0;
   }
 }
 
@@ -109,6 +109,7 @@
     font-size: 32px;
     line-height: 32px;
     margin-bottom: 60px;
+    white-space: normal;
   }
 }
 
