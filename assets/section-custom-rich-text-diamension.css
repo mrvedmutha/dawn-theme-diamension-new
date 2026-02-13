@@ -61,10 +61,10 @@
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
-  font-size: 60px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 400;
-  line-height: 50px; /* 112.5% */
+  line-height: 45px;
   text-transform: uppercase;
   margin: 0;
   max-width: 619.228px;
@@ -97,11 +97,11 @@
   }
 
   .custom-section-rich-text-diamension__headline {
-    max-width: 619.228px;
+    max-width: 620px;
   }
 
   .custom-section-rich-text-diamension__subtext {
-    max-width: 477.15px;
+    max-width: 478px;
   }
 }
 
