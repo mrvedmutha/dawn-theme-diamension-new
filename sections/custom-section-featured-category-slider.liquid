@@ -136,7 +136,7 @@
         {{ first_block.settings.category_name | default: 'Category Name' | upcase }}
       </h2>
       <p class="custom-section-featured-category-slider__category-description-mobile">
-        {{ first_block.settings.description | default: 'Category description text goes here.' }}
+        {{ first_block.settings.description }}
       </p>
       <a
         href="{% if first_block.settings.collection != blank %}{{ first_block.settings.collection.url }}{% else %}#{% endif %}"
@@ -159,7 +159,7 @@
           "videoDirectUrl": "{{ block.settings.video_direct_url | escape }}",
           "videoYouTubeVimeo": "{{ block.settings.video_youtube_vimeo | escape }}",
           "collectionUrl": "{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}",
-          "description": "{{ block.settings.description | default: 'Category description text goes here.' | escape }}",
+          "description": "{{ block.settings.description | escape }}",
           "fallbackImage": "{% if block.settings.fallback_image != blank %}{{ block.settings.fallback_image | image_url: width: 1920 }}{% endif %}"
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}

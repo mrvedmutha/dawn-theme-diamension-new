@@ -470,6 +470,13 @@
   }
 }
 
+/* Tablet Only: 768px - 1024px - Newsletter Section Constrained */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .custom-diamension-footer__newsletter {
+    max-width: 50%;
+  }
+}
+
 /* Mid Mobile: 767px - 480px */
 @media (max-width: 767px) {
   .custom-diamension-footer__bottom-copyright,

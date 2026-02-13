@@ -450,9 +450,9 @@
 
   .custom-section-shop-by-price__tabs {
     gap: 80px;
-    padding: 0 80px 32px;
+    padding: 0 80px;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     margin-bottom: 70px;
@@ -466,7 +466,7 @@
 
   .custom-section-shop-by-price__underline {
     left: 80px;
-    bottom: 4px;
+    bottom: 0px;
   }
 
   .custom-section-shop-by-price__tab {
@@ -544,11 +544,11 @@
 
   .custom-section-shop-by-price__tabs {
     gap: 40px;
-    padding: 0 20px 32px;
+    padding: 0 20px;
     justify-content: flex-start;
     margin-bottom: 50px;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     scroll-behavior: smooth;
   }
 
@@ -561,7 +561,7 @@
   .custom-section-shop-by-price__underline {
     left: 20px;
     width: 100px;
-    bottom: 4px;
+    bottom: 0px;
   }
 
   /* Keep arrows visible on mobile */

@@ -156,7 +156,7 @@
 /* Desktop Hover Effects
    ========================================================================== */
 
-@media (min-width: 768px) {
+@media (min-width: 1025px) {
   .custom-section-four-collection-arch__card:hover {
     border-radius: 1000px 1000px 0 0;
   }
