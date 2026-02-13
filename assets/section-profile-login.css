@@ -75,7 +75,7 @@
   color: #183754;
   text-transform: uppercase;
   text-align: center;
-  margin: 0;
+  margin: 0 0 15px 0;
   width: 100%;
 }
 
@@ -95,7 +95,9 @@
 .custom-section-profile-login__form-wrapper {
   width: 480px;
   max-width: 100%;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 /* Form Wrapper - Hidden State */
