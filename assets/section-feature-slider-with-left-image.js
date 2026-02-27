@@ -1,48 +1,5 @@
-// TODO: Initialize Feature Slider with Left Image functionality
+// Feature Slider with Left Image
 document.addEventListener('DOMContentLoaded', () => {
-  // Wishlist Manager (localStorage)
-  const WishlistManager = {
-    WISHLIST_KEY: 'diamension_wishlist',
-
-    get() {
-      try {
-        const data = localStorage.getItem(this.WISHLIST_KEY);
-        return data ? JSON.parse(data) : [];
-      } catch (error) {
-        console.error('Error reading wishlist:', error);
-        return [];
-      }
-    },
-
-    add(productId) {
-      const wishlist = this.get();
-      if (!wishlist.includes(productId)) {
-        wishlist.push(productId);
-        localStorage.setItem(this.WISHLIST_KEY, JSON.stringify(wishlist));
-      }
-    },
-
-    remove(productId) {
-      const wishlist = this.get();
-      const filtered = wishlist.filter((id) => id !== productId);
-      localStorage.setItem(this.WISHLIST_KEY, JSON.stringify(filtered));
-    },
-
-    has(productId) {
-      return this.get().includes(productId);
-    },
-
-    toggle(productId) {
-      if (this.has(productId)) {
-        this.remove(productId);
-        return false;
-      } else {
-        this.add(productId);
-        return true;
-      }
-    },
-  };
-
   class FeatureSliderWithLeftImage {
     constructor(container) {
       this.container = container;
@@ -73,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
         this.bindEvents();
         this.updateNavButtons();
         this.initAnimations();
-        this.initWishlistStates();
+
+        // Initialize wishlist buttons using global WishlistManager
+        if (window.WishlistManager) {
+          window.WishlistManager.initializeButtons();
+        }
 
         // Debounced resize handler
         let resizeTimeout;
@@ -83,19 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } catch (error) {
         console.error('Error initializing feature slider:', error);
-      }
-    }
-
-    initWishlistStates() {
-      try {
-        this.wishlistButtons.forEach((button) => {
-          const productId = button.dataset.productId;
-          if (WishlistManager.has(productId)) {
-            button.classList.add('custom-section-feature-slider-with-left-image__wishlist-button--active');
-          }
-        });
-      } catch (error) {
-        console.error('Error initializing wishlist states:', error);
       }
     }
 
@@ -217,15 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.navigate('next');
           });
         }
-
-        // Wishlist button animation only (functionality to be implemented later)
-        this.wishlistButtons.forEach((button) => {
-          button.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.animateWishlistButton(e);
-          });
-        });
       } catch (error) {
         console.error('Error binding events:', error);
       }
@@ -337,47 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    animateWishlistButton(event) {
-      try {
-        const button = event.currentTarget;
-        const productId = button.dataset.productId;
-
-        // Toggle wishlist state
-        const isNowLiked = WishlistManager.toggle(productId);
-
-        // GSAP animation - scale down-up with spring effect (same as shop by price)
-        if (typeof gsap !== 'undefined') {
-          gsap
-            .timeline()
-            .to(button, {
-              scale: 0.85,
-              duration: 0.1,
-              ease: 'power2.in',
-            })
-            .to(button, {
-              scale: 1,
-              duration: 0.15,
-              ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)', // Spring effect
-            });
-        } else {
-          // Fallback CSS animation
-          button.style.transform = 'scale(0.85)';
-          setTimeout(() => {
-            button.style.transform = 'scale(1)';
-          }, 100);
-        }
-
-        // Update button appearance
-        if (isNowLiked) {
-          button.classList.add('custom-section-feature-slider-with-left-image__wishlist-button--active');
-        } else {
-          button.classList.remove('custom-section-feature-slider-with-left-image__wishlist-button--active');
-        }
-      } catch (error) {
-        console.error('Error animating wishlist button:', error);
-      }
-    }
-
     handleResize() {
       try {
         const oldIndex = this.currentIndex;
@@ -436,8 +334,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error reinitializing feature slider on section load:', error);
     }
   });
-
-  // TODO: Wishlist functionality to be implemented later as per technical specification
-  // The documentation states: "JavaScript Functions (To Implement Later)"
-  // This includes localStorage integration, state management, and UI updates
 });

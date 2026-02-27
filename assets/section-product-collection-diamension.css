@@ -273,9 +273,17 @@
   background: #fffaf5;
 }
 
-.product-card-collection-diamension__wishlist-path {
-  fill: none;
-  stroke: #183754;
+.product-card-collection-diamension__wishlist-icon path {
+  stroke: #183754 !important;
+  fill: none !important;
+  stroke-width: 1.5;
+  transition: stroke 0.2s ease;
+}
+
+.product-card-collection-diamension__wishlist.is-active .product-card-collection-diamension__wishlist-icon path {
+  stroke: #183754 !important;
+  fill: none !important;
+  stroke-width: 1.5;
 }
 
 /* New Arrival Badge */

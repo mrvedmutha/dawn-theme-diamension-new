@@ -40,6 +40,11 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js" defer></script>
 
+    {%- comment -%} Wishlist System {%- endcomment -%}
+    <script src="{{ 'wishlist-manager.js' | asset_url }}" defer></script>
+    {{ 'wishlist-button.css' | asset_url | stylesheet_tag }}
+    {{ 'wishlist-toast.css' | asset_url | stylesheet_tag }}
+
     {%- comment -%} Page Transition Overlay - Rendered INLINE for instant execution {%- endcomment -%}
     {%- render 'page-transition-overlay' -%}
 
@@ -399,5 +404,8 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    {%- comment -%} Wishlist Toast Notification {%- endcomment -%}
+    {% render 'wishlist-toast' %}
   </body>
 </html>

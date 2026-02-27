@@ -275,8 +275,8 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 26px;
-  height: 26px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: transparent;
   border: none;
@@ -293,14 +293,27 @@
   opacity: 0.8;
 }
 
-.custom-product-detail__wishlist-btn--active {
-  background-color: #fffcf9;
+.custom-product-detail__wishlist-btn.is-active {
+  background-color: #fffaf5;
 }
 
-.custom-product-detail__wishlist-btn img {
-  width: 18px;
-  height: 18px;
+.custom-product-detail__wishlist-btn svg {
+  width: 24px;
+  height: 24px;
   display: block;
+}
+
+.custom-product-detail__wishlist-btn svg path {
+  stroke: #183754 !important;
+  fill: none !important;
+  stroke-width: 1.5;
+  transition: stroke 0.2s ease;
+}
+
+.custom-product-detail__wishlist-btn.is-active svg path {
+  stroke: #183754 !important;
+  fill: none !important;
+  stroke-width: 1.5;
 }
 
 /* Image Loading Overlay */
@@ -1835,15 +1848,15 @@
 
   /* Wishlist button */
   .custom-product-detail__wishlist-btn {
-    width: 22px;
-    height: 22px;
+    width: 36px;
+    height: 36px;
     top: 12px;
     right: 12px;
   }
 
-  .custom-product-detail__wishlist-btn img {
-    width: 16px;
-    height: 16px;
+  .custom-product-detail__wishlist-btn svg {
+    width: 20px;
+    height: 20px;
   }
 
   /* Size Guide Modal - Tablet */

@@ -5,72 +5,6 @@
   const CONFIG = {
     PRODUCTS_PER_PAGE: 10,
     ANIMATION_DURATION: 0.3,
-    WISHLIST_KEY: 'diamension_wishlist',
-    HEART_ICON_PATH:
-      '/Users/wingsdino/Documents/Wings Shopify Projects/diamension/diamension-dawn-theme-new/diamension-shopify-dawn/prototype/section-shop-by-price/icons/heart.svg',
-  };
-
-  // Wishlist Manager (localStorage)
-  const WishlistManager = {
-    get() {
-      try {
-        const data = localStorage.getItem(CONFIG.WISHLIST_KEY);
-        return data ? JSON.parse(data) : [];
-      } catch (error) {
-        console.error('Error reading wishlist:', error);
-        return [];
-      }
-    },
-
-    add(productId) {
-      const wishlist = this.get();
-      if (!wishlist.includes(productId)) {
-        wishlist.push(productId);
-        localStorage.setItem(CONFIG.WISHLIST_KEY, JSON.stringify(wishlist));
-      }
-    },
-
-    remove(productId) {
-      const wishlist = this.get();
-      const filtered = wishlist.filter((id) => id !== productId);
-      localStorage.setItem(CONFIG.WISHLIST_KEY, JSON.stringify(filtered));
-    },
-
-    has(productId) {
-      return this.get().includes(productId);
-    },
-
-    toggle(productId) {
-      if (this.has(productId)) {
-        this.remove(productId);
-        return false;
-      } else {
-        this.add(productId);
-        return true;
-      }
-    },
-  };
-
-  // Wishlist Animation using GSAP
-  const animateWishlistToggle = (button) => {
-    if (!window.gsap) {
-      console.error('GSAP not loaded');
-      return;
-    }
-
-    // Scale down-up animation with spring effect
-    gsap
-      .timeline()
-      .to(button, {
-        scale: 0.85,
-        duration: 0.1,
-        ease: 'power2.in',
-      })
-      .to(button, {
-        scale: 1,
-        duration: 0.15,
-        ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)', // Spring effect
-      });
   };
 
   // Product Fetcher
@@ -127,7 +61,7 @@
     const hasImage = !!primaryImage;
     const price = product.variants[0]?.price || 0;
     const formattedPrice = `₹ ${parseFloat(price).toLocaleString('en-IN')}`;
-    const isLiked = WishlistManager.has(product.id.toString());
+    const isLiked = window.WishlistManager?.has(product.id.toString()) || false;
 
     return `
       <div class="custom-section-shop-by-price__product-card" data-product-id="${product.id}">
@@ -163,27 +97,19 @@
             }
           </a>
           <button
-            class="custom-section-shop-by-price__wishlist ${
-              isLiked ? 'custom-section-shop-by-price__wishlist--liked' : ''
-            }"
-            data-wishlist-btn
+            class="wishlist-button wishlist-button--m ${isLiked ? 'is-active' : ''}"
+            data-wishlist-toggle
             data-product-id="${product.id}"
-            aria-label="Add to wishlist"
+            data-product-title="${product.title}"
+            data-product-handle="${product.handle}"
+            data-product-image="${primaryImage}"
+            data-product-price="${formattedPrice}"
+            aria-label="Add ${product.title} to wishlist"
+            type="button"
+            style="--button-size: 26px; --svg-size: 18px;"
           >
-            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_12_4822)">
-                <mask id="mask0_12_4822" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="19" height="19">
-                  <path d="M18.7554 0H0V18.7554H18.7554V0Z" fill="white"/>
-                </mask>
-                <g mask="url(#mask0_12_4822)">
-                  <path d="M16.0901 3.88421C16.7778 4.65787 17.192 5.67378 17.192 6.79129C17.192 12.2616 12.128 15.4891 9.86175 16.2706C9.59605 16.3643 9.15842 16.3643 8.89272 16.2706C6.62645 15.4891 1.5625 12.2616 1.5625 6.79129C1.5625 4.37654 3.50837 2.42285 5.90749 2.42285C7.32978 2.42285 8.58795 3.11055 9.37724 4.17335C10.1665 3.11055 11.4325 2.42285 12.847 2.42285" stroke="#183754" stroke-width="1.25036" stroke-linecap="round" stroke-linejoin="round"/>
-                </g>
-              </g>
-              <defs>
-                <clipPath id="clip0_12_4822">
-                  <rect width="18.7554" height="18.7554" fill="white"/>
-                </clipPath>
-              </defs>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.59 4.96961C21.47 5.95961 22 7.25961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8196C12.28 20.9396 11.72 20.9396 11.38 20.8196C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
         </div>
@@ -529,8 +455,10 @@
       const html = products.map((product) => renderProductCard(product)).join('');
       this.productsContainer.innerHTML = html;
 
-      // Attach wishlist button listeners
-      this.attachWishlistListeners();
+      // Initialize wishlist buttons using global manager
+      if (window.WishlistManager) {
+        window.WishlistManager.initializeButtons();
+      }
 
       // Update carousel arrow states and card width
       if (this.carousel) {
@@ -540,30 +468,6 @@
         }
         this.carousel.updateArrowStates();
       }
-    }
-
-    attachWishlistListeners() {
-      const wishlistButtons = this.productsContainer.querySelectorAll('[data-wishlist-btn]');
-
-      wishlistButtons.forEach((button) => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          const productId = button.dataset.productId;
-          const isNowLiked = WishlistManager.toggle(productId);
-
-          // Animate the button
-          animateWishlistToggle(button);
-
-          // Update button appearance
-          if (isNowLiked) {
-            button.classList.add('custom-section-shop-by-price__wishlist--liked');
-          } else {
-            button.classList.remove('custom-section-shop-by-price__wishlist--liked');
-          }
-        });
-      });
     }
 
     updateShopAllButton(totalProductCount, minPrice, maxPrice) {
