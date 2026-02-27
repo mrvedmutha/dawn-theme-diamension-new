@@ -246,7 +246,7 @@ class DiamensionHeader {
             '--after-width': '100%',
             duration: 0.3,
             ease: 'power2.out',
-          }
+          },
         );
       });
 
@@ -392,6 +392,11 @@ class DiamensionSearch {
     this.overlay.classList.add('diamension-search-overlay--active');
     document.body.style.overflow = 'hidden';
 
+    // Stop Lenis smooth scroll if available (prevents scroll on homepage)
+    if (window.lenis && typeof window.lenis.stop === 'function') {
+      window.lenis.stop();
+    }
+
     // Make header solid and visible when search is open
     const header = document.querySelector('[data-header]');
     if (header) {
@@ -513,6 +518,11 @@ class DiamensionSearch {
           this.overlay.classList.remove('diamension-search-overlay--active');
           document.body.style.overflow = '';
 
+          // Resume Lenis smooth scroll if available
+          if (window.lenis && typeof window.lenis.start === 'function') {
+            window.lenis.start();
+          }
+
           // Clear search
           this.searchInput.value = '';
           this.currentQuery = '';
@@ -527,6 +537,12 @@ class DiamensionSearch {
       setTimeout(() => {
         this.overlay.classList.remove('diamension-search-overlay--active');
         document.body.style.overflow = '';
+
+        // Resume Lenis smooth scroll if available
+        if (window.lenis && typeof window.lenis.start === 'function') {
+          window.lenis.start();
+        }
+
         this.searchInput.value = '';
         this.currentQuery = '';
         this.clearResults();
@@ -569,7 +585,7 @@ class DiamensionSearch {
     try {
       // Use Shopify Predictive Search API
       const response = await fetch(
-        `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=10`
+        `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=10`,
       );
 
       if (!response.ok) throw new Error('Search failed');
@@ -637,7 +653,7 @@ class DiamensionSearch {
           ${
             imageUrl
               ? `<img src="${imageUrl}" alt="${this.escapeHtml(
-                  product.title
+                  product.title,
                 )}" class="diamension-search-overlay__product-image" loading="lazy">`
               : ''
           }
@@ -878,13 +894,13 @@ class DiamensionMegaMenu {
         gsap.fromTo(
           elementsToAnimate,
           { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.05 }
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.05 },
         );
       }
     } else {
       // Fallback without GSAP - instant show
       const allAnimatableElements = targetMegaMenu.querySelectorAll(
-        '.custom-header-mega-menu__column, .custom-header-mega-menu__card'
+        '.custom-header-mega-menu__column, .custom-header-mega-menu__card',
       );
 
       allAnimatableElements.forEach((el) => {
@@ -900,7 +916,7 @@ class DiamensionMegaMenu {
   hideMegaMenu(megaMenu) {
     if (typeof gsap !== 'undefined') {
       const allAnimatableElements = megaMenu.querySelectorAll(
-        '.custom-header-mega-menu__column, .custom-header-mega-menu__card'
+        '.custom-header-mega-menu__column, .custom-header-mega-menu__card',
       );
 
       // Only animate if there are elements to animate
@@ -1023,7 +1039,7 @@ class DiamensionMobileNav {
           x: 0,
           duration: 0.4,
           ease: 'power2.out',
-        }
+        },
       );
     } else {
       // Fallback
@@ -1086,7 +1102,7 @@ class DiamensionMobileNav {
           x: 0,
           duration: 0.4,
           ease: 'power2.out',
-        }
+        },
       );
     }
   }
@@ -1121,7 +1137,7 @@ class DiamensionMobileNav {
           x: 0,
           duration: 0.4,
           ease: 'power2.out',
-        }
+        },
       );
     }
   }
@@ -1151,7 +1167,7 @@ class DiamensionMobileNav {
           x: 0,
           duration: 0.4,
           ease: 'power2.out',
-        }
+        },
       );
 
       // Current level slides out to LEFT

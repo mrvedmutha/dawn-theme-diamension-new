@@ -5,7 +5,7 @@
  * Version: 1.0
  */
 
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -30,13 +30,16 @@
 
     // Get data from button attributes
     const currentPage = parseInt(btn.dataset.currentPage);
+    console.log('Current page:', currentPage); //TODO: remove();
     const totalResults = parseInt(btn.dataset.totalResults);
     const productsPerPage = parseInt(btn.dataset.productsPerPage);
+    console.log('Products per page:', productsPerPage); //TODO: remove();
     const searchQuery = btn.dataset.searchQuery;
 
     // Calculate next page
     const nextPage = currentPage + 1;
     const loadedProducts = currentPage * productsPerPage;
+    console.log('Loaded products:', loadedProducts); //TODO: remove();
 
     // Check if there are more products to load
     if (loadedProducts >= totalResults) {
@@ -57,7 +60,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -72,7 +75,7 @@
       const newProducts = doc.querySelectorAll('.product-card-search');
 
       // Append new products to the grid
-      newProducts.forEach(product => {
+      newProducts.forEach((product) => {
         productsGrid.appendChild(product.cloneNode(true));
       });
 
@@ -88,7 +91,6 @@
       if (newLoadedProducts >= totalResults) {
         btn.style.display = 'none';
       }
-
     } catch (error) {
       console.error('Error loading more products:', error);
 
@@ -137,5 +139,4 @@
   } else {
     initSearchResults();
   }
-
 })();

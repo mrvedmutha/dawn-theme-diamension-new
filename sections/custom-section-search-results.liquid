@@ -10,7 +10,7 @@
 {% liquid
   assign suggested_terms_menu = section.settings.suggested_terms_menu
   assign categories_menu = section.settings.categories_menu
-  assign products_per_page = section.settings.products_per_page | default: 10
+  assign products_per_page = section.settings.products_per_page | default: 8
 
   assign search_query = search.terms | escape
   assign total_results = search.results_count
@@ -58,21 +58,23 @@
       {%- comment -%} Main Content: Two Column Layout with Grid {%- endcomment -%}
       <div class="custom-section-search-results__main-content">
         {%- comment -%} Left Column: Categories Sidebar {%- endcomment -%}
-        {%- if categories_menu and linklists[categories_menu].links.size > 0 -%}
-          <aside class="custom-section-search-results__sidebar">
-            <h3 class="custom-section-search-results__sidebar-title">CATEGORIES</h3>
-            <nav class="custom-section-search-results__categories" aria-label="Product Categories">
-              {%- for link in linklists[categories_menu].links -%}
-                <a href="{{ link.url }}" class="custom-section-search-results__category-link">
-                  {{ link.title }}
-                </a>
-              {%- endfor -%}
-            </nav>
-          </aside>
-        {%- endif -%}
+        {% comment %}
+          {%- if categories_menu and linklists[categories_menu].links.size > 0 -%}
+            <aside class="custom-section-search-results__sidebar">
+              <h3 class="custom-section-search-results__sidebar-title">CATEGORIES</h3>
+              <nav class="custom-section-search-results__categories" aria-label="Product Categories">
+                {%- for link in linklists[categories_menu].links -%}
+                  <a href="{{ link.url }}" class="custom-section-search-results__category-link">
+                    {{ link.title }}
+                  </a>
+                {%- endfor -%}
+              </nav>
+            </aside>
+          {%- endif -%}
 
-        {%- comment -%} Vertical Divider {%- endcomment -%}
-        <div class="custom-section-search-results__divider">&nbsp;</div>
+          {%- comment -%} Vertical Divider {%- endcomment -%}
+          <div class="custom-section-search-results__divider">&nbsp;</div>
+        {% endcomment %}
 
         {%- comment -%} Right Column: Products Grid Only {%- endcomment -%}
         <div class="custom-section-search-results__products-grid" data-search-products-grid>
@@ -85,9 +87,7 @@
               {%- endfor -%}
             {%- else -%}
               <div class="custom-section-search-results__no-results">
-                <p class="custom-section-search-results__no-results-text">
-                  No products found for "{{ search_query }}"
-                </p>
+                <p class="custom-section-search-results__no-results-text">No products found for "{{ search_query }}"</p>
               </div>
             {%- endif -%}
           {%- else -%}
@@ -153,10 +153,10 @@
       "type": "range",
       "id": "products_per_page",
       "label": "Products Per Page",
-      "min": 5,
-      "max": 50,
-      "step": 5,
-      "default": 10,
+      "min": 4,
+      "max": 40,
+      "step": 4,
+      "default": 8,
       "info": "Number of products to display initially and per load more"
     }
   ],

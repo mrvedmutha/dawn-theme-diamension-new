@@ -854,7 +854,7 @@ body:has(.diamension-header--solid-layout.diamension-header--scrolling) {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-  --header-height: 105px; /* Announcement bar (43.66px) + Main header (61px) + buffer */
+  --header-height: 110px; /* Announcement bar (43.66px) + Main header (61px) + buffer */
 }
 
 .diamension-search-overlay--active {

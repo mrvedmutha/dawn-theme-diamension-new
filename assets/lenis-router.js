@@ -10,7 +10,7 @@ class LenisRouter {
     // Configuration object - add or remove page templates here
     this.config = {
       enabledPages: [
-        'index',           // Homepage
+        // 'index',         // Homepage - TEMPORARILY DISABLED
         // 'page',         // All pages (uncomment to enable)
         // 'product',      // Product pages (uncomment to enable)
         // 'collection',   // Collection pages (uncomment to enable)
@@ -24,7 +24,7 @@ class LenisRouter {
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',
         smoothWheel: true,
-      }
+      },
     };
 
     this.lenis = null;
