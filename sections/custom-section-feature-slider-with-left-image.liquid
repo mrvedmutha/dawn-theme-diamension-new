@@ -76,10 +76,12 @@
           class="custom-section-feature-slider-with-left-image__carousel-container"
           data-carousel-container
         >
-          {%- assign collection = section.settings.collection -%}
+          {%- comment -%} Get all products and sort by creation date (newest first) {%- endcomment -%}
+          {%- assign all_products_collection = collections.all -%}
+          {%- assign sorted_products = all_products_collection.products | sort: 'created_at' | reverse -%}
 
-          {%- if collection and collection.products.size > 0 -%}
-            {%- for product in collection.products limit: section.settings.products_limit -%}
+          {%- if sorted_products.size > 0 -%}
+            {%- for product in sorted_products limit: section.settings.products_limit -%}
               <a href="{{ product.url }}" class="custom-section-feature-slider-with-left-image__card" data-card>
                 <div class="custom-section-feature-slider-with-left-image__card-image-wrapper">
                   {%- if product.featured_image -%}
@@ -99,11 +101,7 @@
                 </div>
 
                 {%- comment -%} Wishlist Button (size L - 30px) {%- endcomment -%}
-                {% render 'wishlist-button',
-                  product: product,
-                  size: 'l',
-                  position: 'absolute'
-                %}
+                {% render 'wishlist-button', product: product, size: 'l', position: 'absolute' %}
 
                 <div class="custom-section-feature-slider-with-left-image__card-content">
                   <h3 class="custom-section-feature-slider-with-left-image__card-title">
@@ -118,10 +116,7 @@
             {%- endfor -%}
           {%- else -%}
             <div class="custom-section-feature-slider-with-left-image__empty-state">
-              <p>
-                No products found in the selected collection. Please select a collection with products in the theme
-                settings.
-              </p>
+              <p>No products found. Please make sure you have published products in your store.</p>
             </div>
           {%- endif -%}
         </div>
@@ -155,12 +150,6 @@
       "info": "Landscape aspect ratio recommended (16:9 for tablet, 5:4 for mobile). If not uploaded, desktop image will be used as fallback."
     },
     {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection",
-      "info": "Select a collection to display products from."
-    },
-    {
       "type": "range",
       "id": "products_limit",
       "min": 3,
@@ -168,7 +157,7 @@
       "step": 1,
       "label": "Products to Display",
       "default": 10,
-      "info": "Maximum number of products to show in the carousel."
+      "info": "Number of newest products to display from all products in store. Note: Ensure 'All' collection in Shopify is sorted by 'Date created (newest first)'."
     },
     {
       "type": "checkbox",
