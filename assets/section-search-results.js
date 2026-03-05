@@ -25,6 +25,7 @@
   const handleLoadMore = async (event) => {
     const btn = event.currentTarget;
     const productsGrid = document.querySelector('[data-search-products-grid]');
+    const progressText = document.querySelector('[data-progress-text]');
 
     if (!productsGrid) return;
 
@@ -82,12 +83,19 @@
       // Update current page
       btn.dataset.currentPage = nextPage;
 
+      // Update progress text
+      const newLoadedProducts = nextPage * productsPerPage;
+      const displayedProducts = Math.min(newLoadedProducts, totalResults);
+      if (progressText) {
+        progressText.textContent = `Showing ${displayedProducts} of ${totalResults} products`;
+        progressText.dataset.currentCount = displayedProducts;
+      }
+
       // Reset button state
       btn.disabled = false;
       btn.textContent = 'LOAD MORE';
 
       // Check if all products are loaded
-      const newLoadedProducts = nextPage * productsPerPage;
       if (newLoadedProducts >= totalResults) {
         btn.style.display = 'none';
       }

@@ -101,6 +101,21 @@
       {%- comment -%} Load More Button - Outside main content {%- endcomment -%}
       {%- if search.results_count > products_per_page -%}
         <div class="custom-section-search-results__load-more">
+          <div class="custom-section-search-results__progress">
+            <p
+              class="custom-section-search-results__progress-text"
+              data-progress-text
+              data-current-count="{{ products_per_page }}"
+              data-total-count="{{ total_results }}"
+            >
+              Showing {{ products_per_page }} of {{ total_results }} products
+            </p>
+            <div class="custom-section-search-results__progress-line">
+              <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="0.5" x2="110" y2="0.5" stroke="#183754"/>
+              </svg>
+            </div>
+          </div>
           <button
             type="button"
             class="custom-section-search-results__load-more-btn"
@@ -153,10 +168,10 @@
       "type": "range",
       "id": "products_per_page",
       "label": "Products Per Page",
-      "min": 4,
-      "max": 40,
-      "step": 4,
-      "default": 8,
+      "min": 10,
+      "max": 50,
+      "step": 10,
+      "default": 10,
       "info": "Number of products to display initially and per load more"
     }
   ],
