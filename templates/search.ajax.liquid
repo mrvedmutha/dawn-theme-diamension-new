@@ -6,9 +6,11 @@
 {% endcomment %}
 
 {%- if search.performed and search.results_count > 0 -%}
-  {%- for item in search.results -%}
-    {%- if item.object_type == 'product' -%}
-      {%- render 'product-card-search', product: item -%}
-    {%- endif -%}
-  {%- endfor -%}
+  {%- paginate search.results by 12 -%}
+    {%- for item in search.results -%}
+      {%- if item.object_type == 'product' -%}
+        {%- render 'product-card-search', product: item -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endpaginate -%}
 {%- endif -%}

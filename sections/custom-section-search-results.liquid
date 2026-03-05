@@ -10,7 +10,7 @@
 {% liquid
   assign suggested_terms_menu = section.settings.suggested_terms_menu
   assign categories_menu = section.settings.categories_menu
-  assign products_per_page = section.settings.products_per_page | default: 8
+  assign products_per_page = section.settings.products_per_page | default: 12
 
   assign search_query = search.terms | escape
   assign total_results = search.results_count
@@ -80,11 +80,13 @@
         <div class="custom-section-search-results__products-grid" data-search-products-grid>
           {%- if search.performed -%}
             {%- if search.results_count > 0 -%}
-              {%- for item in search.results limit: products_per_page -%}
-                {%- if item.object_type == 'product' -%}
-                  {%- render 'product-card-search', product: item -%}
-                {%- endif -%}
-              {%- endfor -%}
+              {%- paginate search.results by products_per_page -%}
+                {%- for item in search.results -%}
+                  {%- if item.object_type == 'product' -%}
+                    {%- render 'product-card-search', product: item -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endpaginate -%}
             {%- else -%}
               <div class="custom-section-search-results__no-results">
                 <p class="custom-section-search-results__no-results-text">No products found for "{{ search_query }}"</p>
@@ -98,8 +100,8 @@
         </div>
       </div>
 
-      {%- comment -%} Load More Button - Outside main content {%- endcomment -%}
-      {%- if search.results_count > products_per_page -%}
+      {%- comment -%} Load More Button {%- endcomment -%}
+      {%- if search.performed and search.results_count > products_per_page -%}
         <div class="custom-section-search-results__load-more">
           <div class="custom-section-search-results__progress">
             <p
@@ -168,11 +170,11 @@
       "type": "range",
       "id": "products_per_page",
       "label": "Products Per Page",
-      "min": 10,
-      "max": 50,
-      "step": 10,
-      "default": 10,
-      "info": "Number of products to display initially and per load more"
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 12,
+      "info": "Number of products to display initially and per load more (12, 24, 36, 48)"
     }
   ],
   "presets": [
