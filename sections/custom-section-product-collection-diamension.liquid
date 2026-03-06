@@ -1,18 +1,19 @@
 {% comment %}
-  Section: Product Collection Diamension
-  Purpose: Custom collection page with progressive loading and promotional image cards
+  Section: Product Collection Diamension (Shopify Facets Hybrid)
+  Purpose: Custom UI + Shopify native filtering logic
   Author: Wings Design Team
-  Version: 1.0
+  Version: 2.0
+  Changes: Integrated Shopify facets while preserving custom UI design
 {% endcomment %}
 
 {{ 'section-product-collection-diamension.css' | asset_url | stylesheet_tag }}
+{{ 'component-facets.css' | asset_url | stylesheet_tag }}
 
 {% liquid
   assign breadcrumb_menu = section.settings.breadcrumb_menu
   assign products_per_page = section.settings.products_per_page | default: 20
   assign show_filter = section.settings.show_filter_button
   assign show_sort = section.settings.show_sort_button
-  assign enable_ajax = section.settings.enable_ajax_loading
 
   assign hero_image = collection.metafields.custom.collection_hero_image
   assign hero_caption = collection.metafields.custom.collection_caption
@@ -26,26 +27,18 @@
   endif
 
   comment
-    Calculate min and max prices from ALL products in collection
+    Determine current collection for conditional filter disabling
   endcomment
-  assign min_price = 999999999
-  assign max_price = 0
+  assign is_in_corporate = false
+  assign is_in_celebrations = false
+  assign is_in_foundations = false
 
-  for product in collection.products
-    assign product_price = product.price | divided_by: 100.0
-    if product_price < min_price
-      assign min_price = product_price
-    endif
-    if product_price > max_price
-      assign max_price = product_price
-    endif
-  endfor
-
-  comment
-    If no products, set defaults
-  endcomment
-  if min_price == 999999999
-    assign min_price = 0
+  if collection.handle == 'corporate-comeback'
+    assign is_in_corporate = true
+  elsif collection.handle == 'celebrations' or collection.handle == 'the-celebrations'
+    assign is_in_celebrations = true
+  elsif collection.handle == 'the-foundations'
+    assign is_in_foundations = true
   endif
 %}
 
@@ -53,8 +46,6 @@
   class="custom-section-product-collection-diamension"
   data-section-id="{{ section.id }}"
   data-collection-handle="{{ collection.handle }}"
-  data-collection-min-price="{{ min_price }}"
-  data-collection-max-price="{{ max_price }}"
 >
   {% comment %} Header section with breadcrumb, title, and hero {% endcomment %}
   <div class="custom-section-product-collection-diamension__header-section">
@@ -101,6 +92,7 @@
             class="custom-section-product-collection-diamension__filter-btn"
             type="button"
             aria-label="Filter products"
+            data-filter-open
           >
             <img
               src="{{ 'custom-product-collection/icons/filter-icon.svg' | asset_url }}"
@@ -117,15 +109,15 @@
             class="custom-section-product-collection-diamension__sort-btn"
             type="button"
             aria-label="Sort products"
+            data-sort-open
           >
             <img src="{{ 'custom-product-collection/icons/sort-icon.svg' | asset_url }}" alt="" width="24" height="24">
             <span>Sort</span>
           </button>
         {% endif %}
 
-        {% comment %} Sort Panel {% endcomment %}
+        {% comment %} Sort Panel - Using Shopify's sort options {% endcomment %}
         <div class="custom-section-product-collection-diamension__sort-panel" data-sort-panel>
-          {% comment %} Sort Header {% endcomment %}
           <div class="custom-section-product-collection-diamension__sort-header">
             <button
               class="custom-section-product-collection-diamension__sort-close"
@@ -139,372 +131,358 @@
             </button>
           </div>
 
-          {% comment %} Sort Options {% endcomment %}
           <div class="custom-section-product-collection-diamension__sort-content">
-            <button
-              class="custom-section-product-collection-diamension__sort-option"
-              data-sort-option="featured"
-              type="button"
-            >
-              Featured
-            </button>
-            <button
-              class="custom-section-product-collection-diamension__sort-option"
-              data-sort-option="best-selling"
-              type="button"
-            >
-              Best Selling
-            </button>
-            <button
-              class="custom-section-product-collection-diamension__sort-option"
-              data-sort-option="price-low-high"
-              type="button"
-            >
-              Price : Low to High
-            </button>
-            <button
-              class="custom-section-product-collection-diamension__sort-option"
-              data-sort-option="price-high-low"
-              type="button"
-            >
-              Price : High to Low
-            </button>
+            {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+            {% for option in collection.sort_options %}
+              {% comment %} Skip date-based sorting options {% endcomment %}
+              {% unless option.value == 'created-ascending' or option.value == 'created-descending' %}
+                <a
+                  href="{{ collection.url }}?sort_by={{ option.value }}"
+                  class="custom-section-product-collection-diamension__sort-option{% if option.value == sort_by %} is-active{% endif %}"
+                  data-sort-value="{{ option.value }}"
+                  style="text-decoration: none;"
+                >
+                  {{ option.name }}
+                </a>
+              {% endunless %}
+            {% endfor %}
           </div>
         </div>
 
-        {% comment %} Filter Panel {% endcomment %}
-        <div class="custom-section-product-collection-diamension__filter-panel" data-filter-panel>
-          {% comment %} Filter Header {% endcomment %}
-          <div class="custom-section-product-collection-diamension__filter-header">
-            <h2 class="custom-section-product-collection-diamension__filter-title">Filter</h2>
-            <button
-              class="custom-section-product-collection-diamension__filter-close"
-              data-filter-close
-              type="button"
-              aria-label="Close filter"
-            >
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 8L8 24M8 8L24 24" stroke="#183754" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-          </div>
-
-          {% comment %} Filter Content (Scrollable) {% endcomment %}
-          <div class="custom-section-product-collection-diamension__filter-content" data-filter-content>
-            {% comment %} Categories Filter (from product.type) - Moved to Top {% endcomment %}
-            <div class="custom-section-product-collection-diamension__filter-group">
-              <button class="custom-section-product-collection-diamension__filter-group-header" data-accordion-toggle>
-                <span>CATEGORIES</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </button>
-              <div class="custom-section-product-collection-diamension__filter-group-content" data-accordion-content>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    value="Rings"
-                    data-filter-checkbox="categories"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Rings</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    value="Earrings"
-                    data-filter-checkbox="categories"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Earrings</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    value="Bracelets"
-                    data-filter-checkbox="categories"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Bracelets</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="categories"
-                    value="Pendants"
-                    data-filter-checkbox="categories"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Pendants</span>
-                </label>
-              </div>
-            </div>
-
-            {% comment %} Price Filter {% endcomment %}
-            {% if section.settings.show_price_filter %}
-              <div class="custom-section-product-collection-diamension__filter-group">
-                <button class="custom-section-product-collection-diamension__filter-group-header" data-accordion-toggle>
-                  <span>PRICE</span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+        {% comment %} Filter Panel - Using Shopify Facets Data {% endcomment %}
+        <facet-filters-form class="facets-wrapper-custom">
+          <form id="FacetFiltersFormCustom" action="{{ collection.url }}" method="get">
+            <div class="custom-section-product-collection-diamension__filter-panel" data-filter-panel>
+              <div class="custom-section-product-collection-diamension__filter-header">
+                <h2 class="custom-section-product-collection-diamension__filter-title">Filter</h2>
+                <button
+                  class="custom-section-product-collection-diamension__filter-close"
+                  data-filter-close
+                  type="button"
+                  aria-label="Close filter"
+                >
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 8L8 24M8 8L24 24" stroke="#183754" stroke-width="2" stroke-linecap="round"/>
                   </svg>
                 </button>
-                <div class="custom-section-product-collection-diamension__filter-group-content" data-accordion-content>
-                  <div class="custom-section-product-collection-diamension__filter-price">
-                    <div class="custom-section-product-collection-diamension__filter-price-slider" data-price-slider>
-                      <input type="range" data-price-min>
-                      <input type="range" data-price-max>
-                    </div>
-                    <div class="custom-section-product-collection-diamension__filter-price-inputs">
-                      <input type="text" readonly data-price-min-display>
-                      <input type="text" readonly data-price-max-display>
-                    </div>
-                  </div>
-                </div>
               </div>
-            {% endif %}
 
-            {% comment %} Sub-Categories Filter (tags-based, conditional visibility) {% endcomment %}
-            <div class="custom-section-product-collection-diamension__filter-group" data-subcategories-group>
-              <button class="custom-section-product-collection-diamension__filter-group-header" data-accordion-toggle>
-                <span>SUB-CATEGORIES</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </button>
-              <div class="custom-section-product-collection-diamension__filter-group-content" data-accordion-content>
-                {% comment %} Rings Sub-Categories {% endcomment %}
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="rings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Solitaire Ring"
-                    data-filter-checkbox="subcategories"
-                    data-parent="rings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Solitaire Ring</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="rings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Bands"
-                    data-filter-checkbox="subcategories"
-                    data-parent="rings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Bands</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="rings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Designer Rings"
-                    data-filter-checkbox="subcategories"
-                    data-parent="rings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Designer Rings</span>
-                </label>
+              <div class="custom-section-product-collection-diamension__filter-content" data-filter-content>
+                {% comment %} DEBUG: Log available filters {% endcomment %}
+                <script>
+                  console.log('🔍 AVAILABLE FILTERS:');
+                  {% for filter in collection.filters %}
+                    console.log('  Filter: "{{ filter.label }}" | Type: "{{ filter.type }}" | Values: {{ filter.values.size }}');
+                  {% endfor %}
+                </script>
 
-                {% comment %} Earrings Sub-Categories {% endcomment %}
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="earrings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Studs"
-                    data-filter-checkbox="subcategories"
-                    data-parent="earrings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Studs</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="earrings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Everyday Wear"
-                    data-filter-checkbox="subcategories"
-                    data-parent="earrings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Everyday Wear</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="earrings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Designer Earrings"
-                    data-filter-checkbox="subcategories"
-                    data-parent="earrings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Designer Earrings</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="earrings">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Hoops/Huggies"
-                    data-filter-checkbox="subcategories"
-                    data-parent="earrings"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Hoops/Huggies</span>
-                </label>
+                {% for filter in collection.filters %}
+                  {% liquid
+                    assign filter_label_lower = filter.label | downcase
+                    assign is_product_type = false
+                    assign is_price = false
+                    assign is_tag = false
 
-                {% comment %} Bracelets Sub-Categories {% endcomment %}
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="bracelets">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Solitaire Tennis Bracelet"
-                    data-filter-checkbox="subcategories"
-                    data-parent="bracelets"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Solitaire Tennis Bracelet</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="bracelets">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Designer Tennis Bracelet"
-                    data-filter-checkbox="subcategories"
-                    data-parent="bracelets"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Designer Tennis Bracelet</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="bracelets">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Oval Bracelet"
-                    data-filter-checkbox="subcategories"
-                    data-parent="bracelets"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Oval Bracelet</span>
-                </label>
+                    if filter_label_lower contains 'type' or filter_label_lower contains 'category' or filter_label_lower contains 'categories'
+                      assign is_product_type = true
+                    elsif filter.type == 'price_range'
+                      assign is_price = true
+                    else
+                      assign is_tag = true
+                    endif
+                  %}
 
-                {% comment %} Pendants Sub-Categories {% endcomment %}
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="pendants">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Solitaire Pendants"
-                    data-filter-checkbox="subcategories"
-                    data-parent="pendants"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Solitaire Pendants</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="pendants">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Designer Pendants"
-                    data-filter-checkbox="subcategories"
-                    data-parent="pendants"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Designer Pendants</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option" data-parent-category="pendants">
-                  <input
-                    type="checkbox"
-                    name="subcategories"
-                    value="Pendant Sets"
-                    data-filter-checkbox="subcategories"
-                    data-parent="pendants"
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Pendant Sets</span>
-                </label>
+                  {% comment %} CATEGORIES (Product Type Filter) {% endcomment %}
+                  {% if is_product_type %}
+                    <div class="custom-section-product-collection-diamension__filter-group">
+                      <button
+                        class="custom-section-product-collection-diamension__filter-group-header"
+                        data-accordion-toggle
+                        type="button"
+                      >
+                        <span>CATEGORIES</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <div
+                        class="custom-section-product-collection-diamension__filter-group-content"
+                        data-accordion-content
+                      >
+                        {% for value in filter.values %}
+                          <label class="custom-section-product-collection-diamension__filter-option">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value }}"
+                              {% if value.active %}
+                                checked
+                              {% endif %}
+                              {% if value.count == 0 and value.active == false %}
+                                disabled
+                              {% endif %}
+                              data-filter-checkbox="categories"
+                            >
+                            <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
+                            <span class="custom-section-product-collection-diamension__filter-label">
+                              {{ value.label }} ({{ value.count }})
+                            </span>
+                          </label>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% comment %} PRICE RANGE FILTER {% endcomment %}
+                  {% if is_price %}
+                    <div class="custom-section-product-collection-diamension__filter-group">
+                      <button
+                        class="custom-section-product-collection-diamension__filter-group-header"
+                        data-accordion-toggle
+                        type="button"
+                      >
+                        <span>PRICE</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <div
+                        class="custom-section-product-collection-diamension__filter-group-content"
+                        data-accordion-content
+                      >
+                        <div class="custom-section-product-collection-diamension__filter-price">
+                          {% assign min_price = filter.range_min | divided_by: 100.0 %}
+                          {% assign max_price = filter.range_max | divided_by: 100.0 %}
+                          {% assign current_min = filter.min_value.value
+                            | default: filter.range_min
+                            | divided_by: 100.0
+                          %}
+                          {% assign current_max = filter.max_value.value
+                            | default: filter.range_max
+                            | divided_by: 100.0
+                          %}
+
+                          <div
+                            class="custom-section-product-collection-diamension__filter-price-slider"
+                            data-price-slider
+                          >
+                            <input
+                              type="range"
+                              name="{{ filter.min_value.param_name }}"
+                              min="{{ min_price }}"
+                              max="{{ max_price }}"
+                              value="{{ current_min }}"
+                              data-price-min
+                            >
+                            <input
+                              type="range"
+                              name="{{ filter.max_value.param_name }}"
+                              min="{{ min_price }}"
+                              max="{{ max_price }}"
+                              value="{{ current_max }}"
+                              data-price-max
+                            >
+                          </div>
+                          <div class="custom-section-product-collection-diamension__filter-price-inputs">
+                            <input
+                              type="text"
+                              readonly
+                              data-price-min-display
+                              value="₹{{ current_min | round }}"
+                            >
+                            <input
+                              type="text"
+                              readonly
+                              data-price-max-display
+                              value="₹{{ current_max | round }}"
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% comment %} TAG FILTERS - Determine if subcategory or studio {% endcomment %}
+                  {% if is_tag %}
+                    {% liquid
+                      # Check if this is a subcategory or studio filter based on values
+                      assign is_subcategory = false
+                      assign is_studio = false
+
+                      for value in filter.values limit: 3
+                        assign value_lower = value.label | downcase
+                        if value_lower contains 'solitaire' or value_lower contains 'band' or value_lower contains 'designer' or value_lower contains 'stud' or value_lower contains 'hoop' or value_lower contains 'everyday' or value_lower contains 'tennis' or value_lower contains 'oval' or value_lower contains 'pendant'
+                          assign is_subcategory = true
+                          break
+                        elsif value_lower contains 'corporate' or value_lower contains 'celebration' or value_lower contains 'foundation'
+                          assign is_studio = true
+                          break
+                        endif
+                      endfor
+                    %}
+
+                    {% if is_subcategory %}
+                      {% comment %} SUB-CATEGORIES {% endcomment %}
+                      <div class="custom-section-product-collection-diamension__filter-group" data-subcategories-group>
+                        <button
+                          class="custom-section-product-collection-diamension__filter-group-header"
+                          data-accordion-toggle
+                          type="button"
+                        >
+                          <span>SUB-CATEGORIES</span>
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+                          </svg>
+                        </button>
+                        <div
+                          class="custom-section-product-collection-diamension__filter-group-content"
+                          data-accordion-content
+                        >
+                          {% for value in filter.values %}
+                            {% liquid
+                              # Determine parent category
+                              assign parent_category = ''
+                              assign value_lower = value.label | downcase
+
+                              if value_lower contains 'ring' or value_lower contains 'band'
+                                assign parent_category = 'rings'
+                              elsif value_lower contains 'earring' or value_lower contains 'stud' or value_lower contains 'hoop'
+                                assign parent_category = 'earrings'
+                              elsif value_lower contains 'bracelet' or value_lower contains 'tennis'
+                                assign parent_category = 'bracelets'
+                              elsif value_lower contains 'pendant'
+                                assign parent_category = 'pendants'
+                              endif
+                            %}
+
+                            <label
+                              class="custom-section-product-collection-diamension__filter-option"
+                              data-parent-category="{{ parent_category }}"
+                              {% unless parent_category == blank %}
+                                style="display: none;"
+                              {% endunless %}
+                            >
+                              <input
+                                type="checkbox"
+                                name="{{ value.param_name }}"
+                                value="{{ value.value }}"
+                                {% if value.active %}
+                                  checked
+                                {% endif %}
+                                {% if value.count == 0 and value.active == false %}
+                                  disabled
+                                {% endif %}
+                                data-filter-checkbox="subcategories"
+                                data-parent="{{ parent_category }}"
+                              >
+                              <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
+                              <span class="custom-section-product-collection-diamension__filter-label">
+                                {{ value.label }} ({{ value.count }})
+                              </span>
+                            </label>
+                          {% endfor %}
+                        </div>
+                      </div>
+
+                    {% elsif is_studio %}
+                      {% comment %} FROM THE STUDIO {% endcomment %}
+                      <div class="custom-section-product-collection-diamension__filter-group">
+                        <button
+                          class="custom-section-product-collection-diamension__filter-group-header"
+                          data-accordion-toggle
+                          type="button"
+                        >
+                          <span>FROM THE STUDIO</span>
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
+                          </svg>
+                        </button>
+                        <div
+                          class="custom-section-product-collection-diamension__filter-group-content"
+                          data-accordion-content
+                        >
+                          {% for value in filter.values %}
+                            {% liquid
+                              # Determine if should be disabled based on collection
+                              assign should_disable = false
+                              assign value_lower = value.label | downcase
+
+                              if is_in_celebrations or is_in_foundations
+                                if value_lower contains 'corporate'
+                                  assign should_disable = true
+                                endif
+                              endif
+
+                              if is_in_corporate or is_in_foundations
+                                if value_lower contains 'celebration'
+                                  assign should_disable = true
+                                endif
+                              endif
+
+                              if is_in_corporate or is_in_celebrations
+                                if value_lower contains 'foundation'
+                                  assign should_disable = true
+                                endif
+                              endif
+                            %}
+
+                            <label class="custom-section-product-collection-diamension__filter-option">
+                              <input
+                                type="checkbox"
+                                name="{{ value.param_name }}"
+                                value="{{ value.value }}"
+                                {% if value.active %}
+                                  checked
+                                {% endif %}
+                                {% if should_disable or value.count == 0 and value.active == false %}
+                                  disabled
+                                {% endif %}
+                                data-filter-checkbox="fromthestudio"
+                              >
+                              <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
+                              <span class="custom-section-product-collection-diamension__filter-label">
+                                {{ value.label }} ({{ value.count }})
+                              </span>
+                            </label>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <div class="custom-section-product-collection-diamension__filter-footer">
+                <a
+                  href="{{ collection.url }}"
+                  class="custom-section-product-collection-diamension__filter-clear"
+                  data-filter-clear
+                  style="text-decoration: none;"
+                >
+                  CLEAR ALL
+                </a>
+                <button
+                  class="custom-section-product-collection-diamension__filter-apply"
+                  type="submit"
+                >
+                  APPLY
+                </button>
               </div>
             </div>
-
-            {% comment %} From The Studio Filter (tags-based, with collection-specific disabling) {% endcomment %}
-            {% assign is_in_corporate = false %}
-            {% assign is_in_celebrations = false %}
-            {% assign is_in_foundations = false %}
-
-            {% if collection.handle == 'corporate-comeback' %}
-              {% assign is_in_corporate = true %}
-            {% elsif collection.handle == 'celebrations' or collection.handle == 'the-celebrations' %}
-              {% assign is_in_celebrations = true %}
-            {% elsif collection.handle == 'the-foundations' %}
-              {% assign is_in_foundations = true %}
-            {% endif %}
-
-            <div class="custom-section-product-collection-diamension__filter-group">
-              <button class="custom-section-product-collection-diamension__filter-group-header" data-accordion-toggle>
-                <span>FROM THE STUDIO</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 9L12 15L18 9" stroke="#3E6282" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </button>
-              <div class="custom-section-product-collection-diamension__filter-group-content" data-accordion-content>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="fromthestudio"
-                    value="Corporate Comeback"
-                    data-filter-checkbox="fromthestudio"
-                    {% if is_in_celebrations or is_in_foundations %}disabled{% endif %}
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">Corporate Comeback</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="fromthestudio"
-                    value="The Celebrations"
-                    data-filter-checkbox="fromthestudio"
-                    {% if is_in_corporate or is_in_foundations %}disabled{% endif %}
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">The Celebrations</span>
-                </label>
-                <label class="custom-section-product-collection-diamension__filter-option">
-                  <input
-                    type="checkbox"
-                    name="fromthestudio"
-                    value="The Foundations"
-                    data-filter-checkbox="fromthestudio"
-                    {% if is_in_corporate or is_in_celebrations %}disabled{% endif %}
-                  >
-                  <span class="custom-section-product-collection-diamension__filter-checkbox"></span>
-                  <span class="custom-section-product-collection-diamension__filter-label">The Foundations</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {% comment %} Filter Footer {% endcomment %}
-          <div class="custom-section-product-collection-diamension__filter-footer">
-            <button
-              class="custom-section-product-collection-diamension__filter-clear"
-              data-filter-clear
-              type="button"
-            >
-              CLEAR ALL
-            </button>
-            <button
-              class="custom-section-product-collection-diamension__filter-apply"
-              data-filter-apply
-              type="button"
-            >
-              APPLY
-            </button>
-          </div>
-        </div>
+          </form>
+        </facet-filters-form>
       </div>
     </div>
 
@@ -530,72 +508,118 @@
 
   {% comment %} Products section {% endcomment %}
   <div class="custom-section-product-collection-diamension__products-section">
-    {% comment %} No products message {% endcomment %}
-    <div class="custom-section-product-collection-diamension__no-products" data-no-products style="display: none;">
-      <p>No products match your selected filters.</p>
-    </div>
-
     {% paginate collection.products by products_per_page %}
-      <div class="custom-section-product-collection-diamension__grid" data-product-grid>
-        {% for product in collection.products %}
-          {% assign index = forloop.index %}
+      {% comment %} Product count and active filters display {% endcomment %}
+      <div
+        class="custom-section-product-collection-diamension__results-bar"
+        style="padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;"
+      >
+        <p class="custom-section-product-collection-diamension__product-count" style="margin: 0; color: #3e6282;">
+          Showing Results: {{ paginate.items }} products
+        </p>
 
-          {% comment %} Render product card {% endcomment %}
-          {% render 'product-card-collection-diamension', product: product %}
-
-          {% comment %} First image card after product 10 {% endcomment %}
-          {% if index == 10 and has_enough_for_images and first_image_card %}
-            {% render 'image-card-collection-diamension', image_card: first_image_card %}
-          {% endif %}
-
-          {% comment %} Second image card after product 18 {% endcomment %}
-          {% if index == 18 and has_enough_for_images and second_image_card %}
-            {% render 'image-card-collection-diamension', image_card: second_image_card %}
-          {% endif %}
-        {% endfor %}
+        {% if collection.filters %}
+          <div
+            class="custom-section-product-collection-diamension__active-filters"
+            style="display: flex; gap: 10px; flex-wrap: wrap;"
+          >
+            {% for filter in collection.filters %}
+              {% for value in filter.active_values %}
+                <a
+                  href="{{ value.url_to_remove }}"
+                  class="custom-section-product-collection-diamension__active-filter-pill"
+                  style="padding: 5px 15px; background: #f0efea; border-radius: 20px; text-decoration: none; color: #183754; font-size: 14px;"
+                >
+                  {{ value.label }} ✕
+                </a>
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
-      {% comment %} Load more section {% endcomment %}
-      {% if paginate.pages > 1 %}
-        <div class="custom-section-product-collection-diamension__load-more">
-          <div class="custom-section-product-collection-diamension__progress">
-            <p
-              class="custom-section-product-collection-diamension__progress-text"
-              data-progress-text
-              data-current-offset="{{ paginate.current_offset }}"
-              data-page-size="{{ paginate.page_size }}"
-              data-total-items="{{ paginate.items }}"
-            >
-              Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of
-              {{ paginate.items }} products
-            </p>
-            <div class="custom-section-product-collection-diamension__progress-line">
-              <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0" y1="0.5" x2="110" y2="0.5" stroke="#183754"/>
-              </svg>
-            </div>
-          </div>
-
-          {% unless paginate.next == null %}
-            <button
-              class="custom-section-product-collection-diamension__load-more-btn"
-              data-load-more
-              data-next-url="{{ paginate.next.url }}"
-            >
-              LOAD MORE
-            </button>
-          {% endunless %}
+      {% comment %} No products message {% endcomment %}
+      {% if collection.products.size == 0 %}
+        <div class="custom-section-product-collection-diamension__no-products" style="display: block;">
+          <p>No products match your selected filters.</p>
+          <a href="{{ collection.url }}" style="text-decoration: underline; color: #183754;">Clear all filters</a>
         </div>
+      {% else %}
+        <div class="custom-section-product-collection-diamension__grid" data-product-grid>
+          {% for product in collection.products %}
+            {% assign index = forloop.index %}
+
+            {% comment %} Render product card {% endcomment %}
+            {% render 'product-card-collection-diamension', product: product %}
+
+            {% comment %} First image card after product 10 {% endcomment %}
+            {% if index == 10 and has_enough_for_images and first_image_card %}
+              {% render 'image-card-collection-diamension', image_card: first_image_card %}
+            {% endif %}
+
+            {% comment %} Second image card after product 18 {% endcomment %}
+            {% if index == 18 and has_enough_for_images and second_image_card %}
+              {% render 'image-card-collection-diamension', image_card: second_image_card %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% comment %} Load More Section {% endcomment %}
+        {% if paginate.pages > 1 %}
+          <div
+            class="custom-section-product-collection-diamension__load-more"
+            style="display: flex; flex-direction: column; align-items: center; gap: 32px; padding: 60px 50px;"
+          >
+            <div
+              class="custom-section-product-collection-diamension__progress"
+              style="display: flex; flex-direction: column; align-items: center; gap: 16px;"
+            >
+              <p
+                class="custom-section-product-collection-diamension__progress-text"
+                data-progress-text
+                data-current-offset="{{ paginate.current_offset }}"
+                data-page-size="{{ paginate.page_size }}"
+                data-total-items="{{ paginate.items }}"
+                style="font-size: 14px; color: #183754; text-align: center; margin: 0;"
+              >
+                Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of
+                {{ paginate.items }} products
+              </p>
+              <div class="custom-section-product-collection-diamension__progress-line">
+                <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="0" y1="0.5" x2="110" y2="0.5" stroke="#183754"/>
+                </svg>
+              </div>
+            </div>
+
+            {% if paginate.next %}
+              <button
+                class="custom-section-product-collection-diamension__load-more-btn"
+                data-load-more-btn
+                data-next-url="{{ paginate.next.url }}"
+                style="padding: 16px 120px; border: 1px solid #183754; background: transparent; font-size: 16px; color: #183754; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;"
+                onmouseover="if(!this.disabled) { this.style.background='#183754'; this.style.color='#fffaf5'; }"
+                onmouseout="if(!this.disabled) { this.style.background='transparent'; this.style.color='#183754'; }"
+              >
+                LOAD MORE
+              </button>
+            {% else %}
+              <p style="color: #183754; font-size: 14px; margin: 0;">All products loaded</p>
+            {% endif %}
+          </div>
+        {% endif %}
       {% endif %}
     {% endpaginate %}
   </div>
 </div>
 
+
+<script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'section-product-collection-diamension.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
-  "name": "Product Collection Custom",
+  "name": "Collection Diamension",
   "class": "section-collection-diamension",
   "settings": [
     {
@@ -609,7 +633,7 @@
       "id": "products_per_page",
       "label": "Products Per Page",
       "min": 12,
-      "max": 40,
+      "max": 48,
       "step": 4,
       "default": 20
     },
@@ -624,27 +648,6 @@
       "id": "show_sort_button",
       "label": "Show Sort Button",
       "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_ajax_loading",
-      "label": "Enable AJAX Loading",
-      "default": true,
-      "info": "Load more products without page refresh"
-    },
-    {
-      "type": "header",
-      "content": "Filter Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_price_filter",
-      "label": "Show Price Filter",
-      "default": true
-    },
-    {
-      "type": "paragraph",
-      "content": "Categories, Sub-Categories, and From The Studio filters are hardcoded and cannot be modified from the theme editor."
     }
   ],
   "presets": [

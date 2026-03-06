@@ -1,566 +1,40 @@
 /**
- * Product Collection Diamension - JavaScript
- * Handles AJAX loading, wishlist, and dynamic grid behavior
+ * Product Collection Diamension (Shopify Facets Hybrid)
+ * Simplified JavaScript - UI interactions only
+ * Filtering logic handled by Shopify's native facets
+ * Version: 2.0
  */
-
-class CollectionDiamension {
-  constructor(container) {
-    this.container = container;
-    this.sectionId = container.dataset.sectionId;
-    this.productGrid = container.querySelector('[data-product-grid]');
-    this.loadMoreBtn = container.querySelector('[data-load-more]');
-    this.progressText = container.querySelector('[data-progress-text]');
-
-    this.init();
-  }
-
-  init() {
-    this.setupEventListeners();
-    this.initWishlist();
-  }
-
-  setupEventListeners() {
-    if (this.loadMoreBtn) {
-      this.loadMoreBtn.addEventListener('click', this.loadMoreProducts.bind(this));
-    }
-  }
-
-  /**
-   * Load more products via AJAX
-   */
-  loadMoreProducts() {
-    const nextUrl = this.loadMoreBtn.dataset.nextUrl;
-    if (!nextUrl) return;
-
-    this.loadMoreBtn.disabled = true;
-    this.loadMoreBtn.textContent = 'LOADING...';
-
-    fetch(nextUrl)
-      .then(response => response.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        // Get new products
-        const newProducts = doc.querySelectorAll('[data-product-grid] > *');
-        newProducts.forEach(product => {
-          this.productGrid.appendChild(product.cloneNode(true));
-        });
-
-        // Update progress
-        const newProgressText = doc.querySelector('[data-progress-text]');
-        if (newProgressText && this.progressText) {
-          this.progressText.textContent = newProgressText.textContent;
-        }
-
-        // Update next URL or hide button
-        const newLoadMoreBtn = doc.querySelector('[data-load-more]');
-        if (newLoadMoreBtn && newLoadMoreBtn.dataset.nextUrl) {
-          this.loadMoreBtn.dataset.nextUrl = newLoadMoreBtn.dataset.nextUrl;
-          this.loadMoreBtn.disabled = false;
-          this.loadMoreBtn.textContent = 'LOAD MORE';
-        } else {
-          this.loadMoreBtn.style.display = 'none';
-        }
-
-        // Reinitialize wishlist for new products
-        this.initWishlist();
-      })
-      .catch(error => {
-        console.error('Error loading products:', error);
-        this.loadMoreBtn.disabled = false;
-        this.loadMoreBtn.textContent = 'LOAD MORE';
-      });
-  }
-
-  /**
-   * Initialize wishlist functionality
-   */
-  initWishlist() {
-    if (window.WishlistManager) {
-      window.WishlistManager.initializeButtons();
-    }
-  }
-}
 
 /**
- * Sort Panel Manager
+ * Filter Panel UI Manager
+ * Only handles opening/closing and UI interactions
+ * Shopify handles the actual filtering via form submission
  */
-class SortPanelDiamension {
-  constructor(container) {
-    this.container = container;
-    this.sortPanel = container.querySelector('[data-sort-panel]');
-    this.sortBtn = container.querySelector('.custom-section-product-collection-diamension__sort-btn');
-    this.closeBtn = container.querySelector('[data-sort-close]');
-    this.sortOptions = container.querySelectorAll('[data-sort-option]');
-    this.productGrid = container.querySelector('[data-product-grid]');
-    this.noProductsMessage = container.querySelector('[data-no-products]');
-    this.progressText = container.querySelector('[data-progress-text]');
-    this.loadMoreSection = container.querySelector('.custom-section-product-collection-diamension__load-more');
-
-    if (!this.sortPanel || !this.sortBtn) return;
-
-    this.currentSort = 'featured';
-    this.isSortOpen = false;
-    this.sortActive = false;
-    this.filterPanel = null; // Will be set by FilterPanelDiamension
-    this.dynamicProducts = []; // Track dynamically created product cards
-
-    this.init();
-  }
-
-  init() {
-    this.setupEventListeners();
-    this.updateActiveOption();
-  }
-
-  setupEventListeners() {
-    // Open sort panel
-    this.sortBtn.addEventListener('click', () => {
-      this.openPanel();
-    });
-
-    // Close sort panel
-    this.closeBtn.addEventListener('click', () => {
-      this.closePanel();
-    });
-
-    // Sort option click
-    this.sortOptions.forEach(option => {
-      option.addEventListener('click', () => {
-        const sortType = option.dataset.sortOption;
-        this.applySort(sortType);
-        this.closePanel();
-      });
-    });
-  }
-
-  openPanel() {
-    // Close filter panel if open
-    if (this.filterPanel && this.filterPanel.isFilterOpen) {
-      this.filterPanel.closePanel();
-    }
-
-    this.sortPanel.classList.add('is-open');
-    this.isSortOpen = true;
-  }
-
-  closePanel() {
-    this.sortPanel.classList.remove('is-open');
-    this.isSortOpen = false;
-  }
-
-  applySort(sortType) {
-    this.currentSort = sortType;
-    this.sortActive = sortType !== 'featured';
-    this.updateActiveOption();
-    this.sortProducts(sortType);
-  }
-
-  updateActiveOption() {
-    this.sortOptions.forEach(option => {
-      if (option.dataset.sortOption === this.currentSort) {
-        option.classList.add('is-active');
-      } else {
-        option.classList.remove('is-active');
-      }
-    });
-  }
-
-  sortProducts(sortType) {
-    if (!this.filterPanel || !this.filterPanel.allProductsLoaded) {
-      console.warn('Filter panel or product data not available');
-      return;
-    }
-
-    // If "featured" is selected, restore default state
-    if (sortType === 'featured') {
-      this.restoreDefaultState();
-      return;
-    }
-
-    // Get all products data
-    let productsToSort = [...this.filterPanel.allProductsData];
-
-    // Apply any active filters first
-    if (this.filterPanel.filtersActive) {
-      productsToSort = this.filterPanel.getFilteredProducts();
-    }
-
-    // Sort the products
-    switch (sortType) {
-      case 'best-selling':
-        // For best-selling, sort by product ID (newest first) as fallback
-        productsToSort.sort((a, b) => {
-          const idA = parseInt(a.id);
-          const idB = parseInt(b.id);
-          return idB - idA;
-        });
-        break;
-
-      case 'price-low-high':
-        productsToSort.sort((a, b) => {
-          return parseFloat(a.price) - parseFloat(b.price);
-        });
-        break;
-
-      case 'price-high-low':
-        productsToSort.sort((a, b) => {
-          return parseFloat(b.price) - parseFloat(a.price);
-        });
-        break;
-    }
-
-    // Clear existing dynamic products
-    this.dynamicProducts.forEach(card => {
-      if (card.parentNode) {
-        card.parentNode.removeChild(card);
-      }
-    });
-    this.dynamicProducts = [];
-
-    // Hide original DOM products
-    this.filterPanel.products.forEach(product => {
-      product.element.style.display = 'none';
-    });
-
-    // Hide image cards
-    this.filterPanel.imageCards.forEach(card => {
-      card.element.style.display = 'none';
-    });
-
-    // Clear grid and create sorted product cards
-    const existingCards = this.productGrid.querySelectorAll('.product-card-collection-diamension[data-dynamic="true"]');
-    existingCards.forEach(card => card.remove());
-
-    productsToSort.forEach(product => {
-      const card = this.filterPanel.createProductCard(product);
-      this.productGrid.appendChild(card);
-      this.dynamicProducts.push(card);
-    });
-
-    // Reinitialize wishlist for new products
-    if (this.container.collectionDiamension) {
-      this.container.collectionDiamension.initWishlist();
-    }
-
-    // Update UI
-    this.updateSortedUI(productsToSort.length);
-  }
-
-  restoreDefaultState() {
-    // Remove dynamic products
-    this.dynamicProducts.forEach(card => {
-      if (card.parentNode) {
-        card.parentNode.removeChild(card);
-      }
-    });
-    this.dynamicProducts = [];
-
-    // If filters are active, let filter handle the display
-    if (this.filterPanel.filtersActive) {
-      this.filterPanel.applyFilters();
-      return;
-    }
-
-    // Otherwise, show all original DOM products
-    this.filterPanel.products.forEach(product => {
-      product.element.style.display = '';
-    });
-
-    // Show image cards
-    this.filterPanel.imageCards.forEach(card => {
-      card.element.style.display = '';
-    });
-
-    // Reinitialize wishlist for original products
-    if (this.container.collectionDiamension) {
-      this.container.collectionDiamension.initWishlist();
-    }
-
-    // Restore original UI
-    const totalCount = this.filterPanel.allProductsLoaded ? this.filterPanel.allProductsData.length : this.filterPanel.totalProducts;
-
-    if (this.progressText) {
-      const currentOffset = parseInt(this.progressText.dataset.currentOffset || 0);
-      const pageSize = parseInt(this.progressText.dataset.pageSize || 20);
-      const totalItems = parseInt(this.progressText.dataset.totalItems || totalCount);
-      this.progressText.textContent = `Showing ${Math.min(currentOffset + pageSize, totalItems)} of ${totalItems} products`;
-    }
-
-    if (this.noProductsMessage) {
-      this.noProductsMessage.style.display = 'none';
-    }
-
-    if (this.productGrid) {
-      this.productGrid.style.display = '';
-    }
-
-    if (this.loadMoreSection) {
-      this.loadMoreSection.style.display = '';
-    }
-
-    this.sortActive = false;
-  }
-
-  updateSortedUI(visibleCount) {
-    const totalCount = this.filterPanel.allProductsLoaded ? this.filterPanel.allProductsData.length : this.filterPanel.totalProducts;
-
-    // Update progress text
-    if (this.progressText) {
-      this.progressText.textContent = `Showing ${visibleCount} of ${totalCount} products`;
-    }
-
-    // Show/hide no products message
-    if (this.noProductsMessage) {
-      if (visibleCount === 0) {
-        this.noProductsMessage.style.display = 'block';
-        this.productGrid.style.display = 'none';
-      } else {
-        this.noProductsMessage.style.display = 'none';
-        this.productGrid.style.display = '';
-      }
-    }
-
-    // Hide load more when sorting
-    if (this.loadMoreSection) {
-      this.loadMoreSection.style.display = 'none';
-    }
-  }
-
-  // Method to re-apply current sort (called after filtering)
-  reapplySort() {
-    if (this.sortActive && this.currentSort !== 'featured') {
-      this.sortProducts(this.currentSort);
-    }
-  }
-}
-
-/**
- * Filter Panel Manager
- */
-class FilterPanelDiamension {
+class FilterPanelUI {
   constructor(container) {
     this.container = container;
     this.filterPanel = container.querySelector('[data-filter-panel]');
-    this.filterBtn = container.querySelector('.custom-section-product-collection-diamension__filter-btn');
+    this.filterBtn = container.querySelector('[data-filter-open]');
     this.closeBtn = container.querySelector('[data-filter-close]');
-    this.applyBtn = container.querySelector('[data-filter-apply]');
-    this.clearBtn = container.querySelector('[data-filter-clear]');
-    this.productGrid = container.querySelector('[data-product-grid]');
     this.filterContent = container.querySelector('[data-filter-content]');
-    this.progressText = container.querySelector('[data-progress-text]');
-    this.loadMoreSection = container.querySelector('.custom-section-product-collection-diamension__load-more');
-    this.noProductsMessage = container.querySelector('[data-no-products]');
+    this.sortPanel = null; // Set by SortPanelUI
 
     if (!this.filterPanel || !this.filterBtn) return;
 
-    // Get collection handle and price range
-    this.collectionHandle = container.dataset.collectionHandle;
-    this.actualMinPrice = parseFloat(container.dataset.collectionMinPrice) || 0;
-    this.actualMaxPrice = parseFloat(container.dataset.collectionMaxPrice) || 0;
-
-    this.products = []; // Products currently in DOM
-    this.allProductsData = []; // Complete product metadata from collection
-    this.imageCards = [];
-    this.totalProducts = 0;
-    this.allProductsLoaded = false;
-    this.dynamicProducts = []; // Track dynamically created product cards
-
-    this.filters = {
-      categories: [],
-      subcategories: [],
-      fromthestudio: [],
-      priceMin: this.actualMinPrice,
-      priceMax: this.actualMaxPrice
-    };
-
-    this.isMouseOverFilter = false;
     this.isFilterOpen = false;
-    this.filtersActive = false;
-    this.sortPanel = null; // Will be set during initialization
+    this.isMouseOverFilter = false;
 
     this.init();
   }
 
-  async init() {
-    this.collectProductData();
-    await this.fetchAllProductsData();
+  init() {
     this.setupEventListeners();
     this.initializeAccordions();
-    this.initializePriceSlider();
-    this.updateCheckboxStates();
-    this.autoCheckAvailableFilters();
+    this.setupPriceSlider();
+    this.setupSubcategoryVisibility();
     this.setupAreaBasedScrolling();
   }
 
-  /**
-   * Fetch ALL products metadata from collection via AJAX
-   */
-  async fetchAllProductsData() {
-    if (!this.collectionHandle) return;
-
-    try {
-      const response = await fetch(`/collections/${this.collectionHandle}/products.json?limit=250`);
-      const data = await response.json();
-
-      this.allProductsData = data.products.map(product => {
-        // Try to find this product in DOM to get its type
-        const domProduct = this.products.find(p => p.id === product.id.toString());
-
-        return {
-          id: product.id.toString(),
-          title: product.title || '',
-          price: parseFloat(product.variants[0]?.price || 0),
-          tags: (product.tags || []).map(tag => tag.trim().toLowerCase()),
-          type: domProduct ? domProduct.type : (product.product_type || product.type || '').toLowerCase().trim(),
-          url: product.url || '',
-          image: product.images[0]?.src || '',
-          inDOM: !!domProduct // Track if product card is already in DOM
-        };
-      });
-
-      this.allProductsLoaded = true;
-      console.log(`Loaded ${this.allProductsData.length} products from collection`);
-    } catch (error) {
-      console.error('Error fetching all products:', error);
-    }
-  }
-
-  /**
-   * Collect all product data (tags, types, prices) and image cards
-   */
-  collectProductData() {
-    const productCards = this.productGrid.querySelectorAll('.product-card-collection-diamension');
-    const imageCardElements = this.productGrid.querySelectorAll('.image-card-collection-diamension');
-
-    productCards.forEach(card => {
-      const productId = card.dataset.productId || '';
-      const tagsAttr = card.dataset.productTags || '';
-      const productType = card.dataset.productType || '';
-      const priceAttr = card.dataset.productPrice || '0';
-
-      // Parse tags (comma-separated, case-insensitive)
-      const tags = tagsAttr.split(',').map(tag => tag.trim().toLowerCase()).filter(t => t);
-      const price = parseFloat(priceAttr);
-
-      this.products.push({
-        element: card,
-        id: productId,
-        tags: tags,
-        type: productType.toLowerCase().trim(),
-        price: price,
-        visible: true
-      });
-    });
-
-    // Collect image cards
-    imageCardElements.forEach(card => {
-      this.imageCards.push({
-        element: card,
-        visible: true
-      });
-    });
-
-    this.totalProducts = this.products.length;
-  }
-
-  /**
-   * Update checkbox states (enable/disable based on available products)
-   */
-  updateCheckboxStates() {
-    const checkboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox]');
-
-    checkboxes.forEach(checkbox => {
-      const category = checkbox.dataset.filterCheckbox;
-      const value = checkbox.value.toLowerCase().trim();
-
-      let hasMatch = false;
-
-      if (category === 'categories') {
-        // Check product.type
-        hasMatch = this.products.some(product => product.type === value);
-      } else if (category === 'subcategories' || category === 'fromthestudio') {
-        // Check tags for sub-categories and from the studio
-        hasMatch = this.products.some(product => product.tags.includes(value));
-      }
-
-      // Don't override disabled state for "From The Studio" if already disabled by Liquid
-      if (category === 'fromthestudio' && checkbox.disabled) {
-        // Keep it disabled (set by collection-specific logic in Liquid)
-        return;
-      }
-
-      checkbox.disabled = !hasMatch;
-    });
-  }
-
-  /**
-   * Auto-check checkboxes for filters that are available in the collection
-   */
-  autoCheckAvailableFilters() {
-    if (!this.allProductsLoaded) return;
-
-    // Get all unique types and tags from the collection
-    const availableTypes = new Set();
-    const availableTags = new Set();
-
-    this.allProductsData.forEach(product => {
-      if (product.type) {
-        availableTypes.add(product.type);
-      }
-      product.tags.forEach(tag => {
-        availableTags.add(tag);
-      });
-    });
-
-    // Auto-check category checkboxes
-    const categoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="categories"]');
-    categoryCheckboxes.forEach(checkbox => {
-      const value = checkbox.value.toLowerCase().trim();
-      if (availableTypes.has(value) && !checkbox.disabled) {
-        checkbox.checked = true;
-        if (!this.filters.categories.includes(value)) {
-          this.filters.categories.push(value);
-        }
-      }
-    });
-
-    // Update sub-category visibility based on auto-checked categories
-    this.updateSubcategoryVisibility();
-
-    // Auto-check sub-category checkboxes (only for visible ones)
-    const subcategoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="subcategories"]');
-    subcategoryCheckboxes.forEach(checkbox => {
-      const value = checkbox.value.toLowerCase().trim();
-      const parentOption = checkbox.closest('[data-parent-category]');
-
-      // Only check if visible and tag exists in collection
-      if (parentOption && parentOption.style.display !== 'none' &&
-          availableTags.has(value) && !checkbox.disabled) {
-        checkbox.checked = true;
-        if (!this.filters.subcategories.includes(value)) {
-          this.filters.subcategories.push(value);
-        }
-      }
-    });
-
-    // Auto-check "From The Studio" checkboxes
-    const studioCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="fromthestudio"]');
-    studioCheckboxes.forEach(checkbox => {
-      const value = checkbox.value.toLowerCase().trim();
-      if (availableTags.has(value) && !checkbox.disabled) {
-        checkbox.checked = true;
-        if (!this.filters.fromthestudio.includes(value)) {
-          this.filters.fromthestudio.push(value);
-        }
-      }
-    });
-  }
-
-  /**
-   * Setup event listeners
-   */
   setupEventListeners() {
     // Open filter panel
     this.filterBtn.addEventListener('click', () => {
@@ -572,32 +46,30 @@ class FilterPanelDiamension {
       this.closePanel();
     });
 
-    // Apply filters
-    this.applyBtn.addEventListener('click', () => {
-      this.applyFilters();
-      this.closePanel();
-    });
-
-    // Clear filters
-    this.clearBtn.addEventListener('click', () => {
-      this.clearFilters();
-    });
-
-    // Checkbox changes
-    const checkboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox]');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', (e) => {
-        this.handleCheckboxChange(e.target);
-
-        // If it's a category checkbox, update sub-category visibility
-        if (e.target.dataset.filterCheckbox === 'categories') {
-          this.updateSubcategoryVisibility();
+    // Prevent form submission on Enter key in price inputs
+    const form = this.filterPanel.querySelector('form');
+    if (form) {
+      form.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.type !== 'submit') {
+          e.preventDefault();
         }
       });
-    });
+    }
+  }
 
-    // Initialize sub-category visibility on load
-    this.updateSubcategoryVisibility();
+  openPanel() {
+    // Close sort panel if open
+    if (this.sortPanel && this.sortPanel.isSortOpen) {
+      this.sortPanel.closePanel();
+    }
+
+    this.filterPanel.classList.add('is-open');
+    this.isFilterOpen = true;
+  }
+
+  closePanel() {
+    this.filterPanel.classList.remove('is-open');
+    this.isFilterOpen = false;
   }
 
   /**
@@ -623,9 +95,9 @@ class FilterPanelDiamension {
   }
 
   /**
-   * Initialize price slider with dynamic min/max from collection
+   * Setup price slider with live display updates
    */
-  initializePriceSlider() {
+  setupPriceSlider() {
     const minSlider = this.filterPanel.querySelector('[data-price-min]');
     const maxSlider = this.filterPanel.querySelector('[data-price-max]');
     const minDisplay = this.filterPanel.querySelector('[data-price-min-display]');
@@ -633,25 +105,14 @@ class FilterPanelDiamension {
 
     if (!minSlider || !maxSlider) return;
 
-    // Set slider attributes to actual price range
-    minSlider.setAttribute('min', this.actualMinPrice);
-    minSlider.setAttribute('max', this.actualMaxPrice);
-    minSlider.value = this.actualMinPrice;
-
-    maxSlider.setAttribute('min', this.actualMinPrice);
-    maxSlider.setAttribute('max', this.actualMaxPrice);
-    maxSlider.value = this.actualMaxPrice;
-
-    // Set initial display values
-    minDisplay.value = '₹' + this.formatPrice(this.actualMinPrice);
-    maxDisplay.value = '₹' + this.formatPrice(this.actualMaxPrice);
-
     const updateDisplay = () => {
       const minVal = parseFloat(minSlider.value);
       const maxVal = parseFloat(maxSlider.value);
+      const min = parseFloat(minSlider.min);
+      const max = parseFloat(maxSlider.max);
 
       // Calculate 1% of range as minimum gap
-      const priceRange = this.actualMaxPrice - this.actualMinPrice;
+      const priceRange = max - min;
       const minGap = Math.max(priceRange * 0.01, 100);
 
       // Ensure min doesn't exceed max
@@ -664,11 +125,12 @@ class FilterPanelDiamension {
         maxSlider.value = minVal + minGap;
       }
 
-      this.filters.priceMin = parseFloat(minSlider.value);
-      this.filters.priceMax = parseFloat(maxSlider.value);
+      // Update displays
+      const currentMin = parseFloat(minSlider.value);
+      const currentMax = parseFloat(maxSlider.value);
 
-      minDisplay.value = '₹' + this.formatPrice(this.filters.priceMin);
-      maxDisplay.value = '₹' + this.formatPrice(this.filters.priceMax);
+      minDisplay.value = '₹' + this.formatPrice(currentMin);
+      maxDisplay.value = '₹' + this.formatPrice(currentMax);
     };
 
     minSlider.addEventListener('input', updateDisplay);
@@ -679,445 +141,79 @@ class FilterPanelDiamension {
    * Format price with commas
    */
   formatPrice(price) {
-    return price.toLocaleString('en-IN');
+    return Math.round(price).toLocaleString('en-IN');
   }
 
   /**
-   * Handle checkbox change
+   * Setup subcategory visibility based on category selection
+   * Shopify provides the data, we just show/hide based on UI logic
    */
-  handleCheckboxChange(checkbox) {
-    const category = checkbox.dataset.filterCheckbox;
-    const value = checkbox.value.toLowerCase().trim();
-
-    if (checkbox.checked) {
-      if (!this.filters[category].includes(value)) {
-        this.filters[category].push(value);
-      }
-    } else {
-      this.filters[category] = this.filters[category].filter(v => v !== value);
-    }
-  }
-
-  /**
-   * Update sub-category visibility based on selected categories
-   */
-  updateSubcategoryVisibility() {
+  setupSubcategoryVisibility() {
     const subcategoryGroup = this.filterPanel.querySelector('[data-subcategories-group]');
     if (!subcategoryGroup) return;
 
     const categoryCheckboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox="categories"]');
     const subcategoryOptions = this.filterPanel.querySelectorAll('[data-parent-category]');
 
-    // Get selected categories
-    const selectedCategories = [];
-    categoryCheckboxes.forEach(cb => {
-      if (cb.checked) {
-        selectedCategories.push(cb.value.toLowerCase());
-      }
-    });
+    const updateVisibility = () => {
+      // Get selected categories
+      const selectedCategories = [];
+      categoryCheckboxes.forEach(cb => {
+        if (cb.checked) {
+          const label = cb.value.toLowerCase();
+          selectedCategories.push(label);
+        }
+      });
 
-    // Show/hide sub-categories based on selected parent categories
-    subcategoryOptions.forEach(option => {
-      const parentCategory = option.dataset.parentCategory;
-      const checkbox = option.querySelector('input[type="checkbox"]');
+      // Show/hide subcategories based on selected parent categories
+      subcategoryOptions.forEach(option => {
+        const parentCategory = option.dataset.parentCategory;
 
+        if (selectedCategories.length === 0) {
+          // No categories selected - hide all subcategories
+          option.style.display = 'none';
+          const checkbox = option.querySelector('input[type="checkbox"]');
+          if (checkbox && checkbox.checked) {
+            checkbox.checked = false;
+          }
+        } else {
+          // Check if any selected category matches (partial match)
+          const shouldShow = selectedCategories.some(cat =>
+            parentCategory.includes(cat) || cat.includes(parentCategory)
+          );
+
+          if (shouldShow) {
+            option.style.display = '';
+          } else {
+            option.style.display = 'none';
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            if (checkbox && checkbox.checked) {
+              checkbox.checked = false;
+            }
+          }
+        }
+      });
+
+      // Hide the entire sub-categories group if no categories selected
       if (selectedCategories.length === 0) {
-        // No categories selected - hide all sub-categories
-        option.style.display = 'none';
-        if (checkbox) {
-          checkbox.checked = false;
-          // Remove from filter state
-          const value = checkbox.value.toLowerCase().trim();
-          this.filters.subcategories = this.filters.subcategories.filter(v => v !== value);
-        }
-      } else if (selectedCategories.includes(parentCategory)) {
-        // Parent category is selected - show this sub-category
-        option.style.display = '';
+        subcategoryGroup.style.display = 'none';
       } else {
-        // Parent category not selected - hide and uncheck
-        option.style.display = 'none';
-        if (checkbox && checkbox.checked) {
-          checkbox.checked = false;
-          // Remove from filter state
-          const value = checkbox.value.toLowerCase().trim();
-          this.filters.subcategories = this.filters.subcategories.filter(v => v !== value);
-        }
+        subcategoryGroup.style.display = '';
       }
-    });
-
-    // Hide the entire sub-categories group if no categories selected
-    if (selectedCategories.length === 0) {
-      subcategoryGroup.style.display = 'none';
-    } else {
-      subcategoryGroup.style.display = '';
-    }
-  }
-
-  /**
-   * Create product card HTML dynamically
-   */
-  createProductCard(product) {
-    const card = document.createElement('div');
-    card.className = 'product-card-collection-diamension';
-    card.dataset.productId = product.id;
-    card.dataset.productTags = product.tags.join(',');
-    card.dataset.productType = product.type;
-    card.dataset.productPrice = product.price;
-    card.dataset.dynamic = 'true'; // Mark as dynamically created
-
-    const formattedPrice = '₹' + this.formatPrice(product.price);
-
-    card.innerHTML = `
-      <a href="${product.url}" class="product-card-collection-diamension__link">
-        <div class="product-card-collection-diamension__image-wrapper">
-          ${product.image ? `
-            <img
-              src="${product.image}"
-              alt="${product.title}"
-              loading="lazy"
-              class="product-card-collection-diamension__image"
-            >
-          ` : `
-            <div class="product-card-collection-diamension__image-placeholder"></div>
-          `}
-        </div>
-        <div class="product-card-collection-diamension__info">
-          <h3 class="product-card-collection-diamension__title">${product.title}</h3>
-          <p class="product-card-collection-diamension__price">From ${formattedPrice}</p>
-        </div>
-      </a>
-      <button
-        class="product-card-collection-diamension__wishlist"
-        data-wishlist-toggle
-        data-product-id="${product.id}"
-        aria-label="Add to wishlist"
-        type="button"
-      >
-        <svg width="24" height="24" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-card-collection-diamension__wishlist-icon">
-          <g clip-path="url(#clip0_12_4822)">
-            <mask id="mask0_12_4822" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="19" height="19">
-              <path d="M18.7554 0H0V18.7554H18.7554V0Z" fill="white"/>
-            </mask>
-            <g mask="url(#mask0_12_4822)">
-              <path d="M16.0901 3.88421C16.7778 4.65787 17.192 5.67378 17.192 6.79129C17.192 12.2616 12.128 15.4891 9.86175 16.2706C9.59605 16.3643 9.15842 16.3643 8.89272 16.2706C6.62645 15.4891 1.5625 12.2616 1.5625 6.79129C1.5625 4.37654 3.50837 2.42285 5.90749 2.42285C7.32978 2.42285 8.58795 3.11055 9.37724 4.17335C10.1665 3.11055 11.4325 2.42285 12.847 2.42285" stroke="#183754" stroke-width="1.25036" stroke-linecap="round" stroke-linejoin="round" class="product-card-collection-diamension__wishlist-path"/>
-            </g>
-          </g>
-          <defs>
-            <clipPath id="clip0_12_4822">
-              <rect width="18.7554" height="18.7554" fill="white"/>
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
-    `;
-
-    return card;
-  }
-
-  /**
-   * Get filtered products without rendering (for use by sort panel)
-   */
-  getFilteredProducts() {
-    const matchingProducts = [];
-
-    this.allProductsData.forEach(product => {
-      let matches = true;
-
-      // Categories filter (product.type)
-      if (this.filters.categories.length > 0) {
-        const hasCategory = this.filters.categories.includes(product.type);
-        if (!hasCategory) matches = false;
-      }
-
-      // Sub-categories filter (tags)
-      if (this.filters.subcategories.length > 0) {
-        const hasSubcategory = this.filters.subcategories.some(subcategory =>
-          product.tags.includes(subcategory)
-        );
-        if (!hasSubcategory) matches = false;
-      }
-
-      // From The Studio filter (tags)
-      if (this.filters.fromthestudio.length > 0) {
-        const hasStudio = this.filters.fromthestudio.some(studio =>
-          product.tags.includes(studio)
-        );
-        if (!hasStudio) matches = false;
-      }
-
-      // Price filter
-      const productPrice = parseFloat(product.price);
-      const filterMin = parseFloat(this.filters.priceMin);
-      const filterMax = parseFloat(this.filters.priceMax);
-
-      if (!isNaN(productPrice) && !isNaN(filterMin) && !isNaN(filterMax)) {
-        if (productPrice < filterMin || productPrice > filterMax) {
-          matches = false;
-        }
-      }
-
-      if (matches) {
-        matchingProducts.push(product);
-      }
-    });
-
-    return matchingProducts;
-  }
-
-  /**
-   * Apply filters - uses complete product dataset
-   */
-  applyFilters() {
-    if (!this.allProductsLoaded) {
-      console.warn('All products not loaded yet');
-      return;
-    }
-
-    // Remove previously created dynamic product cards
-    this.dynamicProducts.forEach(card => {
-      if (card.parentNode) {
-        card.parentNode.removeChild(card);
-      }
-    });
-    this.dynamicProducts = [];
-
-    let totalMatchingProducts = 0;
-    const matchingProducts = [];
-
-    // Check if any filters are active
-    this.filtersActive =
-      this.filters.categories.length > 0 ||
-      this.filters.subcategories.length > 0 ||
-      this.filters.fromthestudio.length > 0 ||
-      this.filters.priceMin > this.actualMinPrice ||
-      this.filters.priceMax < this.actualMaxPrice;
-
-    // If sorting is active, let sort panel handle rendering
-    if (this.sortPanel && this.sortPanel.sortActive) {
-      this.sortPanel.reapplySort();
-      return;
-    }
-
-    // Filter the complete dataset
-    this.allProductsData.forEach(product => {
-      let matches = true;
-
-      // Categories filter (product.type)
-      if (this.filters.categories.length > 0) {
-        const hasCategory = this.filters.categories.includes(product.type);
-        if (!hasCategory) matches = false;
-      }
-
-      // Sub-categories filter (tags)
-      if (this.filters.subcategories.length > 0) {
-        const hasSubcategory = this.filters.subcategories.some(subcategory =>
-          product.tags.includes(subcategory)
-        );
-        if (!hasSubcategory) matches = false;
-      }
-
-      // From The Studio filter (tags)
-      if (this.filters.fromthestudio.length > 0) {
-        const hasStudio = this.filters.fromthestudio.some(studio =>
-          product.tags.includes(studio)
-        );
-        if (!hasStudio) matches = false;
-      }
-
-      // Price filter
-      const productPrice = parseFloat(product.price);
-      const filterMin = parseFloat(this.filters.priceMin);
-      const filterMax = parseFloat(this.filters.priceMax);
-
-      if (!isNaN(productPrice) && !isNaN(filterMin) && !isNaN(filterMax)) {
-        if (productPrice < filterMin || productPrice > filterMax) {
-          matches = false;
-        }
-      }
-
-      // If product matches filters
-      if (matches) {
-        totalMatchingProducts++;
-        matchingProducts.push(product);
-
-        // If product is in DOM, show it
-        if (product.inDOM) {
-          const domProduct = this.products.find(p => p.id === product.id);
-          if (domProduct) {
-            domProduct.element.style.display = '';
-          }
-        }
-      } else {
-        // Hide if in DOM
-        if (product.inDOM) {
-          const domProduct = this.products.find(p => p.id === product.id);
-          if (domProduct) {
-            domProduct.element.style.display = 'none';
-          }
-        }
-      }
-    });
-
-    // Create cards for matching products not in DOM
-    matchingProducts.forEach(product => {
-      if (!product.inDOM) {
-        const card = this.createProductCard(product);
-        this.productGrid.appendChild(card);
-        this.dynamicProducts.push(card);
-      }
-    });
-
-    // Reinitialize wishlist for new products
-    if (this.container.collectionDiamension) {
-      this.container.collectionDiamension.initWishlist();
-    }
-
-    // Update UI based on total matching products
-    this.updateFilteredUI(totalMatchingProducts);
-  }
-
-  /**
-   * Update UI elements based on filtered product count
-   */
-  updateFilteredUI(visibleCount) {
-    // Get total products count
-    const totalCount = this.allProductsLoaded ? this.allProductsData.length : this.totalProducts;
-
-    // Update progress text
-    if (this.progressText) {
-      if (this.filtersActive) {
-        this.progressText.textContent = `Showing ${visibleCount} of ${totalCount} products`;
-      } else {
-        // Restore original text - will be updated by pagination
-        const currentOffset = parseInt(this.progressText.dataset.currentOffset || 0);
-        const pageSize = parseInt(this.progressText.dataset.pageSize || 20);
-        const totalItems = parseInt(this.progressText.dataset.totalItems || totalCount);
-        this.progressText.textContent = `Showing ${Math.min(currentOffset + pageSize, totalItems)} of ${totalItems} products`;
-      }
-    }
-
-    // Show/hide no products message
-    if (this.noProductsMessage) {
-      if (visibleCount === 0 && this.filtersActive) {
-        this.noProductsMessage.style.display = 'block';
-        this.productGrid.style.display = 'none';
-      } else {
-        this.noProductsMessage.style.display = 'none';
-        this.productGrid.style.display = '';
-      }
-    }
-
-    // Hide/show image cards based on visible product count and filter state
-    // Image cards should only show when filters are NOT active
-    this.imageCards.forEach(card => {
-      if (this.filtersActive) {
-        card.element.style.display = 'none';
-      } else {
-        card.element.style.display = '';
-      }
-    });
-
-    // Hide/show load more section when filtering
-    if (this.loadMoreSection) {
-      if (this.filtersActive) {
-        this.loadMoreSection.style.display = 'none';
-      } else {
-        this.loadMoreSection.style.display = '';
-      }
-    }
-  }
-
-  /**
-   * Clear all filters
-   */
-  clearFilters() {
-    // Remove dynamic product cards
-    this.dynamicProducts.forEach(card => {
-      if (card.parentNode) {
-        card.parentNode.removeChild(card);
-      }
-    });
-    this.dynamicProducts = [];
-
-    // Reset filter state to actual collection min/max
-    this.filters = {
-      categories: [],
-      subcategories: [],
-      fromthestudio: [],
-      priceMin: this.actualMinPrice,
-      priceMax: this.actualMaxPrice
     };
 
-    this.filtersActive = false;
-
-    // Uncheck all checkboxes
-    const checkboxes = this.filterPanel.querySelectorAll('[data-filter-checkbox]');
-    checkboxes.forEach(checkbox => {
-      checkbox.checked = false;
+    // Listen to category checkbox changes
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateVisibility);
     });
 
-    // Reset price sliders to actual collection range
-    const minSlider = this.filterPanel.querySelector('[data-price-min]');
-    const maxSlider = this.filterPanel.querySelector('[data-price-max]');
-    const minDisplay = this.filterPanel.querySelector('[data-price-min-display]');
-    const maxDisplay = this.filterPanel.querySelector('[data-price-max-display]');
-
-    if (minSlider && maxSlider) {
-      minSlider.value = this.actualMinPrice;
-      maxSlider.value = this.actualMaxPrice;
-      minDisplay.value = '₹' + this.formatPrice(this.actualMinPrice);
-      maxDisplay.value = '₹' + this.formatPrice(this.actualMaxPrice);
-    }
-
-    // Show all products currently in DOM
-    this.products.forEach(product => {
-      product.visible = true;
-      product.element.style.display = '';
-    });
-
-    // Reset sub-category visibility
-    this.updateSubcategoryVisibility();
-
-    // Reinitialize wishlist after clearing
-    if (this.container.collectionDiamension) {
-      this.container.collectionDiamension.initWishlist();
-    }
-
-    // Reset UI to default state
-    const totalCount = this.allProductsLoaded ? this.allProductsData.length : this.totalProducts;
-    this.updateFilteredUI(totalCount);
-
-    // Re-apply current sort after clearing filters
-    if (this.sortPanel) {
-      this.sortPanel.reapplySort();
-    }
-  }
-
-  /**
-   * Open filter panel
-   */
-  openPanel() {
-    // Close sort panel if open
-    if (this.sortPanel && this.sortPanel.isSortOpen) {
-      this.sortPanel.closePanel();
-    }
-
-    this.filterPanel.classList.add('is-open');
-    this.isFilterOpen = true;
-  }
-
-  /**
-   * Close filter panel
-   */
-  closePanel() {
-    this.filterPanel.classList.remove('is-open');
-    this.isFilterOpen = false;
+    // Initial update
+    updateVisibility();
   }
 
   /**
    * Setup area-based scrolling
    * Scrolls filter when mouse is over filter, scrolls page when mouse is outside
-   * When filter reaches scroll boundary, allows page to scroll
    */
   setupAreaBasedScrolling() {
     if (!this.filterPanel || !this.filterContent) return;
@@ -1142,27 +238,22 @@ class FilterPanelDiamension {
         const scrollHeight = this.filterContent.scrollHeight;
         const clientHeight = this.filterContent.clientHeight;
 
-        // Check if at boundaries (with 1px tolerance)
+        // Check if at boundaries
         const isAtTop = scrollTop <= 1;
         const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-        // Determine if we should scroll the filter or allow page scroll
         let shouldScrollFilter = false;
 
         if (delta < 0) {
           // Scrolling up
           if (!isAtTop) {
-            // Filter has room to scroll up
             shouldScrollFilter = true;
           }
-          // If at top, allow page scroll
         } else if (delta > 0) {
           // Scrolling down
           if (!isAtBottom) {
-            // Filter has room to scroll down
             shouldScrollFilter = true;
           }
-          // If at bottom, allow page scroll
         }
 
         if (shouldScrollFilter) {
@@ -1171,53 +262,313 @@ class FilterPanelDiamension {
           e.stopPropagation();
           this.filterContent.scrollTop += delta;
         }
-        // If not scrolling filter, page will scroll naturally
-      }
-      // If mouse is outside filter, allow normal page scroll (do nothing)
-    }, { passive: false });
-
-    // Handle touch events for mobile
-    let touchStartY = 0;
-
-    this.filterContent.addEventListener('touchstart', (e) => {
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    this.filterContent.addEventListener('touchmove', (e) => {
-      if (!this.isFilterOpen) return;
-
-      const touchY = e.touches[0].clientY;
-      const touchDelta = touchStartY - touchY;
-      const scrollTop = this.filterContent.scrollTop;
-      const scrollHeight = this.filterContent.scrollHeight;
-      const clientHeight = this.filterContent.clientHeight;
-
-      const isAtTop = scrollTop <= 1;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-      // Only prevent default if we're at boundary and trying to scroll beyond
-      if ((touchDelta < 0 && isAtTop) || (touchDelta > 0 && isAtBottom)) {
-        e.preventDefault();
       }
     }, { passive: false });
+  }
+}
+
+/**
+ * Sort Panel UI Manager
+ * Handles sort options via URL navigation (Shopify standard)
+ */
+class SortPanelUI {
+  constructor(container) {
+    this.container = container;
+    this.sortPanel = container.querySelector('[data-sort-panel]');
+    this.sortBtn = container.querySelector('[data-sort-open]');
+    this.closeBtn = container.querySelector('[data-sort-close]');
+    this.filterPanel = null; // Set by FilterPanelUI
+
+    if (!this.sortPanel || !this.sortBtn) return;
+
+    this.isSortOpen = false;
+
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    // Open sort panel
+    this.sortBtn.addEventListener('click', () => {
+      this.openPanel();
+    });
+
+    // Close sort panel
+    this.closeBtn.addEventListener('click', () => {
+      this.closePanel();
+    });
+
+    // Close panel when sort option is clicked (it's a link, will navigate)
+    const sortOptions = this.sortPanel.querySelectorAll('.custom-section-product-collection-diamension__sort-option');
+    sortOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Panel will close when page navigates
+        this.closePanel();
+      });
+    });
+  }
+
+  openPanel() {
+    // Close filter panel if open
+    if (this.filterPanel && this.filterPanel.isFilterOpen) {
+      this.filterPanel.closePanel();
+    }
+
+    this.sortPanel.classList.add('is-open');
+    this.isSortOpen = true;
+  }
+
+  closePanel() {
+    this.sortPanel.classList.remove('is-open');
+    this.isSortOpen = false;
+  }
+}
+
+/**
+ * Preserve Filters in Sort Links
+ * Ensures sort links maintain current filter parameters
+ */
+function preserveFiltersInSortLinks() {
+  // Get current URL parameters (filters)
+  const currentParams = new URLSearchParams(window.location.search);
+
+  // Get all sort option links
+  const sortLinks = document.querySelectorAll('[data-sort-value]');
+
+  sortLinks.forEach(link => {
+    const sortValue = link.dataset.sortValue;
+
+    // Create new URL params with current filters
+    const newParams = new URLSearchParams(currentParams);
+
+    // Update or add sort_by parameter
+    newParams.set('sort_by', sortValue);
+
+    // Update the link href to include filters + sort
+    const baseUrl = link.href.split('?')[0];
+    link.href = baseUrl + '?' + newParams.toString();
+  });
+
+  console.log('✅ Sort links updated to preserve filters');
+}
+
+/**
+ * AJAX Load More Functionality
+ * Handles progressive loading of products with filter support
+ */
+function setupLoadMore() {
+  const loadMoreBtn = document.querySelector('[data-load-more-btn]');
+  const progressText = document.querySelector('[data-progress-text]');
+  const productGrid = document.querySelector('[data-product-grid]');
+
+  if (!loadMoreBtn || !productGrid || !progressText) return;
+
+  // Get initial values
+  const totalItems = parseInt(progressText.dataset.totalItems);
+
+  // Function to count visible products
+  function countVisibleProducts() {
+    const allProducts = productGrid.querySelectorAll('[data-product-price]');
+    let visibleCount = 0;
+    allProducts.forEach(product => {
+      if (product.style.display !== 'none') {
+        visibleCount++;
+      }
+    });
+    return visibleCount;
+  }
+
+  // Function to update progress text
+  function updateProgressText() {
+    const visibleCount = countVisibleProducts();
+    progressText.textContent = `Showing ${visibleCount} of ${totalItems} products`;
+  }
+
+  // Function to apply client-side price filter to new products
+  function applyPriceFilterToNewProducts(newCards) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const minFilterPrice = urlParams.get('filter.v.price.gte');
+    const maxFilterPrice = urlParams.get('filter.v.price.lte');
+
+    if (!minFilterPrice && !maxFilterPrice) return 0;
+
+    const minPrice = minFilterPrice ? parseFloat(minFilterPrice) : 0;
+    const maxPrice = maxFilterPrice ? parseFloat(maxFilterPrice) : Infinity;
+
+    console.log(`\n🎯 Filtering new products: ₹${minPrice.toLocaleString('en-IN')} - ₹${maxPrice.toLocaleString('en-IN')}`);
+
+    let hiddenCount = 0;
+    newCards.forEach(card => {
+      const productPrice = parseFloat(card.dataset.productPrice);
+      if (productPrice < minPrice || productPrice > maxPrice) {
+        card.style.display = 'none';
+        hiddenCount++;
+        console.log(`  ❌ Hidden: ₹${productPrice.toLocaleString('en-IN')} (outside range)`);
+      } else {
+        console.log(`  ✅ Visible: ₹${productPrice.toLocaleString('en-IN')}`);
+      }
+    });
+    return hiddenCount;
+  }
+
+  loadMoreBtn.addEventListener('click', async function() {
+    const nextUrl = loadMoreBtn.dataset.nextUrl;
+    if (!nextUrl) return;
+
+    // Set button to loading state (filled + disabled)
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.textContent = 'LOADING...';
+    loadMoreBtn.style.background = '#183754';
+    loadMoreBtn.style.color = '#fffaf5';
+    loadMoreBtn.style.opacity = '0.6';
+    loadMoreBtn.style.cursor = 'wait';
+
+    try {
+      console.log('🔄 Loading more products from:', nextUrl);
+
+      // Fetch next page
+      const response = await fetch(nextUrl);
+      const html = await response.text();
+
+      // Parse HTML
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // Extract product cards
+      const newProductCards = doc.querySelectorAll('[data-product-grid] .product-card-collection-diamension');
+      console.log(`  ✅ Found ${newProductCards.length} new products`);
+
+      if (newProductCards.length > 0) {
+        // Append new products to grid
+        newProductCards.forEach(card => {
+          productGrid.appendChild(card.cloneNode(true));
+        });
+
+        // Apply price filter to new products
+        const addedCards = Array.from(productGrid.querySelectorAll('[data-product-price]')).slice(-newProductCards.length);
+        applyPriceFilterToNewProducts(addedCards);
+
+        // Update progress text
+        updateProgressText();
+
+        // Reinitialize wishlist buttons for new products
+        if (window.WishlistManager) {
+          window.WishlistManager.initializeButtons();
+        }
+      }
+
+      // Check for next page button in loaded content
+      const newLoadMoreBtn = doc.querySelector('[data-load-more-btn]');
+      if (newLoadMoreBtn && newLoadMoreBtn.dataset.nextUrl) {
+        // Update next URL and restore button to outline state
+        loadMoreBtn.dataset.nextUrl = newLoadMoreBtn.dataset.nextUrl;
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.textContent = 'LOAD MORE';
+        loadMoreBtn.style.background = 'transparent';
+        loadMoreBtn.style.color = '#183754';
+        loadMoreBtn.style.opacity = '1';
+        loadMoreBtn.style.cursor = 'pointer';
+      } else {
+        // No more pages
+        loadMoreBtn.remove();
+        const allLoadedMsg = document.createElement('p');
+        allLoadedMsg.style.cssText = 'color: #183754; font-size: 14px; margin: 0;';
+        allLoadedMsg.textContent = 'All products loaded';
+        progressText.parentElement.parentElement.appendChild(allLoadedMsg);
+        console.log('  ℹ️ All products loaded');
+      }
+
+    } catch (error) {
+      console.error('❌ Error loading more products:', error);
+      // Restore button to outline state on error
+      loadMoreBtn.disabled = false;
+      loadMoreBtn.textContent = 'LOAD MORE';
+      loadMoreBtn.style.background = 'transparent';
+      loadMoreBtn.style.color = '#183754';
+      loadMoreBtn.style.opacity = '1';
+      loadMoreBtn.style.cursor = 'pointer';
+      alert('Failed to load more products. Please try again.');
+    }
+  });
+
+  console.log('✅ Load More functionality initialized');
+}
+
+/**
+ * Wishlist Integration
+ * Keeps existing wishlist functionality
+ */
+class WishlistIntegration {
+  constructor(container) {
+    this.container = container;
+    this.init();
+  }
+
+  init() {
+    if (window.WishlistManager) {
+      window.WishlistManager.initializeButtons();
+    }
+  }
+
+  reinitialize() {
+    if (window.WishlistManager) {
+      window.WishlistManager.initializeButtons();
+    }
   }
 }
 
 // Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('.custom-section-product-collection-diamension');
+
   sections.forEach(section => {
-    const collectionDiamension = new CollectionDiamension(section);
+    // Initialize UI managers
+    const filterPanel = new FilterPanelUI(section);
+    const sortPanel = new SortPanelUI(section);
+    const wishlist = new WishlistIntegration(section);
 
-    // Initialize sort and filter panels and link them
-    const sortPanel = new SortPanelDiamension(section);
-    const filterPanel = new FilterPanelDiamension(section);
-
-    // Store reference to CollectionDiamension for wishlist re-initialization
-    section.collectionDiamension = collectionDiamension;
-
-    // Cross-reference between panels
-    sortPanel.filterPanel = filterPanel;
+    // Cross-reference panels
     filterPanel.sortPanel = sortPanel;
+    sortPanel.filterPanel = filterPanel;
+
+    // Store references
+    section.filterPanel = filterPanel;
+    section.sortPanel = sortPanel;
+    section.wishlist = wishlist;
   });
+
+  // Initialize additional functionality
+  preserveFiltersInSortLinks();
+  setupLoadMore();
+
+  console.log('✅ Product Collection (Facets Hybrid) initialized');
+  console.log('ℹ️ Filtering handled by Shopify facets, UI interactions handled by JavaScript');
 });
+
+// Reinitialize wishlist when page content changes (for AJAX loaded content)
+if (typeof MutationObserver !== 'undefined') {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length) {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.classList && node.classList.contains('product-card-collection-diamension')) {
+            // Reinitialize wishlist for new product cards
+            if (window.WishlistManager) {
+              window.WishlistManager.initializeButtons();
+            }
+          }
+        });
+      }
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const productGrids = document.querySelectorAll('[data-product-grid]');
+    productGrids.forEach(grid => {
+      observer.observe(grid, { childList: true });
+    });
+  });
+}

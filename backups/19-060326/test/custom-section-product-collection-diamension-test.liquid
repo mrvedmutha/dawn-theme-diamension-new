@@ -168,6 +168,14 @@
               </div>
 
               <div class="custom-section-product-collection-diamension__filter-content" data-filter-content>
+                {% comment %} DEBUG: Log available filters {% endcomment %}
+                <script>
+                  console.log('🔍 AVAILABLE FILTERS:');
+                  {% for filter in collection.filters %}
+                    console.log('  Filter: "{{ filter.label }}" | Type: "{{ filter.type }}" | Values: {{ filter.values.size }}');
+                  {% endfor %}
+                </script>
+
                 {% for filter in collection.filters %}
                   {% liquid
                     assign filter_label_lower = filter.label | downcase
@@ -175,7 +183,7 @@
                     assign is_price = false
                     assign is_tag = false
 
-                    if filter_label_lower contains 'type' or filter_label_lower contains 'category'
+                    if filter_label_lower contains 'type' or filter_label_lower contains 'category' or filter_label_lower contains 'categories'
                       assign is_product_type = true
                     elsif filter.type == 'price_range'
                       assign is_price = true
@@ -507,9 +515,7 @@
         style="padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;"
       >
         <p class="custom-section-product-collection-diamension__product-count" style="margin: 0; color: #3e6282;">
-          Showing {{ paginate.current_offset | plus: 1 }}-
-          {{- paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }}
-          of {{ paginate.items }} products
+          Showing Results: {{ paginate.items }} products
         </p>
 
         {% if collection.filters %}
@@ -558,34 +564,44 @@
           {% endfor %}
         </div>
 
-        {% comment %} Load More Button {% endcomment %}
+        {% comment %} Load More Section {% endcomment %}
         {% if paginate.pages > 1 %}
           <div
-            class="custom-section-product-collection-diamension__load-more-wrapper"
-            style="padding: 40px 50px; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px;"
-            data-pagination-wrapper
-            data-current-page="{{ paginate.current_page }}"
-            data-total-pages="{{ paginate.pages }}"
-            data-next-url="{% if paginate.next %}{{ paginate.next.url }}{% endif %}"
+            class="custom-section-product-collection-diamension__load-more"
+            style="display: flex; flex-direction: column; align-items: center; gap: 32px; padding: 60px 50px;"
           >
+            <div
+              class="custom-section-product-collection-diamension__progress"
+              style="display: flex; flex-direction: column; align-items: center; gap: 16px;"
+            >
+              <p
+                class="custom-section-product-collection-diamension__progress-text"
+                data-progress-text
+                data-current-offset="{{ paginate.current_offset }}"
+                data-page-size="{{ paginate.page_size }}"
+                data-total-items="{{ paginate.items }}"
+                style="font-size: 14px; color: #183754; text-align: center; margin: 0;"
+              >
+                Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of {{ paginate.items }} products
+              </p>
+              <div class="custom-section-product-collection-diamension__progress-line">
+                <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="0" y1="0.5" x2="110" y2="0.5" stroke="#183754"/>
+                </svg>
+              </div>
+            </div>
+
             {% if paginate.next %}
               <button
-                class="custom-section-product-collection-diamension__load-more"
+                class="custom-section-product-collection-diamension__load-more-btn"
                 data-load-more-btn
-                style="padding: 15px 40px; background: #183754; color: #fffaf5; border: none; cursor: pointer; font-size: 16px; font-weight: 500; letter-spacing: 1px; transition: all 0.3s;"
-                onmouseover="this.style.background='#3e6282'"
-                onmouseout="this.style.background='#183754'"
+                data-next-url="{{ paginate.next.url }}"
+                style="padding: 16px 120px; border: 1px solid #183754; background: transparent; font-size: 16px; color: #183754; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;"
+                onmouseover="if(!this.disabled) { this.style.background='#183754'; this.style.color='#fffaf5'; }"
+                onmouseout="if(!this.disabled) { this.style.background='transparent'; this.style.color='#183754'; }"
               >
                 LOAD MORE
               </button>
-
-              <div
-                class="custom-section-product-collection-diamension__loading"
-                data-loading-indicator
-                style="display: none; color: #183754; font-size: 14px;"
-              >
-                <span>Loading products...</span>
-              </div>
             {% else %}
               <p style="color: #183754; font-size: 14px; margin: 0;">
                 All products loaded
@@ -629,11 +645,31 @@
 <script>
   (function() {
     const loadMoreBtn = document.querySelector('[data-load-more-btn]');
-    const loadingIndicator = document.querySelector('[data-loading-indicator]');
-    const paginationWrapper = document.querySelector('[data-pagination-wrapper]');
+    const progressText = document.querySelector('[data-progress-text]');
     const productGrid = document.querySelector('[data-product-grid]');
 
-    if (!loadMoreBtn || !productGrid) return;
+    if (!loadMoreBtn || !productGrid || !progressText) return;
+
+    // Get initial values
+    const totalItems = parseInt(progressText.dataset.totalItems);
+
+    // Function to count visible products
+    function countVisibleProducts() {
+      const allProducts = productGrid.querySelectorAll('[data-product-price]');
+      let visibleCount = 0;
+      allProducts.forEach(product => {
+        if (product.style.display !== 'none') {
+          visibleCount++;
+        }
+      });
+      return visibleCount;
+    }
+
+    // Function to update progress text
+    function updateProgressText() {
+      const visibleCount = countVisibleProducts();
+      progressText.textContent = `Showing ${visibleCount} of ${totalItems} products`;
+    }
 
     // Function to apply client-side price filter to new products
     function applyPriceFilterToNewProducts(newCards) {
@@ -641,31 +677,38 @@
       const minFilterPrice = urlParams.get('filter.v.price.gte');
       const maxFilterPrice = urlParams.get('filter.v.price.lte');
 
-      if (!minFilterPrice && !maxFilterPrice) return;
+      if (!minFilterPrice && !maxFilterPrice) return 0;
 
       const minPrice = minFilterPrice ? parseFloat(minFilterPrice) : 0;
       const maxPrice = maxFilterPrice ? parseFloat(maxFilterPrice) : Infinity;
 
       console.log(`\n🎯 Filtering new products: ₹${minPrice.toLocaleString('en-IN')} - ₹${maxPrice.toLocaleString('en-IN')}`);
 
+      let hiddenCount = 0;
       newCards.forEach(card => {
         const productPrice = parseFloat(card.dataset.productPrice);
         if (productPrice < minPrice || productPrice > maxPrice) {
           card.style.display = 'none';
+          hiddenCount++;
           console.log(`  ❌ Hidden: ₹${productPrice.toLocaleString('en-IN')} (outside range)`);
         } else {
           console.log(`  ✅ Visible: ₹${productPrice.toLocaleString('en-IN')}`);
         }
       });
+      return hiddenCount;
     }
 
     loadMoreBtn.addEventListener('click', async function() {
-      const nextUrl = paginationWrapper.dataset.nextUrl;
+      const nextUrl = loadMoreBtn.dataset.nextUrl;
       if (!nextUrl) return;
 
-      // Show loading, hide button
-      loadMoreBtn.style.display = 'none';
-      loadingIndicator.style.display = 'block';
+      // Set button to loading state (filled + disabled)
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.textContent = 'LOADING...';
+      loadMoreBtn.style.background = '#183754';
+      loadMoreBtn.style.color = '#fffaf5';
+      loadMoreBtn.style.opacity = '0.6';
+      loadMoreBtn.style.cursor = 'wait';
 
       try {
         console.log('🔄 Loading more products from:', nextUrl);
@@ -692,41 +735,45 @@
           const addedCards = Array.from(productGrid.querySelectorAll('[data-product-price]')).slice(-newProductCards.length);
           applyPriceFilterToNewProducts(addedCards);
 
+          // Update progress text
+          updateProgressText();
+
           // Reinitialize wishlist buttons for new products
           if (window.WishlistManager) {
             window.WishlistManager.initializeButtons();
           }
         }
 
-        // Update pagination state
-        const newPaginationWrapper = doc.querySelector('[data-pagination-wrapper]');
-        if (newPaginationWrapper) {
-          const newNextUrl = newPaginationWrapper.dataset.nextUrl;
-          const newCurrentPage = newPaginationWrapper.dataset.currentPage;
-          const totalPages = newPaginationWrapper.dataset.totalPages;
-
-          paginationWrapper.dataset.nextUrl = newNextUrl || '';
-          paginationWrapper.dataset.currentPage = newCurrentPage;
-
-          // Check if there are more pages
-          if (newNextUrl) {
-            loadMoreBtn.style.display = 'block';
-            loadingIndicator.style.display = 'none';
-          } else {
-            // No more pages
-            loadingIndicator.style.display = 'none';
-            const allLoadedMsg = document.createElement('p');
-            allLoadedMsg.style.cssText = 'color: #183754; font-size: 14px; margin: 0;';
-            allLoadedMsg.textContent = 'All products loaded';
-            paginationWrapper.insertBefore(allLoadedMsg, paginationWrapper.firstChild);
-            console.log('  ℹ️ All products loaded');
-          }
+        // Check for next page button in loaded content
+        const newLoadMoreBtn = doc.querySelector('[data-load-more-btn]');
+        if (newLoadMoreBtn && newLoadMoreBtn.dataset.nextUrl) {
+          // Update next URL and restore button to outline state
+          loadMoreBtn.dataset.nextUrl = newLoadMoreBtn.dataset.nextUrl;
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.textContent = 'LOAD MORE';
+          loadMoreBtn.style.background = 'transparent';
+          loadMoreBtn.style.color = '#183754';
+          loadMoreBtn.style.opacity = '1';
+          loadMoreBtn.style.cursor = 'pointer';
+        } else {
+          // No more pages
+          loadMoreBtn.remove();
+          const allLoadedMsg = document.createElement('p');
+          allLoadedMsg.style.cssText = 'color: #183754; font-size: 14px; margin: 0;';
+          allLoadedMsg.textContent = 'All products loaded';
+          progressText.parentElement.parentElement.appendChild(allLoadedMsg);
+          console.log('  ℹ️ All products loaded');
         }
 
       } catch (error) {
         console.error('❌ Error loading more products:', error);
-        loadMoreBtn.style.display = 'block';
-        loadingIndicator.style.display = 'none';
+        // Restore button to outline state on error
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.textContent = 'LOAD MORE';
+        loadMoreBtn.style.background = 'transparent';
+        loadMoreBtn.style.color = '#183754';
+        loadMoreBtn.style.opacity = '1';
+        loadMoreBtn.style.cursor = 'pointer';
         alert('Failed to load more products. Please try again.');
       }
     });
