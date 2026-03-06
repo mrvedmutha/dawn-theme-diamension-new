@@ -56,7 +56,7 @@
         "background_color": "#c8102e",
         "tagline": "For the Ones Who Define Success",
         "cta_text": "Explore",
-        "cta_link": "#",
+        "cta_link": "shopify://collections/corporate-comeback",
         "heading": "Sleek Minimal",
         "text_color": "#fffaf5"
       }
@@ -81,7 +81,7 @@
         "hero_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
         "show_logo": true,
         "hero_quote": "\"Glamour is a condition, not a commodity.\"",
-        "collection": "custom-collections"
+        "collection": "corporate-comeback"
       }
     },
     "custom_section_dynamic_hero_studio_6EBrcw": {
@@ -108,37 +108,37 @@
         "product_card_6JwJ6F": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CBR10107_Y_04.webp",
+            "product_name": "The Celeste Droplet Bracelet",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/the-celeste-droplet-bracelet"
           }
         },
         "product_card_kMpfJU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CBR10103_R_01.webp",
+            "product_name": "The Solis Halo Bolo Bracelet",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/the-solis-halo-bolo-bracelet"
           }
         },
         "product_card_4wNQR4": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1_58a9c924-ec26-4306-b90f-ed9bcd312944.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CLR40563_W_01.webp",
+            "product_name": "The Trinity Marquise Band",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/the-trinity-marquise-band"
           }
         },
         "product_card_CatwBU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CBR70218_Y_04.webp",
+            "product_name": "Ethereal Cluster Bypass Bangle",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/ethereal-cluster-bypass-bangle"
           }
         }
       },
@@ -230,7 +230,7 @@
         "heading": "Jewellery",
         "tagline": "will outlast fashion, and all of us.",
         "cta_text": "Explore Collections",
-        "cta_link": "#"
+        "cta_link": "shopify://collections/corporate-comeback"
       }
     }
   },

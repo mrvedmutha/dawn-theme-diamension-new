@@ -36,7 +36,7 @@
           "type": "category",
           "settings": {
             "category_name": "Earrings",
-            "collection": "custom-collections",
+            "collection": "earrings",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/aa2fe822ca094baeb179aeaab01bff92.mp4",
             "video_youtube_vimeo": ""
@@ -46,7 +46,7 @@
           "type": "category",
           "settings": {
             "category_name": "Necklace",
-            "collection": "custom-collections",
+            "collection": "necklace",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/3ff77210c1de49d0a5be032fc8b5ca58.mp4",
             "video_youtube_vimeo": ""
@@ -56,7 +56,7 @@
           "type": "category",
           "settings": {
             "category_name": "Rings",
-            "collection": "custom-collections",
+            "collection": "rings",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/18ae4fe1fdf04661888f86ae18c0169b.mp4",
             "video_youtube_vimeo": ""
@@ -66,7 +66,7 @@
           "type": "category",
           "settings": {
             "category_name": "Pendents",
-            "collection": "custom-collections",
+            "collection": "pendants",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/7c09a42c7aef418a9e8b817f3a180b31.mp4",
             "video_youtube_vimeo": ""
@@ -76,7 +76,7 @@
           "type": "category",
           "settings": {
             "category_name": "Bracelets",
-            "collection": "custom-collections",
+            "collection": "bracelets",
             "description": "",
             "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/2febf4b56e3c4ec58f4f7fc3c39bf6d3.mp4",
             "video_youtube_vimeo": ""
@@ -208,7 +208,7 @@
         "heading": "INTO THE RED",
         "caption": "Jewelry that feels as good as it looks.",
         "cta_text": "Shop the Collection",
-        "cta_link": "shopify://collections",
+        "cta_link": "shopify://collections/corporate-comeback",
         "text_color": "#fffaf5",
         "overlay_color": "#000000",
         "overlay_opacity": 0
