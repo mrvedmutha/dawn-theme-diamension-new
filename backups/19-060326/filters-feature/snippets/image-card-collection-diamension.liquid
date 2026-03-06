@@ -1,0 +1,51 @@
+{% comment %}
+  Promotional Image Card for Collection Page
+  Parameters:
+  - image_card: Metaobject with image, caption, button_link (Link field with text and URL)
+{% endcomment %}
+
+{% if image_card %}
+  {% liquid
+    assign card_image = image_card.image
+    assign card_caption = image_card.caption
+    assign card_button_link = image_card.button_link.value
+  %}
+
+  <div class="image-card-collection-diamension">
+    <div class="image-card-collection-diamension__media">
+      {% if card_image.src contains '.mp4' or card_image.src contains 'video' %}
+        <video autoplay loop muted playsinline class="image-card-collection-diamension__video">
+          <source src="{{ card_image.src }}" type="video/mp4">
+        </video>
+      {% else %}
+        {% if card_image != blank %}
+          <img
+            src="{{ card_image | image_url: width: 704 }}"
+            srcset="{{ card_image | image_url: width: 704 }} 704w,
+                    {{ card_image | image_url: width: 1408 }} 1408w"
+            sizes="(min-width: 1024px) 704px, 100vw"
+            alt="{{ card_caption | strip_html | truncate: 50 }}"
+            loading="lazy"
+            class="image-card-collection-diamension__image"
+          >
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% if card_caption != blank or card_button_link != blank %}
+      <div class="image-card-collection-diamension__overlay">
+        {% if card_caption != blank %}
+          <div class="image-card-collection-diamension__caption">
+            {{ card_caption }}
+          </div>
+        {% endif %}
+
+        {% if card_button_link != blank %}
+          <a href="{{ card_button_link.url }}" class="image-card-collection-diamension__cta">
+            {{ card_button_link.text | upcase }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

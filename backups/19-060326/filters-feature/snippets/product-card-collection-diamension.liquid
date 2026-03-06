@@ -1,0 +1,73 @@
+{% comment %}
+  Product Card for Collection Page
+  Parameters:
+  - product: Product object
+{% endcomment %}
+
+{% liquid
+  assign product_url = product.url
+  assign product_title = product.title
+  assign product_price = product.price | money
+  assign product_price_raw = product.price | divided_by: 100.0
+  assign product_image = product.featured_image
+  assign product_id = product.id
+  assign product_type = product.type
+  assign product_tags = product.tags | join: ','
+  assign is_new_arrival = false
+  if product.tags contains 'new-arrival' or product.tags contains 'New Arrival'
+    assign is_new_arrival = true
+  endif
+%}
+
+<div
+  class="product-card-collection-diamension"
+  data-product-id="{{ product_id }}"
+  data-product-tags="{{ product_tags }}"
+  data-product-type="{{ product_type }}"
+  data-product-price="{{ product_price_raw }}"
+>
+  <a href="{{ product_url }}" class="product-card-collection-diamension__link">
+    <div class="product-card-collection-diamension__image-wrapper">
+      {% if product_image %}
+        <img
+          src="{{ product_image | image_url: width: 400 }}"
+          srcset="{{ product_image | image_url: width: 200 }} 200w,
+                  {{ product_image | image_url: width: 400 }} 400w,
+                  {{ product_image | image_url: width: 600 }} 600w,
+                  {{ product_image | image_url: width: 800 }} 800w"
+          sizes="(min-width: 1024px) 348px, (min-width: 768px) 25vw, (min-width: 480px) 33vw, 50vw"
+          alt="{{ product_title | escape }}"
+          loading="lazy"
+          class="product-card-collection-diamension__image"
+        >
+      {% else %}
+        <div class="product-card-collection-diamension__image-placeholder"></div>
+      {% endif %}
+    </div>
+
+    <div class="product-card-collection-diamension__info">
+      <h3 class="product-card-collection-diamension__title">{{ product_title }}</h3>
+      <p class="product-card-collection-diamension__price">From {{ product_price }}</p>
+    </div>
+  </a>
+
+  {% comment %} Wishlist button {% endcomment %}
+  <button
+    class="product-card-collection-diamension__wishlist"
+    data-wishlist-toggle
+    data-product-id="{{ product_id }}"
+    aria-label="Add to wishlist"
+    type="button"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="product-card-collection-diamension__wishlist-icon">
+      <path d="M20.59 4.96961C21.47 5.95961 22 7.25961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8196C12.28 20.9396 11.72 20.9396 11.38 20.8196C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="product-card-collection-diamension__wishlist-path"/>
+    </svg>
+  </button>
+
+  {% comment %} New Arrival Badge {% endcomment %}
+  {% if is_new_arrival %}
+    <div class="product-card-collection-diamension__badge">
+      <p>NEW ARRIVAL</p>
+    </div>
+  {% endif %}
+</div>

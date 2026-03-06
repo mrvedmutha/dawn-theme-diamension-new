@@ -1,0 +1,117 @@
+{
+  "backup_info": {
+    "backup_date": "2026-03-06",
+    "backup_number": "19",
+    "feature_name": "Collection Filters & Sort - Custom Implementation",
+    "reason": "Creating hybrid approach: Keep custom UI + Use Shopify facets logic",
+    "status": "Complete - Ready for hybrid implementation"
+  },
+  "backed_up_files": [
+    {
+      "original_path": "sections/custom-section-product-collection-diamension.liquid",
+      "backup_path": "backups/19-060326/filters-feature/sections/custom-section-product-collection-diamension.liquid",
+      "file_size": "~19KB",
+      "total_lines": 656,
+      "description": "Main section file with filter UI, sort UI, product grid, and load more"
+    },
+    {
+      "original_path": "assets/section-product-collection-diamension.js",
+      "backup_path": "backups/19-060326/filters-feature/assets/section-product-collection-diamension.js",
+      "file_size": "~42KB",
+      "total_lines": 1224,
+      "description": "JavaScript with FilterPanelDiamension, SortPanelDiamension, CollectionDiamension classes"
+    },
+    {
+      "original_path": "assets/section-product-collection-diamension.css",
+      "backup_path": "backups/19-060326/filters-feature/assets/section-product-collection-diamension.css",
+      "file_size": "~35KB",
+      "description": "Complete styling for filters, sort, products, and UI components"
+    },
+    {
+      "original_path": "templates/collection.json",
+      "backup_path": "backups/19-060326/filters-feature/templates/collection.json",
+      "file_size": "~1KB",
+      "total_lines": 28,
+      "description": "Collection template using custom-section-product-collection-diamension"
+    },
+    {
+      "original_path": "snippets/product-card-collection-diamension.liquid",
+      "backup_path": "backups/19-060326/filters-feature/snippets/product-card-collection-diamension.liquid",
+      "description": "Product card snippet used in collection grid"
+    },
+    {
+      "original_path": "snippets/image-card-collection-diamension.liquid",
+      "backup_path": "backups/19-060326/filters-feature/snippets/image-card-collection-diamension.liquid",
+      "description": "Promotional image card snippet"
+    },
+    {
+      "original_path": "assets/custom-product-collection/icons/filter-icon.svg",
+      "backup_path": "backups/19-060326/filters-feature/assets/custom-product-collection/icons/filter-icon.svg",
+      "description": "Filter button icon"
+    },
+    {
+      "original_path": "assets/custom-product-collection/icons/sort-icon.svg",
+      "backup_path": "backups/19-060326/filters-feature/assets/custom-product-collection/icons/sort-icon.svg",
+      "description": "Sort button icon"
+    }
+  ],
+  "key_features_backed_up": [
+    "Custom filter panel with slide-in animation",
+    "4 filter groups: Categories, Price, Sub-categories, From The Studio",
+    "Hierarchical subcategory visibility logic",
+    "Collection-aware studio filter disabling",
+    "Custom sort panel with 4 sort options",
+    "AJAX product loading (Load More)",
+    "Client-side filtering using fetchAllProductsData()",
+    "Dynamic product card creation",
+    "Price range calculation from collection products",
+    "Wishlist integration"
+  ],
+  "dependencies": {
+    "external": [
+      "window.WishlistManager (for wishlist functionality)"
+    ],
+    "shopify_api": [
+      "/collections/{handle}/products.json (fetches all products)",
+      "collection.products",
+      "collection.metafields"
+    ],
+    "liquid_objects": [
+      "collection.handle",
+      "collection.title",
+      "collection.products",
+      "product.type",
+      "product.tags",
+      "product.price"
+    ]
+  },
+  "known_issues": {
+    "spelling_variations": "Product types and tags have inconsistent spelling (e.g., 'EARRING' vs 'earrings')",
+    "hardcoded_filters": "Filter options are hardcoded in Liquid, not dynamic",
+    "no_url_updates": "Filtering is client-side only, no URL parameters",
+    "performance": "Loads all 250 products upfront for filtering",
+    "no_seo": "Filtered results not crawlable by search engines"
+  },
+  "test_version_created": {
+    "section": "custom-section-product-collection-diamension-test.liquid",
+    "javascript": "section-product-collection-diamension-test.js",
+    "css": "section-product-collection-diamension-test.css",
+    "approach": "Hybrid - Custom UI + Shopify Facets Logic"
+  },
+  "restoration_instructions": {
+    "steps": [
+      "1. Copy files from backups/19-060326/filters-feature/ back to original locations",
+      "2. Ensure templates/collection.json references the original section",
+      "3. Clear theme cache in Shopify admin",
+      "4. Test on a collection page"
+    ],
+    "command": "cp -r backups/19-060326/filters-feature/sections/* sections/ && cp -r backups/19-060326/filters-feature/assets/* assets/ && cp -r backups/19-060326/filters-feature/templates/* templates/"
+  },
+  "notes": [
+    "Original files remain untouched",
+    "Test versions created with '-test' suffix",
+    "Can compare side-by-side: original vs hybrid implementation",
+    "Once hybrid is confirmed working, can replace original files",
+    "Backup is permanent reference for custom implementation approach"
+  ]
+}

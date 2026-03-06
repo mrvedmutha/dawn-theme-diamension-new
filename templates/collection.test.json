@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "custom-product-collection-diamension-test": {
+      "type": "custom-section-product-collection-diamension-test",
+      "settings": {
+        "breadcrumb_menu": "main-menu",
+        "products_per_page": 20,
+        "show_filter_button": true,
+        "show_sort_button": true
+      }
+    }
+  },
+  "order": [
+    "custom-product-collection-diamension-test"
+  ]
+}
