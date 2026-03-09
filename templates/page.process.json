@@ -53,7 +53,9 @@
           "settings": {
             "title": "ORIGIN",
             "description": "Where the diamond \ntakes its first true form.",
-            "step_number_override": 1
+            "step_number_override": 1,
+            "mask_in_start_frame": 1,
+            "mask_out_start_frame": 70
           }
         },
         "card_KDUwGd": {
@@ -88,7 +90,9 @@
           "settings": {
             "title": "THE REVEAL",
             "description": "The journey begins with a tiny diamond seed placed in a controlled chamber.",
-            "step_number_override": 2
+            "step_number_override": 2,
+            "mask_in_start_frame": 71,
+            "mask_out_start_frame": 175
           }
         },
         "card_LbttJM": {
@@ -123,7 +127,37 @@
           "settings": {
             "title": "THE CUT",
             "description": "Where light is engineered.",
-            "step_number_override": 1
+            "step_number_override": 1,
+            "mask_in_start_frame": 176,
+            "mask_out_start_frame": 300
+          }
+        },
+        "definition_panel_6Vye7p": {
+          "type": "definition_panel",
+          "settings": {
+            "left_heading": "Diamond Quality, Defined",
+            "left_body": "Diamond excellence is defined by four universal parameters — the 4C's.",
+            "term_1": "Cut",
+            "definition_1": "Determines brilliance and light performance.",
+            "term_2": "Clarity",
+            "definition_2": "Measures natural inclusions and purity.",
+            "term_3": "Color",
+            "definition_3": "Evaluates the absence of color.",
+            "term_4": "Carat",
+            "definition_4": "Defines weight, not size.",
+            "mask_in_start_frame": 350,
+            "mask_out_start_frame": 490
+          }
+        },
+        "final_panel_3EJYxr": {
+          "type": "final_panel",
+          "settings": {
+            "small_text": "The",
+            "left_heading": "DIAMENSION",
+            "right_heading": "PROMISE",
+            "bottom_label": "Final Creation",
+            "bottom_body": "Ethically grown. Scientifically perfected. Unmistakably brilliant.",
+            "reveal_frame": 525
           }
         }
       },
@@ -140,24 +174,37 @@
         "card_LbttJM",
         "card_bLjBrt",
         "card_JFKM9q",
-        "phase_8JX4Jw"
+        "phase_8JX4Jw",
+        "definition_panel_6Vye7p",
+        "final_panel_3EJYxr"
       ],
       "settings": {
         "intro_small_text": "The Making of a CVD Diamond",
         "intro_left_text": "FROM SEED",
         "intro_right_text": "TO SPARKLE",
         "intro_scroll_text": "(KEEP SCROLLING)",
-        "frame_count": 750,
+        "frame_count": 620,
         "scroll_distance": 1500,
         "intro_scroll_vh": 10,
         "transition_frames": 20,
-        "phases_end_frame": 600,
+        "phases_end_frame": 300,
         "background_color": "#fffaf5",
         "text_color": "#183754"
+      }
+    },
+    "custom_section_image_hero_RkBxtV": {
+      "type": "custom-section-image-hero",
+      "name": "Image Hero",
+      "settings": {
+        "background_image": "shopify://shop_images/process-page-image-end.webp",
+        "heading": "",
+        "text_color": "#FFFAF5",
+        "overlay_opacity": 0
       }
     }
   },
   "order": [
-    "process_hero"
+    "process_hero",
+    "custom_section_image_hero_RkBxtV"
   ]
 }
