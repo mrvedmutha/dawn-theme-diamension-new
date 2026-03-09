@@ -25,6 +25,13 @@
       height="1080"
       aria-label="Process 3D background animation"
     ></canvas>
+    <canvas
+      class="process-hero__canvas process-hero__canvas--fg"
+      data-canvas-fg
+      width="1920"
+      height="1080"
+      aria-label="Process 3D foreground animation"
+    ></canvas>
 
     {%- comment -%} Layer 5: Content Overlay {%- endcomment -%}
     <div class="process-hero__content">
@@ -148,29 +155,24 @@
     <div class="process-hero__transition-overlay" data-transition-overlay>&nbsp;</div>
   </div>
 
-  {%- comment -%} Spacer: canvas scroll + intro scroll (additive) {%- endcomment -%}
-  {%- assign total_scroll_vh = section.settings.intro_scroll_vh | plus: section.settings.scroll_distance -%}
-  <div class="process-hero__spacer" data-spacer style="height: {{ total_scroll_vh }}vh;">&nbsp;</div>
+  {%- comment -%} Spacer for scroll distance {%- endcomment -%}
+  <div class="process-hero__spacer" data-spacer style="height: {{ section.settings.scroll_distance }}vh;">&nbsp;</div>
 
-  {%- comment -%} Frame URLs + timing config for JavaScript {%- endcomment -%}
+  {%- comment -%} Frame URLs for JavaScript {%- endcomment -%}
   <script>
     window.processHeroData = window.processHeroData || {};
     {%- assign max_frame = section.settings.frame_count | minus: 1 -%}
-    {%- assign phase_blocks = section.blocks | where: 'type', 'phase' | slice: 0, 3 -%}
     window.processHeroData['{{ section.id }}'] = {
       backgroundUrls: [
         {%- for i in (0..max_frame) -%}
           {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-          "{{ 'custom-section-process-page/background-sequence/DiamensionWebP_V2-F' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+          "{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ],
-      introScrollVh: {{ section.settings.intro_scroll_vh | default: 10 }},
-      scrollDistanceVh: {{ section.settings.scroll_distance }},
-      transitionFrames: {{ section.settings.transition_frames | default: 20 }},
-      phasesEndFrame: {{ section.settings.phases_end_frame | default: 600 }},
-      phaseTimings: [
-        {%- for phase in phase_blocks -%}
-        { maskInStart: {{ phase.settings.mask_in_start_frame | default: 1 }}, maskOutStart: {{ phase.settings.mask_out_start_frame | default: 1 }} }{% unless forloop.last %},{% endunless %}
+      foregroundUrls: [
+        {%- for i in (0..max_frame) -%}
+          {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
+          "{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ]
     };
@@ -226,47 +228,20 @@
       "id": "frame_count",
       "label": "Total Frames",
       "min": 50,
-      "max": 800,
+      "max": 500,
       "step": 10,
-      "default": 750,
+      "default": 260,
       "info": "Number of frames in animation sequence"
     },
     {
       "type": "range",
       "id": "scroll_distance",
-      "label": "Canvas Scroll Distance (vh)",
+      "label": "Scroll Distance (vh)",
       "min": 500,
       "max": 3000,
       "step": 100,
       "default": 1500,
-      "info": "Scroll height for the canvas animation (intro scroll is added on top)"
-    },
-    {
-      "type": "range",
-      "id": "intro_scroll_vh",
-      "label": "Intro Scroll Distance (vh)",
-      "min": 5,
-      "max": 30,
-      "step": 5,
-      "default": 10,
-      "info": "Additional scroll where canvas is frozen at frame 0 — intro text exits, Phase 1 enters"
-    },
-    {
-      "type": "range",
-      "id": "transition_frames",
-      "label": "Transition Window (frames)",
-      "min": 5,
-      "max": 50,
-      "step": 5,
-      "default": 20,
-      "info": "Number of frames each mask-in / mask-out animation spans"
-    },
-    {
-      "type": "number",
-      "id": "phases_end_frame",
-      "label": "Phases End Frame",
-      "default": 600,
-      "info": "Frame where all 3 phases complete — progress line and dots fade out, remaining frames play silently"
+      "info": "Total scroll height for the animation"
     },
     {
       "type": "header",
@@ -312,24 +287,6 @@
           "step": 1,
           "default": 1,
           "info": "Leave at 1 to use automatic numbering"
-        },
-        {
-          "type": "header",
-          "content": "Frame Timing"
-        },
-        {
-          "type": "number",
-          "id": "mask_in_start_frame",
-          "label": "Mask-In Start Frame",
-          "default": 1,
-          "info": "Canvas frame where this phase's text begins sliding in"
-        },
-        {
-          "type": "number",
-          "id": "mask_out_start_frame",
-          "label": "Mask-Out Start Frame",
-          "default": 1,
-          "info": "Canvas frame where this phase's text begins sliding out"
         }
       ]
     },

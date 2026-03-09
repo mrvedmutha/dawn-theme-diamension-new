@@ -147,8 +147,11 @@
         "intro_left_text": "FROM SEED",
         "intro_right_text": "TO SPARKLE",
         "intro_scroll_text": "(KEEP SCROLLING)",
-        "frame_count": 260,
+        "frame_count": 750,
         "scroll_distance": 1500,
+        "intro_scroll_vh": 10,
+        "transition_frames": 20,
+        "phases_end_frame": 600,
         "background_color": "#fffaf5",
         "text_color": "#183754"
       }

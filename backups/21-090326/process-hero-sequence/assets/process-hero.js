@@ -7,6 +7,39 @@
 (function() {
   'use strict';
 
+  // Progress constants for timeline (0.0 to 1.0)
+  const PROGRESS = {
+    INTRO_MASK_IN_START: 0.00,
+    INTRO_MASK_IN_END: 0.03,
+    INTRO_HOLD_END: 0.06,
+    INTRO_MASK_OUT_START: 0.06,
+    INTRO_MASK_OUT_END: 0.09,
+
+    PHASE1_MASK_IN_START: 0.09,
+    PHASE1_MASK_IN_END: 0.12,
+    PHASE1_ACTIVE_START: 0.12,
+    PHASE1_ACTIVE_END: 0.30,
+    PHASE1_MASK_OUT_START: 0.30,
+    PHASE1_MASK_OUT_END: 0.33,
+
+    PHASE2_MASK_IN_START: 0.33,
+    PHASE2_MASK_IN_END: 0.36,
+    PHASE2_ACTIVE_START: 0.36,
+    PHASE2_ACTIVE_END: 0.58,
+    PHASE2_MASK_OUT_START: 0.58,
+    PHASE2_MASK_OUT_END: 0.61,
+
+    PHASE3_MASK_IN_START: 0.61,
+    PHASE3_MASK_IN_END: 0.64,
+    PHASE3_ACTIVE_START: 0.64,
+    PHASE3_ACTIVE_END: 0.90,
+    PHASE3_MASK_OUT_START: 0.90,
+    PHASE3_MASK_OUT_END: 0.93,
+
+    FINAL_STATE_START: 0.93,
+    FINAL_STATE_END: 1.00
+  };
+
   // Wait for GSAP to load
   function initWhenReady() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -25,7 +58,7 @@
       const sectionId = section.dataset.sectionId;
       const data = window.processHeroData?.[sectionId];
 
-      if (!data || !data.backgroundUrls) {
+      if (!data || !data.backgroundUrls || !data.foregroundUrls) {
         console.error('Process Hero data not found');
         return;
       }
@@ -41,13 +74,17 @@
    * ========================================
    */
   class FrameEngine {
-    constructor(canvasBg, backgroundUrls) {
+    constructor(canvasBg, canvasFg, backgroundUrls, foregroundUrls) {
       this.canvasBg = canvasBg;
+      this.canvasFg = canvasFg;
       this.ctxBg = canvasBg.getContext('2d');
+      this.ctxFg = canvasFg.getContext('2d');
       this.backgroundUrls = backgroundUrls;
+      this.foregroundUrls = foregroundUrls;
       this.totalFrames = backgroundUrls.length;
 
       this.backgroundImages = [];
+      this.foregroundImages = [];
       this.currentFrame = 0;
     }
 
@@ -55,7 +92,7 @@
       console.log('Loading canvas frames:', this.totalFrames);
 
       for (let i = 0; i < this.totalFrames; i++) {
-        await this.loadImage(this.backgroundUrls[i], this.backgroundImages, i);
+        await this.loadBothFrames(i);
 
         if (i % 5 === 0) {
           await new Promise(resolve => setTimeout(resolve, 0));
@@ -64,6 +101,13 @@
 
       console.log('All frames loaded');
       this.drawFrame(0);
+    }
+
+    loadBothFrames(index) {
+      return Promise.all([
+        this.loadImage(this.backgroundUrls[index], this.backgroundImages, index),
+        this.loadImage(this.foregroundUrls[index], this.foregroundImages, index)
+      ]);
     }
 
     loadImage(url, imageArray, index) {
@@ -84,6 +128,7 @@
     drawFrame(frameIndex) {
       const frame = Math.floor(frameIndex);
 
+      // Draw background
       if (this.backgroundImages[frame]) {
         this.ctxBg.clearRect(0, 0, this.canvasBg.width, this.canvasBg.height);
         this.ctxBg.drawImage(
@@ -91,6 +136,17 @@
           0, 0,
           this.canvasBg.width,
           this.canvasBg.height
+        );
+      }
+
+      // Draw foreground (NO mix-blend-mode, render as-is)
+      if (this.foregroundImages[frame]) {
+        this.ctxFg.clearRect(0, 0, this.canvasFg.width, this.canvasFg.height);
+        this.ctxFg.drawImage(
+          this.foregroundImages[frame],
+          0, 0,
+          this.canvasFg.width,
+          this.canvasFg.height
         );
       }
 
@@ -111,36 +167,36 @@
       this.scrollHint = scrollHint;
     }
 
-    addToTimeline(timeline, t) {
-      // Intro text masks out (scroll-driven, first half of intro zone)
+    addToTimeline(timeline) {
+      // Intro text is already revealed (auto-play), so only mask-out on scroll
       if (this.intro) {
         const introMasks = this.intro.querySelectorAll('.process-hero__mask > span');
         timeline.to(introMasks, {
           y: '-100%',
-          duration: t.introMaskOutEnd - t.introMaskOutStart,
+          duration: PROGRESS.INTRO_MASK_OUT_END - PROGRESS.INTRO_MASK_OUT_START,
           stagger: 0.005,
           ease: 'power2.in'
-        }, t.introMaskOutStart);
+        }, PROGRESS.INTRO_MASK_OUT_START);
       }
 
-      // Phase 1 (mask-in during intro zone, mask-out from block settings)
-      this.addPhaseMasks(timeline, 0, t.p1MaskInStart, t.p1MaskInEnd, t.p1MaskOutStart, t.p1MaskOutEnd);
+      // Phase 1
+      this.addPhaseMasks(timeline, 0, PROGRESS.PHASE1_MASK_IN_START, PROGRESS.PHASE1_MASK_IN_END, PROGRESS.PHASE1_MASK_OUT_START, PROGRESS.PHASE1_MASK_OUT_END);
 
       // Phase 2
-      this.addPhaseMasks(timeline, 1, t.p2MaskInStart, t.p2MaskInEnd, t.p2MaskOutStart, t.p2MaskOutEnd);
+      this.addPhaseMasks(timeline, 1, PROGRESS.PHASE2_MASK_IN_START, PROGRESS.PHASE2_MASK_IN_END, PROGRESS.PHASE2_MASK_OUT_START, PROGRESS.PHASE2_MASK_OUT_END);
 
       // Phase 3
-      this.addPhaseMasks(timeline, 2, t.p3MaskInStart, t.p3MaskInEnd, t.p3MaskOutStart, t.p3MaskOutEnd);
+      this.addPhaseMasks(timeline, 2, PROGRESS.PHASE3_MASK_IN_START, PROGRESS.PHASE3_MASK_IN_END, PROGRESS.PHASE3_MASK_OUT_START, PROGRESS.PHASE3_MASK_OUT_END);
 
-      // Scroll hint masks out with Phase 3
+      // Hide scroll hint at end of Phase 3 (mask out)
       if (this.scrollHint) {
-        const span = this.scrollHint.closest('.process-hero__mask')?.querySelector('span');
-        if (span) {
-          timeline.to(span, {
+        const scrollHintMask = this.scrollHint.closest('.process-hero__mask');
+        if (scrollHintMask) {
+          timeline.to(scrollHintMask.querySelector('span'), {
             y: '-100%',
-            duration: t.p3MaskOutEnd - t.p3MaskOutStart,
+            duration: 0.02,
             ease: 'power2.in'
-          }, t.p3MaskOutStart);
+          }, PROGRESS.PHASE3_MASK_OUT_START);
         }
       }
     }
@@ -187,32 +243,53 @@
       this.dots = dots; // Array of 3 dot elements
     }
 
-    addToTimeline(timeline, t) {
-      // Line grows 0→100% across full scroll
+    addToTimeline(timeline) {
+      // Line grows LEFT to RIGHT throughout ENTIRE scroll (0% → 100%)
+      // Tracks the whole scroll progress, not just intro phase
       timeline.fromTo(this.progressLine,
         { width: '0%' },
-        { width: '100%', duration: 1, ease: 'none' },
-        0
+        { width: '100%', duration: 1, ease: 'none' }, // duration: 1 = full timeline length
+        0 // Start at beginning, end at 1.0 (100% scroll)
       );
 
-      // Dots fill at each phase's mask-in start frame
+      // Dot 1: at right: 75% (= left: 25%)
+      // Fills with blue color when line reaches ~25% width (25% scroll progress)
       if (this.dots[0]) {
-        timeline.to(this.dots[0], { color: '#183754', duration: 0.02, ease: 'none' }, t.dot1At);
-      }
-      if (this.dots[1]) {
-        timeline.to(this.dots[1], { color: '#183754', duration: 0.02, ease: 'none' }, t.dot2At);
-      }
-      if (this.dots[2]) {
-        timeline.to(this.dots[2], { color: '#183754', duration: 0.02, ease: 'none' }, t.dot3At);
+        timeline.to(this.dots[0],
+          {
+            color: '#183754', // Fill with blue color
+            duration: 0.05, // Quick color transition
+            ease: 'power1.out'
+          },
+          0.25 // Trigger at 25% scroll
+        );
       }
 
-      // Fade out line + all dots at Phase 3 mask-out start
-      const fadeTargets = [this.progressLine, ...this.dots].filter(Boolean);
-      timeline.to(fadeTargets, {
-        opacity: 0,
-        duration: t.p3MaskOutEnd - t.p3MaskOutStart,
-        ease: 'power2.in'
-      }, t.p3MaskOutStart);
+      // Dot 2: at right: 50% (= left: 50%)
+      // Fills with blue color when line reaches ~50% width (50% scroll progress)
+      if (this.dots[1]) {
+        timeline.to(this.dots[1],
+          {
+            color: '#183754',
+            duration: 0.05,
+            ease: 'power1.out'
+          },
+          0.50 // Trigger at 50% scroll
+        );
+      }
+
+      // Dot 3: at right: 25% (= left: 75%)
+      // Fills with blue color when line reaches ~75% width (75% scroll progress)
+      if (this.dots[2]) {
+        timeline.to(this.dots[2],
+          {
+            color: '#183754',
+            duration: 0.05,
+            ease: 'power1.out'
+          },
+          0.75 // Trigger at 75% scroll
+        );
+      }
     }
   }
 
@@ -227,10 +304,15 @@
       this.tracks = tracks; // Array of 3 track elements
     }
 
-    addToTimeline(timeline, t) {
-      this.addTrackScroll(timeline, 0, t.p1CardsStart, t.p1CardsEnd);
-      this.addTrackScroll(timeline, 1, t.p2CardsStart, t.p2CardsEnd);
-      this.addTrackScroll(timeline, 2, t.p3CardsStart, t.p3CardsEnd);
+    addToTimeline(timeline) {
+      // Track 1 (Phase 1)
+      this.addTrackScroll(timeline, 0, PROGRESS.PHASE1_ACTIVE_START, PROGRESS.PHASE1_ACTIVE_END);
+
+      // Track 2 (Phase 2)
+      this.addTrackScroll(timeline, 1, PROGRESS.PHASE2_ACTIVE_START, PROGRESS.PHASE2_ACTIVE_END);
+
+      // Track 3 (Phase 3)
+      this.addTrackScroll(timeline, 2, PROGRESS.PHASE3_ACTIVE_START, PROGRESS.PHASE3_ACTIVE_END);
     }
 
     addTrackScroll(timeline, trackIndex, startProgress, endProgress) {
@@ -272,12 +354,13 @@
   class ProcessHeroController {
     constructor(section, data) {
       this.section = section;
-      this.data = data;
       this.backgroundUrls = data.backgroundUrls;
+      this.foregroundUrls = data.foregroundUrls;
       this.totalFrames = this.backgroundUrls.length;
 
       // DOM elements
       this.canvasBg = section.querySelector('[data-canvas-bg]');
+      this.canvasFg = section.querySelector('[data-canvas-fg]');
       this.pinnedContainer = section.querySelector('[data-pinned-container]');
       this.spacer = section.querySelector('[data-spacer]');
       this.transitionOverlay = section.querySelector('[data-transition-overlay]');
@@ -303,7 +386,9 @@
       // 1. Initialize FrameEngine
       this.frameEngine = new FrameEngine(
         this.canvasBg,
-        this.backgroundUrls
+        this.canvasFg,
+        this.backgroundUrls,
+        this.foregroundUrls
       );
 
       // 2. Load all frames
@@ -388,70 +473,12 @@
     setupScrollAnimation() {
       console.log('Setting up scroll animation');
 
-      // ── Timing config ────────────────────────────────────────────────
-      const d            = this.data;
-      const totalVh      = d.introScrollVh + d.scrollDistanceVh;
-      const introEndP    = d.introScrollVh / totalVh;   // progress where intro zone ends
-      const canvasRange  = 1 - introEndP;               // progress span of canvas zone
-      const total        = this.totalFrames - 1;         // max frame index
-      const tw           = d.transitionFrames;
-      const pt           = d.phaseTimings;               // [{maskInStart, maskOutStart}, ...]
-
-      // Convert canvas frame number → full scroll progress (0.0–1.0)
-      const fp = frame => introEndP + (Math.min(frame, total) / total) * canvasRange;
-
-      const t = {
-        // Intro zone: first half exits intro text, second half enters Phase 1
-        introMaskOutStart:  0,
-        introMaskOutEnd:    introEndP * 0.5,
-        p1MaskInStart:      introEndP * 0.5,
-        p1MaskInEnd:        introEndP,
-
-        // Phase 1 mask-out (canvas zone)
-        p1MaskOutStart:     fp(pt[0].maskOutStart),
-        p1MaskOutEnd:       fp(pt[0].maskOutStart + tw),
-
-        // Phase 2
-        p2MaskInStart:      fp(pt[1].maskInStart),
-        p2MaskInEnd:        fp(pt[1].maskInStart + tw),
-        p2MaskOutStart:     fp(pt[1].maskOutStart),
-        p2MaskOutEnd:       fp(pt[1].maskOutStart + tw),
-
-        // Phase 3
-        p3MaskInStart:      fp(pt[2].maskInStart),
-        p3MaskInEnd:        fp(pt[2].maskInStart + tw),
-        p3MaskOutStart:     fp(pt[2].maskOutStart),
-        p3MaskOutEnd:       fp(pt[2].maskOutStart + tw),
-
-        // Card scroll windows (mask-in-end → mask-out-start per phase)
-        p1CardsStart:       introEndP,
-        p1CardsEnd:         fp(pt[0].maskOutStart),
-        p2CardsStart:       fp(pt[1].maskInStart + tw),
-        p2CardsEnd:         fp(pt[1].maskOutStart),
-        p3CardsStart:       fp(pt[2].maskInStart + tw),
-        p3CardsEnd:         fp(pt[2].maskOutStart),
-
-        // Progress dot triggers (at each phase's mask-in start)
-        dot1At:             introEndP * 0.5,
-        dot2At:             fp(pt[1].maskInStart),
-        dot3At:             fp(pt[2].maskInStart),
-
-        // Raw values used in onUpdate / debug
-        introEndP, canvasRange, total, pt, tw
-      };
-
-      // ── Debug overlay ────────────────────────────────────────────────
-      this._debugEl = document.createElement('div');
-      this._debugEl.style.cssText = 'position:fixed;top:16px;right:16px;z-index:999999;background:rgba(0,0,0,0.72);color:#fff;font:bold 12px/1.7 monospace;padding:8px 14px;border-radius:6px;pointer-events:none;min-width:280px;';
-      this._debugEl.innerHTML = 'Initializing...';
-      document.body.appendChild(this._debugEl);
-
-      // ── Managers ─────────────────────────────────────────────────────
-      this.phaseManager    = new PhaseManager(this.intro, this.phases, this.scrollHint);
+      // Initialize managers
+      this.phaseManager = new PhaseManager(this.intro, this.phases, this.scrollHint);
       this.progressManager = new ProgressLineManager(this.progressLine, this.dots);
-      this.cardManager     = new CardScrollManager(this.cardTracks);
+      this.cardManager = new CardScrollManager(this.cardTracks);
 
-      // ── Master timeline ───────────────────────────────────────────────
+      // Create master timeline
       const masterTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.pinnedContainer,
@@ -462,47 +489,35 @@
           pinSpacing: false,
           anticipatePin: 1,
           onUpdate: (self) => {
+            // Frame playback per phase
             const progress = self.progress;
-
-            // Canvas frozen at frame 0 during intro zone; plays linearly after
             let targetFrame = 0;
-            if (progress > t.introEndP) {
-              const canvasProgress = (progress - t.introEndP) / t.canvasRange;
-              targetFrame = Math.min(t.total, Math.floor(canvasProgress * t.total));
+
+            if (progress >= PROGRESS.PHASE1_ACTIVE_START && progress < PROGRESS.PHASE1_ACTIVE_END) {
+              // Phase 1: play 0-259
+              const phaseProgress = (progress - PROGRESS.PHASE1_ACTIVE_START) / (PROGRESS.PHASE1_ACTIVE_END - PROGRESS.PHASE1_ACTIVE_START);
+              targetFrame = Math.floor(phaseProgress * (this.totalFrames - 1));
+            } else if (progress >= PROGRESS.PHASE2_ACTIVE_START && progress < PROGRESS.PHASE2_ACTIVE_END) {
+              // Phase 2: replay 0-259
+              const phaseProgress = (progress - PROGRESS.PHASE2_ACTIVE_START) / (PROGRESS.PHASE2_ACTIVE_END - PROGRESS.PHASE2_ACTIVE_START);
+              targetFrame = Math.floor(phaseProgress * (this.totalFrames - 1));
+            } else if (progress >= PROGRESS.PHASE3_ACTIVE_START && progress < PROGRESS.PHASE3_ACTIVE_END) {
+              // Phase 3: replay 0-259
+              const phaseProgress = (progress - PROGRESS.PHASE3_ACTIVE_START) / (PROGRESS.PHASE3_ACTIVE_END - PROGRESS.PHASE3_ACTIVE_START);
+              targetFrame = Math.floor(phaseProgress * (this.totalFrames - 1));
             }
 
             this.frameEngine.drawFrame(targetFrame);
-
-            // Update debug overlay
-            if (this._debugEl) {
-              let phase = 'Intro exiting';
-              if      (progress >= t.p3MaskOutEnd)       phase = 'Silent (post-phases)';
-              else if (progress >= t.p3MaskOutStart)     phase = 'Phase 3 exiting';
-              else if (progress >= t.p3MaskInEnd)        phase = 'Phase 3 active';
-              else if (progress >= t.p3MaskInStart)      phase = 'Phase 3 entering';
-              else if (progress >= t.p2MaskOutStart)     phase = 'Phase 2 exiting';
-              else if (progress >= t.p2MaskInEnd)        phase = 'Phase 2 active';
-              else if (progress >= t.p2MaskInStart)      phase = 'Phase 2 entering';
-              else if (progress >= t.p1MaskOutStart)     phase = 'Phase 1 exiting';
-              else if (progress >= t.p1MaskInEnd)        phase = 'Phase 1 active';
-              else if (progress >= t.p1MaskInStart)      phase = 'Phase 1 entering';
-
-              this._debugEl.innerHTML =
-                `<b>Frame: ${targetFrame} / ${t.total}&nbsp;&nbsp;(${Math.round(progress * 100)}%)</b><br>` +
-                `P1 mask-out  @ frame <b>${t.pt[0].maskOutStart}</b><br>` +
-                `P2 mask-in @ <b>${t.pt[1].maskInStart}</b> | mask-out @ <b>${t.pt[1].maskOutStart}</b><br>` +
-                `P3 mask-in @ <b>${t.pt[2].maskInStart}</b> | mask-out @ <b>${t.pt[2].maskOutStart}</b><br>` +
-                `&#9654;&nbsp;${phase}`;
-            }
           }
         }
       });
 
       // Add all animations to master timeline
-      this.phaseManager.addToTimeline(masterTimeline, t);
-      this.progressManager.addToTimeline(masterTimeline, t);
-      this.cardManager.addToTimeline(masterTimeline, t);
+      this.phaseManager.addToTimeline(masterTimeline);
+      this.progressManager.addToTimeline(masterTimeline);
+      this.cardManager.addToTimeline(masterTimeline);
 
+      // Refresh ScrollTrigger
       ScrollTrigger.refresh();
     }
   }

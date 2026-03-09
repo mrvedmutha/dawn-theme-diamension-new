@@ -13,12 +13,11 @@
     console.log('🎬 Transition detected - Creating seamless overlay');
 
     var bgSnapshot = sessionStorage.getItem('transitionBgSnapshot');
-    var fgSnapshot = sessionStorage.getItem('transitionFgSnapshot');
     var ellipseScale = sessionStorage.getItem('transitionEllipseScale') || '5';
     var ellipseColor = sessionStorage.getItem('transitionEllipseColor') || '#fffcf9';
 
-    if (!bgSnapshot || !fgSnapshot) {
-      console.warn('Snapshots not found');
+    if (!bgSnapshot) {
+      console.warn('Snapshot not found');
       return;
     }
 
@@ -31,15 +30,10 @@
 
     var bgImage = document.createElement('img');
     bgImage.src = bgSnapshot;
-    bgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1920px;height:1080px;max-width:100%;max-height:100vh;object-fit:contain;z-index:2;';
-
-    var fgImage = document.createElement('img');
-    fgImage.src = fgSnapshot;
-    fgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1920px;height:1080px;max-width:100%;max-height:100vh;object-fit:contain;z-index:3;mix-blend-mode:darken;';
+    bgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:max(100%,177.78vh);height:max(100%,56.25vw);object-fit:cover;z-index:2;';
 
     overlay.appendChild(ellipse);
     overlay.appendChild(bgImage);
-    overlay.appendChild(fgImage);
     document.documentElement.appendChild(overlay);
 
     console.log('✅ Overlay created');
@@ -51,7 +45,6 @@
         if (overlay.parentNode) overlay.remove();
         sessionStorage.removeItem('fromBrillanceTransition');
         sessionStorage.removeItem('transitionBgSnapshot');
-        sessionStorage.removeItem('transitionFgSnapshot');
         sessionStorage.removeItem('transitionEllipseScale');
         sessionStorage.removeItem('transitionEllipseColor');
         console.log('🧹 Cleaned up');
