@@ -49,52 +49,80 @@
 
       this.backgroundImages = [];
       this.currentFrame = 0;
+      this.desiredFrame = 0;
     }
 
-    async preloadAllFrames() {
-      console.log('Loading canvas frames:', this.totalFrames);
-
-      for (let i = 0; i < this.totalFrames; i++) {
-        await this.loadImage(this.backgroundUrls[i], this.backgroundImages, i);
-
-        if (i % 5 === 0) {
-          await new Promise(resolve => setTimeout(resolve, 0));
+    // Load a contiguous batch of frames (skips already-loaded ones)
+    async loadBatch(from, count) {
+      const end = Math.min(from + count, this.totalFrames);
+      const t0 = performance.now();
+      for (let i = from; i < end; i++) {
+        if (!this.backgroundImages[i]) {
+          await this.loadImage(i);
         }
       }
-
-      console.log('All frames loaded');
-      this.drawFrame(0);
+      console.log(`Batch ${from}–${end - 1} loaded in ${(performance.now() - t0).toFixed(0)}ms`);
     }
 
-    loadImage(url, imageArray, index) {
+    // Stream remaining frames in batches of 30, scroll-aware
+    async streamRemaining(from) {
+      const BATCH = 30;
+      let next = from;
+      const total = this.totalFrames;
+
+      while (next < total) {
+        // If scroll has jumped far ahead and that frame isn't loaded, prioritize it
+        const desired = this.desiredFrame;
+        const priorityBatchStart = Math.floor(desired / BATCH) * BATCH;
+        if (desired > next + BATCH && !this.backgroundImages[desired] && priorityBatchStart > next) {
+          console.log(`Scroll at frame ${desired} — prioritizing batch ${priorityBatchStart}`);
+          await this.loadBatch(priorityBatchStart, BATCH);
+        }
+
+        await this.loadBatch(next, BATCH);
+        next += BATCH;
+      }
+
+      console.log(`All ${total} frames loaded`);
+    }
+
+    loadImage(index) {
       return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
-          imageArray[index] = img;
+          this.backgroundImages[index] = img;
+          // If scroll is waiting on this exact frame, draw it now
+          if (this.desiredFrame === index) {
+            this._paint(index);
+          }
           resolve();
         };
         img.onerror = () => {
-          console.error('Failed to load:', url);
+          console.error('Failed to load frame:', index);
           resolve();
         };
-        img.src = url;
+        img.src = this.backgroundUrls[index];
       });
+    }
+
+    _paint(frame) {
+      this.ctxBg.clearRect(0, 0, this.canvasBg.width, this.canvasBg.height);
+      this.ctxBg.drawImage(
+        this.backgroundImages[frame],
+        0, 0,
+        this.canvasBg.width,
+        this.canvasBg.height
+      );
+      this.currentFrame = frame;
     }
 
     drawFrame(frameIndex) {
       const frame = Math.floor(frameIndex);
-
+      this.desiredFrame = frame; // always track what scroll wants
       if (this.backgroundImages[frame]) {
-        this.ctxBg.clearRect(0, 0, this.canvasBg.width, this.canvasBg.height);
-        this.ctxBg.drawImage(
-          this.backgroundImages[frame],
-          0, 0,
-          this.canvasBg.width,
-          this.canvasBg.height
-        );
+        this._paint(frame);
       }
-
-      this.currentFrame = frame;
+      // If not loaded yet, loadImage will paint it the moment it arrives
     }
   }
 
@@ -409,14 +437,18 @@
         this.backgroundUrls
       );
 
-      // 2. Load all frames
+      // 2. Load first 30 frames then start immediately
       try {
-        await this.frameEngine.preloadAllFrames();
+        await this.frameEngine.loadBatch(0, 30);
+        this.frameEngine.drawFrame(0);
       } catch (error) {
-        console.error('Error loading frames:', error);
+        console.error('Error loading initial frames:', error);
       }
 
-      // 3. Play enter animation
+      // 3. Stream remaining frames in background (scroll-aware batches of 30)
+      this.frameEngine.streamRemaining(30);
+
+      // 4. Play enter animation
       this.playEnterAnimation();
     }
 
