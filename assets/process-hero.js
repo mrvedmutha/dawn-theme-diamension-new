@@ -188,12 +188,9 @@
     }
 
     addToTimeline(timeline, t) {
-      // Line grows 0→100% across full scroll
-      timeline.fromTo(this.progressLine,
-        { width: '0%' },
-        { width: '100%', duration: 1, ease: 'none' },
-        0
-      );
+      // Anchor timeline at exactly 1.0 duration using a plain object (no DOM side effects)
+      // Width is driven by onUpdate instead, aligned to phasesEndFrame
+      timeline.to({ _: 0 }, { _: 1, duration: 1, ease: 'none' }, 0);
 
       // Dots fill at each phase's mask-in start frame
       if (this.dots[0]) {
@@ -436,6 +433,9 @@
         dot2At:             fp(pt[1].maskInStart),
         dot3At:             fp(pt[2].maskInStart),
 
+        // Progress line end point
+        phasesEndP:         fp(d.phasesEndFrame),
+
         // Raw values used in onUpdate / debug
         introEndP, canvasRange, total, pt, tw
       };
@@ -472,6 +472,15 @@
             }
 
             this.frameEngine.drawFrame(targetFrame);
+
+            // Progress line: 0% at canvas frame 0 → 100% at phasesEndFrame
+            if (this.progressLine) {
+              let lineWidth = 0;
+              if (progress > t.introEndP) {
+                lineWidth = Math.min(100, ((progress - t.introEndP) / (t.phasesEndP - t.introEndP)) * 100);
+              }
+              this.progressLine.style.width = lineWidth + '%';
+            }
 
             // Update debug overlay
             if (this._debugEl) {
