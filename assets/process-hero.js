@@ -182,8 +182,9 @@
    * ========================================
    */
   class ProgressLineManager {
-    constructor(progressLine, dots) {
+    constructor(progressLine, progressTrack, dots) {
       this.progressLine = progressLine;
+      this.progressTrack = progressTrack;
       this.dots = dots; // Array of 3 dot elements
     }
 
@@ -203,8 +204,8 @@
         timeline.to(this.dots[2], { color: '#183754', duration: 0.02, ease: 'none' }, t.dot3At);
       }
 
-      // Fade out line + all dots at Phase 3 mask-out start
-      const fadeTargets = [this.progressLine, ...this.dots].filter(Boolean);
+      // Fade out track, line + all dots at Phase 3 mask-out start
+      const fadeTargets = [this.progressTrack, this.progressLine, ...this.dots].filter(Boolean);
       timeline.to(fadeTargets, {
         opacity: 0,
         duration: t.p3MaskOutEnd - t.p3MaskOutStart,
@@ -284,6 +285,7 @@
       this.scrollHint = section.querySelector('[data-scroll-hint]');
       this.phases = Array.from(section.querySelectorAll('[data-phase]'));
       this.progressLine = section.querySelector('.process-hero__progress-line');
+      this.progressTrack = section.querySelector('.process-hero__progress-line-col');
       this.dots = Array.from(section.querySelectorAll('[data-dot]'));
       this.cardTracks = Array.from(section.querySelectorAll('[data-track]'));
 
@@ -448,7 +450,7 @@
 
       // ── Managers ─────────────────────────────────────────────────────
       this.phaseManager    = new PhaseManager(this.intro, this.phases, this.scrollHint);
-      this.progressManager = new ProgressLineManager(this.progressLine, this.dots);
+      this.progressManager = new ProgressLineManager(this.progressLine, this.progressTrack, this.dots);
       this.cardManager     = new CardScrollManager(this.cardTracks);
 
       // ── Master timeline ───────────────────────────────────────────────
