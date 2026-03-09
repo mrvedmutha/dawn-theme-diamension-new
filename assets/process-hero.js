@@ -314,6 +314,57 @@
 
   /**
    * ========================================
+   * FINAL PANEL MANAGER
+   * Phase 5 — three group stagger, no mask-out
+   * Groups: center-left → center-right → bottom-left
+   * ========================================
+   */
+  class FinalPanelManager {
+    constructor(panel) {
+      this.panel = panel;
+    }
+
+    addToTimeline(timeline, t) {
+      if (!this.panel) return;
+
+      const centerLeftMasks = this.panel.querySelectorAll('.process-hero__final-center-left .process-hero__mask > span');
+      const centerRightMasks = this.panel.querySelectorAll('.process-hero__final-center-right .process-hero__mask > span');
+      const bottomMasks = this.panel.querySelectorAll('.process-hero__final-bottom .process-hero__mask > span');
+      const dur = t.twP; // one group reveal = tw frames in progress units
+
+      // Show panel
+      timeline.set(this.panel, { opacity: 1, visibility: 'visible' }, t.finalRevealStart);
+
+      // Group 1: center-left
+      timeline.to(centerLeftMasks, {
+        y: 0,
+        duration: dur,
+        stagger: 0.01,
+        ease: 'power2.out'
+      }, t.finalRevealStart);
+
+      // Group 2: center-right (offset by half a group)
+      timeline.to(centerRightMasks, {
+        y: 0,
+        duration: dur,
+        stagger: 0.01,
+        ease: 'power2.out'
+      }, t.finalRevealStart + dur * 0.5);
+
+      // Group 3: bottom-left (offset by a full group)
+      timeline.to(bottomMasks, {
+        y: 0,
+        duration: dur,
+        stagger: 0.01,
+        ease: 'power2.out'
+      }, t.finalRevealStart + dur * 1.0);
+
+      // No mask-out — panel stays visible until scroll ends
+    }
+  }
+
+  /**
+   * ========================================
    * MAIN CONTROLLER
    * Orchestrates all components
    * ========================================
@@ -340,6 +391,7 @@
       this.dots = Array.from(section.querySelectorAll('[data-dot]'));
       this.cardTracks = Array.from(section.querySelectorAll('[data-track]'));
       this.definitionPanel = section.querySelector('[data-definition-panel]');
+      this.finalPanel = section.querySelector('[data-final-panel]');
 
       console.log('Initializing Process Hero:', {
         totalFrames: this.totalFrames,
@@ -490,11 +542,17 @@
         // Progress line end point
         phasesEndP:         fp(d.phasesEndFrame),
 
+        // tw expressed as scroll progress units (group stagger offset for FinalPanelManager)
+        twP: (tw / total) * canvasRange,
+
         // Definition panel timing
         defMaskInStart:  d.definitionPanel ? fp(d.definitionPanel.maskInStart)        : 1,
         defMaskInEnd:    d.definitionPanel ? fp(d.definitionPanel.maskInStart + tw)    : 1,
         defMaskOutStart: d.definitionPanel ? fp(d.definitionPanel.maskOutStart)        : 1,
         defMaskOutEnd:   d.definitionPanel ? fp(d.definitionPanel.maskOutStart + tw)   : 1,
+
+        // Final panel timing
+        finalRevealStart: d.finalPanel ? fp(d.finalPanel.revealFrame) : 1,
 
         // Raw values used in onUpdate / debug
         introEndP, canvasRange, total, pt, tw
@@ -511,6 +569,7 @@
       this.progressManager   = new ProgressLineManager(this.progressLine, this.progressTrack, this.dots);
       this.cardManager       = new CardScrollManager(this.cardTracks);
       this.definitionManager = new DefinitionPanelManager(this.definitionPanel);
+      this.finalManager      = new FinalPanelManager(this.finalPanel);
 
       // ── Master timeline ───────────────────────────────────────────────
       const masterTimeline = gsap.timeline({
@@ -546,7 +605,8 @@
             // Update debug overlay
             if (this._debugEl) {
               let phase = 'Intro exiting';
-              if      (progress >= t.defMaskOutEnd)      phase = 'Silent (post-4Cs)';
+              if      (progress >= t.finalRevealStart)   phase = 'Phase 5 — Promise';
+              else if (progress >= t.defMaskOutEnd)      phase = 'Silent (post-4Cs)';
               else if (progress >= t.defMaskOutStart)    phase = '4Cs exiting';
               else if (progress >= t.defMaskInEnd)       phase = '4Cs active';
               else if (progress >= t.defMaskInStart)     phase = '4Cs entering';
@@ -561,14 +621,16 @@
               else if (progress >= t.p1MaskInEnd)        phase = 'Phase 1 active';
               else if (progress >= t.p1MaskInStart)      phase = 'Phase 1 entering';
 
-              const defIn  = d.definitionPanel ? d.definitionPanel.maskInStart  : '—';
-              const defOut = d.definitionPanel ? d.definitionPanel.maskOutStart : '—';
+              const defIn    = d.definitionPanel ? d.definitionPanel.maskInStart  : '—';
+              const defOut   = d.definitionPanel ? d.definitionPanel.maskOutStart : '—';
+              const finalRev = d.finalPanel      ? d.finalPanel.revealFrame       : '—';
               this._debugEl.innerHTML =
                 `<b>Frame: ${targetFrame} / ${t.total}&nbsp;&nbsp;(${Math.round(progress * 100)}%)</b><br>` +
                 `P1 mask-out  @ frame <b>${t.pt[0].maskOutStart}</b><br>` +
                 `P2 mask-in @ <b>${t.pt[1].maskInStart}</b> | mask-out @ <b>${t.pt[1].maskOutStart}</b><br>` +
                 `P3 mask-in @ <b>${t.pt[2].maskInStart}</b> | mask-out @ <b>${t.pt[2].maskOutStart}</b><br>` +
                 `4Cs mask-in @ <b>${defIn}</b> | mask-out @ <b>${defOut}</b><br>` +
+                `P5 reveal @ <b>${finalRev}</b><br>` +
                 `&#9654;&nbsp;${phase}`;
             }
           }
@@ -581,6 +643,9 @@
       this.cardManager.addToTimeline(masterTimeline, t);
       if (d.definitionPanel) {
         this.definitionManager.addToTimeline(masterTimeline, t);
+      }
+      if (d.finalPanel) {
+        this.finalManager.addToTimeline(masterTimeline, t);
       }
 
       ScrollTrigger.refresh();
