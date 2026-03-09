@@ -14,14 +14,6 @@
         aria-label="Brilliance 3D background animation"
       ></canvas>
 
-      <canvas
-        class="brillance-3d__canvas brillance-3d__canvas--foreground"
-        data-canvas-fg
-        width="1920"
-        height="1080"
-        aria-label="Brilliance 3D foreground animation"
-      ></canvas>
-
       {%- comment -%} Content Overlay {%- endcomment -%}
       <div class="brillance-3d__content">
         {%- if section.settings.heading != blank -%}
@@ -59,12 +51,7 @@
       {%- comment -%} Background images {%- endcomment -%}
       {%- for i in (0..max_frame) -%}
         {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}">
-      {%- endfor -%}
-      {%- comment -%} Foreground images {%- endcomment -%}
-      {%- for i in (0..max_frame) -%}
-        {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}">
+        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}">
       {%- endfor -%}
     </div>
 
@@ -75,15 +62,9 @@
         backgroundUrls: [
           {%- for i in (0..max_frame) -%}
             {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-            "{{ 'custom-section-brillance-3d/background-sequence/2FEB26-BGCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+            "{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         ],
-        foregroundUrls: [
-          {%- for i in (0..max_frame) -%}
-            {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-            "{{ 'custom-section-brillance-3d/front-sequence/2FEB26-TweezersCubesWebP-f' | append: frame_num | append: 'Output.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
-          {%- endfor -%}
-        ]
       };
     </script>
   </div>

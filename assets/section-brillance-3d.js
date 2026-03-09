@@ -35,7 +35,7 @@
       const sectionId = section.dataset.sectionId;
       const data = window.brillance3dData?.[sectionId];
 
-      if (!data || !data.backgroundUrls || !data.foregroundUrls) {
+      if (!data || !data.backgroundUrls) {
         console.error('Brillance 3D data not found');
         return;
       }
@@ -48,14 +48,11 @@
     constructor(section, data) {
       this.section = section;
       this.backgroundUrls = data.backgroundUrls;
-      this.foregroundUrls = data.foregroundUrls;
       this.totalFrames = this.backgroundUrls.length;
 
       // DOM elements
       this.canvasBg = section.querySelector('[data-canvas-bg]');
-      this.canvasFg = section.querySelector('[data-canvas-fg]');
       this.ctxBg = this.canvasBg.getContext('2d');
-      this.ctxFg = this.canvasFg.getContext('2d');
       this.pinnedContainer = section.querySelector('[data-pinned-container]');
       this.paragraph = section.querySelector('[data-paragraph]');
       this.cta = section.querySelector('[data-cta]');
@@ -64,9 +61,6 @@
 
       // State
       this.backgroundImages = [];
-      this.foregroundImages = [];
-      this.loadedBgCount = 0;
-      this.loadedFgCount = 0;
       this.currentFrame = 0;
 
       console.log('Initializing Brilliance 3D:', {
@@ -115,13 +109,10 @@
     }
 
     /**
-     * Load both background and foreground frames
+     * Load background frame
      */
     loadBothFrames(index) {
-      return Promise.all([
-        this.loadImage(this.backgroundUrls[index], this.backgroundImages, index),
-        this.loadImage(this.foregroundUrls[index], this.foregroundImages, index)
-      ]);
+      return this.loadImage(this.backgroundUrls[index], this.backgroundImages, index);
     }
 
     /**
@@ -160,18 +151,6 @@
           0,
           this.canvasBg.width,
           this.canvasBg.height
-        );
-      }
-
-      // Draw foreground
-      if (this.foregroundImages[frame]) {
-        this.ctxFg.clearRect(0, 0, this.canvasFg.width, this.canvasFg.height);
-        this.ctxFg.drawImage(
-          this.foregroundImages[frame],
-          0,
-          0,
-          this.canvasFg.width,
-          this.canvasFg.height
         );
       }
 
@@ -354,17 +333,14 @@
           // Capture canvas snapshots as data URLs for seamless page transition
           try {
             const bgSnapshot = this.canvasBg.toDataURL('image/webp', 0.8);
-            const fgSnapshot = this.canvasFg.toDataURL('image/webp', 0.8);
 
-            console.log('📸 Canvas snapshots captured:', {
-              bgSize: (bgSnapshot.length / 1024).toFixed(1) + 'KB',
-              fgSize: (fgSnapshot.length / 1024).toFixed(1) + 'KB'
+            console.log('📸 Canvas snapshot captured:', {
+              bgSize: (bgSnapshot.length / 1024).toFixed(1) + 'KB'
             });
 
             // Store transition state in sessionStorage
             sessionStorage.setItem('fromBrillanceTransition', 'true');
             sessionStorage.setItem('transitionBgSnapshot', bgSnapshot);
-            sessionStorage.setItem('transitionFgSnapshot', fgSnapshot);
             sessionStorage.setItem('transitionEllipseScale', '5');
 
             // Store colors for matching background

@@ -71,21 +71,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1920px;
-  height: 1080px;
-  max-width: 100%;
-  max-height: 100vh;
-  object-fit: contain;
+  /* Simulate object-fit: cover for 16:9 content on any viewport */
+  width: max(100%, 177.78vh);
+  height: max(100%, 56.25vw);
   pointer-events: none;
 }
 
 .brillance-3d__canvas--background {
   z-index: 1;
-}
-
-.brillance-3d__canvas--foreground {
-  z-index: 2;
-  mix-blend-mode: darken;
 }
 
 /* ==========================================
