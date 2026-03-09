@@ -263,6 +263,46 @@
 
   /**
    * ========================================
+   * DEFINITION PANEL MANAGER
+   * Mask-in / mask-out for 4C's panel (post phases)
+   * ========================================
+   */
+  class DefinitionPanelManager {
+    constructor(panel) {
+      this.panel = panel;
+    }
+
+    addToTimeline(timeline, t) {
+      if (!this.panel) return;
+
+      const masks = this.panel.querySelectorAll('.process-hero__mask > span');
+
+      // Show panel
+      timeline.set(this.panel, { opacity: 1, visibility: 'visible' }, t.defMaskInStart);
+
+      // Mask-in: staggered slide up (left heading → left body → right rows)
+      timeline.to(masks, {
+        y: 0,
+        duration: t.defMaskInEnd - t.defMaskInStart,
+        stagger: 0.015,
+        ease: 'power2.out'
+      }, t.defMaskInStart);
+
+      // Mask-out: slide up out
+      timeline.to(masks, {
+        y: '-100%',
+        duration: t.defMaskOutEnd - t.defMaskOutStart,
+        stagger: 0.005,
+        ease: 'power2.in'
+      }, t.defMaskOutStart);
+
+      // Hide panel
+      timeline.set(this.panel, { opacity: 0, visibility: 'hidden' }, t.defMaskOutEnd);
+    }
+  }
+
+  /**
+   * ========================================
    * MAIN CONTROLLER
    * Orchestrates all components
    * ========================================
@@ -288,6 +328,7 @@
       this.progressTrack = section.querySelector('.process-hero__progress-line-col');
       this.dots = Array.from(section.querySelectorAll('[data-dot]'));
       this.cardTracks = Array.from(section.querySelectorAll('[data-track]'));
+      this.definitionPanel = section.querySelector('[data-definition-panel]');
 
       console.log('Initializing Process Hero:', {
         totalFrames: this.totalFrames,
@@ -438,6 +479,12 @@
         // Progress line end point
         phasesEndP:         fp(d.phasesEndFrame),
 
+        // Definition panel timing
+        defMaskInStart:  d.definitionPanel ? fp(d.definitionPanel.maskInStart)        : 1,
+        defMaskInEnd:    d.definitionPanel ? fp(d.definitionPanel.maskInStart + tw)    : 1,
+        defMaskOutStart: d.definitionPanel ? fp(d.definitionPanel.maskOutStart)        : 1,
+        defMaskOutEnd:   d.definitionPanel ? fp(d.definitionPanel.maskOutStart + tw)   : 1,
+
         // Raw values used in onUpdate / debug
         introEndP, canvasRange, total, pt, tw
       };
@@ -449,9 +496,10 @@
       document.body.appendChild(this._debugEl);
 
       // ── Managers ─────────────────────────────────────────────────────
-      this.phaseManager    = new PhaseManager(this.intro, this.phases, this.scrollHint);
-      this.progressManager = new ProgressLineManager(this.progressLine, this.progressTrack, this.dots);
-      this.cardManager     = new CardScrollManager(this.cardTracks);
+      this.phaseManager      = new PhaseManager(this.intro, this.phases, this.scrollHint);
+      this.progressManager   = new ProgressLineManager(this.progressLine, this.progressTrack, this.dots);
+      this.cardManager       = new CardScrollManager(this.cardTracks);
+      this.definitionManager = new DefinitionPanelManager(this.definitionPanel);
 
       // ── Master timeline ───────────────────────────────────────────────
       const masterTimeline = gsap.timeline({
@@ -487,7 +535,11 @@
             // Update debug overlay
             if (this._debugEl) {
               let phase = 'Intro exiting';
-              if      (progress >= t.p3MaskOutEnd)       phase = 'Silent (post-phases)';
+              if      (progress >= t.defMaskOutEnd)      phase = 'Silent (post-4Cs)';
+              else if (progress >= t.defMaskOutStart)    phase = '4Cs exiting';
+              else if (progress >= t.defMaskInEnd)       phase = '4Cs active';
+              else if (progress >= t.defMaskInStart)     phase = '4Cs entering';
+              else if (progress >= t.p3MaskOutEnd)       phase = 'Silent (post-phases)';
               else if (progress >= t.p3MaskOutStart)     phase = 'Phase 3 exiting';
               else if (progress >= t.p3MaskInEnd)        phase = 'Phase 3 active';
               else if (progress >= t.p3MaskInStart)      phase = 'Phase 3 entering';
@@ -498,11 +550,14 @@
               else if (progress >= t.p1MaskInEnd)        phase = 'Phase 1 active';
               else if (progress >= t.p1MaskInStart)      phase = 'Phase 1 entering';
 
+              const defIn  = d.definitionPanel ? d.definitionPanel.maskInStart  : '—';
+              const defOut = d.definitionPanel ? d.definitionPanel.maskOutStart : '—';
               this._debugEl.innerHTML =
                 `<b>Frame: ${targetFrame} / ${t.total}&nbsp;&nbsp;(${Math.round(progress * 100)}%)</b><br>` +
                 `P1 mask-out  @ frame <b>${t.pt[0].maskOutStart}</b><br>` +
                 `P2 mask-in @ <b>${t.pt[1].maskInStart}</b> | mask-out @ <b>${t.pt[1].maskOutStart}</b><br>` +
                 `P3 mask-in @ <b>${t.pt[2].maskInStart}</b> | mask-out @ <b>${t.pt[2].maskOutStart}</b><br>` +
+                `4Cs mask-in @ <b>${defIn}</b> | mask-out @ <b>${defOut}</b><br>` +
                 `&#9654;&nbsp;${phase}`;
             }
           }
@@ -513,6 +568,9 @@
       this.phaseManager.addToTimeline(masterTimeline, t);
       this.progressManager.addToTimeline(masterTimeline, t);
       this.cardManager.addToTimeline(masterTimeline, t);
+      if (d.definitionPanel) {
+        this.definitionManager.addToTimeline(masterTimeline, t);
+      }
 
       ScrollTrigger.refresh();
     }

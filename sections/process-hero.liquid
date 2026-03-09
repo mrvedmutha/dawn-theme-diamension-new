@@ -100,6 +100,46 @@
         </div>
       </div>
 
+      {%- comment -%} Definition Panel (4C's — post phases) {%- endcomment -%}
+      {%- assign def_block = section.blocks | where: 'type', 'definition_panel' | first -%}
+      {%- if def_block -%}
+        <div class="process-hero__definition-panel" data-definition-panel>
+          {%- comment -%} Left: heading + body {%- endcomment -%}
+          <div class="process-hero__definition-left">
+            {%- if def_block.settings.left_heading != blank -%}
+              <div class="process-hero__mask">
+                <span class="process-hero__definition-heading">{{ def_block.settings.left_heading }}</span>
+              </div>
+            {%- endif -%}
+            {%- if def_block.settings.left_body != blank -%}
+              <div class="process-hero__mask">
+                <span class="process-hero__definition-body">{{ def_block.settings.left_body }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Right: 4 definition rows {%- endcomment -%}
+          <div class="process-hero__definition-right">
+            {%- for i in (1..4) -%}
+              {%- assign term_key = 'term_' | append: i -%}
+              {%- assign def_key = 'definition_' | append: i -%}
+              {%- if def_block.settings[term_key] != blank -%}
+                <div class="process-hero__definition-row">
+                  <div class="process-hero__mask">
+                    <span class="process-hero__definition-term">{{ def_block.settings[term_key] }}</span>
+                  </div>
+                  {%- if def_block.settings[def_key] != blank -%}
+                    <div class="process-hero__mask">
+                      <span class="process-hero__definition-desc">{{ def_block.settings[def_key] }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
       {%- comment -%} Image Cards Viewport {%- endcomment -%}
       <div class="process-hero__cards-viewport">
         {%- for i in (1..3) -%}
@@ -172,7 +212,9 @@
         {%- for phase in phase_blocks -%}
         { maskInStart: {{ phase.settings.mask_in_start_frame | default: 1 }}, maskOutStart: {{ phase.settings.mask_out_start_frame | default: 1 }} }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
-      ]
+      ],
+      {%- assign def_block = section.blocks | where: 'type', 'definition_panel' | first -%}
+      definitionPanel: {%- if def_block -%}{ maskInStart: {{ def_block.settings.mask_in_start_frame | default: 370 }}, maskOutStart: {{ def_block.settings.mask_out_start_frame | default: 550 }} }{%- else -%}null{%- endif -%}
     };
   </script>
 </div>
@@ -362,6 +404,99 @@
           "step": 1,
           "default": 1,
           "info": "Which phase this card belongs to"
+        }
+      ]
+    },
+    {
+      "type": "definition_panel",
+      "name": "Definition Panel (4C's)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Left Column"
+        },
+        {
+          "type": "text",
+          "id": "left_heading",
+          "label": "Heading",
+          "default": "Diamond Quality, Defined"
+        },
+        {
+          "type": "textarea",
+          "id": "left_body",
+          "label": "Body Text",
+          "default": "Diamond excellence is defined by four universal parameters — the 4C's."
+        },
+        {
+          "type": "header",
+          "content": "Right Column — Definitions"
+        },
+        {
+          "type": "text",
+          "id": "term_1",
+          "label": "Term 1",
+          "default": "Cut"
+        },
+        {
+          "type": "textarea",
+          "id": "definition_1",
+          "label": "Definition 1",
+          "default": "Determines brilliance and light performance."
+        },
+        {
+          "type": "text",
+          "id": "term_2",
+          "label": "Term 2",
+          "default": "Clarity"
+        },
+        {
+          "type": "textarea",
+          "id": "definition_2",
+          "label": "Definition 2",
+          "default": "Measures natural inclusions and purity."
+        },
+        {
+          "type": "text",
+          "id": "term_3",
+          "label": "Term 3",
+          "default": "Color"
+        },
+        {
+          "type": "textarea",
+          "id": "definition_3",
+          "label": "Definition 3",
+          "default": "Evaluates the absence of color."
+        },
+        {
+          "type": "text",
+          "id": "term_4",
+          "label": "Term 4",
+          "default": "Carat"
+        },
+        {
+          "type": "textarea",
+          "id": "definition_4",
+          "label": "Definition 4",
+          "default": "Defines weight, not size."
+        },
+        {
+          "type": "header",
+          "content": "Frame Timing"
+        },
+        {
+          "type": "number",
+          "id": "mask_in_start_frame",
+          "label": "Mask-In Start Frame",
+          "default": 370,
+          "info": "Canvas frame where the panel begins sliding in"
+        },
+        {
+          "type": "number",
+          "id": "mask_out_start_frame",
+          "label": "Mask-Out Start Frame",
+          "default": 550,
+          "info": "Canvas frame where the panel begins sliding out"
         }
       ]
     }
