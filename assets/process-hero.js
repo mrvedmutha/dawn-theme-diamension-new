@@ -326,9 +326,7 @@
     addToTimeline(timeline, t) {
       if (!this.panel) return;
 
-      const allMasks  = this.panel.querySelectorAll('.process-hero__mask > span');
-      const leftMasks = this.panel.querySelectorAll('.process-hero__definition-left .process-hero__mask > span');
-      const rightCol  = this.panel.querySelector('.process-hero__definition-right');
+      const allMasks = this.panel.querySelectorAll('.process-hero__mask > span');
 
       // Show panel
       timeline.set(this.panel, { opacity: 1, visibility: 'visible' }, t.defMaskInStart);
@@ -341,22 +339,12 @@
         ease: 'power2.out'
       }, t.defMaskInStart);
 
-      // Mask-out LEFT: slide up (same as phases)
-      timeline.to(leftMasks, {
+      // Mask-out ALL: slide up all at once (no stagger)
+      timeline.to(allMasks, {
         y: '-100%',
         duration: t.defMaskOutEnd - t.defMaskOutStart,
-        stagger: 0.005,
         ease: 'power2.in'
       }, t.defMaskOutStart);
-
-      // Mask-out RIGHT: fade out entire column
-      if (rightCol) {
-        timeline.to(rightCol, {
-          opacity: 0,
-          duration: t.defMaskOutEnd - t.defMaskOutStart,
-          ease: 'power2.in'
-        }, t.defMaskOutStart);
-      }
 
       // Hide panel
       timeline.set(this.panel, { opacity: 0, visibility: 'hidden' }, t.defMaskOutEnd);

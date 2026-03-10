@@ -472,6 +472,12 @@
   display: contents;
 }
 
+/* Ensure each mask sizes to its own content — prevents grid from
+   constraining desc masks to term height when desc wraps to 2+ lines */
+.process-hero__definition-right .process-hero__mask {
+  align-self: start;
+}
+
 .process-hero__definition-term {
   display: block;
   font-family: var(--font-nhgdp);
