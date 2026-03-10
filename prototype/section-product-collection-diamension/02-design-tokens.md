@@ -60,7 +60,7 @@ This document contains all design specifications, measurements, colors, typograp
 ### Font Families
 ```css
 --font-primary: 'Neue Haas Grotesk Display Pro', sans-serif;  /* Headings, buttons */
---font-secondary: 'Neue Montreal', sans-serif;                /* Product titles, prices */
+--font-secondary: 'Neue Haas Grotesk Display Pro', sans-serif;                /* Product titles, prices */
 ```
 
 **Font Locations:**
@@ -220,7 +220,7 @@ separator-icon: line-8.svg;
 link-font-size: 16px;
 link-font-weight: 400;
 link-color: #183754;
-link-font-family: 'Neue Montreal', sans-serif;
+link-font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 ```
 
 ---
@@ -231,14 +231,14 @@ link-font-family: 'Neue Montreal', sans-serif;
 title-font-size: 32px;
 title-font-weight: 400;
 title-color: #183754;
-title-font-family: 'Neue Montreal', sans-serif;
+title-font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 title-text-transform: uppercase;
 
 /* Description */
 description-font-size: 16px;
 description-font-weight: 400;
 description-color: #3e6282; /* First line different line-height: 2 */
-description-font-family: 'Neue Montreal', sans-serif;
+description-font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 description-line-height-1: 2;
 description-line-height-2: 101.445%;
 
@@ -330,11 +330,11 @@ badge-background: #fffaf5;
 badge-font-size: 14px;
 badge-font-weight: 400;
 badge-color: #183754;
-badge-font-family: 'Neue Montreal', sans-serif;
+badge-font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 
 /* Product Info */
 info-gap: 4px;
-info-font-family: 'Neue Montreal', sans-serif;
+info-font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 
 /* Product Title */
 title-font-size: 18px;

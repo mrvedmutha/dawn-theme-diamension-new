@@ -2,17 +2,6 @@
    Custom Trust Badge Section Styles
    ============================================ */
 
-/* Font Face Declarations */
-@font-face {
-  font-family: 'Neue Haas Display';
-  src:
-    url('NeueHaasDisplay-Roman.woff2') format('woff2'),
-    url('NeueHaasDisplay-Roman.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* CSS Variables */
 :root {
   --custom-trust-badge-text-color: #183754;

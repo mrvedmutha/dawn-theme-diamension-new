@@ -4,17 +4,6 @@
    Pattern: custom-[folder-name]
    ========================================================================== */
 
-/* Font Face - Neue Haas Grotesk Display Pro
-   ========================================================================== */
-@font-face {
-  font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('NeueHaasDisplay-Light.woff2') format('woff2'),
-    url('NeueHaasDisplay-Light.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Section Root
    ========================================================================== */
 .custom-diamension-before-footer-hero {

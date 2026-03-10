@@ -2,24 +2,6 @@
    Editorial Hero Section
    ========================================================================== */
 
-/* Font Face Declarations */
-@font-face {
-  font-family: 'Bickham Script Pro';
-  src: url('../assets/Bickham Script Pro Semibold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('../assets/NeueHaasDisplay-Roman.woff2') format('woff2'),
-       url('../assets/NeueHaasDisplay-Roman.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Section Container */
 .custom-section-editorial-hero {
   position: relative;

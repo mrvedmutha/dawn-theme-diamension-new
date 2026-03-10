@@ -2,16 +2,6 @@
    Font Imports
    ============================================ */
 
-@font-face {
-  font-family: 'Neue Montreal';
-  src:
-    url('NeueMontreal-Regular.woff2') format('woff2'),
-    url('NeueMontreal-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ============================================
    CSS Variables
    ============================================ */
@@ -114,7 +104,7 @@
 }
 
 .custom-diamension-footer__menu-title {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -137,7 +127,7 @@
 }
 
 .custom-diamension-footer__menu-link {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.7px;
@@ -170,7 +160,7 @@
 }
 
 .custom-diamension-footer__newsletter-heading {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -181,7 +171,7 @@
 
 /* Success/Error Messages */
 .custom-diamension-footer__newsletter-message {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: var(--footer-text-primary);
@@ -199,7 +189,7 @@
 }
 
 .custom-diamension-footer__newsletter-description {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -222,7 +212,7 @@
 }
 
 .custom-diamension-footer__newsletter-input {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   text-transform: uppercase;
@@ -296,7 +286,7 @@
 }
 
 .custom-diamension-footer__bottom-credit {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -318,7 +308,7 @@
 }
 
 .custom-diamension-footer__bottom-copyright {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -346,7 +336,7 @@
 }
 
 .custom-diamension-footer__bottom-legal-link {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: capitalize;

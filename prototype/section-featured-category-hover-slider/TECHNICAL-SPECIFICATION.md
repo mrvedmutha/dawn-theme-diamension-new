@@ -255,7 +255,7 @@ const categories = [
 
 .shop-now-btn {
   position: absolute;
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 20px;
   line-height: 40px;
   color: #fffaf5;
@@ -338,7 +338,7 @@ const categories = [
   }
 
   .slider-counter {
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
     font-size: 16px;
     color: #fffaf5;
     white-space: nowrap;
@@ -360,7 +360,7 @@ const categories = [
   }
 
   .next-btn {
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
     font-size: 16px;
     color: #fffaf5;
     background: none;
@@ -390,7 +390,7 @@ const categories = [
   }
 
   .category-description-mobile {
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
     font-size: 14px;
     color: #fffaf5;
     margin-bottom: 30px;
@@ -398,7 +398,7 @@ const categories = [
   }
 
   .view-collection-btn {
-    font-family: 'Neue Montreal', sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
     font-size: 14px;
     color: #fffaf5;
     text-decoration: underline;

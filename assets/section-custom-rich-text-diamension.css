@@ -2,27 +2,6 @@
    Custom Rich Text Diamension Section Styles
    ============================================ */
 
-/* Font Face Declarations */
-@font-face {
-  font-family: 'Neue Haas Display';
-  src:
-    url('NeueHaasDisplay-Light.woff2') format('woff2'),
-    url('NeueHaasDisplay-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Display';
-  src:
-    url('NeueHaasDisplay-Roman.woff2') format('woff2'),
-    url('NeueHaasDisplay-Roman.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* CSS Variables */
 :root {
   --custom-rich-text-headline-color: #183754;

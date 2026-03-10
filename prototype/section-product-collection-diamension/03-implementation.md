@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   padding: 16px 24px;
   background: rgba(0, 0, 0, 0.5);
   color: #fffaf5;
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   line-height: normal;
 }
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ```css
 .collection-diamension__breadcrumb-link,
 .collection-diamension__breadcrumb-current {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #183754;
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
 **CSS:**
 ```css
 .collection-diamension__title {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 32px;
   font-weight: 400;
   color: #183754;
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .collection-diamension__description {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #3e6282;
@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .product-card-collection__title {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #183754;
@@ -610,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .product-card-collection__price {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #3e6282;
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
   left: 12px;
   padding: 10px;
   background: #fffaf5;
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: #183754;

@@ -175,7 +175,7 @@ tests/liquid/
   
   /* Typography */
   --font-display: 'Neue Haas Grotesk Display Pro', sans-serif;
-  --font-body: 'Neue Montreal', sans-serif;
+  --font-body: 'Neue Haas Grotesk Display Pro', sans-serif;
   --font-size-display: 60px;
   --font-size-button: 20px;
   

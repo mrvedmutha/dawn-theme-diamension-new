@@ -32,7 +32,7 @@
 
 ### Font Families
 ```css
---font-primary: 'Neue Montreal', sans-serif;            /* Navigation items */
+--font-primary: 'Neue Haas Grotesk Display Pro', sans-serif;            /* Navigation items */
 --font-secondary: 'Neue Haas Grotesk Display Pro', sans-serif;  /* Headings, labels */
 ```
 

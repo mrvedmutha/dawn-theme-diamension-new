@@ -2,42 +2,6 @@
    Custom Image Hero - Diamension The Studio
    ========================================================================== */
 
-/* Font Face Declarations */
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Light.woff2') format('woff2'),
-       url('NeueHaasDisplay-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Roman.woff2') format('woff2'),
-       url('NeueHaasDisplay-Roman.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Bold.woff2') format('woff2'),
-       url('NeueHaasDisplay-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bickham Script Pro';
-  src: url('Bickham Script Pro Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Keyframe Animation - Fade in from bottom */
 @keyframes fadeInUp {
   from {

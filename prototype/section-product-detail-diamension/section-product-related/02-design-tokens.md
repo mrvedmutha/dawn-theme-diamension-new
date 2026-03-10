@@ -47,7 +47,7 @@ This document contains all design specifications, measurements, colors, typograp
 ### Font Families
 ```css
 --font-primary: 'Neue Haas Grotesk Display Pro', sans-serif;
---font-secondary: 'Neue Montreal', sans-serif;
+--font-secondary: 'Neue Haas Grotesk Display Pro', sans-serif;
 ```
 
 **Font Location:** `assets/fonts/`

@@ -2,25 +2,6 @@
    Six Diamond Shape B2B Section
    ======================================== */
 
-/* Font Face */
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Roman.woff2') format('woff2'),
-       url('NeueHaasDisplay-Roman.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Neue Haas Display';
-  src: url('NeueHaasDisplay-Bold.woff2') format('woff2'),
-       url('NeueHaasDisplay-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Wrapper */
 .custom-section-six-diamond-shape-b2b {
   background-color: #fffaf5;

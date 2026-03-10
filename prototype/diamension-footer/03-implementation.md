@@ -496,7 +496,7 @@ Create font-face declarations in your CSS file to import fonts from `assets/font
 }
 
 .custom-diamension-footer__menu-title {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -519,7 +519,7 @@ Create font-face declarations in your CSS file to import fonts from `assets/font
 }
 
 .custom-diamension-footer__menu-link {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.7px;
@@ -552,7 +552,7 @@ Create font-face declarations in your CSS file to import fonts from `assets/font
 }
 
 .custom-diamension-footer__newsletter-heading {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-transform: uppercase;
@@ -598,7 +598,7 @@ Create font-face declarations in your CSS file to import fonts from `assets/font
 }
 
 .custom-diamension-footer__newsletter-label {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   text-transform: uppercase;
@@ -611,7 +611,7 @@ Create font-face declarations in your CSS file to import fonts from `assets/font
 }
 
 .custom-diamension-footer__newsletter-input {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: var(--footer-text-primary);

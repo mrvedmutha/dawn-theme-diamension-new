@@ -34,7 +34,7 @@
 }
 
 .custom-section-wishlist__count {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 18px;
   color: #183754;
   margin: 0;
@@ -89,7 +89,7 @@
 }
 
 .custom-section-wishlist__empty-text {
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   line-height: 24px;
   color: #183754;
@@ -120,7 +120,7 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  font-family: 'Neue Montreal', sans-serif;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   color: #183754;
 }

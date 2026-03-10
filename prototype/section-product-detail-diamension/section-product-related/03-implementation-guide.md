@@ -317,7 +317,7 @@ Open `assets/section-product-related.css` and implement the following:
 
   /* Typography */
   --related-font-primary: 'Neue Haas Grotesk Display Pro', sans-serif;
-  --related-font-secondary: 'Neue Montreal', sans-serif;
+  --related-font-secondary: 'Neue Haas Grotesk Display Pro', sans-serif;
 
   /* Spacing */
   --related-section-container-max-width: 1440px;

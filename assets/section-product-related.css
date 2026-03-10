@@ -13,7 +13,7 @@
 
   /* Typography */
   --related-font-primary: 'Neue Haas Grotesk Display Pro', sans-serif;
-  --related-font-secondary: 'Neue Montreal', sans-serif;
+  --related-font-secondary: 'Neue Haas Grotesk Display Pro', sans-serif;
 
   /* Spacing */
   --related-section-container-max-width: 1440px;
@@ -207,7 +207,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--related-transition-default), transform 0.15s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition:
+    background-color var(--related-transition-default),
+    transform 0.15s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   pointer-events: auto;
 }
 
