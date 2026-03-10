@@ -47,66 +47,43 @@
       this.backgroundUrls = backgroundUrls;
       this.totalFrames = backgroundUrls.length;
 
-      // Reduce frames loaded on smaller screens to save bandwidth
-      const vw = window.innerWidth;
-      this.frameStep = vw < 768 ? 3 : vw < 1024 ? 2 : 1;
-
       this.backgroundImages = [];
       this.currentFrame = 0;
       this.desiredFrame = 0;
     }
 
-    // Snap a frame index to the nearest loaded step
-    _snapFrame(frame) {
-      return Math.round(frame / this.frameStep) * this.frameStep;
-    }
-
-    // Load a contiguous batch of frames (skips already-loaded ones, respects frameStep)
+    // Load a contiguous batch of frames (skips already-loaded ones)
     async loadBatch(from, count) {
       const end = Math.min(from + count, this.totalFrames);
       const t0 = performance.now();
-      for (let i = from; i < end; i += this.frameStep) {
+      for (let i = from; i < end; i++) {
         if (!this.backgroundImages[i]) {
           await this.loadImage(i);
         }
       }
-      console.log(`Batch ${from}–${end - 1} loaded in ${(performance.now() - t0).toFixed(0)}ms (step=${this.frameStep})`);
+      console.log(`Batch ${from}–${end - 1} loaded in ${(performance.now() - t0).toFixed(0)}ms`);
     }
 
-    // Stream remaining frames — forward-first, then backfill
+    // Stream remaining frames in batches of 30, scroll-aware
     async streamRemaining(from) {
       const BATCH = 30;
+      let next = from;
       const total = this.totalFrames;
 
-      // Phase 1: start from current scroll position and load forward
-      // so frames the user is about to see are prioritised over already-passed frames
-      let forwardStart = Math.floor(
-        Math.max(from, this._snapFrame(this.desiredFrame)) / BATCH
-      ) * BATCH;
-
-      let next = forwardStart;
       while (next < total) {
-        // If user scrolled even further ahead while we were loading, jump to keep up
-        const jumpTo = Math.floor(this._snapFrame(this.desiredFrame) / BATCH) * BATCH;
-        if (jumpTo > next && !this.backgroundImages[this._snapFrame(this.desiredFrame)]) {
-          console.log(`Scroll jumped to frame ${this.desiredFrame} — jumping forward to batch ${jumpTo}`);
-          next = jumpTo;
+        // If scroll has jumped far ahead and that frame isn't loaded, prioritize it
+        const desired = this.desiredFrame;
+        const priorityBatchStart = Math.floor(desired / BATCH) * BATCH;
+        if (desired > next + BATCH && !this.backgroundImages[desired] && priorityBatchStart > next) {
+          console.log(`Scroll at frame ${desired} — prioritizing batch ${priorityBatchStart}`);
+          await this.loadBatch(priorityBatchStart, BATCH);
         }
+
         await this.loadBatch(next, BATCH);
         next += BATCH;
       }
 
-      // Phase 2: backfill any frames that were behind the starting scroll position
-      if (forwardStart > from) {
-        console.log(`Backfilling frames ${from}–${forwardStart - 1}`);
-        next = from;
-        while (next < forwardStart) {
-          await this.loadBatch(next, BATCH);
-          next += BATCH;
-        }
-      }
-
-      console.log(`All frames loaded (step=${this.frameStep})`);
+      console.log(`All ${total} frames loaded`);
     }
 
     loadImage(index) {
@@ -115,7 +92,7 @@
         img.onload = () => {
           this.backgroundImages[index] = img;
           // If scroll is waiting on this exact frame, draw it now
-          if (this._snapFrame(this.desiredFrame) === index) {
+          if (this.desiredFrame === index) {
             this._paint(index);
           }
           resolve();
@@ -140,8 +117,8 @@
     }
 
     drawFrame(frameIndex) {
-      const frame = this._snapFrame(Math.floor(frameIndex));
-      this.desiredFrame = Math.floor(frameIndex); // always track what scroll wants
+      const frame = Math.floor(frameIndex);
+      this.desiredFrame = frame; // always track what scroll wants
       if (this.backgroundImages[frame]) {
         this._paint(frame);
       }
