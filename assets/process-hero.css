@@ -21,6 +21,13 @@
   position: relative;
   width: 100%;
   background: var(--bg-color, #fffaf5);
+
+  /* ---- Neue Haas Grotesk Display Pro variables ---- */
+  --font-nhgdp: 'Neue Haas Grotesk Display Pro', sans-serif;
+  --font-nhgdp-light: 400;
+  --font-nhgdp-roman: 500;
+  --font-nhgdp-medium: 600;
+  --font-nhgdp-bold: 700;
 }
 
 /* ========================================
@@ -144,8 +151,9 @@
 
 .process-hero__intro-small {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(12px, 1.2vw, 16px);
-  font-weight: 400;
+  font-weight: var(--font-nhgdp-roman);
   line-height: 1.25;
   color: var(--text-color, #183754);
   white-space: nowrap;
@@ -153,8 +161,9 @@
 
 .process-hero__intro-large {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(32px, 5vw, 70px);
-  font-weight: 400;
+  font-weight: var(--font-nhgdp-light);
   text-transform: uppercase;
   line-height: 1.2;
   color: var(--text-color, #183754);
@@ -210,8 +219,9 @@
 
 .process-hero__phase-title {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(28px, 3.5vw, 48px);
-  font-weight: 700;
+  font-weight: var(--font-nhgdp-bold);
   letter-spacing: 0.05em;
   line-height: 1.2;
   white-space: nowrap;
@@ -221,7 +231,9 @@
 
 .process-hero__phase-description {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: var(--font-nhgdp-roman);
   line-height: 1.6;
   opacity: 0.8;
 }
@@ -428,45 +440,53 @@
 
 .process-hero__definition-heading {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(24px, 2.8vw, 40px);
-  font-weight: 700;
+  font-weight: var(--font-nhgdp-medium);
   line-height: 1.2;
 }
 
 .process-hero__definition-body {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(15px, 1.4vw, 20px);
-  font-weight: 400;
+  font-weight: var(--font-nhgdp-light);
   line-height: 1.6;
   opacity: 0.8;
 }
 
 .process-hero__definition-right {
   width: 30%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  column-gap: 8px;
+  row-gap: 24px;
+  align-items: baseline;
 }
 
 .process-hero__definition-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  display: contents;
 }
 
 .process-hero__definition-term {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(16px, 1.6vw, 24px);
-  font-weight: 700;
+  font-weight: var(--font-nhgdp-medium);
   line-height: 1.3;
+  width: 110px;
+  flex-shrink: 0;
+  text-align: left;
 }
 
 .process-hero__definition-desc {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(14px, 1.3vw, 18px);
-  font-weight: 400;
+  font-weight: var(--font-nhgdp-roman);
   line-height: 1.5;
   opacity: 0.75;
+  flex: 1;
 }
 
 /* ========================================
@@ -481,26 +501,23 @@
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5% 80px;
   opacity: 0;
   visibility: hidden;
   color: var(--text-color, #183754);
   pointer-events: none;
 }
 
-/* Center row: left heading + right heading */
+/* Transparent wrapper — children become direct flex items of the panel */
 .process-hero__final-center {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 5%;
+  display: contents;
 }
 
 .process-hero__final-center-left {
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -508,24 +525,38 @@
 }
 
 .process-hero__final-center-right {
-  /* Right heading — aligned to right edge */
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .process-hero__final-small {
   display: block;
-  font-size: clamp(16px, 1.6vw, 22px);
-  font-weight: 400;
+  font-family: var(--font-nhgdp);
+  font-size: max(12px, 1.5vw);
+  font-weight: var(--font-nhgdp-roman);
   line-height: 1.4;
 }
 
 .process-hero__final-heading {
   display: block;
-  font-size: clamp(36px, 6.5vw, 96px);
-  font-weight: 300;
+  font-family: var(--font-nhgdp);
+  font-weight: var(--font-nhgdp-light);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  margin-left: -5px;
+  width: 100%;
+}
+
+/* DIAMENSION: 9 chars — fills ~30vw column, no upper cap */
+.process-hero__final-center-left .process-hero__final-heading {
+  font-size: max(42px, 5vw);
+}
+
+/* PROMISE: 7 chars — fills ~30vw column, no upper cap */
+.process-hero__final-center-right .process-hero__final-heading {
+  font-size: max(54px, 6.4vw);
 }
 
 /* Bottom-left: label + body */
@@ -541,15 +572,17 @@
 
 .process-hero__final-label {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(18px, 1.8vw, 26px);
-  font-weight: 700;
+  font-weight: var(--font-nhgdp-medium);
   line-height: 1.3;
 }
 
 .process-hero__final-body {
   display: block;
+  font-family: var(--font-nhgdp);
   font-size: clamp(13px, 1.2vw, 16px);
-  font-weight: 400;
+  font-weight: var(--font-nhgdp-roman);
   line-height: 1.6;
   opacity: 0.8;
 }
@@ -586,10 +619,6 @@
 
   .process-hero__phase-counter-container {
     left: 5%;
-  }
-
-  .process-hero__definition-panel {
-    padding: 0 5%;
   }
 
   .process-hero__definition-left,
@@ -684,8 +713,13 @@
     padding: 0 5%;
   }
 
+  .process-hero__final-center-left,
+  .process-hero__final-center-right {
+    width: 100%;
+  }
+
   .process-hero__final-heading {
-    font-size: clamp(28px, 8vw, 56px);
+    font-size: clamp(28px, 8vw, 48px);
   }
 
   .process-hero__final-bottom {
