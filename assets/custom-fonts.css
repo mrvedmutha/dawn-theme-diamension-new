@@ -1,0 +1,217 @@
+/* =======================================================
+   DIAMENSION — GLOBAL CUSTOM FONTS
+   All @font-face declarations live here.
+   Loaded once via theme.liquid before base.css.
+   ======================================================= */
+
+
+/* -------------------------------------------------------
+   NEUE HAAS GROTESK DISPLAY PRO
+   Weights: 100 (XXThin) → 200 (XThin) → 300 (Thin)
+            400 (Light) → 500 (Roman) → 600 (Medium)
+            700 (Bold)  → 900 (Black)
+   woff2 + woff available for Light, Roman, Bold;
+   ttf covers all weights including italic variants.
+   ------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayXXThin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayXXThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayXThin.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayXThinItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayThin.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayThinItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light — woff2/woff preferred, ttf fallback */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplay-Light.woff2') format('woff2'),
+       url('NeueHaasDisplay-Light.woff') format('woff'),
+       url('NeueHaasDisplayLight.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayLightItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Roman (Regular) — woff2/woff preferred, ttf fallback */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplay-Roman.woff2') format('woff2'),
+       url('NeueHaasDisplay-Roman.woff') format('woff'),
+       url('NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayRomanItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayMediu.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayMediumItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold — woff2/woff preferred, ttf fallback */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplay-Bold.woff2') format('woff2'),
+       url('NeueHaasDisplay-Bold.woff') format('woff'),
+       url('NeueHaasDisplayBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayBoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayBlack.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display Pro';
+  src: url('NeueHaasDisplayBlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* -------------------------------------------------------
+   OGG
+   ------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Ogg';
+  src: url('Ogg-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ogg';
+  src: url('Ogg-RegularItalic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* -------------------------------------------------------
+   BICKHAM SCRIPT PRO
+   ------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('Bickham Script Pro Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('Bickham Script Pro Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bickham Script Pro';
+  src: url('Bickham Script Pro Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* -------------------------------------------------------
+   NEUE MONTREAL
+   ------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('NeueMontreal-Regular.woff2') format('woff2'),
+       url('NeueMontreal-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

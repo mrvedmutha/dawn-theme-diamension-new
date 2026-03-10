@@ -280,6 +280,7 @@
       }
     {% endstyle %}
 
+    {{ 'custom-fonts.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
     {%- comment -%} Lenis Smooth Scroll CSS {%- endcomment -%}
