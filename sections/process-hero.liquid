@@ -42,8 +42,11 @@
           </div>
         </div>
 
-        {%- comment -%} Right Column: TO SPARKLE {%- endcomment -%}
+        {%- comment -%} Right Column: spacer + TO SPARKLE (spacer matches left small text height) {%- endcomment -%}
         <div class="process-hero__intro-right-col">
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-small">&nbsp;</span>
+          </div>
           <div class="process-hero__mask">
             <span class="process-hero__intro-large">{{ section.settings.intro_right_text }}</span>
           </div>
@@ -160,6 +163,10 @@
               {%- endif -%}
             </div>
             <div class="process-hero__final-center-right">
+              {%- comment -%} Spacer matches left small text height so headings align {%- endcomment -%}
+              <div class="process-hero__mask">
+                <span class="process-hero__final-small">&nbsp;</span>
+              </div>
               {%- if final_block.settings.right_heading != blank -%}
                 <div class="process-hero__mask">
                   <span class="process-hero__final-heading">{{ final_block.settings.right_heading }}</span>

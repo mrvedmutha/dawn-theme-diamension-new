@@ -147,12 +147,13 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
+  gap: 16px;
 }
 
 .process-hero__intro-small {
   display: block;
   font-family: var(--font-nhgdp);
-  font-size: clamp(12px, 1.2vw, 16px);
+  font-size: max(12px, 1.2vw);
   font-weight: var(--font-nhgdp-roman);
   line-height: 1.25;
   color: var(--text-color, #183754);
@@ -162,7 +163,7 @@
 .process-hero__intro-large {
   display: block;
   font-family: var(--font-nhgdp);
-  font-size: clamp(32px, 5vw, 70px);
+  font-size: max(32px, 5vw);
   font-weight: var(--font-nhgdp-light);
   text-transform: uppercase;
   line-height: 1.2;
@@ -244,11 +245,14 @@
 
 .process-hero__mask {
   overflow: hidden;
+  /* pixel-perfect clip at all viewport sizes — prevents subpixel bleed */
+  -webkit-clip-path: inset(0);
+  clip-path: inset(0);
 }
 
 .process-hero__mask > span {
   display: block;
-  transform: translateY(100%);
+  transform: translateY(105%); /* 5% overdrive absorbs any rounding gap */
 }
 
 /* ========================================
@@ -529,6 +533,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 4px;
 }
 
 .process-hero__final-small {
