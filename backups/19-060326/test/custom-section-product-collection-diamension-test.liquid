@@ -512,7 +512,6 @@
       {% comment %} Product count and active filters display {% endcomment %}
       <div
         class="custom-section-product-collection-diamension__results-bar"
-        style="padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;"
       >
         <p class="custom-section-product-collection-diamension__product-count" style="margin: 0; color: #3e6282;">
           Showing Results: {{ paginate.items }} products
@@ -582,7 +581,8 @@
                 data-total-items="{{ paginate.items }}"
                 style="font-size: 14px; color: #183754; text-align: center; margin: 0;"
               >
-                Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of {{ paginate.items }} products
+                Showing {{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of
+                {{ paginate.items }} products
               </p>
               <div class="custom-section-product-collection-diamension__progress-line">
                 <svg width="110" height="1" viewBox="0 0 110 1" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -603,9 +603,7 @@
                 LOAD MORE
               </button>
             {% else %}
-              <p style="color: #183754; font-size: 14px; margin: 0;">
-                All products loaded
-              </p>
+              <p style="color: #183754; font-size: 14px; margin: 0;">All products loaded</p>
             {% endif %}
           </div>
         {% endif %}
@@ -616,14 +614,14 @@
 
 {% comment %} Preserve Filters in Sort Links {% endcomment %}
 <script>
-  (function() {
+  (function () {
     // Get current URL parameters (filters)
     const currentParams = new URLSearchParams(window.location.search);
 
     // Get all sort option links
     const sortLinks = document.querySelectorAll('[data-sort-value]');
 
-    sortLinks.forEach(link => {
+    sortLinks.forEach((link) => {
       const sortValue = link.dataset.sortValue;
 
       // Create new URL params with current filters
@@ -643,7 +641,7 @@
 
 {% comment %} AJAX Load More Script {% endcomment %}
 <script>
-  (function() {
+  (function () {
     const loadMoreBtn = document.querySelector('[data-load-more-btn]');
     const progressText = document.querySelector('[data-progress-text]');
     const productGrid = document.querySelector('[data-product-grid]');
@@ -657,7 +655,7 @@
     function countVisibleProducts() {
       const allProducts = productGrid.querySelectorAll('[data-product-price]');
       let visibleCount = 0;
-      allProducts.forEach(product => {
+      allProducts.forEach((product) => {
         if (product.style.display !== 'none') {
           visibleCount++;
         }
@@ -682,10 +680,12 @@
       const minPrice = minFilterPrice ? parseFloat(minFilterPrice) : 0;
       const maxPrice = maxFilterPrice ? parseFloat(maxFilterPrice) : Infinity;
 
-      console.log(`\n🎯 Filtering new products: ₹${minPrice.toLocaleString('en-IN')} - ₹${maxPrice.toLocaleString('en-IN')}`);
+      console.log(
+        `\n🎯 Filtering new products: ₹${minPrice.toLocaleString('en-IN')} - ₹${maxPrice.toLocaleString('en-IN')}`
+      );
 
       let hiddenCount = 0;
-      newCards.forEach(card => {
+      newCards.forEach((card) => {
         const productPrice = parseFloat(card.dataset.productPrice);
         if (productPrice < minPrice || productPrice > maxPrice) {
           card.style.display = 'none';
@@ -698,7 +698,7 @@
       return hiddenCount;
     }
 
-    loadMoreBtn.addEventListener('click', async function() {
+    loadMoreBtn.addEventListener('click', async function () {
       const nextUrl = loadMoreBtn.dataset.nextUrl;
       if (!nextUrl) return;
 
@@ -727,12 +727,14 @@
 
         if (newProductCards.length > 0) {
           // Append new products to grid
-          newProductCards.forEach(card => {
+          newProductCards.forEach((card) => {
             productGrid.appendChild(card.cloneNode(true));
           });
 
           // Apply price filter to new products
-          const addedCards = Array.from(productGrid.querySelectorAll('[data-product-price]')).slice(-newProductCards.length);
+          const addedCards = Array.from(productGrid.querySelectorAll('[data-product-price]')).slice(
+            -newProductCards.length
+          );
           applyPriceFilterToNewProducts(addedCards);
 
           // Update progress text
@@ -764,7 +766,6 @@
           progressText.parentElement.parentElement.appendChild(allLoadedMsg);
           console.log('  ℹ️ All products loaded');
         }
-
       } catch (error) {
         console.error('❌ Error loading more products:', error);
         // Restore button to outline state on error

@@ -164,6 +164,7 @@
   margin: 0;
   padding: 0;
   letter-spacing: normal;
+  text-decoration: none;
 }
 
 /* Modifier - Active Category */
@@ -438,6 +439,10 @@
 
 /* Focus States */
 .custom-section-featured-category-slider__category-name:focus,
+.custom-section-featured-category-slider__category-name:focus-visible {
+  outline: none;
+}
+
 .custom-section-featured-category-slider__shop-now-btn:focus,
 .custom-section-featured-category-slider__next-btn:focus,
 .custom-section-featured-category-slider__view-collection-btn:focus {

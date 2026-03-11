@@ -16,7 +16,7 @@
   color: #183754;
   transition: all 0.3s ease;
   padding: 0;
-  z-index: 10;
+  z-index: 2;
 }
 
 /* Size-specific positioning */
@@ -57,11 +57,11 @@
 
 /* Active state (in wishlist) */
 .wishlist-button.is-active {
-  background-color: #fffaf5;
+  background-color: #183754;
 }
 
 .wishlist-button.is-active svg path {
-  stroke: #183754 !important;
+  stroke: #fffaf5 !important;
   fill: none !important;
   stroke-width: 1.5;
 }

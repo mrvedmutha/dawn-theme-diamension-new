@@ -512,7 +512,6 @@
       {% comment %} Product count and active filters display {% endcomment %}
       <div
         class="custom-section-product-collection-diamension__results-bar"
-        style="padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;"
       >
         <p class="custom-section-product-collection-diamension__product-count" style="margin: 0; color: #3e6282;">
           Showing Results: {{ paginate.items }} products
@@ -612,7 +611,6 @@
     {% endpaginate %}
   </div>
 </div>
-
 
 <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'section-product-collection-diamension.js' | asset_url }}" defer></script>

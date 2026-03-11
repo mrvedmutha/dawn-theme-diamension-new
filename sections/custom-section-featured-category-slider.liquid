@@ -70,7 +70,8 @@
     <!-- Desktop Category Names -->
     <div class="custom-section-featured-category-slider__category-names">
       {%- for block in section.blocks -%}
-        <p
+        <a
+          href="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% else %}#{% endif %}"
           class="custom-section-featured-category-slider__category-name{% if forloop.first %} custom-section-featured-category-slider__category-name--active{% endif %}"
           data-category-id="{{ forloop.index }}"
           data-block-id="{{ block.id }}"
@@ -82,7 +83,7 @@
           {{ block.shopify_attributes }}
         >
           {{ block.settings.category_name | default: 'Category Name' | upcase }}
-        </p>
+        </a>
       {%- endfor -%}
     </div>
 
