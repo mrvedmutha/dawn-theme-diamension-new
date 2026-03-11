@@ -51,6 +51,16 @@
             <span class="process-hero__intro-large">{{ section.settings.intro_right_text }}</span>
           </div>
         </div>
+
+        {%- comment -%} Mobile-only: small text left + FROM SEED TO SPARKLE combined right {%- endcomment -%}
+        <div class="process-hero__intro--mobile">
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-small">{{ section.settings.intro_small_text }}</span>
+          </div>
+          <div class="process-hero__mask">
+            <span class="process-hero__intro-large">{{ section.settings.intro_left_text }} {{ section.settings.intro_right_text }}</span>
+          </div>
+        </div>
       </div>
 
       {%- comment -%} Phase Text Containers (3 phases, absolutely stacked) {%- endcomment -%}
@@ -185,6 +195,20 @@
             {%- if final_block.settings.bottom_body != blank -%}
               <div class="process-hero__mask">
                 <span class="process-hero__final-body">{{ final_block.settings.bottom_body }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} Mobile-only: small text + combined heading {%- endcomment -%}
+          <div class="process-hero__final--mobile">
+            {%- if final_block.settings.small_text != blank -%}
+              <div class="process-hero__mask">
+                <span class="process-hero__final-small">{{ final_block.settings.small_text }}</span>
+              </div>
+            {%- endif -%}
+            {%- if final_block.settings.left_heading != blank or final_block.settings.right_heading != blank -%}
+              <div class="process-hero__mask">
+                <span class="process-hero__final-heading">{{ final_block.settings.left_heading }} {{ final_block.settings.right_heading }}</span>
               </div>
             {%- endif -%}
           </div>

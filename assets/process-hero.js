@@ -165,7 +165,7 @@
     addToTimeline(timeline, t) {
       // Intro text masks out (scroll-driven, first half of intro zone)
       if (this.intro) {
-        const introMasks = this.intro.querySelectorAll('.process-hero__mask > span');
+        const introMasks = Array.from(this.intro.querySelectorAll('.process-hero__mask > span')).filter(s => s.offsetParent !== null);
         timeline.to(introMasks, {
           y: '-100%',
           duration: t.introMaskOutEnd - t.introMaskOutStart,
@@ -369,18 +369,29 @@
       const centerLeftMasks = this.panel.querySelectorAll('.process-hero__final-center-left .process-hero__mask > span');
       const centerRightMasks = this.panel.querySelectorAll('.process-hero__final-center-right .process-hero__mask > span');
       const bottomMasks = this.panel.querySelectorAll('.process-hero__final-bottom .process-hero__mask > span');
+      const mobileMasks = this.panel.querySelectorAll('.process-hero__final--mobile .process-hero__mask > span');
       const dur = t.twP; // one group reveal = tw frames in progress units
 
       // Show panel
       timeline.set(this.panel, { opacity: 1, visibility: 'visible' }, t.finalRevealStart);
 
-      // Group 1: center-left
+      // Group 1: center-left (desktop) — mobile div also starts here
       timeline.to(centerLeftMasks, {
         y: 0,
         duration: dur,
         stagger: 0.01,
         ease: 'power2.out'
       }, t.finalRevealStart);
+
+      // Mobile group — same start time as Group 1 (hidden on desktop, visible on mobile)
+      if (mobileMasks.length > 0) {
+        timeline.to(mobileMasks, {
+          y: 0,
+          duration: dur,
+          stagger: 0.01,
+          ease: 'power2.out'
+        }, t.finalRevealStart);
+      }
 
       // Group 2: center-right (offset by half a group)
       timeline.to(centerRightMasks, {
@@ -498,8 +509,8 @@
     revealIntroText() {
       console.log('Revealing intro text (auto-play, not scrubbed)');
 
-      // Get all intro masks
-      const introMasks = this.intro ? this.intro.querySelectorAll('.process-hero__mask > span') : [];
+      // Get all visible intro masks (filter hidden desktop/mobile variants)
+      const introMasks = this.intro ? Array.from(this.intro.querySelectorAll('.process-hero__mask > span')).filter(s => s.offsetParent !== null) : [];
       const scrollHintMask = this.scrollHint ? this.scrollHint.closest('.process-hero__mask') : null;
 
       // Create auto-play timeline for intro text reveal
@@ -601,9 +612,9 @@
         introEndP, canvasRange, total, pt, tw
       };
 
-      // ── Debug overlay ────────────────────────────────────────────────
+      // ── Debug overlay (hidden) ───────────────────────────────────────
       this._debugEl = document.createElement('div');
-      this._debugEl.style.cssText = 'position:fixed;top:16px;right:16px;z-index:999999;background:rgba(0,0,0,0.72);color:#fff;font:bold 12px/1.7 monospace;padding:8px 14px;border-radius:6px;pointer-events:none;min-width:280px;';
+      this._debugEl.style.cssText = 'display:none;position:fixed;top:16px;right:16px;z-index:999999;background:rgba(0,0,0,0.72);color:#fff;font:bold 12px/1.7 monospace;padding:8px 14px;border-radius:6px;pointer-events:none;min-width:280px;';
       this._debugEl.innerHTML = 'Initializing...';
       document.body.appendChild(this._debugEl);
 

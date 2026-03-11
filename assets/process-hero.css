@@ -120,6 +120,16 @@
    INTRO TEXT (two columns, space-between)
    ======================================== */
 
+/* Mobile-only intro row — hidden by default */
+.process-hero__intro--mobile {
+  display: none;
+}
+
+/* Mobile-only final panel — hidden by default */
+.process-hero__final--mobile {
+  display: none;
+}
+
 .process-hero__intro {
   position: absolute;
   top: 0;
@@ -740,20 +750,30 @@
 
 /* Mobile: Stack vertically and allow wrapping */
 @media (max-width: 768px) {
+  /* Pin intro to top, centre the mobile block horizontally */
   .process-hero__intro {
-    flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
-    padding: 0 5%;
-    gap: 32px;
+    justify-content: center;
   }
 
+  /* Hide desktop intro cols, show mobile row instead */
   .process-hero__intro-left-col,
   .process-hero__intro-right-col {
-    width: 100%;
+    display: none;
   }
 
-  .process-hero__intro-large {
+  .process-hero__intro--mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    width: auto;
+    padding-top: 160px;
+  }
+
+  /* Allow combined heading to wrap if needed on narrow screens */
+  .process-hero__intro--mobile .process-hero__intro-large {
     white-space: normal;
     font-size: clamp(28px, 8vw, 48px);
     line-height: 1.1;
@@ -761,10 +781,10 @@
 
   .process-hero__phase {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    padding: 0 5%;
-    gap: 24px;
+    padding: 160px 5% 0;
+    gap: 16px;
   }
 
   .process-hero__phase-left,
@@ -797,14 +817,22 @@
 
   .process-hero__cards-viewport {
     bottom: 100px;
+    height: 240px; /* 300px × 0.8 */
+  }
+
+  .process-hero__card {
+    width: 320px; /* 400px × 0.8 */
+  }
+
+  .process-hero__card-media {
+    height: 180px; /* 225px × 0.8 */
   }
 
   .process-hero__definition-panel {
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-start;
-    padding: 0 5% 80px;
-    gap: 40px;
+    padding: 160px 5% 80px;
   }
 
   .process-hero__definition-left,
@@ -812,28 +840,55 @@
     width: 100%;
   }
 
-  .process-hero__final-center {
-    padding: 0 5%;
-  }
-
+  /* Hide desktop final panel heading groups only */
   .process-hero__final-center-left,
   .process-hero__final-center-right {
-    width: 100%;
+    display: none;
   }
 
-  .process-hero__final-heading {
+  /* Pin panel to top, centre the mobile block */
+  .process-hero__final-panel {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Mobile heading block — top, centred as a unit */
+  .process-hero__final--mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: auto;
+    padding-top: 160px;
+  }
+
+  .process-hero__final--mobile .process-hero__final-heading {
+    white-space: normal;
     font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.1;
   }
 
+  /* Final Creation label + body — bottom centre on mobile */
   .process-hero__final-bottom {
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 60px;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
   }
 }
 
 /* ========================================
    REDUCED MOTION
    ======================================== */
+
+@media (max-width: 425px) {
+  .process-hero__canvas {
+    object-fit: cover;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .process-hero__mask > span {
