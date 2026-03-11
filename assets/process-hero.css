@@ -632,9 +632,30 @@
     left: 5%;
   }
 
-  .process-hero__definition-left,
+  /* Definition panel: give right column more room and tighten term column
+     so description text has more horizontal space and wraps less */
+  .process-hero__definition-left {
+    width: 25%;
+  }
+
   .process-hero__definition-right {
-    width: 30%;
+    width: 42%;
+    grid-template-columns: 80px 1fr;
+  }
+
+  /* Term width matches the tighter grid column */
+  .process-hero__definition-term {
+    width: 80px;
+  }
+
+  /* Reinforce mask alignment in display:contents grid at tablet —
+     each mask must self-size to its own content height so overflow:hidden
+     fully clips the translateY(105%) span, even when text wraps to 2+ lines */
+  .process-hero__definition-right .process-hero__mask {
+    align-self: start;
+    overflow: hidden;
+    -webkit-clip-path: inset(0);
+    clip-path: inset(0);
   }
 
   .process-hero__final-center {
