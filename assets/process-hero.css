@@ -731,7 +731,10 @@
   }
 
   .process-hero__final-bottom {
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
   }
 }
 
