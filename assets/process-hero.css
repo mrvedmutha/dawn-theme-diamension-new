@@ -632,30 +632,98 @@
     left: 5%;
   }
 
-  /* Definition panel: give right column more room and tighten term column
-     so description text has more horizontal space and wraps less */
+  /* ── Definition Panel: tablet rework ──────────────────────────────────
+     Top:    heading + body — pinned to top
+     Bottom: 4Cs 2×2 grid — pinned to bottom, centered as a block
+     ──────────────────────────────────────────────────────────────────── */
+  .process-hero__definition-panel {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 160px 8% 60px;
+  }
+
+  /* Top: heading + body centered */
   .process-hero__definition-left {
-    width: 25%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
   }
 
+  /* Bottom: full-width grid, two card columns pushed to opposite edges */
   .process-hero__definition-right {
-    width: 42%;
-    grid-template-columns: 80px 1fr;
+    width: 100%;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    column-gap: 0;
+    row-gap: 6px; /* term → desc spacing within each card */
+    align-items: start;
+    align-self: unset;
   }
 
-  /* Term width matches the tighter grid column */
+  /* Term width no longer constrained to a fixed column */
   .process-hero__definition-term {
-    width: 80px;
+    width: auto;
   }
 
-  /* Reinforce mask alignment in display:contents grid at tablet —
-     each mask must self-size to its own content height so overflow:hidden
-     fully clips the translateY(105%) span, even when text wraps to 2+ lines */
+  /* Reinforce mask clipping — must stay on the actual mask elements.
+     NO padding here — padding on a mask increases its height, which
+     breaks translateY(105%) and causes the span to bleed through. */
   .process-hero__definition-right .process-hero__mask {
     align-self: start;
     overflow: hidden;
     -webkit-clip-path: inset(0);
     clip-path: inset(0);
+  }
+
+  /* ── 2×2 card placement ─────────────────────────────────────────────
+     Target layout:
+       col1 row1: Cut term    │  col2 row1: Clarity term
+       col1 row2: Cut desc    │  col2 row2: Clarity desc
+       col1 row3: Color term  │  col2 row3: Carat term   ← margin-top gap
+       col1 row4: Color desc  │  col2 row4: Carat desc
+     ──────────────────────────────────────────────────────────────────── */
+
+  /* Cut — top-left */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(1) > .process-hero__mask:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(1) > .process-hero__mask:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* Clarity — top-right */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(2) > .process-hero__mask:nth-child(1) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(2) > .process-hero__mask:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  /* Color — bottom-left, margin-top creates the gap between card groups */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(3) > .process-hero__mask:nth-child(1) {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(3) > .process-hero__mask:nth-child(2) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  /* Carat — bottom-right, same margin-top to stay aligned with Color */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(4) > .process-hero__mask:nth-child(1) {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(4) > .process-hero__mask:nth-child(2) {
+    grid-column: 2;
+    grid-row: 4;
   }
 
   .process-hero__final-center {
