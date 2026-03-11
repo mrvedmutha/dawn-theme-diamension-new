@@ -30,7 +30,11 @@
 
     var bgImage = document.createElement('img');
     bgImage.src = bgSnapshot;
-    bgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:max(100%,177.78vh);height:max(100%,56.25vw);object-fit:cover;z-index:2;';
+    var isMobilePortrait = window.innerWidth <= 425;
+    var bgImageSize = isMobilePortrait
+      ? 'width:max(100%,56.25vh);height:max(100%,177.78vw);'   /* 9:16 cover */
+      : 'width:max(100%,177.78vh);height:max(100%,56.25vw);';  /* 16:9 cover */
+    bgImage.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);' + bgImageSize + 'object-fit:cover;z-index:2;';
 
     overlay.appendChild(ellipse);
     overlay.appendChild(bgImage);

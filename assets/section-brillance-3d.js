@@ -332,6 +332,16 @@
 
           // Capture canvas snapshots as data URLs for seamless page transition
           try {
+            // On ≤425px: resize canvas to 9:16 (portrait) and redraw before snapshot
+            if (window.innerWidth <= 425) {
+              const frame = this.currentFrame;
+              this.canvasBg.width  = window.innerWidth;
+              this.canvasBg.height = window.innerHeight;
+              if (this.backgroundImages[frame]) {
+                this.ctxBg.drawImage(this.backgroundImages[frame], 0, 0, this.canvasBg.width, this.canvasBg.height);
+              }
+            }
+
             const bgSnapshot = this.canvasBg.toDataURL('image/webp', 0.8);
 
             console.log('📸 Canvas snapshot captured:', {
