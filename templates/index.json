@@ -106,28 +106,28 @@
           "type": "trust_badge",
           "settings": {
             "badge_icon_json": "section-custom-trust-badge-icon-1.json",
-            "badge_label": "100% certified jewellery"
+            "badge_label": "100% Certified Jewellery"
           }
         },
         "trust_badge_KU4NFG": {
           "type": "trust_badge",
           "settings": {
             "badge_icon_json": "section-custom-trust-badge-icon-2.json",
-            "badge_label": "15 days easy return"
+            "badge_label": "15 Days Easy Return"
           }
         },
         "trust_badge_NQ77gz": {
           "type": "trust_badge",
           "settings": {
             "badge_icon_json": "section-custom-trust-badge-icon-3.json",
-            "badge_label": "lifetime exchange"
+            "badge_label": "Lifetime Exchange"
           }
         },
         "trust_badge_mYgh3B": {
           "type": "trust_badge",
           "settings": {
             "badge_icon_json": "section-custom-trust-badge-icon-4.json",
-            "badge_label": "lifetime warrenty"
+            "badge_label": "Lifetime Warranty"
           }
         }
       },
@@ -295,7 +295,7 @@
       "name": "Brilliance 3D Animation",
       "settings": {
         "heading": "Brilliance Made by Us.",
-        "paragraph": "At Diamensions, we manufacture every lab-grown diamond. This control over the journey — from creation to craftsmanship — ensures purity, sustainability, and perfection you can trust.",
+        "paragraph": "At Diamensions, we manufacture every lab-grown diamond. This control over the journey from creation to craftsmanship ensures purity, sustainability, and perfection you can trust.",
         "cta_text": "Explore the Journey",
         "cta_url": "shopify://pages/process",
         "frame_count": 260,
@@ -344,7 +344,7 @@
       "name": "Diamension Follow Instagram",
       "settings": {
         "headline_text": "FOLLOW US ON INSTAGRAM",
-        "cta_text": "Instagram",
+        "cta_text": "Visit Instagram",
         "cta_url": "https://www.instagram.com/diamension.official/",
         "show_decorative_ellipse": true
       }
