@@ -131,11 +131,12 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 615px;
+  max-width: 567px;
   padding: 0 20px;
   z-index: 1;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .brillance-3d__paragraph {
@@ -146,14 +147,14 @@
     'Segoe UI',
     sans-serif;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 35px;
   text-align: center;
   color: var(--color-text, #183754);
   margin: 0;
   padding: 0;
   opacity: 0;
-  white-space: pre-wrap;
+  white-space: normal;
   width: 100%;
 }
 

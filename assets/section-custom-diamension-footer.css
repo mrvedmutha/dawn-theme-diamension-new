@@ -192,7 +192,6 @@
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  text-transform: capitalize;
   color: var(--footer-text-primary);
   margin: 0 0 48px 0;
   line-height: 1.6;

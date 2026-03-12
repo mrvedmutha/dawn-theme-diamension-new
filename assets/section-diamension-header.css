@@ -2,6 +2,14 @@
    Diamension Header - Custom Section
    ============================================ */
 
+/* Remove focus outline on click for all header interactive elements */
+.diamension-header a:focus,
+.diamension-header button:focus,
+.diamension-header a:focus-visible,
+.diamension-header button:focus-visible {
+  outline: none;
+}
+
 
 /* ============================================
    TEMPORARY FIX: Hide Default Dawn Header & Announcement

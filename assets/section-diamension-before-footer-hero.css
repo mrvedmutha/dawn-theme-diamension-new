@@ -45,7 +45,7 @@
   color: #fffaf5;
   text-align: center;
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-  font-size: 40px;
+  font-size: 32px;
   font-style: normal;
   font-weight: 400;
   line-height: 45px; /* 112.5% */
@@ -141,11 +141,6 @@
   .custom-diamension-before-footer-hero__quote-wrapper {
     margin-top: 0;
     width: 600px;
-  }
-
-  .custom-diamension-before-footer-hero__quote {
-    font-size: 32px;
-    line-height: 36px;
   }
 
   .custom-diamension-before-footer-hero__caption-wrapper {
