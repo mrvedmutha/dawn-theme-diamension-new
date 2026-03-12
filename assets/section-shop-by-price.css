@@ -28,7 +28,7 @@
 
 .custom-section-shop-by-price__header {
   text-align: center;
-  margin-bottom: 88px;
+  margin-bottom: 60px;
 }
 
 .custom-section-shop-by-price__title {
@@ -63,7 +63,7 @@
   gap: 141px;
   padding: 0 144px;
   position: relative;
-  margin-bottom: 90px;
+  margin-bottom: 60px;
 }
 
 .custom-section-shop-by-price__tab {
@@ -434,10 +434,6 @@
     padding: 60px;
   }
 
-  .custom-section-shop-by-price__header {
-    margin-bottom: 60px;
-  }
-
   .custom-section-shop-by-price__title {
     font-size: 36px;
     line-height: 42px;
@@ -455,7 +451,6 @@
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin-bottom: 70px;
     justify-content: flex-start;
     scroll-behavior: smooth;
   }

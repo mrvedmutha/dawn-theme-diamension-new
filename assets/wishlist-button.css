@@ -93,35 +93,151 @@
   right: auto;
 }
 
-/* Mobile: Larger tap targets for accessibility */
-@media (max-width: 767px) {
-  .wishlist-button {
-    min-width: 44px;
-    min-height: 44px;
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  .wishlist-button--xl {
+    top: 20px;
+    right: 20px;
+    width: 34px;
+    height: 34px;
   }
 
-  /* Adjust positioning for mobile */
-  .wishlist-button--xl {
-    top: 16px;
-    right: 16px;
+  .wishlist-button--xl svg {
+    width: 20px;
+    height: 20px;
   }
 
   .wishlist-button--l {
-    top: 8px;
-    right: 8px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .wishlist-button--l svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .wishlist-button--m {
+    width: 22px;
+    height: 22px;
+  }
+
+  .wishlist-button--m svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .wishlist-button--s {
+    width: 20px;
+    height: 20px;
+  }
+
+  .wishlist-button--s svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .wishlist-button--xl {
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .wishlist-button--xl svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .wishlist-button--l {
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .wishlist-button--l svg {
+    width: 15px;
+    height: 15px;
   }
 
   .wishlist-button--m,
   .wishlist-button--s {
-    top: 8px;
-    right: 8px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .wishlist-button--m {
+    width: 20px;
+    height: 20px;
+  }
+
+  .wishlist-button--m svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .wishlist-button--s {
+    width: 18px;
+    height: 18px;
+  }
+
+  .wishlist-button--s svg {
+    width: 12px;
+    height: 12px;
   }
 }
 
-/* Tablet responsive */
-@media (max-width: 1024px) and (min-width: 768px) {
+/* Small mobile (≤425px) */
+@media (max-width: 425px) {
   .wishlist-button--xl {
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .wishlist-button--xl svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .wishlist-button--l {
+    top: 10px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .wishlist-button--l svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .wishlist-button--m {
+    top: 10px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .wishlist-button--m svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .wishlist-button--s {
+    top: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .wishlist-button--s svg {
+    width: 11px;
+    height: 11px;
   }
 }
