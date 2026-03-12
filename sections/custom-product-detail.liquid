@@ -12,6 +12,13 @@
 -%}
 
 <section class="custom-product-detail" id="custom-product-detail-{{ section.id }}" data-section-id="{{ section.id }}">
+
+  {%
+    render 'breadcrumb-diamension',
+    collection: collection,
+    current_title: product.title
+  %}
+
   <div class="custom-product-detail__wrapper">
     <!-- Gallery Wrapper: Thumbnails + Image (Sticky as one unit) -->
     <div class="custom-product-detail__gallery-wrapper">

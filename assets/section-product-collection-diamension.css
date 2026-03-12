@@ -31,14 +31,14 @@
 /* =============================================================================
    Breadcrumb
    ============================================================================= */
-.custom-section-product-collection-diamension__breadcrumb {
+.breadcrumb-diamension {
   display: flex;
   gap: 10px;
   align-items: flex-start;
 }
 
-.custom-section-product-collection-diamension__breadcrumb-link,
-.custom-section-product-collection-diamension__breadcrumb-current {
+.breadcrumb-diamension__link,
+.breadcrumb-diamension__current {
   font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   font-size: 16px;
   font-style: normal;
@@ -49,11 +49,11 @@
   white-space: nowrap;
 }
 
-.custom-section-product-collection-diamension__breadcrumb-link:hover {
+.breadcrumb-diamension__link:hover {
   opacity: 0.8;
 }
 
-.custom-section-product-collection-diamension__breadcrumb-separator {
+.breadcrumb-diamension__separator {
   display: flex;
   align-items: center;
   height: 19px;
@@ -216,6 +216,11 @@
   max-height: 400px;
   object-fit: cover;
   object-position: 50% 50%;
+  transition: transform 0.4s ease;
+}
+
+.product-card-collection-diamension:hover .product-card-collection-diamension__image {
+  transform: scale(1.05);
 }
 
 .product-card-collection-diamension__image-placeholder {
@@ -416,7 +421,7 @@
   .custom-section-product-collection-diamension__header-section,
   .custom-section-product-collection-diamension__results-bar,
   .custom-section-product-collection-diamension__title-row,
-  .custom-section-product-collection-diamension__breadcrumb,
+  .breadcrumb-diamension,
   .custom-section-product-collection-diamension__grid {
     padding-left: 10px;
     padding-right: 10px;
@@ -483,18 +488,18 @@
 
 /* Mobile */
 @media (max-width: 767px) {
-  .custom-section-product-collection-diamension__breadcrumb,
+  .breadcrumb-diamension,
   .custom-section-product-collection-diamension__title-row {
     padding: 0;
   }
 
-  .custom-section-product-collection-diamension__breadcrumb {
+  .breadcrumb-diamension {
     flex-wrap: wrap;
     gap: 8px;
   }
 
-  .custom-section-product-collection-diamension__breadcrumb-link,
-  .custom-section-product-collection-diamension__breadcrumb-current {
+  .breadcrumb-diamension__link,
+  .breadcrumb-diamension__current {
     font-size: 14px;
   }
 

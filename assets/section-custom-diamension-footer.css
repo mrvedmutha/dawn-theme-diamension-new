@@ -42,10 +42,6 @@
   position: relative;
 }
 
-/* Product Page Modifier - Extra bottom spacing for sticky CTA */
-.custom-diamension-footer--product-page {
-  margin-bottom: 120px;
-}
 
 /* ============================================
    Main Content Grid - Desktop

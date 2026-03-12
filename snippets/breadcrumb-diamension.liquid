@@ -1,0 +1,42 @@
+{% comment %}
+  Snippet: Breadcrumb Diamension (Generic)
+  Purpose: URL-based breadcrumb for collection and product pages
+
+  Parameters:
+  - collection     {Collection} Optional. If passed and differs from current page, renders as a linked crumb
+  - current_title  {String}     The current page title — used to detect if we're on the collection page or PDP
+{% endcomment %}
+
+{% liquid
+  assign show_collection_crumb = false
+  if collection and collection.title != current_title
+    assign show_collection_crumb = true
+  endif
+%}
+
+<nav class="breadcrumb-diamension" aria-label="Breadcrumb">
+
+  {% comment %} Home {% endcomment %}
+  <a href="/" class="breadcrumb-diamension__link">Home</a>
+  <span class="breadcrumb-diamension__separator">
+    <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
+    </svg>
+  </span>
+
+  {% comment %} Collections — separator only if collection crumb follows {% endcomment %}
+  <a href="/collections" class="breadcrumb-diamension__link">Collections</a>
+  {% if show_collection_crumb %}
+    <span class="breadcrumb-diamension__separator">
+      <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
+      </svg>
+    </span>
+
+    {% comment %} Collection crumb — shown on PDP only {% endcomment %}
+    <a href="{{ collection.url }}" class="breadcrumb-diamension__link">
+      {{ collection.title }}
+    </a>
+  {% endif %}
+
+</nav>

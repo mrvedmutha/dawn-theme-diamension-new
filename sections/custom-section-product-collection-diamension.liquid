@@ -50,30 +50,11 @@
   {% comment %} Header section with breadcrumb, title, and hero {% endcomment %}
   <div class="custom-section-product-collection-diamension__header-section">
     {% comment %} Breadcrumb {% endcomment %}
-    <nav class="custom-section-product-collection-diamension__breadcrumb" aria-label="Breadcrumb">
-      {% if breadcrumb_menu and linklists[breadcrumb_menu] %}
-        {% for link in linklists[breadcrumb_menu].links %}
-          <a href="{{ link.url }}" class="custom-section-product-collection-diamension__breadcrumb-link">
-            {{ link.title }}
-          </a>
-          {% unless forloop.last %}
-            <span class="custom-section-product-collection-diamension__breadcrumb-separator">
-              <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
-              </svg>
-            </span>
-          {% endunless %}
-        {% endfor %}
-        <span class="custom-section-product-collection-diamension__breadcrumb-separator">
-          <svg width="19" height="1" viewBox="0 0 19 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="0.5" x2="19" y2="0.5" stroke="#183754"/>
-          </svg>
-        </span>
-      {% endif %}
-      <span class="custom-section-product-collection-diamension__breadcrumb-current">
-        {{ collection.title }}
-      </span>
-    </nav>
+    {%
+      render 'breadcrumb-diamension',
+      collection: collection,
+      current_title: collection.title
+    %}
 
     {% comment %} Title + Filter/Sort {% endcomment %}
     <div class="custom-section-product-collection-diamension__title-row">
@@ -549,7 +530,7 @@
             {% assign index = forloop.index %}
 
             {% comment %} Render product card {% endcomment %}
-            {% render 'product-card-collection-diamension', product: product %}
+            {% render 'product-card-collection-diamension', product: product, collection: collection %}
 
             {% comment %} First image card after product 10 {% endcomment %}
             {% if index == 10 and has_enough_for_images and first_image_card %}

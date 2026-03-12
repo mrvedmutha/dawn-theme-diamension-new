@@ -132,6 +132,11 @@
   height: var(--related-image-size);
   object-fit: contain;
   object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.custom-section-related-products__card:hover .custom-section-related-products__image {
+  transform: scale(1.05);
 }
 
 .custom-section-related-products__image--placeholder {

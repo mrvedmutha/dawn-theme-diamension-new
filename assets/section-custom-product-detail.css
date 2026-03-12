@@ -48,6 +48,52 @@
 }
 
 /* ===================================
+   BREADCRUMB
+   =================================== */
+
+.breadcrumb-diamension {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 24px var(--cpd-container-padding) 0;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.breadcrumb-diamension__link,
+.breadcrumb-diamension__current {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #183754;
+  line-height: normal;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.breadcrumb-diamension__link:hover {
+  opacity: 0.8;
+}
+
+.breadcrumb-diamension__separator {
+  display: flex;
+  align-items: center;
+  height: 19px;
+  transform: rotate(90deg);
+}
+
+@media (max-width: 767px) {
+  .breadcrumb-diamension {
+    display: none;
+  }
+
+  .breadcrumb-diamension__link,
+  .breadcrumb-diamension__current {
+    font-size: 14px;
+  }
+}
+
+/* ===================================
    MAIN LAYOUT
    =================================== */
 
@@ -1043,6 +1089,13 @@
   z-index: 100;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   height: 133px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.custom-product-detail__footer--hidden {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .custom-product-detail__footer-content {

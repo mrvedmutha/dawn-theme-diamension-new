@@ -5,7 +5,11 @@
 {% endcomment %}
 
 {% liquid
-  assign product_url = product.url
+  if collection
+    assign product_url = product.url | within: collection
+  else
+    assign product_url = product.url
+  endif
   assign product_title = product.title
   assign product_price = product.price | money
   assign product_price_raw = product.price | divided_by: 100.0

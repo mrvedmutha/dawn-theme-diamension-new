@@ -1733,6 +1733,31 @@
     });
   }
 
+  // ===== HIDE STICKY FOOTER WHEN SITE FOOTER IS VISIBLE =====
+
+  function initStickyFooterVisibility() {
+    const siteFooter = document.querySelector('.custom-diamension-footer');
+    if (!siteFooter) return;
+
+    const observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          const stickyBars = document.querySelectorAll('.custom-product-detail__footer');
+          stickyBars.forEach(function (bar) {
+            if (entry.isIntersecting) {
+              bar.classList.add('custom-product-detail__footer--hidden');
+            } else {
+              bar.classList.remove('custom-product-detail__footer--hidden');
+            }
+          });
+        });
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(siteFooter);
+  }
+
   // ===== INITIALIZATION =====
 
   // Initialize on DOM ready
@@ -1740,10 +1765,12 @@
     document.addEventListener('DOMContentLoaded', function () {
       initProductDetail();
       updateTrustBadgesSentence();
+      initStickyFooterVisibility();
     });
   } else {
     initProductDetail();
     updateTrustBadgesSentence();
+    initStickyFooterVisibility();
   }
 
   // Reinitialize on Shopify theme editor changes
