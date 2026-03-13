@@ -1,29 +1,50 @@
 (function () {
   'use strict';
 
+  /**
+   * Global Wishlist Manager
+   * Centralized singleton for managing wishlist state across the entire theme
+   */
   const WishlistManager = {
+    // Configuration
     STORAGE_KEY: 'diamension_wishlist',
     MAX_ITEMS: 100,
     TOAST_DURATION: 4000,
 
+    // State
     wishlist: [],
     listeners: new Set(),
     toastElement: null,
     toastTimeout: null,
 
+    /**
+     * Initialize the wishlist system
+     */
     init() {
       this.load();
       this.initializeButtons();
       this.setupToast();
       this.publish('loaded', { count: this.wishlist.length });
+      console.log('[Wishlist] Initialized with', this.wishlist.length, 'items');
     },
 
+    /**
+     * Get copy of wishlist array
+     * @returns {Array} Array of wishlist items
+     */
     get() {
       return [...this.wishlist];
     },
 
+    /**
+     * Add product to wishlist
+     * @param {string|number} productId - Product ID
+     * @param {Object} productData - Product metadata (title, handle, image, price)
+     * @returns {boolean} True if added, false if already exists or limit reached
+     */
     add(productId, productData = {}) {
       if (this.has(productId)) {
+        console.log('[Wishlist] Product already in wishlist:', productId);
         return false;
       }
 
@@ -47,9 +68,15 @@
       return true;
     },
 
+    /**
+     * Remove product from wishlist
+     * @param {string|number} productId - Product ID
+     * @returns {boolean} True if removed, false if not found
+     */
     remove(productId) {
       const index = this.wishlist.findIndex((item) => item.id === String(productId));
       if (index === -1) {
+        console.log('[Wishlist] Product not in wishlist:', productId);
         return false;
       }
 
@@ -63,10 +90,21 @@
       return true;
     },
 
+    /**
+     * Check if product is in wishlist
+     * @param {string|number} productId - Product ID
+     * @returns {boolean}
+     */
     has(productId) {
       return this.wishlist.some((item) => item.id === String(productId));
     },
 
+    /**
+     * Toggle product in wishlist
+     * @param {string|number} productId - Product ID
+     * @param {Object} productData - Product metadata
+     * @returns {boolean} True if added, false if removed
+     */
     toggle(productId, productData = {}) {
       if (this.has(productId)) {
         this.remove(productId);
@@ -77,22 +115,34 @@
       }
     },
 
+    /**
+     * Clear all items from wishlist
+     */
     clear() {
       this.wishlist = [];
       this.save();
       this.publish('cleared');
       this.updateBadge();
+      console.log('[Wishlist] Cleared all items');
     },
 
+    /**
+     * Get wishlist item count
+     * @returns {number}
+     */
     getCount() {
       return this.wishlist.length;
     },
 
+    /**
+     * Save wishlist to localStorage
+     */
     save() {
       try {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.wishlist));
       } catch (error) {
         console.error('[Wishlist] Failed to save to localStorage:', error);
+        // Fallback to sessionStorage
         try {
           sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.wishlist));
           console.warn('[Wishlist] Using sessionStorage as fallback');
@@ -102,6 +152,9 @@
       }
     },
 
+    /**
+     * Load wishlist from localStorage
+     */
     load() {
       try {
         const data = localStorage.getItem(this.STORAGE_KEY);
@@ -112,11 +165,21 @@
       }
     },
 
+    /**
+     * Subscribe to wishlist events
+     * @param {Function} callback - Event handler
+     * @returns {Function} Unsubscribe function
+     */
     subscribe(callback) {
       this.listeners.add(callback);
       return () => this.listeners.delete(callback);
     },
 
+    /**
+     * Publish event to all subscribers
+     * @param {string} event - Event name
+     * @param {Object} data - Event data
+     */
     publish(event, data = {}) {
       this.listeners.forEach((callback) => {
         try {
@@ -127,27 +190,39 @@
       });
     },
 
+    /**
+     * Initialize all wishlist buttons on the page
+     */
     initializeButtons() {
       const buttons = document.querySelectorAll('[data-wishlist-toggle]');
 
       buttons.forEach((button) => {
+        // Skip if already initialized
         if (button.dataset.wishlistInit) return;
         button.dataset.wishlistInit = 'true';
 
         const productId = button.dataset.productId;
 
+        // Set initial state
         if (this.has(productId)) {
           button.classList.add('is-active');
         }
 
+        // Attach click handler
         button.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
           this.handleButtonClick(button);
         });
       });
+
+      console.log('[Wishlist] Initialized', buttons.length, 'buttons');
     },
 
+    /**
+     * Handle wishlist button click
+     * @param {HTMLElement} button - Button element
+     */
     handleButtonClick(button) {
       const productId = button.dataset.productId;
       const productData = {
@@ -157,10 +232,13 @@
         price: button.dataset.productPrice,
       };
 
+      // Toggle wishlist
       const isNowInWishlist = this.toggle(productId, productData);
 
+      // Animate button
       this.animateButton(button);
 
+      // Update button state
       button.classList.toggle('is-active', isNowInWishlist);
       button.setAttribute(
         'aria-label',
@@ -170,6 +248,11 @@
       );
     },
 
+    /**
+     * Update all buttons for a product
+     * @param {string|number} productId - Product ID
+     * @param {boolean} isInWishlist - Whether product is in wishlist
+     */
     updateAllButtons(productId, isInWishlist) {
       const buttons = document.querySelectorAll(
         `[data-wishlist-toggle][data-product-id="${productId}"]`
@@ -179,6 +262,10 @@
       });
     },
 
+    /**
+     * Animate button with GSAP or CSS fallback
+     * @param {HTMLElement} button - Button element
+     */
     animateButton(button) {
       if (window.gsap) {
         gsap
@@ -194,6 +281,7 @@
             ease: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)',
           });
       } else {
+        // CSS fallback
         button.style.transform = 'scale(0.85)';
         button.style.transition = 'transform 0.1s';
         setTimeout(() => {
@@ -207,6 +295,9 @@
       }
     },
 
+    /**
+     * Setup toast notification element
+     */
     setupToast() {
       this.toastElement = document.getElementById('wishlist-toast');
       if (!this.toastElement) {
@@ -219,12 +310,14 @@
         closeBtn.addEventListener('click', () => this.hideToast());
       }
 
+      // Close on Escape key
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && this.toastElement.classList.contains('active')) {
           this.hideToast();
         }
       });
 
+      // Pause auto-dismiss on hover
       this.toastElement.addEventListener('mouseenter', () => {
         clearTimeout(this.toastTimeout);
       });
@@ -234,8 +327,15 @@
           this.toastTimeout = setTimeout(() => this.hideToast(), this.TOAST_DURATION);
         }
       });
+
+      console.log('[Wishlist] Toast initialized');
     },
 
+    /**
+     * Show toast notification
+     * @param {string} action - 'added' or 'removed'
+     * @param {Object} productData - Product metadata
+     */
     showToast(action, productData) {
       if (!this.toastElement) return;
 
@@ -248,25 +348,34 @@
             : `${productTitle} removed from wishlist`;
       }
 
+      // Show toast
       this.toastElement.hidden = false;
+      // Force reflow for animation
       this.toastElement.offsetHeight;
       this.toastElement.classList.add('active');
 
+      // Auto-dismiss
       clearTimeout(this.toastTimeout);
       this.toastTimeout = setTimeout(() => this.hideToast(), this.TOAST_DURATION);
     },
 
+    /**
+     * Hide toast notification
+     */
     hideToast() {
       if (!this.toastElement) return;
 
       this.toastElement.classList.remove('active');
       setTimeout(() => {
         this.toastElement.hidden = true;
-      }, 300);
+      }, 300); // Match CSS transition duration
 
       clearTimeout(this.toastTimeout);
     },
 
+    /**
+     * Update wishlist count badge in header
+     */
     updateBadge() {
       const badge = document.querySelector('[data-wishlist-badge]');
       const count = this.getCount();
@@ -278,11 +387,13 @@
     },
   };
 
+  // Initialize on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => WishlistManager.init());
   } else {
     WishlistManager.init();
   }
 
+  // Expose globally
   window.WishlistManager = WishlistManager;
 })();
