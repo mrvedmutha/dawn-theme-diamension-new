@@ -1,6 +1,3 @@
-// Featured Category Slider - JavaScript Implementation
-// TODO: Initialize featured category slider functionality
-
 document.addEventListener('DOMContentLoaded', () => {
   const initFeaturedCategorySlider = () => {
     try {
@@ -10,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new FeaturedCategorySlider(section);
       });
     } catch (error) {
-      console.error('Error initializing featured category slider:', error);
+      console.error('Error initializing Featured Category Slider:', error);
     }
   };
 
@@ -20,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.sectionId = section.dataset.sectionId;
       this.enableAnimations = section.dataset.enableAnimations === 'true';
 
-      // DOM Elements
       this.videoContainer = section.querySelector('.custom-section-featured-category-slider__video-container');
       this.video = section.querySelector('.custom-section-featured-category-slider__video');
       this.videoEmbed = section.querySelector('.custom-section-featured-category-slider__video-embed');
@@ -39,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       this.viewCollectionBtn = section.querySelector('.custom-section-featured-category-slider__view-collection-btn');
 
-      // Data
       this.categoriesData = this.getCategoriesData();
       this.currentCategoryId = 1;
       this.totalCategories = this.categoriesData.length;
@@ -48,31 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
       this.hoverTimeout = null;
       this.pendingCategoryId = null;
 
-      // Initialize
       this.init();
     }
 
     init() {
       try {
         if (this.categoriesData.length === 0) {
-          console.warn('No categories data found for slider');
           return;
         }
 
         this.setupEventListeners();
         this.setupResponsiveHandling();
-        this.setActiveCategory(1, false); // Set initial state without animation
+        this.setActiveCategory(1, false);
 
-        // Initialize mobile UI
         if (this.isMobile) {
           this.updateMobileCounter();
           this.updateProgressBar();
         }
-
-        // TODO: debugging slider initialization
-        // console.log('Featured category slider initialized:', this.sectionId);
       } catch (error) {
-        console.error('Error in slider initialization:', error);
+        console.error('Error initializing Featured Category Slider:', error);
       }
     }
 
@@ -90,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     setupEventListeners() {
-      // Desktop hover events
       this.categoryNames.forEach((categoryName) => {
         categoryName.addEventListener('mouseenter', (e) => {
           if (!this.isMobile) {
@@ -105,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-        // Keyboard accessibility
         categoryName.addEventListener('keydown', (e) => {
           if ((e.key === 'Enter' || e.key === ' ') && !this.isMobile) {
             e.preventDefault();
@@ -115,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // Mobile next button
       if (this.nextBtn) {
         this.nextBtn.addEventListener('click', () => {
           if (this.isMobile && !this.isAnimating) {
@@ -124,24 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // Video error handling
       if (this.video) {
         this.video.addEventListener('error', () => {
           this.handleVideoError();
         });
 
         this.video.addEventListener('loadstart', () => {
-          // Add loading class to prevent Safari glitch
           this.video.classList.add('is-loading');
         });
 
         this.video.addEventListener('loadeddata', () => {
-          // Video data is loaded, dimensions are known
           this.video.classList.remove('is-loading');
         });
 
         this.video.addEventListener('canplay', () => {
-          // Video is ready to play, safe to show
           this.video.classList.remove('is-loading');
         });
       }
@@ -153,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.isMobile = window.innerWidth <= 1024;
 
         if (wasMobile !== this.isMobile) {
-          // Reset to first category when switching between mobile/desktop
           this.setActiveCategory(1, false);
 
           if (this.isMobile) {
@@ -167,15 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     handleHoverStart(categoryId) {
-      // Clear any existing timeout
       if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
       }
 
-      // Store the pending category
       this.pendingCategoryId = categoryId;
 
-      // Set a small delay to prevent rapid switching
       this.hoverTimeout = setTimeout(() => {
         if (this.pendingCategoryId === categoryId && !this.isAnimating) {
           this.setActiveCategory(categoryId, true);
@@ -184,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     handleHoverEnd() {
-      // Clear timeout if user moves away quickly
       if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
         this.hoverTimeout = null;
@@ -196,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = this.categoriesData.find((c) => c.id === categoryId);
         if (!category) return;
 
-        // If already animating, queue this change
         if (this.isAnimating && animate) {
           this.pendingCategoryId = categoryId;
           return;
@@ -204,22 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.currentCategoryId = categoryId;
 
-        // Update active category styling immediately
         this.updateCategoryActiveState(categoryId);
 
-        // Update video/image with proper animation handling
         this.updateBackgroundMedia(category, animate);
 
-        // Update buttons and mobile content
         this.updateButtons(category);
         this.updateMobileContent(category);
 
-        // Update mobile UI
         if (this.isMobile) {
           this.updateMobileCounter();
           this.updateProgressBar();
         } else {
-          // Update desktop button positions
           this.updateButtonPositions(categoryId, animate);
         }
       } catch (error) {
@@ -244,21 +215,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const videoYouTubeVimeo = category.videoYouTubeVimeo;
       const fallbackSrc = category.fallbackImage;
 
-      // Priority: video file > direct URL > YouTube/Vimeo > fallback image
       const directVideoSrc = videoFile || videoDirectUrl;
 
       if (this.video && directVideoSrc) {
-        // Handle direct video (MP4/WebM)
         this.showVideoElement();
 
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
           this.isAnimating = true;
 
-          // Create a timeline for smoother transitions
           const tl = gsap.timeline({
             onComplete: () => {
               this.isAnimating = false;
-              // Check if there's a pending category change
               if (this.pendingCategoryId && this.pendingCategoryId !== this.currentCategoryId) {
                 const pendingId = this.pendingCategoryId;
                 this.pendingCategoryId = null;
@@ -267,20 +234,17 @@ document.addEventListener('DOMContentLoaded', () => {
             },
           });
 
-          // Fade out current video and show loading background
           tl.to(this.video, {
             opacity: 0,
             duration: 0.15,
             ease: 'power2.in',
           })
             .call(() => {
-              // Show loading background
               if (this.videoContainer) {
                 this.videoContainer.classList.add('is-loading');
               }
               this.video.classList.add('is-loading');
 
-              // Change source
               const source = this.video.querySelector('source') || document.createElement('source');
               source.src = directVideoSrc;
               source.type = directVideoSrc.includes('.webm') ? 'video/webm' : 'video/mp4';
@@ -291,24 +255,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
               this.video.load();
 
-              // Wait for loadedmetadata (faster than canplay for Safari)
               const onMetadataLoaded = () => {
-                // Hide loading background
                 if (this.videoContainer) {
                   this.videoContainer.classList.remove('is-loading');
                 }
                 this.video.classList.remove('is-loading');
-                this.video.play().catch((e) => {
-                  console.warn('Video autoplay failed:', e);
+                this.video.play().catch(() => {
                   this.handleVideoError();
                 });
               };
 
               if (this.video.readyState >= 1) {
-                // Metadata already loaded
                 onMetadataLoaded();
               } else {
-                // Wait for loadedmetadata event (Safari fix - faster than canplay)
                 this.video.addEventListener('loadedmetadata', onMetadataLoaded, { once: true });
               }
             })
@@ -318,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
               ease: 'power2.out',
             });
         } else {
-          // No animation or GSAP not available
           this.video.style.opacity = '0';
           if (this.videoContainer) {
             this.videoContainer.classList.add('is-loading');
@@ -335,15 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
           this.video.load();
 
-          // Wait for metadata (Safari fix - faster than canplay)
           const onMetadataLoaded = () => {
             if (this.videoContainer) {
               this.videoContainer.classList.remove('is-loading');
             }
             this.video.classList.remove('is-loading');
             this.video.style.opacity = '1';
-            this.video.play().catch((e) => {
-              console.warn('Video autoplay failed:', e);
+            this.video.play().catch(() => {
               this.handleVideoError();
             });
           };
@@ -355,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else if (this.videoEmbed && videoYouTubeVimeo) {
-        // Handle YouTube/Vimeo embed
         this.showEmbedElement();
 
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
@@ -364,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const tl = gsap.timeline({
             onComplete: () => {
               this.isAnimating = false;
-              // Check if there's a pending category change
               if (this.pendingCategoryId && this.pendingCategoryId !== this.currentCategoryId) {
                 const pendingId = this.pendingCategoryId;
                 this.pendingCategoryId = null;
@@ -378,10 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 0.3,
             ease: 'power2.inOut',
           })
-            .call(() => {
-              // Update embed content would require regenerating the video_tag
-              // For now, we'll just fade it back in
-            })
+            .call(() => {})
             .to(this.videoEmbed, {
               opacity: 1,
               duration: 0.3,
@@ -389,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
       } else if (this.fallbackImage && fallbackSrc) {
-        // Show fallback image
         this.showFallbackImage();
         this.fallbackImage.src = fallbackSrc;
         this.fallbackImage.alt = category.name;
@@ -445,18 +395,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!categoryElement || !categoryNamesContainer) return;
 
-      // Calculate position relative to the category names container center
       const containerRect = categoryNamesContainer.getBoundingClientRect();
       const categoryRect = categoryElement.getBoundingClientRect();
 
-      // Calculate offset to align button top with category top edge
       const containerCenter = containerRect.top + containerRect.height / 2;
       const categoryTop = categoryRect.top;
       const offsetFromCenter = categoryTop - containerCenter;
 
       this.shopNowBtns.forEach((btn) => {
         const btnRect = btn.getBoundingClientRect();
-        // Add half button height to position button top at category top
         const finalOffset = offsetFromCenter + btnRect.height / 2;
 
         if (animate && this.enableAnimations && typeof gsap !== 'undefined') {
@@ -493,13 +440,10 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgressBar() {
       if (!this.progressBarFill || this.totalCategories === 0) return;
 
-      // Calculate segment-based progress (slider style)
-      // Each segment has fixed width, moves by 100% of its own width
       const segmentWidth = 100 / this.totalCategories;
-      const translatePosition = (this.currentCategoryId - 1) * 100; // 0%, 100%, 200%, 300%, 400%
+      const translatePosition = (this.currentCategoryId - 1) * 100;
 
       if (this.enableAnimations && typeof gsap !== 'undefined') {
-        // Set width and animate position
         gsap.set(this.progressBarFill, {
           width: segmentWidth + '%',
         });
@@ -513,11 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.progressBarFill.style.width = segmentWidth + '%';
         this.progressBarFill.style.transform = `translate(${translatePosition}%, 0px)`;
       }
-
-      // TODO: debugging progress bar segments
-      // console.log(
-      //   `Segment: ${this.currentCategoryId}/${this.totalCategories} = ${segmentWidth}% width, translate(${translatePosition}%, 0px)`
-      // );
     }
 
     handleVideoError() {
@@ -529,14 +468,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.fallbackImage) {
           this.fallbackImage.style.display = 'block';
         }
-
-        console.warn('Video failed to load, showing fallback image');
       } catch (error) {
         console.error('Error handling video error:', error);
       }
     }
 
-    // Utility function for debouncing
     debounce(func, wait) {
       let timeout;
       return function executedFunction(...args) {
@@ -549,11 +485,9 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     }
 
-    // Public method to update from theme editor
     updateSettings(newSettings) {
       try {
         this.enableAnimations = newSettings.enableAnimations;
-        // Reinitialize if needed
         this.setActiveCategory(this.currentCategoryId, false);
       } catch (error) {
         console.error('Error updating settings:', error);
@@ -561,10 +495,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Initialize sliders
   initFeaturedCategorySlider();
 
-  // Handle theme editor updates
   if (typeof Shopify !== 'undefined' && Shopify.designMode) {
     document.addEventListener('shopify:section:load', (e) => {
       if (e.target.classList.contains('custom-section-featured-category-slider')) {
@@ -572,19 +504,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    document.addEventListener('shopify:section:unload', (e) => {
-      // Cleanup if needed
-    });
+    document.addEventListener('shopify:section:unload', (e) => {});
 
     document.addEventListener('shopify:section:select', (e) => {
       if (e.target.classList.contains('custom-section-featured-category-slider')) {
         // Handle section selection in theme editor
       }
     });
-  }
-
-  // Expose for debugging in development
-  if (window.location.hostname === 'localhost' || window.location.hostname.includes('ngrok')) {
-    window.FeaturedCategorySlider = FeaturedCategorySlider;
   }
 });

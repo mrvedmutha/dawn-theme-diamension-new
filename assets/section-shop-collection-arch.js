@@ -1,14 +1,6 @@
-/**
- * Shop Collection Arch Section - JavaScript
- * Handles video loading (YouTube/Vimeo/Direct) and parallax effects
- */
-
 (function() {
   'use strict';
 
-  // ============================================================================
-  // Configuration
-  // ============================================================================
   const CONFIG = {
     selectors: {
       section: '.custom-section-shop-collection-arch',
@@ -20,14 +12,11 @@
       tablet: 1024
     },
     parallax: {
-      movement: 80, // Pixels of vertical movement (increased for more dramatic effect)
+      movement: 80,
       ease: 'none'
     }
   };
 
-  // ============================================================================
-  // Video Handler
-  // ============================================================================
   class VideoHandler {
     constructor(container) {
       this.container = container;
@@ -51,25 +40,20 @@
         case 'direct':
           this.loadDirectVideo();
           break;
-        default:
-          console.warn('Shop Collection Arch: Unsupported video URL format');
       }
     }
 
     detectVideoType(url) {
       if (!url) return null;
 
-      // YouTube patterns
       if (url.includes('youtube.com') || url.includes('youtu.be')) {
         return 'youtube';
       }
 
-      // Vimeo patterns
       if (url.includes('vimeo.com')) {
         return 'vimeo';
       }
 
-      // Direct video file patterns
       if (url.match(/\.(mp4|webm|ogg)$/i) || url.includes('.mp4') || url.includes('.webm')) {
         return 'direct';
       }
@@ -100,7 +84,6 @@
       const videoId = this.extractYouTubeId(this.videoUrl);
 
       if (!videoId) {
-        console.warn('Shop Collection Arch: Could not extract YouTube video ID');
         return;
       }
 
@@ -118,7 +101,6 @@
       const videoId = this.extractVimeoId(this.videoUrl);
 
       if (!videoId) {
-        console.warn('Shop Collection Arch: Could not extract Vimeo video ID');
         return;
       }
 
@@ -142,19 +124,11 @@
       video.controls = false;
       video.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover;';
 
-      // Handle video load errors
-      video.addEventListener('error', () => {
-        console.warn('Shop Collection Arch: Failed to load video');
-      });
-
       this.container.innerHTML = '';
       this.container.appendChild(video);
     }
   }
 
-  // ============================================================================
-  // Parallax Handler (GSAP)
-  // ============================================================================
   class ParallaxHandler {
     constructor(section) {
       this.section = section;
@@ -167,13 +141,9 @@
     }
 
     init() {
-      // Register ScrollTrigger plugin
       gsap.registerPlugin(ScrollTrigger);
 
       this.images.forEach((image) => {
-        // Create parallax effect for each image
-        // Animation goes from -movement to +movement for proper parallax effect
-        // Tighter trigger range means animation completes faster (more visible in middle)
         gsap.fromTo(image,
           {
             y: -CONFIG.parallax.movement
@@ -183,8 +153,8 @@
             ease: CONFIG.parallax.ease,
             scrollTrigger: {
               trigger: this.section,
-              start: 'top 80%', // Start animation when section reaches 80% from top
-              end: 'bottom 20%', // End animation when section is 20% from top
+              start: 'top 80%',
+              end: 'bottom 20%',
               scrub: true
             }
           }
@@ -199,9 +169,6 @@
     }
   }
 
-  // ============================================================================
-  // CTA Animation Handler
-  // ============================================================================
   class CTAAnimationHandler {
     constructor(section) {
       this.ctaButtons = section.querySelectorAll(CONFIG.selectors.ctaButton);
@@ -210,38 +177,27 @@
 
     init() {
       this.ctaButtons.forEach(button => {
-        // Mouse enter: trigger exit-enter animation
         button.addEventListener('mouseenter', () => {
-          // Remove any existing animation classes
           button.classList.remove('animate-exit');
-          // Add enter animation class
           button.classList.add('animate-enter');
 
-          // Remove class after animation completes
           setTimeout(() => {
             button.classList.remove('animate-enter');
-          }, 800); // Match the animation duration
+          }, 800);
         });
 
-        // Mouse leave: trigger exit-enter animation
         button.addEventListener('mouseleave', () => {
-          // Remove any existing animation classes
           button.classList.remove('animate-enter');
-          // Add exit animation class
           button.classList.add('animate-exit');
 
-          // Remove class after animation completes
           setTimeout(() => {
             button.classList.remove('animate-exit');
-          }, 800); // Match the animation duration
+          }, 800);
         });
       });
     }
   }
 
-  // ============================================================================
-  // Lottie Animation Handler
-  // ============================================================================
   class LottieHandler {
     constructor(section) {
       this.section = section;
@@ -254,23 +210,17 @@
     }
 
     init() {
-      // Check if Lottie is loaded
       if (typeof lottie === 'undefined') {
-        console.error('Lottie library not loaded for Shop Collection Arch');
-        // Retry after a short delay
         setTimeout(() => this.init(), 100);
         return;
       }
 
       const lottieUrl = this.lottieContainer.dataset.lottieUrl;
-      const sectionId = this.lottieContainer.dataset.sectionId;
 
       if (!lottieUrl) {
-        console.log('No lottie URL found for Shop Collection Arch section');
         return;
       }
 
-      // Load and play lottie animation
       this.animation = lottie.loadAnimation({
         container: this.lottieContainer,
         renderer: 'svg',
@@ -283,16 +233,6 @@
           hideOnTransparent: true,
         },
       });
-
-      // Log when animation is loaded
-      this.animation.addEventListener('DOMLoaded', () => {
-        console.log('Lottie ellipse animation loaded for section:', sectionId);
-      });
-
-      // Handle errors
-      this.animation.addEventListener('data_failed', (error) => {
-        console.error('Failed to load Lottie ellipse animation:', lottieUrl, error);
-      });
     }
 
     destroy() {
@@ -303,9 +243,6 @@
     }
   }
 
-  // ============================================================================
-  // Section Manager
-  // ============================================================================
   class ShopCollectionArchSection {
     constructor(section) {
       this.section = section;
@@ -319,25 +256,20 @@
     }
 
     init() {
-      // Initialize video handlers
       this.videoContainers.forEach(container => {
         new VideoHandler(container);
       });
 
-      // Initialize lottie animation
       this.lottieHandler = new LottieHandler(this.section);
 
-      // Initialize parallax (desktop only)
       if (window.innerWidth > CONFIG.breakpoints.tablet) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       }
 
-      // Initialize CTA animations
       this.ctaHandler = new CTAAnimationHandler(this.section);
     }
 
     bindEvents() {
-      // Handle window resize
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -350,7 +282,6 @@
     handleResize() {
       const isDesktop = window.innerWidth > CONFIG.breakpoints.tablet;
 
-      // Reinitialize parallax on desktop, destroy on mobile
       if (isDesktop && !this.parallaxHandler) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       } else if (!isDesktop && this.parallaxHandler) {
@@ -360,9 +291,6 @@
     }
   }
 
-  // ============================================================================
-  // Initialize
-  // ============================================================================
   function init() {
     const sections = document.querySelectorAll(CONFIG.selectors.section);
 
@@ -373,14 +301,12 @@
     });
   }
 
-  // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 
-  // Re-initialize on Shopify section load (theme editor)
   if (typeof Shopify !== 'undefined' && Shopify.designMode) {
     document.addEventListener('shopify:section:load', function(event) {
       if (event.target.querySelector(CONFIG.selectors.section)) {
