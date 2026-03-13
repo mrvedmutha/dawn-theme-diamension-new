@@ -1,14 +1,6 @@
-/**
- * Bespoke Creations Section - JavaScript
- * Handles video loading (Direct MP4/WebM) and parallax effects
- */
-
 (function () {
   'use strict';
 
-  // ============================================================================
-  // Configuration
-  // ============================================================================
   const CONFIG = {
     selectors: {
       section: '.custom-section-bespoke-creations',
@@ -19,14 +11,11 @@
       tablet: 1024,
     },
     parallax: {
-      movement: 250, // Pixels of vertical movement
+      movement: 250,
       ease: 'none',
     },
   };
 
-  // ============================================================================
-  // Video Handler
-  // ============================================================================
   class VideoHandler {
     constructor(container) {
       this.container = container;
@@ -52,7 +41,6 @@
     detectVideoType(url) {
       if (!url) return null;
 
-      // Direct video file patterns
       if (url.match(/\.(mp4|webm|ogg)$/i) || url.includes('.mp4') || url.includes('.webm')) {
         return 'direct';
       }
@@ -71,7 +59,6 @@
       video.style.cssText =
         'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover;';
 
-      // Handle video load errors
       video.addEventListener('error', () => {
         console.warn('Bespoke Creations: Failed to load video');
       });
@@ -81,9 +68,6 @@
     }
   }
 
-  // ============================================================================
-  // Parallax Handler (GSAP)
-  // ============================================================================
   class ParallaxHandler {
     constructor(section) {
       this.section = section;
@@ -101,12 +85,9 @@
     }
 
     init() {
-      // Register ScrollTrigger plugin
       gsap.registerPlugin(ScrollTrigger);
 
       this.images.forEach((image) => {
-        // Create parallax effect for each image
-        // Animation goes from -movement to +movement for proper parallax effect
         gsap.fromTo(
           image,
           {
@@ -117,8 +98,8 @@
             ease: CONFIG.parallax.ease,
             scrollTrigger: {
               trigger: this.section,
-              start: 'top 80%', // Start animation when section reaches 80% from top
-              end: 'bottom 20%', // End animation when section is 20% from top
+              start: 'top 80%',
+              end: 'bottom 20%',
               scrub: true,
             },
           }
@@ -133,9 +114,6 @@
     }
   }
 
-  // ============================================================================
-  // Section Manager
-  // ============================================================================
   class BespokeCreationsSection {
     constructor(section) {
       this.section = section;
@@ -147,19 +125,16 @@
     }
 
     init() {
-      // Initialize video handlers
       this.videoContainers.forEach((container) => {
         new VideoHandler(container);
       });
 
-      // Initialize parallax (desktop only)
       if (window.innerWidth > CONFIG.breakpoints.tablet) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       }
     }
 
     bindEvents() {
-      // Handle window resize
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -172,7 +147,6 @@
     handleResize() {
       const isDesktop = window.innerWidth > CONFIG.breakpoints.tablet;
 
-      // Reinitialize parallax on desktop, destroy on mobile
       if (isDesktop && !this.parallaxHandler) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       } else if (!isDesktop && this.parallaxHandler) {
@@ -182,9 +156,6 @@
     }
   }
 
-  // ============================================================================
-  // Initialize
-  // ============================================================================
   function init() {
     const sections = document.querySelectorAll(CONFIG.selectors.section);
 
@@ -195,14 +166,12 @@
     });
   }
 
-  // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 
-  // Re-initialize on Shopify section load (theme editor)
   if (typeof Shopify !== 'undefined' && Shopify.designMode) {
     document.addEventListener('shopify:section:load', function (event) {
       if (event.target.querySelector(CONFIG.selectors.section)) {

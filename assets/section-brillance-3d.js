@@ -55,7 +55,6 @@
       try {
         await this.preloadAllFrames();
       } catch (error) {
-        // silent
       }
 
       this.setupScrollTrigger();
@@ -234,7 +233,6 @@
             const ellipseColor = computedStyle.getPropertyValue('--ellipse-color').trim() || '#fffcf9';
             sessionStorage.setItem('transitionEllipseColor', ellipseColor);
           } catch (error) {
-            // silent
           }
 
           window.location.href = targetUrl;

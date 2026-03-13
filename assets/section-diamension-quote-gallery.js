@@ -1,14 +1,6 @@
-/**
- * Custom Section - Diamension Quote Gallery
- * Handles GSAP parallax scrolling effects for image gallery
- */
-
 (function() {
   'use strict';
 
-  // ============================================================================
-  // Configuration
-  // ============================================================================
   const CONFIG = {
     selectors: {
       section: '.js-quote-gallery-section',
@@ -23,9 +15,6 @@
     }
   };
 
-  // ============================================================================
-  // Parallax Handler (GSAP)
-  // ============================================================================
   class ParallaxHandler {
     constructor(section) {
       this.section = section;
@@ -81,9 +70,6 @@
     }
   }
 
-  // ============================================================================
-  // Section Manager
-  // ============================================================================
   class QuoteGallerySection {
     constructor(section) {
       this.section = section;
@@ -121,9 +107,6 @@
     }
   }
 
-  // ============================================================================
-  // Initialize
-  // ============================================================================
   function init() {
     const sections = document.querySelectorAll(CONFIG.selectors.section);
 

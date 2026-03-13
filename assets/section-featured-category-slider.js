@@ -508,7 +508,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('shopify:section:select', (e) => {
       if (e.target.classList.contains('custom-section-featured-category-slider')) {
-        // Handle section selection in theme editor
       }
     });
   }

@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  // Configuration
   const CONFIG = {
     ARTICLES_PER_LOAD: {
       DESKTOP: 4,
@@ -10,7 +9,6 @@
     },
   };
 
-  // Get current articles per load based on viewport
   const getArticlesPerLoad = () => {
     const width = window.innerWidth;
     if (width <= 767) {
@@ -21,7 +19,6 @@
     return CONFIG.ARTICLES_PER_LOAD.DESKTOP;
   };
 
-  // Blog Journal Controller
   class BlogJournalController {
     constructor(section) {
       this.section = section;
@@ -31,16 +28,13 @@
       this.articlesGrid = section.querySelector('[data-articles-grid]');
       this.loadMoreBtn = section.querySelector('[data-load-more-btn]');
 
-      // Get data from section
       this.currentBlogHandle = this.section.dataset.currentBlog;
       this.showDate = this.section.dataset.showDate === 'true';
       this.showExcerpt = this.section.dataset.showExcerpt === 'true';
       this.totalArticles = parseInt(this.section.dataset.articlesCount) || 0;
       this.articlesPerPage = parseInt(this.section.dataset.articlesPerPage) || 4;
 
-      // Track current state
       this.currentPage = 1;
-      // Count only visible articles initially
       const allCards = this.articlesGrid.querySelectorAll('[data-article-card]');
       this.displayedArticles = Array.from(allCards).filter(card => card.style.display !== 'none').length;
       this.isLoading = false;
@@ -49,18 +43,15 @@
     }
 
     init() {
-      // Position underline on initial load
       if (this.activeTab && this.underline) {
         this.positionUnderlineInitial();
       }
 
-      // Set up load more listener
       if (this.loadMoreBtn) {
         this.loadMoreBtn.addEventListener('click', () => this.loadMoreArticles());
         this.checkLoadMore();
       }
 
-      // Handle window resize for underline positioning
       let resizeTimeout;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
@@ -71,14 +62,12 @@
         }, 150);
       });
 
-      // Scroll active tab into view on mobile
       this.scrollActiveTabIntoView();
     }
 
     positionUnderlineInitial() {
       if (!this.underline || !this.tabsContainer || !this.activeTab) return;
 
-      // Use requestAnimationFrame for smoother rendering
       requestAnimationFrame(() => {
         const tabRect = this.activeTab.getBoundingClientRect();
         const containerRect = this.tabsContainer.getBoundingClientRect();
@@ -120,18 +109,14 @@
       this.loadMoreBtn.textContent = 'Loading...';
       this.loadMoreBtn.disabled = true;
 
-      // Small delay to show loading state
       setTimeout(() => {
         try {
-          // Determine how many articles to show based on viewport
           const articlesToShow = getArticlesPerLoad();
 
-          // Get all hidden article cards
           const allCards = Array.from(this.articlesGrid.querySelectorAll('[data-article-card]'));
           const hiddenCards = allCards.filter(card => card.style.display === 'none');
 
           if (hiddenCards.length > 0) {
-            // Show the next batch of hidden articles
             const cardsToShow = Math.min(articlesToShow, hiddenCards.length);
 
             for (let i = 0; i < cardsToShow; i++) {
@@ -140,7 +125,6 @@
             }
           }
 
-          // Check if we should show load more button
           this.checkLoadMore();
         } catch (error) {
           console.error('Error loading more articles:', error);
@@ -155,7 +139,6 @@
     checkLoadMore() {
       if (!this.loadMoreBtn) return;
 
-      // Show load more button if there are more articles to load
       const hasMoreArticles = this.totalArticles > this.displayedArticles;
 
       if (hasMoreArticles) {
@@ -166,7 +149,6 @@
     }
   }
 
-  // Initialize section
   const initSection = () => {
     const sections = document.querySelectorAll('.custom-section-blog-journal');
 
@@ -175,7 +157,6 @@
     });
   };
 
-  // Wait for DOM to load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSection);
   } else {

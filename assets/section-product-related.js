@@ -1,8 +1,3 @@
-/**
- * Related Products Carousel
- * Handles carousel navigation and wishlist toggle animation
- */
-
 class RelatedProductsCarousel {
   constructor(container) {
     this.container = container;
@@ -18,7 +13,6 @@ class RelatedProductsCarousel {
     this.setupCarousel();
     this.updateArrowVisibility();
 
-    // Initialize wishlist buttons using global WishlistManager
     if (window.WishlistManager) {
       window.WishlistManager.initializeButtons();
     }
@@ -27,22 +21,18 @@ class RelatedProductsCarousel {
   setupCarousel() {
     if (!this.wrapper || !this.leftArrow || !this.rightArrow) return;
 
-    // Left arrow click
     this.leftArrow.addEventListener('click', () => {
       this.scrollCarousel('left');
     });
 
-    // Right arrow click
     this.rightArrow.addEventListener('click', () => {
       this.scrollCarousel('right');
     });
 
-    // Update arrow visibility on scroll
     this.wrapper.addEventListener('scroll', () => {
       this.updateArrowVisibility();
     });
 
-    // Update on resize
     window.addEventListener('resize', () => {
       this.updateArrowVisibility();
     });
@@ -68,16 +58,13 @@ class RelatedProductsCarousel {
     const scrollLeft = this.wrapper.scrollLeft;
     const maxScroll = this.wrapper.scrollWidth - this.wrapper.clientWidth;
 
-    // Hide left arrow if at start
     if (scrollLeft <= 0) {
       this.leftArrow?.classList.add('is-hidden');
     } else {
       this.leftArrow?.classList.remove('is-hidden');
     }
 
-    // Hide right arrow if at end
     if (scrollLeft >= maxScroll - 1) {
-      // -1 for rounding errors
       this.rightArrow?.classList.add('is-hidden');
     } else {
       this.rightArrow?.classList.remove('is-hidden');
@@ -86,7 +73,6 @@ class RelatedProductsCarousel {
 
 }
 
-// Initialize on DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initRelatedProducts);
 } else {
@@ -97,7 +83,6 @@ function initRelatedProducts() {
   const containers = document.querySelectorAll('.custom-section-related-products');
 
   if (containers.length === 0) {
-    // Wait for product-recommendations to load
     const observer = new MutationObserver(() => {
       const newContainers = document.querySelectorAll('.custom-section-related-products');
       if (newContainers.length > 0) {

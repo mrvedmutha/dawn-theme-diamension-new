@@ -1,10 +1,6 @@
 (function () {
   'use strict';
 
-  /**
-   * Wishlist Page Controller
-   * Manages the wishlist page display, product fetching, and rendering
-   */
   class WishlistPage {
     constructor(section) {
       this.section = section;
@@ -18,13 +14,10 @@
     }
 
     async init() {
-      // Show loading state
       this.showLoading();
 
-      // Load wishlist products
       await this.loadProducts();
 
-      // Subscribe to wishlist changes for real-time updates
       if (window.WishlistManager) {
         window.WishlistManager.subscribe((event) => {
           if (event.event === 'removed') {
@@ -32,8 +25,6 @@
           }
         });
       }
-
-      console.log('[Wishlist Page] Initialized');
     }
 
     showLoading() {
@@ -87,7 +78,6 @@
         return;
       }
 
-      // Fetch product data for each wishlist item
       const productPromises = wishlistItems.map((item) =>
         this.fetchProduct(item.handle || item.id)
       );
@@ -104,7 +94,6 @@
         this.renderProducts(validProducts);
         this.updateCount(validProducts.length);
 
-        // Initialize wishlist buttons after render
         if (window.WishlistManager) {
           window.WishlistManager.initializeButtons();
         }
@@ -113,12 +102,9 @@
 
     async fetchProduct(handleOrId) {
       try {
-        // Try to fetch by handle first (from metadata)
         let url = `/products/${handleOrId}.js`;
 
-        // If handleOrId is a number, we need to find the product by ID
         if (!isNaN(handleOrId)) {
-          // Fallback: Try to get handle from wishlist item metadata
           const wishlistItems = window.WishlistManager.get();
           const item = wishlistItems.find((i) => i.id === String(handleOrId));
           if (item && item.handle) {
@@ -148,7 +134,7 @@
     }
 
     renderProductCard(product) {
-      const price = product.price / 100; // Convert from cents to rupees
+      const price = product.price / 100;
       const formattedPrice = `₹${price.toLocaleString('en-IN')}`;
       const priceRaw = price;
       const imageUrl = product.featured_image || product.images?.[0] || '';
@@ -156,7 +142,6 @@
       const productTags = product.tags ? product.tags.join(',') : '';
       const productType = product.type || '';
 
-      // Check if product has new-arrival tag
       const isNewArrival = product.tags &&
         (product.tags.includes('new-arrival') || product.tags.includes('New Arrival'));
 
@@ -224,13 +209,11 @@
     }
 
     handleProductRemoved(productId) {
-      // Remove product card from grid
       const card = this.grid.querySelector(`[data-product-id="${productId}"]`);
       if (card) {
         card.remove();
       }
 
-      // Check if grid is now empty
       const remainingCards = this.grid.querySelectorAll('.product-card-collection-diamension');
       if (remainingCards.length === 0) {
         this.showEmptyState();
@@ -240,7 +223,6 @@
     }
   }
 
-  // Initialize wishlist page
   document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.custom-section-wishlist');
     sections.forEach((section) => {

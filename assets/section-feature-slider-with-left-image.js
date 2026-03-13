@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
           resizeTimeout = setTimeout(() => this.handleResize(), 250);
         });
       } catch (error) {
-        // silent
       }
     }
 
@@ -72,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         this.initCardStaggerAnimation();
       } catch (error) {
-        // silent
       }
     }
 
@@ -104,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
       } catch (error) {
-        // silent
       }
     }
 
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.visibleCards = visibleCards;
         this.offsetCard = offsetCard;
       } catch (error) {
-        // silent
       }
     }
 
