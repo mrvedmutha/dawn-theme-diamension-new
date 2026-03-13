@@ -8,7 +8,7 @@
 {% liquid
   assign product_url = product.url
   assign product_title = product.title
-  assign product_price = product.price | money
+  assign product_price = product.price | money_without_currency | prepend: '₹'
   assign product_image = product.featured_image
 %}
 
@@ -41,4 +41,7 @@
     </div>
 
   </a>
+
+  {%- comment -%} Wishlist Button {%- endcomment -%}
+  {% render 'wishlist-button', product: product, size: 'l' %}
 </div>

@@ -77,6 +77,11 @@
         productsGrid.appendChild(product.cloneNode(true));
       });
 
+      // Re-initialize wishlist buttons for newly added cards
+      if (window.WishlistManager) {
+        window.WishlistManager.initializeButtons();
+      }
+
       // Update current page
       btn.dataset.currentPage = nextPage;
 

@@ -660,14 +660,14 @@ class DiamensionSearch {
         </div>
         <div class="diamension-search-overlay__product-info">
           <h3 class="diamension-search-overlay__product-title">${this.escapeHtml(product.title)}</h3>
-          <p class="diamension-search-overlay__product-price">Rs. ${price}</p>
+          <p class="diamension-search-overlay__product-price">₹${price}</p>
         </div>
       </a>
     `;
   }
 
-  formatPrice(cents) {
-    return new Intl.NumberFormat('en-IN').format(cents / 100);
+  formatPrice(price) {
+    return new Intl.NumberFormat('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
   }
 
   escapeHtml(text) {
