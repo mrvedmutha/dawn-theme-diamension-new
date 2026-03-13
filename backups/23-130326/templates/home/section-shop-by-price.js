@@ -1,36 +1,29 @@
 (function () {
   'use strict';
 
-  // Configuration
   const CONFIG = {
     PRODUCTS_PER_PAGE: 10,
     ANIMATION_DURATION: 0.3,
   };
 
-  // Product Fetcher
   const ProductFetcher = {
     async fetchByPriceRange(minPrice, maxPrice) {
       try {
-        // Fetch all products from a collection (adjust collection handle as needed)
         const response = await fetch(`/collections/all/products.json?limit=250`);
         if (!response.ok) throw new Error('Failed to fetch products');
 
         const data = await response.json();
 
-        // Filter products by price range (prices are already in rupees from Shopify API)
         const filtered = data.products.filter((product) => {
           const price = parseFloat(product.variants[0]?.price || 0);
-          // Compare prices directly in rupees (API returns prices in rupees, not paise)
           return price >= minPrice && price < maxPrice;
         });
 
-        // Return both the total count and the sliced products
         return {
           products: filtered.slice(0, CONFIG.PRODUCTS_PER_PAGE),
           totalCount: filtered.length
         };
       } catch (error) {
-        console.error('Error fetching products:', error);
         return {
           products: [],
           totalCount: 0
@@ -39,7 +32,6 @@
     },
   };
 
-  // Skeleton Card Renderer
   const renderSkeletonCard = () => {
     return `
       <div class="custom-section-shop-by-price__product-card custom-section-shop-by-price__skeleton-card">
@@ -53,9 +45,7 @@
     `;
   };
 
-  // Product Card Renderer
   const renderProductCard = (product) => {
-    // Handle image URLs - Shopify API returns images as objects with 'src' property
     const primaryImage = product.images?.[0]?.src || product.images?.[0] || '';
     const hoverImage = product.images?.[1]?.src || product.images?.[1] || product.images?.[0]?.src || product.images?.[0] || '';
     const hasImage = !!primaryImage;
@@ -121,7 +111,6 @@
     `;
   };
 
-  // Carousel Controller
   class CarouselController {
     constructor(section) {
       this.section = section;
@@ -150,7 +139,6 @@
       const width = window.innerWidth;
       if (width <= 767) {
         this.visibleCards = 2;
-        // Get actual card width from DOM for mobile
         this.updateCardWidth();
       } else if (width <= 1024) {
         this.visibleCards = 4;
@@ -163,13 +151,12 @@
     }
 
     updateCardWidth() {
-      // Wait a bit for CSS to apply, then get actual card width
       setTimeout(() => {
         const firstCard = this.productsContainer.querySelector('.custom-section-shop-by-price__product-card');
         if (firstCard) {
           this.cardWidth = firstCard.offsetWidth;
         } else {
-          this.cardWidth = 165; // fallback
+          this.cardWidth = 165;
         }
       }, 50);
     }
@@ -213,14 +200,12 @@
       const totalCards = this.productsContainer.children.length;
       const maxPosition = Math.max(0, totalCards - this.visibleCards);
 
-      // Update left arrow
       if (this.currentPosition === 0) {
         this.leftArrow.disabled = true;
       } else {
         this.leftArrow.disabled = false;
       }
 
-      // Update right arrow
       if (this.currentPosition >= maxPosition || totalCards <= this.visibleCards) {
         this.rightArrow.disabled = true;
       } else {
@@ -234,7 +219,6 @@
     }
   }
 
-  // Tab Controller
   class TabController {
     constructor(section) {
       this.section = section;
@@ -254,11 +238,8 @@
         tab.addEventListener('click', (e) => this.handleTabClick(e));
       });
 
-      // Initialize with first tab and show underline immediately
       if (this.tabs.length > 0) {
-        // Position underline on first tab immediately (before products load)
         this.positionUnderlineInitial(this.tabs[0]);
-        // Then load products
         this.activateTab(this.tabs[0]);
       }
     }
@@ -268,13 +249,11 @@
 
       const tabsContainer = this.section.querySelector('.custom-section-shop-by-price__tabs');
 
-      // Calculate position immediately on load
       setTimeout(() => {
         const tabRect = tab.getBoundingClientRect();
         const containerRect = tabsContainer.getBoundingClientRect();
         const offsetLeft = tabRect.left - containerRect.left + tabsContainer.scrollLeft;
 
-        // Set underline position without animation
         this.underline.style.left = `${offsetLeft}px`;
         this.underline.style.width = `${tabRect.width}px`;
         this.underline.style.opacity = '1';
@@ -289,7 +268,6 @@
     async handleTabClick(event) {
       const tab = event.currentTarget;
 
-      // Scroll tab into view on mobile/tablet
       this.scrollTabIntoView(tab);
 
       await this.activateTab(tab);
@@ -299,18 +277,15 @@
       const tabsContainer = this.section.querySelector('.custom-section-shop-by-price__tabs');
       if (!tabsContainer) return;
 
-      // Check if we're in responsive mode (when tabs scroll horizontally)
       const isResponsive = window.innerWidth <= 1024;
 
       if (isResponsive) {
-        // Calculate the position to scroll to center the tab
         const tabRect = tab.getBoundingClientRect();
         const containerRect = tabsContainer.getBoundingClientRect();
         const tabCenter = tab.offsetLeft + tabRect.width / 2;
         const containerCenter = containerRect.width / 2;
         const scrollPosition = tabCenter - containerCenter;
 
-        // Smooth scroll the container
         tabsContainer.scrollTo({
           left: Math.max(0, scrollPosition),
           behavior: 'smooth',
@@ -323,64 +298,52 @@
       const minPrice = parseInt(priceRange[0]);
       const maxPrice = parseInt(priceRange[1]);
 
-      // Update active tab
       this.tabs.forEach((t) => t.classList.remove('custom-section-shop-by-price__tab--active'));
       tab.classList.add('custom-section-shop-by-price__tab--active');
 
-      // Animate underline
       this.animateUnderline(tab);
 
       if (this.isFirstLoad) {
-        // First load: Replace loading text with skeletons (no fade needed)
         this.showLoading();
       } else {
-        // Tab switch: Fade out current products, then show skeletons
         await this.fadeOutProducts();
         this.showLoading();
       }
 
-      // Fetch and display new products
       const result = await ProductFetcher.fetchByPriceRange(minPrice, maxPrice);
 
-      // Render products (replaces skeletons)
       this.renderProducts(result.products);
 
-      // Update Shop All button with total count (not just displayed products)
       this.updateShopAllButton(result.totalCount, minPrice, maxPrice);
 
-      // Fade in new products only on first load, otherwise they appear instantly
       if (this.isFirstLoad) {
         this.fadeInProducts();
         this.isFirstLoad = false;
       } else {
-        // Products appear instantly (container already visible)
         this.productsContainer.style.opacity = '1';
       }
 
-      // Reset carousel position
       if (this.carousel) {
         this.carousel.reset();
       }
     }
 
     showLoading() {
-      // Show skeleton loaders based on viewport
       const skeletonCount = this.getSkeletonCount();
       const skeletonsHtml = Array.from({ length: skeletonCount }, () => renderSkeletonCard()).join('');
       this.productsContainer.innerHTML = skeletonsHtml;
 
-      // Make sure container is visible after inserting skeletons
       this.productsContainer.style.opacity = '1';
     }
 
     getSkeletonCount() {
       const width = window.innerWidth;
       if (width <= 767) {
-        return 2; // Mobile
+        return 2;
       } else if (width <= 1024) {
-        return 4; // Tablet
+        return 4;
       } else {
-        return 5; // Desktop
+        return 5;
       }
     }
 
@@ -389,7 +352,6 @@
 
       const tabsContainer = this.section.querySelector('.custom-section-shop-by-price__tabs');
 
-      // Add small delay to let scroll animation start
       setTimeout(() => {
         const tabRect = tab.getBoundingClientRect();
         const containerRect = tabsContainer.getBoundingClientRect();
@@ -451,18 +413,14 @@
         return;
       }
 
-      // Render products (this automatically replaces skeletons)
       const html = products.map((product) => renderProductCard(product)).join('');
       this.productsContainer.innerHTML = html;
 
-      // Initialize wishlist buttons using global manager
       if (window.WishlistManager) {
         window.WishlistManager.initializeButtons();
       }
 
-      // Update carousel arrow states and card width
       if (this.carousel) {
-        // Update card width on mobile after products render
         if (window.innerWidth <= 767) {
           this.carousel.updateCardWidth();
         }
@@ -475,7 +433,6 @@
 
       if (totalProductCount > CONFIG.PRODUCTS_PER_PAGE) {
         this.ctaContainer.style.display = 'block';
-        // Prices are already in rupees, no need to divide by 100
         this.shopAllLink.href = `/collections/all?filter.v.price.gte=${minPrice}&filter.v.price.lt=${maxPrice}`;
       } else {
         this.ctaContainer.style.display = 'none';
@@ -483,7 +440,6 @@
     }
   }
 
-  // Initialize section
   const initSection = () => {
     const sections = document.querySelectorAll('.custom-section-shop-by-price');
 
@@ -494,7 +450,6 @@
     });
   };
 
-  // Wait for DOM and GSAP to load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSection);
   } else {

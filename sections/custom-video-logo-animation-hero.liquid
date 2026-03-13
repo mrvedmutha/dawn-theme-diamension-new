@@ -134,7 +134,8 @@
   });
 </script>
 
-<script src="{{ 'section-video-logo-animation.js' | asset_url }}" defer></script>
+{%- comment -%} <script src="{{ 'section-video-logo-animation.js' | asset_url }}" defer></script> {%- endcomment -%}
+<script src="{{ 'section-video-logo-animation.min.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

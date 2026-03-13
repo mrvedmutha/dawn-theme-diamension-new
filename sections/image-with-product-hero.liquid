@@ -1,5 +1,6 @@
 {{ 'section-image-with-product-hero.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'section-image-with-product-hero.js' | asset_url }}" defer="defer"></script>
+{%- comment -%} <script src="{{ 'section-image-with-product-hero.js' | asset_url }}" defer="defer"></script> {%- endcomment -%}
+<script src="{{ 'section-image-with-product-hero.min.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign bg_image = section.settings.background_image

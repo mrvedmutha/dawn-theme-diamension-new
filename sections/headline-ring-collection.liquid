@@ -24,7 +24,6 @@
 >
   <div class="headline-ring-collection__wrapper">
     <div class="headline-ring-collection__container">
-
       {%- comment -%} Headlines {%- endcomment -%}
       <div class="headline-ring-collection__headlines">
         {%- if headline_line_1 != blank -%}
@@ -59,18 +58,21 @@
       {%- comment -%} Product Image with Parallax {%- endcomment -%}
       {%- if product_image != blank -%}
         <div class="headline-ring-collection__image-wrapper" data-parallax-image>
-          {{- product_image | image_url: width: 608 | image_tag:
-            loading: 'lazy',
-            widths: '304, 456, 608',
-            class: 'headline-ring-collection__image',
-            alt: product_image.alt | default: 'Product image'
+          {{-
+            product_image
+            | image_url: width: 608
+            | image_tag:
+              loading: 'lazy',
+              widths: '304, 456, 608',
+              class: 'headline-ring-collection__image',
+              alt: product_image.alt
+            | default: 'Product image'
           -}}
         </div>
       {%- endif -%}
 
       {%- comment -%} Content and Features Wrapper {%- endcomment -%}
       <div class="headline-ring-collection__content-features-wrapper">
-
         {%- comment -%} Paragraph Content {%- endcomment -%}
         {%- if paragraph_content != blank -%}
           <div class="headline-ring-collection__content">
@@ -82,15 +84,17 @@
 
         {%- comment -%} Feature Icons {%- endcomment -%}
         <div class="headline-ring-collection__features">
-
           {%- if feature_1_icon != blank or feature_1_text != blank -%}
             <div class="headline-ring-collection__feature">
               {%- if feature_1_icon != blank -%}
                 <div class="headline-ring-collection__feature-icon">
-                  {{- feature_1_icon | image_url: width: 100 | image_tag:
-                    loading: 'lazy',
-                    class: 'headline-ring-collection__icon',
-                    alt: 'Quality craftmanship icon'
+                  {{-
+                    feature_1_icon
+                    | image_url: width: 100
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'headline-ring-collection__icon',
+                      alt: 'Quality craftmanship icon'
                   -}}
                 </div>
               {%- endif -%}
@@ -106,10 +110,10 @@
             <div class="headline-ring-collection__feature">
               {%- if feature_2_icon != blank -%}
                 <div class="headline-ring-collection__feature-icon">
-                  {{- feature_2_icon | image_url: width: 100 | image_tag:
-                    loading: 'lazy',
-                    class: 'headline-ring-collection__icon',
-                    alt: 'Sustainability icon'
+                  {{-
+                    feature_2_icon
+                    | image_url: width: 100
+                    | image_tag: loading: 'lazy', class: 'headline-ring-collection__icon', alt: 'Sustainability icon'
                   -}}
                 </div>
               {%- endif -%}
@@ -120,49 +124,50 @@
               {%- endif -%}
             </div>
           {%- endif -%}
-
         </div>
-
       </div>
 
       {%- comment -%} Certification Badges {%- endcomment -%}
       <div class="headline-ring-collection__badges">
         {%- if badge_1_image != blank -%}
           <div class="headline-ring-collection__badge">
-            {{- badge_1_image | image_url: width: 200 | image_tag:
-              loading: 'lazy',
-              class: 'headline-ring-collection__badge-image',
-              alt: badge_1_image.alt | default: 'Certification badge'
+            {{-
+              badge_1_image
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', class: 'headline-ring-collection__badge-image', alt: badge_1_image.alt
+              | default: 'Certification badge'
             -}}
           </div>
         {%- endif -%}
 
         {%- if badge_2_image != blank -%}
           <div class="headline-ring-collection__badge">
-            {{- badge_2_image | image_url: width: 200 | image_tag:
-              loading: 'lazy',
-              class: 'headline-ring-collection__badge-image',
-              alt: badge_2_image.alt | default: 'Certification badge'
+            {{-
+              badge_2_image
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', class: 'headline-ring-collection__badge-image', alt: badge_2_image.alt
+              | default: 'Certification badge'
             -}}
           </div>
         {%- endif -%}
 
         {%- if badge_3_image != blank -%}
           <div class="headline-ring-collection__badge">
-            {{- badge_3_image | image_url: width: 200 | image_tag:
-              loading: 'lazy',
-              class: 'headline-ring-collection__badge-image',
-              alt: badge_3_image.alt | default: 'Certification badge'
+            {{-
+              badge_3_image
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', class: 'headline-ring-collection__badge-image', alt: badge_3_image.alt
+              | default: 'Certification badge'
             -}}
           </div>
         {%- endif -%}
       </div>
-
     </div>
   </div>
 </section>
 
-<script src="{{ 'headline-ring-collection.js' | asset_url }}" defer></script>
+{%- comment -%} <script src="{{ 'headline-ring-collection.js' | asset_url }}" defer></script> {%- endcomment -%}
+<script src="{{ 'headline-ring-collection.min.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

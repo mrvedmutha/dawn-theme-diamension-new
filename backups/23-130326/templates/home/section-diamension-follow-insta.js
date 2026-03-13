@@ -1,17 +1,6 @@
-/**
- * Diamension Follow Instagram Section - JavaScript
- * Handles parallax effects for asymmetric masonry grid using GSAP
- * Layout: 360px images, 72px horizontal overlap (288px spacing), 180px vertical overlap (50%)
- * Grid: 1224px × 540px, centered in 1440px container
- * Desktop only (>1024px)
- */
-
 (function() {
   'use strict';
 
-  // ============================================================================
-  // Configuration
-  // ============================================================================
   const CONFIG = {
     selectors: {
       section: '.custom-section-diamension-follow-insta',
@@ -27,10 +16,6 @@
     }
   };
 
-  // ============================================================================
-  // Parallax Handler (GSAP)
-  // Desktop-only parallax for asymmetric masonry grid
-  // ============================================================================
   class ParallaxHandler {
     constructor(section) {
       this.section = section;
@@ -43,12 +28,8 @@
     }
 
     init() {
-      // Register ScrollTrigger plugin
       gsap.registerPlugin(ScrollTrigger);
 
-      // Apply parallax to all images
-      // Animation goes from -movement to +movement for proper parallax effect
-      // Images reach natural position (y: 0) when section is centered in viewport
       this.images.forEach((image) => {
         gsap.fromTo(image,
           {
@@ -79,9 +60,6 @@
     }
   }
 
-  // ============================================================================
-  // CTA Animation Handler
-  // ============================================================================
   class CTAAnimationHandler {
     constructor(section) {
       this.ctaButtons = section.querySelectorAll(CONFIG.selectors.ctaButton);
@@ -90,7 +68,6 @@
 
     init() {
       this.ctaButtons.forEach(button => {
-        // Mouse enter: trigger exit-enter animation
         button.addEventListener('mouseenter', () => {
           button.classList.remove('animate-exit');
           button.classList.add('animate-enter');
@@ -100,7 +77,6 @@
           }, 800);
         });
 
-        // Mouse leave: trigger exit-enter animation
         button.addEventListener('mouseleave', () => {
           button.classList.remove('animate-enter');
           button.classList.add('animate-exit');
@@ -113,9 +89,6 @@
     }
   }
 
-  // ============================================================================
-  // Section Manager
-  // ============================================================================
   class DiamensionFollowInstaSection {
     constructor(section) {
       this.section = section;
@@ -127,17 +100,14 @@
     }
 
     init() {
-      // Initialize parallax (desktop only)
       if (window.innerWidth > CONFIG.breakpoints.desktop) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       }
 
-      // Initialize CTA animations
       this.ctaHandler = new CTAAnimationHandler(this.section);
     }
 
     bindEvents() {
-      // Handle window resize
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -150,7 +120,6 @@
     handleResize() {
       const isDesktop = window.innerWidth > CONFIG.breakpoints.desktop;
 
-      // Reinitialize parallax on desktop, destroy on mobile/tablet
       if (isDesktop && !this.parallaxHandler) {
         this.parallaxHandler = new ParallaxHandler(this.section);
       } else if (!isDesktop && this.parallaxHandler) {
@@ -166,9 +135,6 @@
     }
   }
 
-  // ============================================================================
-  // Initialize
-  // ============================================================================
   function init() {
     const sections = document.querySelectorAll(CONFIG.selectors.section);
 
@@ -180,14 +146,12 @@
     });
   }
 
-  // Run on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
 
-  // Re-initialize on Shopify section load (theme editor)
   if (typeof Shopify !== 'undefined' && Shopify.designMode) {
     document.addEventListener('shopify:section:load', function(event) {
       const section = event.target.querySelector(CONFIG.selectors.section);

@@ -51,7 +51,11 @@
       {%- comment -%} Background images {%- endcomment -%}
       {%- for i in (0..max_frame) -%}
         {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-        <link rel="preload" as="image" href="{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}">
+        <link
+          rel="preload"
+          as="image"
+          href="{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}"
+        >
       {%- endfor -%}
     </div>
 
@@ -72,7 +76,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="{{ 'section-brillance-3d.js' | asset_url }}" defer></script>
+{%- comment -%} <script src="{{ 'section-brillance-3d.js' | asset_url }}" defer></script> {%- endcomment -%}
+<script src="{{ 'section-brillance-3d.min.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
