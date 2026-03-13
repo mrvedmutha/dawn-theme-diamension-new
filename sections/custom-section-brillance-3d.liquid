@@ -54,7 +54,7 @@
         <link
           rel="preload"
           as="image"
-          href="{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}"
+          href="{{ 'custom-section-brillance-3d/background-sequence/DiamensionProcessPage-Updt_30F-F' | append: frame_num | append: '.webp' | asset_url }}"
         >
       {%- endfor -%}
     </div>
@@ -66,7 +66,7 @@
         backgroundUrls: [
           {%- for i in (0..max_frame) -%}
             {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-            "{{ 'custom-section-brillance-3d/background-sequence/Diamension-Page1_WebP-V2-F' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+            "{{ 'custom-section-brillance-3d/background-sequence/DiamensionProcessPage-Updt_30F-F' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
           {%- endfor -%}
         ],
       };
