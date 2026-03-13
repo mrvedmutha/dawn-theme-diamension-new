@@ -13,7 +13,7 @@
       "type": "custom-video-logo-animation-hero",
       "name": "Video Logo Animation Hero",
       "settings": {
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/83d5763f4317437f86fc37c792b0ad13.webm",
         "logo": "shopify://shop_images/diamesnion-new-logo-white.svg"
       }
     },
@@ -38,7 +38,7 @@
             "category_name": "Earrings",
             "collection": "earrings",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/aa2fe822ca094baeb179aeaab01bff92.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/54d03d9fa13a4222ac639dd73c9974a1.webm",
             "video_youtube_vimeo": ""
           }
         },
@@ -48,7 +48,7 @@
             "category_name": "Necklace",
             "collection": "necklace",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/3ff77210c1de49d0a5be032fc8b5ca58.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/c7b0669167bb4dd5a0fd70688715a08d.webm",
             "video_youtube_vimeo": ""
           }
         },
@@ -58,7 +58,7 @@
             "category_name": "Rings",
             "collection": "rings",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/18ae4fe1fdf04661888f86ae18c0169b.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ebba22304f5e4fb8ae79c24a789d45e6.webm",
             "video_youtube_vimeo": ""
           }
         },
@@ -68,7 +68,7 @@
             "category_name": "Pendents",
             "collection": "pendants",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/7c09a42c7aef418a9e8b817f3a180b31.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/2ee012e5b5c548da8151668afb1bfff6.webm",
             "video_youtube_vimeo": ""
           }
         },
@@ -78,7 +78,7 @@
             "category_name": "Bracelets",
             "collection": "bracelets",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/2febf4b56e3c4ec58f4f7fc3c39bf6d3.mp4",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/50deddc195a046a684af8c4612f46aed.webm",
             "video_youtube_vimeo": ""
           }
         }
@@ -156,7 +156,7 @@
       "name": "Shop Collection Arch",
       "settings": {
         "heading": "THE STUDIO",
-        "center_video": "https://cdn.shopify.com/videos/c/o/v/ac50b32abc5e4c97815b8a3791bddcfb.mp4",
+        "center_video": "https://cdn.shopify.com/videos/c/o/v/83d5763f4317437f86fc37c792b0ad13.webm",
         "center_cta_link": "shopify://pages/the-studio",
         "center_cta_text": "Explore Now",
         "left_image": "shopify://shop_images/neck-jewellery.jpg",
