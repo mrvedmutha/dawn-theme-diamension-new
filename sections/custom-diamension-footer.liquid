@@ -18,7 +18,13 @@
                   <ul class="custom-diamension-footer__menu-list">
                     {% for link in block.settings.menu.links %}
                       <li class="custom-diamension-footer__menu-item">
-                        <a href="{{ link.url }}" class="custom-diamension-footer__menu-link">
+                        <a
+                          href="{{ link.url }}"
+                          class="custom-diamension-footer__menu-link"
+                          {% if block.settings.open_in_new_tab %}
+                            target="_blank" rel="noopener noreferrer"
+                          {% endif %}
+                        >
                           {{ link.title }}
                         </a>
                       </li>
@@ -131,7 +137,7 @@
 
       {%- comment -%} Copyright - HARDCODED with auto year {%- endcomment -%}
       <p class="custom-diamension-footer__bottom-copyright">
-        © {{ 'now' | date: '%Y' }}, DIAMENSIONS. All rights reserved.
+        © {{ 'now' | date: '%Y' }}, Diamension. All rights reserved.
       </p>
 
       {%- comment -%} Legal Links Menu {%- endcomment -%}
@@ -217,6 +223,12 @@
           "id": "menu",
           "label": "Menu",
           "info": "Select menu to display in this column"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open links in new tab",
+          "default": false
         }
       ]
     }

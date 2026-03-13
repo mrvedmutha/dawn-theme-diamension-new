@@ -33,11 +33,15 @@
   align-self: start;
 }
 
-/* Content Area */
+/* Content Area — fixed-height frame, internal scroll */
 .custom-section-faq__content {
   max-width: 655px;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 220px);
+  overflow: hidden;
 }
 
 /* ============================================
@@ -108,6 +112,11 @@
    Right Column: FAQ Content
    ============================================ */
 
+/* Frame Header — title + tabs, pinned at top of the frame (no sticky needed) */
+.custom-section-faq__sticky-header {
+  flex-shrink: 0;
+}
+
 /* Page Title */
 .custom-section-faq__page-title {
   font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
@@ -128,7 +137,7 @@
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  overflow: hidden; /* Hide overflow of underline container */
+  overflow: hidden;
 }
 
 .custom-section-faq__tabs {
@@ -236,6 +245,19 @@
   background-color: #183754;
   width: var(--indicator-width);
   transition: all 0.3s ease;
+}
+
+/* Scroll Body — scrollable area inside the frame */
+.custom-section-faq__scroll-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.custom-section-faq__scroll-body::-webkit-scrollbar {
+  display: none;
 }
 
 /* ============================================
@@ -389,6 +411,10 @@
     top: 120px;
   }
 
+  .custom-section-faq__content {
+    height: calc(100dvh - 200px);
+  }
+
   .custom-section-faq__menu-title {
     font-size: 36px;
     line-height: 40px;
@@ -447,6 +473,16 @@
   .custom-section-faq__sidebar-sticky {
     position: relative;
     top: 0;
+  }
+
+  /* Mobile: revert to normal page scroll */
+  .custom-section-faq__content {
+    height: auto;
+    overflow: visible;
+  }
+
+  .custom-section-faq__scroll-body {
+    overflow-y: visible;
   }
 
   .custom-section-faq__content {

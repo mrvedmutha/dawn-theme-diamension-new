@@ -12,6 +12,7 @@ class FaqSection {
     this.underline = this.section.querySelector('.custom-section-faq__tabs-underline');
     this.activeTab = null;
     this.activeFaq = null;
+    this.scrollBody = this.section.querySelector('.custom-section-faq__scroll-body');
 
     this.init();
   }
@@ -93,15 +94,18 @@ class FaqSection {
     const category = Array.from(this.categories).find((cat) => cat.dataset.tabContent === tabId);
 
     if (category && shouldScroll) {
-      // Scroll to category with offset (10vh from top)
-      const offset = window.innerHeight * 0.3; // 30vh
-      const categoryTop = category.getBoundingClientRect().top + window.pageYOffset;
-      const scrollPosition = categoryTop - offset;
-
-      window.scrollTo({
-        top: scrollPosition,
-        behavior: 'smooth',
-      });
+      if (this.scrollBody) {
+        // Scroll inside the internal frame
+        const bodyRect = this.scrollBody.getBoundingClientRect();
+        const categoryRect = category.getBoundingClientRect();
+        const relativeTop = categoryRect.top - bodyRect.top + this.scrollBody.scrollTop;
+        this.scrollBody.scrollTo({ top: relativeTop, behavior: 'smooth' });
+      } else {
+        // Fallback: mobile uses normal page scroll
+        const offset = window.innerHeight * 0.3;
+        const categoryTop = category.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: categoryTop - offset, behavior: 'smooth' });
+      }
     }
   }
 

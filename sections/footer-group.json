@@ -39,7 +39,8 @@
           "type": "menu_column",
           "settings": {
             "heading": "CONNECT",
-            "menu": "footer-menu-connect"
+            "menu": "footer-menu-connect",
+            "open_in_new_tab": true
           }
         }
       },

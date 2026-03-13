@@ -39,55 +39,58 @@
       {%- comment -%} Right Column: FAQ Content {%- endcomment -%}
       <main class="custom-section-faq__content">
 
-        {% if section.settings.page_title != blank %}
-          <h1 class="custom-section-faq__page-title">
-            {{ section.settings.page_title }}
-          </h1>
-        {% endif %}
+        <div class="custom-section-faq__sticky-header">
+          {% if section.settings.page_title != blank %}
+            <h1 class="custom-section-faq__page-title">
+              {{ section.settings.page_title }}
+            </h1>
+          {% endif %}
 
-        {%- comment -%} Get all unique categories from FAQ blocks {%- endcomment -%}
-        {% assign faq_blocks = section.blocks | where: 'type', 'faq_item' %}
-        {% assign categories = '' %}
-        {% for block in faq_blocks %}
-          {% unless categories contains block.settings.category_id %}
-            {% assign categories = categories | append: block.settings.category_id | append: ',' %}
-          {% endunless %}
-        {% endfor %}
-        {% assign category_array = categories | split: ',' %}
+          {%- comment -%} Get all unique categories from FAQ blocks {%- endcomment -%}
+          {% assign faq_blocks = section.blocks | where: 'type', 'faq_item' %}
+          {% assign categories = '' %}
+          {% for block in faq_blocks %}
+            {% unless categories contains block.settings.category_id %}
+              {% assign categories = categories | append: block.settings.category_id | append: ',' %}
+            {% endunless %}
+          {% endfor %}
+          {% assign category_array = categories | split: ',' %}
 
-        {%- comment -%} Tab Navigation {%- endcomment -%}
-        {% if category_array.size > 0 %}
-          <div class="custom-section-faq__tabs-container">
-            <div class="custom-section-faq__tabs" data-faq-tabs>
-              {% for category_id in category_array %}
-                {% if category_id != blank %}
-                  {%- comment -%} Find first FAQ in this category manually {%- endcomment -%}
-                  {% assign first_in_category = nil %}
-                  {% for faq in faq_blocks %}
-                    {% assign faq_cat = faq.settings.category_id | strip %}
-                    {% assign current_cat = category_id | strip %}
-                    {% if faq_cat == current_cat and first_in_category == nil %}
-                      {% assign first_in_category = faq %}
+          {%- comment -%} Tab Navigation {%- endcomment -%}
+          {% if category_array.size > 0 %}
+            <div class="custom-section-faq__tabs-container">
+              <div class="custom-section-faq__tabs" data-faq-tabs>
+                {% for category_id in category_array %}
+                  {% if category_id != blank %}
+                    {%- comment -%} Find first FAQ in this category manually {%- endcomment -%}
+                    {% assign first_in_category = nil %}
+                    {% for faq in faq_blocks %}
+                      {% assign faq_cat = faq.settings.category_id | strip %}
+                      {% assign current_cat = category_id | strip %}
+                      {% if faq_cat == current_cat and first_in_category == nil %}
+                        {% assign first_in_category = faq %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if first_in_category %}
+                      <button
+                        class="custom-section-faq__tab{% if forloop.first %} custom-section-faq__tab--active{% endif %}"
+                        data-tab="{{ category_id }}"
+                        aria-label="Show {{ first_in_category.settings.category_label }} FAQs"
+                      >
+                        {{ first_in_category.settings.category_label }}
+                      </button>
                     {% endif %}
-                  {% endfor %}
-
-                  {% if first_in_category %}
-                    <button
-                      class="custom-section-faq__tab{% if forloop.first %} custom-section-faq__tab--active{% endif %}"
-                      data-tab="{{ category_id }}"
-                      aria-label="Show {{ first_in_category.settings.category_label }} FAQs"
-                    >
-                      {{ first_in_category.settings.category_label }}
-                    </button>
                   {% endif %}
-                {% endif %}
-              {% endfor %}
+                {% endfor %}
+              </div>
+              <div class="custom-section-faq__tabs-underline">&nbsp;</div>
             </div>
-            <div class="custom-section-faq__tabs-underline">&nbsp;</div>
-          </div>
-        {% endif %}
+          {% endif %}
+        </div>
 
         {%- comment -%} FAQ Categories {%- endcomment -%}
+        <div class="custom-section-faq__scroll-body">
         <div class="custom-section-faq__categories">
           {% for category_id in category_array %}
             {% if category_id != blank %}
@@ -168,6 +171,7 @@
               </div>
             {% endif %}
           {% endfor %}
+        </div>
         </div>
       </main>
     </div>
