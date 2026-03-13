@@ -13,7 +13,7 @@
       "type": "custom-section-image-hero",
       "settings": {
         "background_image": "shopify://shop_images/APF_0644.jpg",
-        "heading": "DIAMENSIONS JOURNAL",
+        "heading": "DIAMENSION JOURNAL",
         "text_color": "#fffaf5",
         "overlay_opacity": 0
       }
@@ -21,7 +21,7 @@
     "blog_journal": {
       "type": "custom-section-blog-journal",
       "settings": {
-        "heading": "DIAMENSIONS JOURNAL",
+        "heading": "DIAMENSION JOURNAL",
         "blog_handles": "style-guide,jewellery-trends,celebrity-looks,ethical-fashion-features",
         "show_date": true,
         "show_excerpt": true,
@@ -29,5 +29,8 @@
       }
     }
   },
-  "order": ["image_hero", "blog_journal"]
+  "order": [
+    "image_hero",
+    "blog_journal"
+  ]
 }
