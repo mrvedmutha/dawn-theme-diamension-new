@@ -32,18 +32,18 @@
         "text_alignment": "center",
         "content_width": 850,
         "content_gap": 24,
-        "heading_color": "#FFFFFF",
+        "heading_color": "#ffffff",
         "heading_size_desktop": 40,
         "heading_size_tablet": 32,
         "heading_size_mobile": 24,
-        "subheading_color": "#FFFFFF",
+        "subheading_color": "#ffffff",
         "subheading_size_desktop": 20,
         "subheading_size_tablet": 18,
         "subheading_size_mobile": 16,
         "button_text": "",
         "button_link": "",
         "button_bg_color": "#000000",
-        "button_text_color": "#FFFFFF",
+        "button_text_color": "#ffffff",
         "button_radius": 4,
         "button_padding_vertical": 12,
         "button_padding_horizontal": 32,
@@ -102,7 +102,7 @@
       "settings": {
         "image": "shopify://shop_images/founder-photo.webp",
         "heading": "The Founder's Vision",
-        "description": "<p>Diamensions was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>"
+        "description": "<p>Diamension was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>"
       }
     }
   },

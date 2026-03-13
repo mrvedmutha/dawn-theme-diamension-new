@@ -11,16 +11,12 @@
   "sections": {
     "main": {
       "type": "custom-section-richtext-page",
-      "settings": {
-        "menu_title": "POLICIES",
-        "page_title": "Privacy Policy"
-      },
       "blocks": {
         "policy_menu_1": {
           "type": "info_menu_item",
           "settings": {
             "menu_text": "TERMS & CONDITIONS",
-            "menu_link": "/pages/terms-and-conditions",
+            "menu_link": "shopify://pages/terms-and-conditions",
             "is_active": false
           }
         },
@@ -117,8 +113,14 @@
         "richtext_7",
         "richtext_8",
         "richtext_9"
-      ]
+      ],
+      "settings": {
+        "menu_title": "POLICIES",
+        "page_title": "Privacy Policy"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

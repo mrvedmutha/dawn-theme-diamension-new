@@ -35,7 +35,7 @@
           "settings": {
             "title": "Make It Yours",
             "description": "Choose your diamond shape, setting, and metal to create a one-of-a-kind jewel.",
-            "link": "",
+            "link": "shopify://pages/customization",
             "link_text": "Start Customising"
           }
         },

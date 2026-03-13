@@ -24,7 +24,7 @@
           "type": "info_menu_item",
           "settings": {
             "menu_text": "PRIVACY POLICY",
-            "menu_link": "shopify://pages/privacy-v1",
+            "menu_link": "shopify://pages/privacy",
             "is_active": false
           }
         },
@@ -111,5 +111,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
