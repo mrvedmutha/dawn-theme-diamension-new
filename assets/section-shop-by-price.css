@@ -280,43 +280,21 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  transition:
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.4s ease-in-out;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  transition: transform 0.4s ease;
 }
 
 .custom-section-shop-by-price__product-image--primary {
   display: block;
   position: relative;
   z-index: 1;
-  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .custom-section-shop-by-price__product-image--hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  object-fit: cover;
-  opacity: 0;
-  z-index: 2;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition:
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.4s ease-in-out;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
+  display: none;
 }
 
 .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
-  opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.95);
-}
-
-.custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1.08);
+  transform: scale(1.05);
 }
 
 /* No Image Fallback */
@@ -501,14 +479,8 @@
     display: block;
   }
 
-  /* Disable hover effect on tablet */
+  /* Disable hover scale on tablet */
   .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
-    display: block;
-  }
-
-  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
-    display: none;
-    opacity: 0;
     transform: none;
   }
 }
@@ -658,10 +630,6 @@
     object-position: center;
   }
 
-  .custom-section-shop-by-price__product-image--hover {
-    object-fit: cover;
-  }
-
   /* No Image Fallback - Mobile */
   .custom-section-shop-by-price__no-image {
     position: absolute;
@@ -676,14 +644,8 @@
     line-height: 18px;
   }
 
-  /* Disable hover effect on mobile */
+  /* Disable hover scale on mobile */
   .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--primary {
-    display: block;
-  }
-
-  .custom-section-shop-by-price__product-card:hover .custom-section-shop-by-price__product-image--hover {
-    display: none;
-    opacity: 0;
     transform: none;
   }
 

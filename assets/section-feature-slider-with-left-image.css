@@ -197,6 +197,11 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.custom-section-feature-slider-with-left-image__card:hover .custom-section-feature-slider-with-left-image__card-image {
+  transform: scale(1.05);
 }
 
 .custom-section-feature-slider-with-left-image__card-image-placeholder {
