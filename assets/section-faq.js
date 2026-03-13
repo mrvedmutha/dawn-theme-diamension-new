@@ -21,11 +21,36 @@ class FaqSection {
     this.setupTabs();
     this.setupAccordion();
     this.setupScrollListeners();
+    this.setupScrollPadding();
 
     // Activate first tab on load
     if (this.tabs.length > 0) {
       this.activateTab(this.tabs[0].dataset.tab, false);
     }
+  }
+
+  /**
+   * Add bottom padding to categories so any category can scroll to the top of the frame.
+   * Without this, short last tabs can't scroll high enough to reach the top.
+   */
+  setupScrollPadding() {
+    if (!this.scrollBody) return;
+
+    const categoriesEl = this.section.querySelector('.custom-section-faq__categories');
+    if (!categoriesEl) return;
+
+    const applyPadding = () => {
+      const lastCategory = categoriesEl.lastElementChild;
+      if (!lastCategory) return;
+      // Only add enough padding so the last category can scroll to the top —
+      // no extra empty space beyond its actual content.
+      const padding = Math.max(0, this.scrollBody.clientHeight - lastCategory.clientHeight);
+      categoriesEl.style.paddingBottom = `${padding}px`;
+    };
+
+    this.applyScrollPadding = applyPadding;
+    applyPadding();
+    window.addEventListener('resize', applyPadding);
   }
 
   /**
@@ -39,16 +64,56 @@ class FaqSection {
     // Sync underline scroll with tabs scroll
     tabsContainer.addEventListener('scroll', () => {
       if (this.underline) {
-        // Sync scroll position
         this.underline.scrollLeft = tabsContainer.scrollLeft;
       }
       this.updateUnderline();
     });
 
+    // Scroll-spy: update active tab as user scrolls the content frame
+    if (this.scrollBody) {
+      this.scrollBody.addEventListener('scroll', () => {
+        this.updateActiveTabOnScroll();
+      });
+    }
+
     // Update underline position on window resize
     window.addEventListener('resize', () => {
       this.updateUnderline();
     });
+  }
+
+  /**
+   * Scroll-spy: find which category is at the top of the scroll frame
+   * and sync the active tab to match it.
+   */
+  updateActiveTabOnScroll() {
+    const bodyRect = this.scrollBody.getBoundingClientRect();
+    const threshold = 30; // px tolerance from the top of the frame
+
+    let currentCategory = null;
+
+    this.categories.forEach((cat) => {
+      const catTop = cat.getBoundingClientRect().top - bodyRect.top;
+      if (catTop <= threshold) {
+        currentCategory = cat;
+      }
+    });
+
+    if (!currentCategory) return;
+
+    const tabId = currentCategory.dataset.tabContent;
+    if (this.activeTab && this.activeTab.dataset.tab === tabId) return; // already active, skip
+
+    this.tabs.forEach((tab) => {
+      if (tab.dataset.tab === tabId) {
+        tab.classList.add('custom-section-faq__tab--active');
+        this.activeTab = tab;
+      } else {
+        tab.classList.remove('custom-section-faq__tab--active');
+      }
+    });
+
+    this.updateUnderline();
   }
 
   /**
@@ -163,9 +228,13 @@ class FaqSection {
     if (isExpanded) {
       this.closeFaq(item);
     } else {
-      // Close all other FAQs first (only one open at a time)
       this.closeAllFaqs();
       this.openFaq(item);
+    }
+
+    // Re-apply padding since last category height may have changed
+    if (this.applyScrollPadding) {
+      setTimeout(this.applyScrollPadding, 420); // after accordion transition (~400ms)
     }
   }
 

@@ -371,7 +371,7 @@ function setupLoadMore() {
 
   // Function to count visible products
   function countVisibleProducts() {
-    const allProducts = productGrid.querySelectorAll('[data-product-price]');
+    const allProducts = productGrid.querySelectorAll('.product-card-collection-diamension');
     let visibleCount = 0;
     allProducts.forEach(product => {
       if (product.style.display !== 'none') {
@@ -448,7 +448,7 @@ function setupLoadMore() {
         });
 
         // Apply price filter to new products
-        const addedCards = Array.from(productGrid.querySelectorAll('[data-product-price]')).slice(-newProductCards.length);
+        const addedCards = Array.from(productGrid.querySelectorAll('.product-card-collection-diamension')).slice(-newProductCards.length);
         applyPriceFilterToNewProducts(addedCards);
 
         // Update progress text
