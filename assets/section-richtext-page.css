@@ -188,6 +188,12 @@
   margin-bottom: 0;
 }
 
+.custom-section-richtext-page__richtext-content a[href^="mailto"] {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  color: inherit;
+}
+
 /* Section heading followed by list */
 .custom-section-richtext-page__section-heading + .custom-section-richtext-page__richtext-content {
   margin-top: 0;
