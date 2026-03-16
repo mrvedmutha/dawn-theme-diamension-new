@@ -97,7 +97,6 @@ class LenisRouter {
       this.lenis.destroy();
       this.lenis = null;
       window.lenis = null;
-      console.log('Lenis smooth scroll disabled');
     }
   }
 
@@ -108,7 +107,6 @@ class LenisRouter {
     if (this.shouldEnableLenis()) {
       this.initLenis();
     } else {
-      console.log(`Lenis smooth scroll disabled for template: ${this.currentTemplate || 'unknown'}`);
     }
   }
 }

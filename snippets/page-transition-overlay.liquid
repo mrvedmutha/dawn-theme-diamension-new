@@ -10,8 +10,6 @@
     var fromTransition = sessionStorage.getItem('fromBrillanceTransition');
     if (!fromTransition) return;
 
-    console.log('🎬 Transition detected - Creating seamless overlay');
-
     var bgSnapshot = sessionStorage.getItem('transitionBgSnapshot');
     var ellipseScale = sessionStorage.getItem('transitionEllipseScale') || '5';
     var ellipseColor = sessionStorage.getItem('transitionEllipseColor') || '#fffcf9';
@@ -39,10 +37,7 @@
     overlay.appendChild(bgImage);
     document.documentElement.appendChild(overlay);
 
-    console.log('✅ Overlay created');
-
     function fadeOut() {
-      console.log('🎭 Fading out overlay');
       overlay.style.opacity = '0';
       setTimeout(function() {
         if (overlay.parentNode) overlay.remove();
@@ -50,7 +45,6 @@
         sessionStorage.removeItem('transitionBgSnapshot');
         sessionStorage.removeItem('transitionEllipseScale');
         sessionStorage.removeItem('transitionEllipseColor');
-        console.log('🧹 Cleaned up');
       }, 600);
     }
 

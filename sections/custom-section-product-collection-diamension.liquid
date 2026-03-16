@@ -149,14 +149,6 @@
               </div>
 
               <div class="custom-section-product-collection-diamension__filter-content" data-filter-content>
-                {% comment %} DEBUG: Log available filters {% endcomment %}
-                <script>
-                  console.log('🔍 AVAILABLE FILTERS:');
-                  {% for filter in collection.filters %}
-                    console.log('  Filter: "{{ filter.label }}" | Type: "{{ filter.type }}" | Values: {{ filter.values.size }}');
-                  {% endfor %}
-                </script>
-
                 {% for filter in collection.filters %}
                   {% liquid
                     assign filter_label_lower = filter.label | downcase

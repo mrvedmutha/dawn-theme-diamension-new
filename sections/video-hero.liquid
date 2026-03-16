@@ -372,11 +372,9 @@
                 playPromise
                   .then(() => {
                     // Autoplay started successfully
-                    console.log('Video autoplay started');
                   })
                   .catch((error) => {
                     // Autoplay was prevented, try to play on user interaction
-                    console.log('Autoplay prevented:', error);
                     document.addEventListener(
                       'click',
                       function playOnClick() {
