@@ -292,7 +292,7 @@
 
                       for value in filter.values limit: 3
                         assign value_lower = value.label | downcase
-                        if value_lower contains 'solitaire' or value_lower contains 'band' or value_lower contains 'designer' or value_lower contains 'stud' or value_lower contains 'hoop' or value_lower contains 'everyday' or value_lower contains 'tennis' or value_lower contains 'oval' or value_lower contains 'pendant'
+                        if value_lower contains 'ring' or value_lower contains 'necklace' or value_lower contains 'bracelet' or value_lower contains 'earring' or value_lower contains 'pendant' or value_lower contains 'solitaire' or value_lower contains 'solitare' or value_lower contains 'band' or value_lower contains 'designer' or value_lower contains 'stud' or value_lower contains 'hoop' or value_lower contains 'everyday' or value_lower contains 'tennis' or value_lower contains 'oval'
                           assign is_subcategory = true
                           break
                         elsif value_lower contains 'corporate' or value_lower contains 'celebration' or value_lower contains 'foundation'

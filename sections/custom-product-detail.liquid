@@ -774,10 +774,32 @@
   <!-- Size Guide Modal -->
   {%- liquid
     assign product_type_upper = product.type | upcase
+    assign product_title_lower = product.title | downcase
     assign show_size_guide = false
+    assign size_guide_type = ''
 
-    if product_type_upper == 'RING' or product_type_upper == 'BRACELET' or product_type_upper == 'NECKLACE'
+    if product_type_upper contains 'RING'
       assign show_size_guide = true
+      assign size_guide_type = 'RING'
+    elsif product_type_upper contains 'BRACELET'
+      assign show_size_guide = true
+      assign size_guide_type = 'BRACELET'
+    elsif product_type_upper contains 'NECKLACE'
+      assign show_size_guide = true
+      assign size_guide_type = 'NECKLACE'
+    endif
+
+    if show_size_guide == false
+      if product_title_lower contains 'ring'
+        assign show_size_guide = true
+        assign size_guide_type = 'RING'
+      elsif product_title_lower contains 'bracelet'
+        assign show_size_guide = true
+        assign size_guide_type = 'BRACELET'
+      elsif product_title_lower contains 'necklace'
+        assign show_size_guide = true
+        assign size_guide_type = 'NECKLACE'
+      endif
     endif
   -%}
 
@@ -790,7 +812,7 @@
           &times;
         </button>
         <div class="custom-product-detail__size-guide-scroll" data-size-guide-scroll>
-          {%- case product_type_upper -%}
+          {%- case size_guide_type -%}
             {%- when 'RING' -%}
               <img
                 src="{{ 'size-chart-ring-01.webp' | asset_url }}"
