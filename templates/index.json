@@ -174,103 +174,6 @@
         "tagline": "Whatever the budget, we have got a beautiful piece of jewellery for every YOU!"
       }
     },
-    "image_with_product_hero_AyTzGC": {
-      "type": "image-with-product-hero",
-      "blocks": {
-        "product_pointer_kqwr3X": {
-          "type": "product_pointer",
-          "disabled": true,
-          "settings": {
-            "product": "linear-trinity-emerald-cut-ring",
-            "x_position": "55",
-            "y_position": "90",
-            "label": "02"
-          }
-        },
-        "product_pointer_KjFABw": {
-          "type": "product_pointer",
-          "disabled": true,
-          "settings": {
-            "product": "cascading-laurel-wrap-ring",
-            "x_position": "50",
-            "y_position": "70",
-            "label": "01"
-          }
-        }
-      },
-      "block_order": [
-        "product_pointer_kqwr3X",
-        "product_pointer_KjFABw"
-      ],
-      "name": "Image Hero with Product",
-      "settings": {
-        "background_image": "shopify://shop_images/jewellery_back_showcase.jpg",
-        "heading": "INTO THE RED",
-        "caption": "Jewelry that feels as good as it looks.",
-        "cta_text": "Shop the Collection",
-        "cta_link": "shopify://collections/corporate-comeback",
-        "text_color": "#fffaf5",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0
-      }
-    },
-    "custom_section_four_collection_arch_e3WPan": {
-      "type": "custom-section-four-collection-arch",
-      "blocks": {
-        "collection_card_bfdzcX": {
-          "type": "collection_card",
-          "settings": {
-            "image": "shopify://shop_images/engagement_and_bridal.png",
-            "title": "Engagement & Bridal",
-            "cta_text": "View Collection",
-            "cta_link": "shopify://collections/earrings",
-            "text_color": "#fffaf5"
-          }
-        },
-        "collection_card_P6wW8E": {
-          "type": "collection_card",
-          "settings": {
-            "image": "shopify://shop_images/everyday_essential.png",
-            "title": "Everyday Essentials",
-            "cta_text": "View Collection",
-            "cta_link": "shopify://collections/bracelets",
-            "text_color": "#fffaf5"
-          }
-        },
-        "collection_card_QxP9xT": {
-          "type": "collection_card",
-          "settings": {
-            "image": "shopify://shop_images/statement_jewellery.png",
-            "title": "Statement Jewelry",
-            "cta_text": "View Collection",
-            "cta_link": "shopify://collections",
-            "text_color": "#fffaf5"
-          }
-        },
-        "collection_card_d8Mgf4": {
-          "type": "collection_card",
-          "settings": {
-            "image": "shopify://shop_images/gifts_that_shine.png",
-            "title": "Gifts That Shine",
-            "cta_text": "View Collection",
-            "cta_link": "shopify://collections",
-            "text_color": "#fffaf5"
-          }
-        }
-      },
-      "block_order": [
-        "collection_card_bfdzcX",
-        "collection_card_P6wW8E",
-        "collection_card_QxP9xT",
-        "collection_card_d8Mgf4"
-      ],
-      "name": "Four Collection Arch",
-      "settings": {
-        "heading": "YOUR STYLE, OUR COLLECTION",
-        "heading_color": "#183754",
-        "mobile_aspect_ratio": "9-16"
-      }
-    },
     "headline_ring_collection_gdTW6r": {
       "type": "headline-ring-collection",
       "name": "Headline Ring Collection",
@@ -349,16 +252,6 @@
         "cta_url": "https://www.instagram.com/diamension.official/",
         "show_decorative_ellipse": true
       }
-    },
-    "custom_diamension_before_footer_hero_dmVzVR": {
-      "type": "custom-diamension-before-footer-hero",
-      "name": "Before Footer Hero",
-      "settings": {
-        "quote_text": "\"We believe jewelry should be something you never take off. A companion to your memory, made to last a lifetime, the kind you'll invest in and pass down.\"",
-        "caption_text": "—KARAN, FOUNDER",
-        "product_image": "shopify://shop_images/ring-at-footer-hero-image.png",
-        "image_offset": -496
-      }
     }
   },
   "order": [
@@ -369,11 +262,8 @@
     "custom_section_feature_slider_with_left_image_bQi7qG",
     "custom_section_shop_collection_arch_AH8MpR",
     "custom_section_shop_by_price_HH876J",
-    "image_with_product_hero_AyTzGC",
-    "custom_section_four_collection_arch_e3WPan",
     "headline_ring_collection_gdTW6r",
     "custom_section_brillance_3d_GVr8xz",
-    "custom_section_diamension_follow_insta_rz3x9q",
-    "custom_diamension_before_footer_hero_dmVzVR"
+    "custom_section_diamension_follow_insta_rz3x9q"
   ]
 }

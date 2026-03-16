@@ -18,21 +18,24 @@
           "type": "menu_column",
           "settings": {
             "heading": "SHOP",
-            "menu": "footer-shop"
+            "menu": "footer-shop",
+            "open_in_new_tab": false
           }
         },
         "menu-2": {
           "type": "menu_column",
           "settings": {
             "heading": "SUPPORT",
-            "menu": "footer-menu-support"
+            "menu": "footer-menu-support",
+            "open_in_new_tab": false
           }
         },
         "menu-3": {
           "type": "menu_column",
           "settings": {
             "heading": "DIAMENSIONS",
-            "menu": "footer-menu-diamension"
+            "menu": "footer-menu-diamension",
+            "open_in_new_tab": false
           }
         },
         "menu-4": {
@@ -57,16 +60,9 @@
         "newsletter_description": "Subscribe to the newsletter and uncover more about Diamensions creations patrimony, and craftsmanship stories.",
         "legal_menu": "footer-policies"
       }
-    },
-    "custom-diamension-footer-image": {
-      "type": "custom-diamension-footer-image",
-      "settings": {
-        "footer_image": "shopify://shop_images/footer-home.jpg"
-      }
     }
   },
   "order": [
-    "custom-diamension-footer",
-    "custom-diamension-footer-image"
+    "custom-diamension-footer"
   ]
 }
