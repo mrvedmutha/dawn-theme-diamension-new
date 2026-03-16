@@ -152,8 +152,8 @@
 .custom-section-contact-page__info-email {
   font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 16px;
+  line-height: 24px;
   color: #183754;
   text-decoration: underline;
   text-decoration-skip-ink: none;
@@ -163,6 +163,26 @@
 }
 
 .custom-section-contact-page__info-email:hover {
+  opacity: 0.7;
+}
+
+/* Richtext content tel: and mailto: links */
+.custom-section-contact-page__info-content a[href^="mailto:"],
+.custom-section-contact-page__info-content a[href^="tel:"] {
+  font-family: 'Neue Haas Grotesk Display Pro', 'neue-haas-display', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #183754;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-position: from-font;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.custom-section-contact-page__info-content a[href^="mailto:"]:hover,
+.custom-section-contact-page__info-content a[href^="tel:"]:hover {
   opacity: 0.7;
 }
 
@@ -374,8 +394,8 @@
   }
 
   .custom-section-contact-page__info-email {
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .custom-section-contact-page__form-title {
@@ -481,8 +501,8 @@
   }
 
   .custom-section-contact-page__info-email {
-    font-size: 17px;
-    line-height: 26px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   /* Form adjustments */

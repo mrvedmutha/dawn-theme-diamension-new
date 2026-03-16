@@ -80,7 +80,7 @@
           "type": "richtext_content",
           "settings": {
             "section_heading": "Your Rights",
-            "content": "<ul><li>You have the right to access, update, or delete your personal information at any time.</li><li>You may opt out of marketing communications by clicking the unsubscribe link in our emails or contacting us directly.</li><li>You may request a copy of the data we hold about you by emailing care@diamension.com.</li><li>If you believe your privacy rights have been violated, you may file a complaint with the relevant data protection authority.</li></ul>",
+            "content": "<ul><li>You have the right to access, update, or delete your personal information at any time.</li><li>You may opt out of marketing communications by clicking the unsubscribe link in our emails or contacting us directly.</li><li>You may request a copy of the data we hold about you by emailing <a href=\"mailto:care@diamension.world\">care@diamension.world</a>.</li><li>If you believe your privacy rights have been violated, you may file a complaint with the relevant data protection authority.</li></ul>",
             "content_gap": 42
           }
         },
@@ -96,7 +96,7 @@
           "type": "richtext_content",
           "settings": {
             "section_heading": "Contact Us",
-            "content": "<p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at <strong>care@diamension.com</strong>.</p>",
+            "content": "<p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at <a href=\"mailto:care@diamension.world\"><strong>care@diamension.world</strong></a>.</p>",
             "content_gap": 0
           }
         }

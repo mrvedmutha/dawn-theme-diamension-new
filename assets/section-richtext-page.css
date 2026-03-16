@@ -390,3 +390,8 @@
     line-height: 20px;
   }
 }
+
+/* Mailto links in richtext content */
+.custom-section-richtext-page__richtext-content a[href^="mailto:"] {
+  text-decoration: underline;
+}

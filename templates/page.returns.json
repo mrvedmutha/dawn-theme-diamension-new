@@ -56,7 +56,7 @@
           "type": "richtext_content",
           "settings": {
             "section_heading": "Returns",
-            "content": "<ul><li>Returns are accepted within 7 working days from the date of delivery.</li><li>The product must be unused, unworn, and in original condition.</li><li>The original invoice must be included.</li><li>The jewellery tag must remain intact and attached.</li><li>The diamond certification must be returned along with the jewellery. </li><li>Items that are worn, damaged, or altered will not be eligible for return</li></ul><p></p><p>To request a return, please contact our team at <span style=\"text-decoration:underline\">care@diamension.com</span>.</p>",
+            "content": "<ul><li>Returns are accepted within 7 working days from the date of delivery.</li><li>The product must be unused, unworn, and in original condition.</li><li>The original invoice must be included.</li><li>The jewellery tag must remain intact and attached.</li><li>The diamond certification must be returned along with the jewellery. </li><li>Items that are worn, damaged, or altered will not be eligible for return</li></ul><p></p><p>To request a return, please contact our team at <a href=\"mailto:care@diamension.world\">care@diamension.world</a>.</p>",
             "content_gap": 42
           }
         }

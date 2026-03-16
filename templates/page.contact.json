@@ -52,17 +52,17 @@
             "email_left": "diamension@gmail.com",
             "heading_right": "ORDERS, SHIPPING AND RETURNS",
             "content_right": "<p>Questions about your order, shipping and returns? Please contact:</p>",
-            "email_right": "Info@diamensions.world"
+            "email_right": "info@diamension.world"
           }
         },
         "info_block_2": {
           "type": "info_block",
           "settings": {
             "heading_left": "HEAD QUATERS",
-            "content_left": "<p>Mumbai (H.O)</p><p>Diamension India PVT- FC-9020, Bharat Diamond Bourse, Bandra Kurla Complex, G Block, Bandra East, Mumbai - 400051</p><p>&nbsp;</p><p>+91 2266449999</p>",
+            "content_left": "<p>Mumbai (H.O)</p><p>Diamension India PVT- FC-9020, Bharat Diamond Bourse, Bandra Kurla Complex, G Block, Bandra East, Mumbai - 400051</p><p>&nbsp;</p><p><a href=\"tel:+912266449999\">+91 2266449999</a></p>",
             "email_left": "",
             "heading_right": "DIAMOND MANUFACTURING",
-            "content_right": "<p>Surat</p><p>Diamension INDIA PVT LMT Minaxi Wadi, Katargam, Surat, Gujarat 395004</p><p>&nbsp;</p><p>+91 9833045757</p>",
+            "content_right": "<p>Surat</p><p>Diamension INDIA PVT LMT Minaxi Wadi, Katargam, Surat, Gujarat 395004</p><p>&nbsp;</p><p><a href=\"tel:+919833045757\">+91 9833045757</a></p>",
             "email_right": ""
           }
         },
@@ -70,7 +70,7 @@
           "type": "info_block",
           "settings": {
             "heading_left": "JEWELRY MANUFACTURING",
-            "content_left": "<p>Surat</p><p>DIAMENSION PVT LMT B/H, Gotalawadi Tenement, Near Chunawala Building, Gotalawadi, Katargaum, Surat - 395004</p><p>&nbsp;</p><p>+91 98254 33364</p><p>Jewelry@diamensions.world</p>",
+            "content_left": "<p>Surat</p><p>DIAMENSION PVT LMT B/H, Gotalawadi Tenement, Near Chunawala Building, Gotalawadi, Katargaum, Surat - 395004</p><p>&nbsp;</p><p><a href=\"tel:+919825433364\">+91 98254 33364</a></p><p><a href=\"mailto:jewelry@diamension.world\">jewelry@diamension.world</a></p>",
             "email_left": "",
             "heading_right": "",
             "content_right": "",
