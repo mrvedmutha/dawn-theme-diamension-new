@@ -397,6 +397,7 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .custom-section-product-collection-diamension__load-more-btn:hover {
