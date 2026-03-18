@@ -4,6 +4,7 @@ class HeroFiveProductCarousel {
     this.track = section.querySelector('[data-carousel-track]');
     this.prevButton = section.querySelector('[data-carousel-prev]');
     this.nextButton = section.querySelector('[data-carousel-next]');
+    this.showMoreLink = section.querySelector('[data-show-more-cta]');
 
     if (!this.track || !this.prevButton || !this.nextButton) {
       this.initScrollAnimation();
@@ -20,8 +21,8 @@ class HeroFiveProductCarousel {
     this.track.addEventListener('scroll', () => this.updateArrowsVisibility());
 
     this.updateArrowsVisibility();
-
     this.initScrollAnimation();
+    this.initShowMoreAnimation();
   }
 
   initScrollAnimation() {
@@ -44,6 +45,28 @@ class HeroFiveProductCarousel {
     observer.observe(this.section);
   }
 
+  initShowMoreAnimation() {
+    if (!this.showMoreLink) return;
+
+    this.showMoreLink.addEventListener('mouseenter', () => {
+      this.showMoreLink.classList.remove('animate-exit');
+      this.showMoreLink.classList.add('animate-enter');
+      clearTimeout(this._enterTimer);
+      this._enterTimer = setTimeout(() => {
+        this.showMoreLink.classList.remove('animate-enter');
+      }, 800);
+    });
+
+    this.showMoreLink.addEventListener('mouseleave', () => {
+      this.showMoreLink.classList.remove('animate-enter');
+      this.showMoreLink.classList.add('animate-exit');
+      clearTimeout(this._exitTimer);
+      this._exitTimer = setTimeout(() => {
+        this.showMoreLink.classList.remove('animate-exit');
+      }, 800);
+    });
+  }
+
   getCardWidth() {
     const screenWidth = window.innerWidth;
 
@@ -62,21 +85,11 @@ class HeroFiveProductCarousel {
     const cardWidth = this.getCardWidth();
     const gap = 10;
     const scrollAmount = cardWidth + gap;
-    const currentScroll = this.track.scrollLeft;
-    const maxScroll = this.track.scrollWidth - this.track.clientWidth;
 
-    if (currentScroll >= maxScroll - 5) {
-      const targetScroll = Math.max(0, maxScroll - scrollAmount);
-      this.track.scrollTo({
-        left: targetScroll,
-        behavior: 'smooth'
-      });
-    } else {
-      this.track.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth'
-      });
-    }
+    this.track.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth'
+    });
   }
 
   scrollNext() {
@@ -95,15 +108,15 @@ class HeroFiveProductCarousel {
     const maxScroll = this.track.scrollWidth - this.track.clientWidth;
 
     if (scrollLeft <= 0) {
-      this.prevButton.setAttribute('disabled', '');
+      this.prevButton.classList.add('is-hidden');
     } else {
-      this.prevButton.removeAttribute('disabled');
+      this.prevButton.classList.remove('is-hidden');
     }
 
     if (scrollLeft >= maxScroll - 1) {
-      this.nextButton.setAttribute('disabled', '');
+      this.nextButton.classList.add('is-hidden');
     } else {
-      this.nextButton.removeAttribute('disabled');
+      this.nextButton.classList.remove('is-hidden');
     }
   }
 }

@@ -43,7 +43,7 @@
     <div class="custom-section-hero-five-product__carousel-wrapper">
       {%- comment -%} Left Arrow {%- endcomment -%}
       <button
-        class="custom-section-hero-five-product__arrow custom-section-hero-five-product__arrow--left"
+        class="custom-section-hero-five-product__arrow custom-section-hero-five-product__arrow--left is-hidden"
         aria-label="Previous product"
         data-carousel-prev
       >
@@ -56,10 +56,11 @@
       <div class="custom-section-hero-five-product__carousel" data-carousel>
         <div class="custom-section-hero-five-product__track" data-carousel-track>
           {% assign product_count = 0 %}
-          {% for product in section.settings.collection.products limit: 5 %}
+          {% for product in section.settings.collection.products limit: 20 %}
             {% assign product_count = product_count | plus: 1 %}
             {% assign is_tall = false %}
-            {% if product_count == 1 or product_count == 3 or product_count == 5 %}
+            {% assign remainder = product_count | modulo: 2 %}
+            {% if remainder == 1 %}
               {% assign is_tall = true %}
             {% endif %}
 
@@ -110,6 +111,19 @@
         </svg>
       </button>
     </div>
+
+    {%- comment -%} Show More CTA (only when collection has more than 20 products) {%- endcomment -%}
+    {% if section.settings.collection.products_count > 20 %}
+      <div class="custom-section-hero-five-product__show-more">
+        <a
+          href="{{ section.settings.collection.url }}"
+          class="custom-section-hero-five-product__show-more-link"
+          data-show-more-cta
+        >
+          Show More
+        </a>
+      </div>
+    {% endif %}
   {% endif %}
 </div>
 
@@ -142,7 +156,7 @@
       "type": "collection",
       "id": "collection",
       "label": "Product Collection",
-      "info": "Only the first 5 products will be displayed"
+      "info": "Only the first 20 products will be displayed. A 'Show More' link appears automatically if the collection has more than 20 products."
     }
   ],
   "presets": [

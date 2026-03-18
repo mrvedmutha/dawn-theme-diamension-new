@@ -4,10 +4,10 @@
 
 /* CSS Variables */
 :root {
-  --hero-five-product-wrapper-bg: #FFFAF5;
-  --hero-five-product-card-bg: #EFE9E4;
+  --hero-five-product-wrapper-bg: #fffaf5;
+  --hero-five-product-card-bg: #efe9e4;
   --hero-five-product-text-primary: #183754;
-  --hero-five-product-button-bg: #FFFFFF;
+  --hero-five-product-button-bg: #ffffff;
   --hero-five-product-button-text: #000000;
   --hero-five-product-gap-hero: 60px;
   --hero-five-product-gap-cards: 10px;
@@ -67,7 +67,9 @@
   .custom-section-hero-five-product__hero-logo {
     opacity: 0;
     transform: translate(-50%, 40px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
   }
 
   .custom-section-hero-five-product--animate .custom-section-hero-five-product__hero-logo {
@@ -96,7 +98,7 @@
   font-weight: 300;
   font-size: 30px;
   line-height: 45px;
-  color: #FFFAF5;
+  color: #fffaf5;
   margin: 0;
 }
 
@@ -105,7 +107,9 @@
   .custom-section-hero-five-product__hero-quote {
     opacity: 0;
     transform: translate(-50%, 40px);
-    transition: opacity 0.8s ease-out 0.3s, transform 0.8s ease-out 0.3s;
+    transition:
+      opacity 0.8s ease-out 0.3s,
+      transform 0.8s ease-out 0.3s;
   }
 
   .custom-section-hero-five-product--animate .custom-section-hero-five-product__hero-quote {
@@ -184,7 +188,9 @@
   .custom-section-hero-five-product__card {
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
   }
 
   /* Staggered animation delays for each card */
@@ -197,7 +203,7 @@
   }
 
   .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(3) {
-    transition-delay: 1.0s;
+    transition-delay: 1s;
   }
 
   .custom-section-hero-five-product--animate .custom-section-hero-five-product__card:nth-child(4) {
@@ -289,47 +295,152 @@
 }
 
 /* ================================================================
-   Navigation Arrows (Hidden on Desktop)
+   Navigation Arrows
    ================================================================ */
 
 .custom-section-hero-five-product__arrow {
   position: absolute;
-  top: 50%;
+  top: calc(var(--hero-five-product-card-tall) / 2);
   transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
   background: transparent;
   border: none;
   cursor: pointer;
   z-index: 10;
-  padding: 10px;
-  display: none; /* Hidden on desktop */
+  outline: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover gradient side effect */
+.custom-section-hero-five-product__arrow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: var(--hero-five-product-card-tall);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  width: 150px;
+}
+
+.custom-section-hero-five-product__arrow--left {
+  left: 0;
+}
+
+.custom-section-hero-five-product__arrow--left::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(128, 128, 128, 0.15) 0%, rgba(128, 128, 128, 0) 100%);
+}
+
+.custom-section-hero-five-product__arrow--right {
+  right: 0;
+}
+
+.custom-section-hero-five-product__arrow--right::before {
+  right: 0;
+  background: linear-gradient(270deg, rgba(128, 128, 128, 0.15) 0%, rgba(128, 128, 128, 0) 100%);
+}
+
+.custom-section-hero-five-product__arrow:hover::before {
+  opacity: 1;
 }
 
 .custom-section-hero-five-product__arrow svg {
   display: block;
-}
-
-.custom-section-hero-five-product__arrow--left {
-  left: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .custom-section-hero-five-product__arrow--left svg {
   transform: rotate(90deg);
 }
 
-.custom-section-hero-five-product__arrow--right {
-  right: 10px;
-}
-
 .custom-section-hero-five-product__arrow--right svg {
   transform: rotate(-90deg);
 }
 
-.custom-section-hero-five-product__arrow:hover {
-  opacity: 0.7;
+.custom-section-hero-five-product__arrow svg path {
+  fill: #183754;
+  transition: fill 0.3s ease;
 }
 
-.custom-section-hero-five-product__arrow[disabled] {
-  display: none;
+.custom-section-hero-five-product__arrow:hover svg path {
+  fill: #183754;
+}
+
+/* Hidden state */
+.custom-section-hero-five-product__arrow.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ================================================================
+   Show More CTA
+   ================================================================ */
+
+.custom-section-hero-five-product__show-more {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0px;
+  padding-bottom: 0;
+}
+
+.custom-section-hero-five-product__show-more-link {
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 40px;
+  color: #183754;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  position: relative;
+}
+
+/* Underline */
+.custom-section-hero-five-product__show-more-link::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #183754;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Underline animation */
+@keyframes hero-five-underline-exit-enter {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  51% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.custom-section-hero-five-product__show-more-link.animate-enter::after,
+.custom-section-hero-five-product__show-more-link.animate-exit::after {
+  animation: hero-five-underline-exit-enter 0.8s ease forwards;
 }
 
 /* ================================================================
@@ -342,12 +453,15 @@
   }
 
   .custom-section-hero-five-product__carousel-wrapper {
-    padding: 0 30px 60px 30px;
+    padding: 0 60px 60px 60px;
   }
 
-  /* Show arrows on tablet */
   .custom-section-hero-five-product__arrow {
-    display: block;
+    top: 160px; /* 320px tall card / 2 */
+  }
+
+  .custom-section-hero-five-product__arrow::before {
+    height: 320px;
   }
 
   /* Button always visible on tablet */
@@ -401,8 +515,19 @@
   }
 
   .custom-section-hero-five-product__carousel-wrapper {
-    padding: 0 20px 40px 20px;
+    padding: 0 50px 40px 50px;
     margin-top: 40px;
+  }
+
+  .custom-section-hero-five-product__arrow {
+    top: 140px; /* 280px tall card / 2 */
+    width: 40px;
+    height: 40px;
+  }
+
+  .custom-section-hero-five-product__arrow::before {
+    width: 100px;
+    height: 280px;
   }
 
   /* Button always visible on mobile */
@@ -451,6 +576,9 @@
     left: 16px;
     right: 16px;
   }
+  .custom-section-hero-five-product__show-more {
+    margin: 20px 0px;
+  }
 }
 
 /* ================================================================
@@ -463,8 +591,19 @@
   }
 
   .custom-section-hero-five-product__carousel-wrapper {
-    padding: 0 15px 30px 15px;
+    padding: 0 44px 30px 44px;
     margin-top: 30px;
+  }
+
+  .custom-section-hero-five-product__arrow {
+    top: 125px; /* 250px tall card / 2 */
+    width: 36px;
+    height: 36px;
+  }
+
+  .custom-section-hero-five-product__arrow::before {
+    width: 80px;
+    height: 250px;
   }
 
   /* Product cards - smallest on very small screens */
@@ -514,5 +653,9 @@
   .custom-section-hero-five-product__hero-quote p {
     font-size: 16px;
     line-height: 24px;
+  }
+
+  .custom-section-hero-five-product__show-more-link {
+    font-size: 16px;
   }
 }
