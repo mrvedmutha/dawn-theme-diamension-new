@@ -70,26 +70,23 @@
       const BATCH = 30;
       const total = this.totalFrames;
 
-      let forwardStart = Math.floor(
-        Math.max(from, this._snapFrame(this.desiredFrame)) / BATCH
-      ) * BATCH;
-
-      let next = forwardStart;
+      // Forward pass — jump ahead to user's current position if needed
+      let next = from;
       while (next < total) {
-        const jumpTo = Math.floor(this._snapFrame(this.desiredFrame) / BATCH) * BATCH;
-        if (jumpTo > next && !this.backgroundImages[this._snapFrame(this.desiredFrame)]) {
+        const desiredSnapped = this._snapFrame(this.desiredFrame);
+        const jumpTo = Math.floor(desiredSnapped / BATCH) * BATCH;
+        if (jumpTo > next && !this.backgroundImages[desiredSnapped]) {
           next = jumpTo;
         }
-        await this.loadBatch(next, BATCH);
+        await this.loadBatchParallel(next, BATCH);
         next += BATCH;
       }
 
-      if (forwardStart > from) {
-        next = from;
-        while (next < forwardStart) {
-          await this.loadBatch(next, BATCH);
-          next += BATCH;
-        }
+      // Cleanup pass — fill any gaps left by forward-jumps
+      next = from;
+      while (next < total) {
+        await this.loadBatchParallel(next, BATCH);
+        next += BATCH;
       }
     }
 
@@ -363,6 +360,7 @@
         this.canvasBg,
         this.backgroundUrls
       );
+      this._remainingStarted = false;
 
       try {
         await this.frameEngine.loadBatchParallel(0, 300);
@@ -371,8 +369,7 @@
         console.error('Error loading initial frames:', error);
       }
 
-      this.frameEngine.streamRemaining(300);
-
+      // Remaining frames are streamed lazily once user scrolls past frame 50
       this.playEnterAnimation();
     }
 
@@ -515,6 +512,11 @@
             }
 
             this.frameEngine.drawFrame(targetFrame);
+
+            if (!this._remainingStarted && targetFrame >= 50) {
+              this._remainingStarted = true;
+              this.frameEngine.streamRemaining(300);
+            }
 
             if (this.progressLine) {
               let lineWidth = 0;
