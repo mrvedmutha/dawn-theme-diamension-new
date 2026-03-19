@@ -276,7 +276,7 @@
       backgroundUrls: [
         {%- for i in (0..max_frame) -%}
           {%- assign frame_num = i | plus: 1 | prepend: '000' | slice: -4, 4 -%}
-          "{{ 'custom-section-process-page/background-sequence/DiamensionWebP_V2-F' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
+          "{{ 'custom-section-process-page/assets/background-sequence/Diamension_HiRes_24p-f' | append: frame_num | append: '.webp' | asset_url }}"{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ],
       introScrollVh: {{ section.settings.intro_scroll_vh | default: 10 }},

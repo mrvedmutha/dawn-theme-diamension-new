@@ -1,0 +1,880 @@
+/**
+ * Process Hero Section — Video Test
+ * Scroll-driven storytelling with video scrubbing
+ * Z-index: All layers stay below header (max z:50)
+ */
+
+/* ========================================
+   RESET SECTION DEFAULTS
+   ======================================== */
+
+.section-process-hero-3d-video-test {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ========================================
+   BASE CONTAINER
+   ======================================== */
+
+.process-hero {
+  position: relative;
+  width: 100%;
+  background: var(--bg-color, #fffaf5);
+
+  /* ---- Neue Haas Grotesk Display Pro variables ---- */
+  --font-nhgdp: 'Neue Haas Grotesk Display Pro', sans-serif;
+  --font-nhgdp-light: 400;
+  --font-nhgdp-roman: 500;
+  --font-nhgdp-medium: 600;
+  --font-nhgdp-bold: 700;
+}
+
+/* ========================================
+   PINNED CONTAINER (ScrollTrigger target)
+   ======================================== */
+
+.process-hero__pinned {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-color, #fffaf5);
+}
+
+/* ========================================
+   LAYER 1: BACKGROUND (z:1)
+   ======================================== */
+
+.process-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-color, #fffaf5);
+  z-index: 1;
+}
+
+/* ========================================
+   LAYER 3: VIDEO (z:3)
+   Replaces canvas image sequence
+   Cover fills viewport, centred
+   ======================================== */
+
+.process-hero__video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 3;
+  /* Prevent any default browser video controls / outlines */
+  outline: none;
+  pointer-events: none;
+}
+
+/* ========================================
+   LAYER 5: CONTENT OVERLAY (z:5)
+   2 columns of 25% each, spaced evenly
+   ======================================== */
+
+.process-hero__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ========================================
+   INTRO TEXT (two columns, space-between)
+   ======================================== */
+
+/* Mobile-only intro row — hidden by default */
+.process-hero__intro--mobile {
+  display: none;
+}
+
+/* Mobile-only final panel — hidden by default */
+.process-hero__final--mobile {
+  display: none;
+}
+
+.process-hero__intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  color: var(--text-color, #183754);
+}
+
+.process-hero__intro-left-col {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.process-hero__intro-right-col {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.process-hero__intro-small {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: max(12px, 1.2vw);
+  font-weight: var(--font-nhgdp-roman);
+  line-height: 1.25;
+  color: var(--text-color, #183754);
+  white-space: nowrap;
+}
+
+.process-hero__intro-large {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: max(32px, 5vw);
+  font-weight: var(--font-nhgdp-light);
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--text-color, #183754);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========================================
+   PHASE TEXT (3 phases, absolutely stacked)
+   Left 25%: counter + title
+   Right 25%: description
+   ======================================== */
+
+.process-hero__phase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  color: var(--text-color, #183754);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__phase-counter-container {
+  position: absolute;
+  top: 80px;
+  left: 5%;
+}
+
+.process-hero__phase-left {
+  width: 30%;
+}
+
+.process-hero__phase-right {
+  width: 30%;
+}
+
+.process-hero__phase-counter {
+  display: block;
+  color: #183754;
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 400;
+  line-height: 1.67;
+  white-space: nowrap;
+}
+
+.process-hero__phase-title {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: var(--font-nhgdp-bold);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.process-hero__phase-description {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: var(--font-nhgdp-roman);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ========================================
+   MASK EFFECT (vertical slide reveal)
+   ======================================== */
+
+.process-hero__mask {
+  overflow: hidden;
+  /* pixel-perfect clip at all viewport sizes — prevents subpixel bleed */
+  -webkit-clip-path: inset(0);
+  clip-path: inset(0);
+}
+
+.process-hero__mask > span {
+  display: block;
+  transform: translateY(105%); /* 5% overdrive absorbs any rounding gap */
+}
+
+/* ========================================
+   PROGRESS LINE + DIAMOND DOTS + SCROLL HINT
+   ======================================== */
+
+.process-hero__progress-container {
+  position: absolute;
+  bottom: 80px;
+  left: 5%;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.process-hero__progress-line-col {
+  position: relative;
+  width: 90%;
+  height: 2px;
+  background: rgba(24, 55, 84, 0.2); /* Grey background line always visible */
+}
+
+.process-hero__progress-line {
+  position: absolute;
+  top: 0;
+  left: 0; /* Left-to-right fill */
+  height: 100%;
+  width: 0%;
+  background: var(--text-color, #183754); /* Blue growing line */
+  opacity: 1;
+}
+
+.process-hero__progress-dot {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translate(50%, -50%); /* No scaling */
+  color: rgba(24, 55, 84, 0.2); /* Start grey (same as line background) */
+  opacity: 1;
+}
+
+.process-hero__progress-dot svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.process-hero__progress-dot[data-dot='1'] {
+  right: 75%;
+}
+
+.process-hero__progress-dot[data-dot='2'] {
+  right: 50%;
+}
+
+.process-hero__progress-dot[data-dot='3'] {
+  right: 25%;
+}
+
+.process-hero__progress-scroll-col {
+  width: 10%;
+}
+
+.process-hero__intro-scroll {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 25px;
+  color: var(--text-color, #183754);
+}
+
+/* ========================================
+   IMAGE CARDS (horizontal scroll)
+   ======================================== */
+
+.process-hero__cards-viewport {
+  position: absolute;
+  bottom: 120px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10; /* Ensure cards are above other content */
+}
+
+.process-hero__cards-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  gap: 20px;
+  padding: 0 10%;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__card {
+  flex-shrink: 0;
+  width: 400px;
+}
+
+.process-hero__card-media {
+  position: relative;
+  width: 100%;
+  height: 225px; /* 16:9 aspect ratio */
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.process-hero__card-media img,
+.process-hero__card-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.process-hero__card-title {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  margin: 0;
+  font-size: 14px;
+  color: #fffaf5;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   TRANSITION OVERLAY (z:50)
+   Enter animation ellipse
+   ======================================== */
+
+.process-hero__transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 0%, var(--bg-color, #fffaf5) 100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__transition-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========================================
+   SPACER (creates scroll distance)
+   ======================================== */
+
+.process-hero__spacer {
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ========================================
+   DEFINITION PANEL (4C's)
+   Same absolute-stack layout as phases
+   ======================================== */
+
+.process-hero__definition-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 5% 80px;
+  color: var(--text-color, #183754);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.process-hero__definition-left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.process-hero__definition-heading {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: var(--font-nhgdp-medium);
+  line-height: 1.2;
+}
+
+.process-hero__definition-body {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(15px, 1.4vw, 20px);
+  font-weight: var(--font-nhgdp-light);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.process-hero__definition-right {
+  width: 30%;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  column-gap: 8px;
+  row-gap: 24px;
+  align-items: baseline;
+}
+
+.process-hero__definition-row {
+  display: contents;
+}
+
+/* Ensure each mask sizes to its own content — prevents grid from
+   constraining desc masks to term height when desc wraps to 2+ lines */
+.process-hero__definition-right .process-hero__mask {
+  align-self: start;
+}
+
+.process-hero__definition-term {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(16px, 1.6vw, 24px);
+  font-weight: var(--font-nhgdp-medium);
+  line-height: 1.3;
+  width: 110px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.process-hero__definition-desc {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(14px, 1.3vw, 18px);
+  font-weight: var(--font-nhgdp-roman);
+  line-height: 1.5;
+  opacity: 0.75;
+  flex: 1;
+}
+
+/* ========================================
+   FINAL PANEL (Phase 5 — Diamension Promise)
+   Center-left + center-right + bottom-left
+   No mask-out — stays visible
+   ======================================== */
+
+.process-hero__final-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5% 80px;
+  opacity: 0;
+  visibility: hidden;
+  color: var(--text-color, #183754);
+  pointer-events: none;
+}
+
+/* Transparent wrapper — children become direct flex items of the panel */
+.process-hero__final-center {
+  display: contents;
+}
+
+.process-hero__final-center-left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.process-hero__final-center-right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.process-hero__final-small {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: max(12px, 1.5vw);
+  font-weight: var(--font-nhgdp-roman);
+  line-height: 1.4;
+}
+
+.process-hero__final-heading {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-weight: var(--font-nhgdp-light);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  width: 100%;
+}
+
+/* DIAMENSION: 9 chars — fills ~30vw column, no upper cap */
+.process-hero__final-center-left .process-hero__final-heading {
+  font-size: max(42px, 5vw);
+}
+
+/* PROMISE: 7 chars — fills ~30vw column, no upper cap */
+.process-hero__final-center-right .process-hero__final-heading {
+  font-size: max(54px, 6.4vw);
+}
+
+/* Bottom-left: label + body */
+.process-hero__final-bottom {
+  position: absolute;
+  bottom: 80px;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 280px;
+}
+
+.process-hero__final-label {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: var(--font-nhgdp-medium);
+  line-height: 1.3;
+}
+
+.process-hero__final-body {
+  display: block;
+  font-family: var(--font-nhgdp);
+  font-size: clamp(13px, 1.2vw, 16px);
+  font-weight: var(--font-nhgdp-roman);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Tablet and below: Allow wrapping for descriptions */
+@media (max-width: 1024px) {
+  .process-hero__intro {
+    padding: 0 5%;
+  }
+
+  .process-hero__phase {
+    padding: 0 5%;
+  }
+
+  .process-hero__intro-left-col,
+  .process-hero__intro-right-col,
+  .process-hero__phase-left,
+  .process-hero__phase-right {
+    width: 30%;
+  }
+
+  .process-hero__phase-description {
+    white-space: normal;
+  }
+
+  .process-hero__progress-container {
+    left: 5%;
+    right: 5%;
+  }
+
+  .process-hero__phase-counter-container {
+    left: 5%;
+  }
+
+  /* ── Definition Panel: tablet rework ──────────────────────────────────
+     Top:    heading + body — pinned to top
+     Bottom: 4Cs 2×2 grid — pinned to bottom, centered as a block
+     ──────────────────────────────────────────────────────────────────── */
+  .process-hero__definition-panel {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 160px 8% 60px;
+  }
+
+  /* Top: heading + body centered */
+  .process-hero__definition-left {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Bottom: full-width grid, two card columns pushed to opposite edges */
+  .process-hero__definition-right {
+    width: 100%;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    column-gap: 0;
+    row-gap: 6px; /* term → desc spacing within each card */
+    align-items: start;
+    align-self: unset;
+  }
+
+  /* Term width no longer constrained to a fixed column */
+  .process-hero__definition-term {
+    width: auto;
+  }
+
+  /* Reinforce mask clipping — must stay on the actual mask elements.
+     NO padding here — padding on a mask increases its height, which
+     breaks translateY(105%) and causes the span to bleed through. */
+  .process-hero__definition-right .process-hero__mask {
+    align-self: start;
+    overflow: hidden;
+    -webkit-clip-path: inset(0);
+    clip-path: inset(0);
+  }
+
+  /* ── 2×2 card placement ─────────────────────────────────────────────
+     Target layout:
+       col1 row1: Cut term    │  col2 row1: Clarity term
+       col1 row2: Cut desc    │  col2 row2: Clarity desc
+       col1 row3: Color term  │  col2 row3: Carat term   ← margin-top gap
+       col1 row4: Color desc  │  col2 row4: Carat desc
+     ──────────────────────────────────────────────────────────────────── */
+
+  /* Cut — top-left */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(1) > .process-hero__mask:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(1) > .process-hero__mask:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* Clarity — top-right */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(2) > .process-hero__mask:nth-child(1) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(2) > .process-hero__mask:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  /* Color — bottom-left, margin-top creates the gap between card groups */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(3) > .process-hero__mask:nth-child(1) {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(3) > .process-hero__mask:nth-child(2) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  /* Carat — bottom-right, same margin-top to stay aligned with Color */
+  .process-hero__definition-right .process-hero__definition-row:nth-child(4) > .process-hero__mask:nth-child(1) {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+  .process-hero__definition-right .process-hero__definition-row:nth-child(4) > .process-hero__mask:nth-child(2) {
+    grid-column: 2;
+    grid-row: 4;
+  }
+
+  .process-hero__final-center {
+    padding: 0 5%;
+  }
+
+  .process-hero__final-bottom {
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Mobile: Stack vertically and allow wrapping */
+@media (max-width: 768px) {
+  /* Pin intro to top, centre the mobile block horizontally */
+  .process-hero__intro {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Hide desktop intro cols, show mobile row instead */
+  .process-hero__intro-left-col,
+  .process-hero__intro-right-col {
+    display: none;
+  }
+
+  .process-hero__intro--mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    width: auto;
+    padding-top: 160px;
+  }
+
+  /* Allow combined heading to wrap if needed on narrow screens */
+  .process-hero__intro--mobile .process-hero__intro-large {
+    white-space: normal;
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.1;
+  }
+
+  .process-hero__phase {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 160px 5% 0;
+    gap: 16px;
+  }
+
+  .process-hero__phase-left,
+  .process-hero__phase-right {
+    width: 100%;
+  }
+
+  .process-hero__phase-title {
+    white-space: normal;
+    font-size: clamp(24px, 6vw, 36px);
+  }
+
+  .process-hero__phase-counter-container {
+    top: 60px;
+  }
+
+  .process-hero__progress-container {
+    bottom: 60px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .process-hero__progress-line-col {
+    width: 100%;
+  }
+
+  .process-hero__progress-scroll-col {
+    width: 100%;
+  }
+
+  .process-hero__cards-viewport {
+    bottom: 100px;
+    height: 240px; /* 300px × 0.8 */
+  }
+
+  .process-hero__card {
+    width: 320px; /* 400px × 0.8 */
+  }
+
+  .process-hero__card-media {
+    height: 180px; /* 225px × 0.8 */
+  }
+
+  .process-hero__definition-panel {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 160px 5% 80px;
+  }
+
+  .process-hero__definition-left,
+  .process-hero__definition-right {
+    width: 100%;
+  }
+
+  /* Hide desktop final panel heading groups only */
+  .process-hero__final-center-left,
+  .process-hero__final-center-right {
+    display: none;
+  }
+
+  /* Pin panel to top, centre the mobile block */
+  .process-hero__final-panel {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* Mobile heading block — top, centred as a unit */
+  .process-hero__final--mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: auto;
+    padding-top: 160px;
+  }
+
+  .process-hero__final--mobile .process-hero__final-heading {
+    white-space: normal;
+    font-size: clamp(28px, 8vw, 48px);
+    line-height: 1.1;
+  }
+
+  /* Final Creation label + body — bottom centre on mobile */
+  .process-hero__final-bottom {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 60px;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE — video full cover
+   ======================================== */
+
+@media (max-width: 425px) {
+  .process-hero__video {
+    object-fit: cover;
+  }
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .process-hero__mask > span {
+    transform: none;
+  }
+
+  .process-hero__transition-overlay {
+    transition: none;
+  }
+}

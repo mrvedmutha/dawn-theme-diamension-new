@@ -55,6 +55,17 @@
       }
     }
 
+    async loadBatchParallel(from, count) {
+      const end = Math.min(from + count, this.totalFrames);
+      const promises = [];
+      for (let i = from; i < end; i += this.frameStep) {
+        if (!this.backgroundImages[i]) {
+          promises.push(this.loadImage(i));
+        }
+      }
+      await Promise.all(promises);
+    }
+
     async streamRemaining(from) {
       const BATCH = 30;
       const total = this.totalFrames;
@@ -354,13 +365,13 @@
       );
 
       try {
-        await this.frameEngine.loadBatch(0, 30);
+        await this.frameEngine.loadBatchParallel(0, 300);
         this.frameEngine.drawFrame(0);
       } catch (error) {
         console.error('Error loading initial frames:', error);
       }
 
-      this.frameEngine.streamRemaining(30);
+      this.frameEngine.streamRemaining(300);
 
       this.playEnterAnimation();
     }
