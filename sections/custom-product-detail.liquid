@@ -883,6 +883,7 @@
             "featured_image": {{ variant.featured_image | json }},
             "featured_image_src": {% if variant.featured_image %}{{ variant.featured_image.src | json }}{% else %}null{% endif %},
             "metafields": {
+              "gross_weight": {{ variant.metafields.custom.gross_weight | default: null | json }},
               "metal_weight": {{ variant.metafields.custom.metal_weight | default: null | json }},
               "metal_charges": {{ variant.metafields.custom.metal_charges | default: null | json }},
               "diamond_in_ct": {{ variant.metafields.custom.diamond_in_ct | default: null | json }},
