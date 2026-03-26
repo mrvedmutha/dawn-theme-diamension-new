@@ -972,6 +972,19 @@
   cursor: not-allowed;
 }
 
+/* Product Detail Cards standalone (outside accordion) */
+.custom-product-detail__detail-cards-standalone {
+  border-bottom: 1px solid #cbcbcb;
+  margin-bottom: 8px;
+}
+
+.custom-product-detail__detail-cards-title {
+  font-size: 20px;
+  color: var(--cpd-color-primary);
+  padding: 20px 0 8px;
+  margin: 0;
+}
+
 /* Product Detail Cards (Three-Column Layout) */
 .custom-product-detail__detail-cards {
   display: flex;

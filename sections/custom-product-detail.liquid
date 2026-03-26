@@ -330,16 +330,9 @@
       <div class="custom-product-detail__information">
         <div class="custom-product-detail__accordion">
           {%- comment -%} 1. HARDCODED: Product Details (Three Cards) {%- endcomment -%}
-          <div class="custom-product-detail__accordion-item custom-product-detail__accordion-item--active">
-            <div class="custom-product-detail__accordion-header">
-              <h3 class="custom-product-detail__accordion-title">Product Details</h3>
-              <svg class="custom-product-detail__accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="custom-product-detail__accordion-content">
-              <div class="custom-product-detail__accordion-body custom-product-detail__accordion-body--cards">
-                <div class="custom-product-detail__detail-cards">
+          <div class="custom-product-detail__detail-cards-standalone">
+            <h3 class="custom-product-detail__detail-cards-title">Product Details</h3>
+            <div class="custom-product-detail__detail-cards">
                   {%- comment -%} Card 1: Total Weight {%- endcomment -%}
                   <div class="custom-product-detail__detail-card">
                     <img
@@ -400,8 +393,6 @@
                     </p>
                     <p class="custom-product-detail__detail-label-bottom">Approx. Diamond Weight</p>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
 
