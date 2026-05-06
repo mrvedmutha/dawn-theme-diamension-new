@@ -13,29 +13,29 @@
       "type": "custom-section-image-hero-diamension-the-studio",
       "name": "Custom Image Hero - The Studio",
       "settings": {
-        "image": "shopify://shop_images/sleek-luxury-images.png",
-        "heading": "Sleek Minimal",
+        "image": "shopify://shop_images/0A6A1072_1.webp",
+        "heading": "Over the Cup of Coffee",
         "heading_size": 180,
         "heading_size_tablet": 60,
         "heading_size_mobile": 60,
         "font_family": "bickham-script",
-        "cta_text": "",
-        "cta_link": "#"
+        "cta_text": "Explore",
+        "cta_link": "shopify://collections/over-the-cup-of-coffee"
       }
     },
     "custom_section_diamension_quote_htEpPc": {
       "type": "custom-section-diamension-quote",
       "name": "Diamension Quote",
       "settings": {
-        "quote_text": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance — a quiet power that speaks volumes.</p>"
+        "quote_text": "<p>Over a Cup of Coffee brings together lighter diamond pieces designed for everyday ease. Effortless and fluid, each piece fits into unplanned moments, adding a quiet detail that feels natural and unforced.</p>"
       }
     },
     "custom_section_dynamic_hero_studio_KwHRhL": {
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/sleek-luxury-image-potrait.png",
-        "image_1_overlay_text": "Beauty",
+        "image_1": "shopify://shop_images/0A6A1098_1.webp",
+        "image_1_overlay_text": "",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
         "image_1_overlay_text_size_mobile": 60,
@@ -43,27 +43,29 @@
         "image_2_overlay_text_size_desktop": 160,
         "image_2_overlay_text_size_tablet": 100,
         "image_2_overlay_text_size_mobile": 60,
-        "tagline": "Sleek. Minimal. Commanding.",
-        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+        "tagline": "Just like that.",
+        "description": "<p>Designed to move with you through slow mornings and easy outings, these pieces sit lightly, never overpowering. Subtle in form yet thoughtful in detail, they become a part of your day without asking for attention.</p>"
       }
     },
     "custom_section_two_image_hero_studio_bXbAXF": {
       "type": "custom-section-two-image-hero-studio",
       "name": "Two Image Hero - The Studio",
       "settings": {
-        "left_image": "shopify://shop_images/sleek-luxury-image-3.png",
-        "right_background_image": "shopify://shop_images/sleek-minimal-image-4.png",
+        "left_image": "shopify://shop_images/0A6A1115_1.webp",
+        "right_background_image": "shopify://shop_images/0A6A1130_1.webp",
         "background_color": "#c8102e",
-        "tagline": "For the Ones Who Define Success",
+        "tagline": "Just enough",
         "cta_text": "Explore",
-        "cta_link": "#",
-        "heading": "Sleek Minimal",
+        "cta_link": "shopify://collections/over-the-cup-of-coffee",
+        "heading": "",
         "text_color": "#fffaf5"
       }
     },
     "custom_section_rich_text_diamension_BcGeTw": {
       "type": "custom-section-rich-text-diamension",
-      "custom_css": [],
+      "custom_css": [
+        ".custom-section-rich-text-diamension__headline {max-width: none; font-size: 32px;}"
+      ],
       "name": "Custom Rich Text Diamension",
       "settings": {
         "headline": "For the Ones Who Define Success",
@@ -78,28 +80,28 @@
       "type": "custom-section-hero-five-product",
       "name": "Hero + 5 Products",
       "settings": {
-        "hero_image": "shopify://shop_images/sleek-luxury-images.png",
+        "hero_image": "shopify://shop_images/0A6A1001_1.webp",
         "show_logo": true,
-        "hero_quote": "\"Glamour is a condition, not a commodity.\"",
-        "collection": "custom-collections"
+        "hero_quote": "\"Worn without thinking\"",
+        "collection": "over-the-cup-of-coffee"
       }
     },
     "custom_section_dynamic_hero_studio_6EBrcw": {
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/sleek-luxury-image-4.png",
-        "image_1_overlay_text": "Beauty",
+        "image_1": "shopify://shop_images/0A6A0972_1.webp",
+        "image_1_overlay_text": "",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
         "image_1_overlay_text_size_mobile": 60,
-        "image_2": "shopify://shop_images/lady-holding-mirror-looking-at-herself.png",
-        "image_2_overlay_text": "Beauty",
+        "image_2": "shopify://shop_images/0A6A1104_1.webp",
+        "image_2_overlay_text": "",
         "image_2_overlay_text_size_desktop": 160,
         "image_2_overlay_text_size_tablet": 100,
         "image_2_overlay_text_size_mobile": 60,
-        "tagline": "Sleek. Minimal. Commanding.",
-        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+        "tagline": "It Fits right in",
+        "description": "<p>Each piece is shaped to feel effortless, with soft forms and light structure. Designed for everyday wear, they bring a sense of ease that stays consistent through every moment.</p>"
       }
     },
     "custom_section_glamor_collection_studio_RdX44n": {
@@ -108,37 +110,37 @@
         "product_card_6JwJ6F": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CLR10093_Y_04.jpg",
+            "product_name": "1CT Round Classic Solitaire Ring",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/1ct-round-classic-solitaire-ring"
           }
         },
         "product_card_kMpfJU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CLR10603_R_06.jpg",
+            "product_name": "Serene Oval Pavé Solitaire Ring",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/serene-oval-pave-solitaire-ring"
           }
         },
         "product_card_4wNQR4": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1_58a9c924-ec26-4306-b90f-ed9bcd312944.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CE10062C_W_09.webp",
+            "product_name": "1 CT EACH Six-Prong Brilliant Studs",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/the-six-prong-brilliant-studs"
           }
         },
         "product_card_CatwBU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70042_Yg_F20_1.png",
-            "product_name": "Product Name",
+            "product_image": "shopify://shop_images/CP10030_R_02.webp",
+            "product_name": "The Essence Pear Pendant",
             "cta_text": "View",
-            "cta_link": ""
+            "cta_link": "shopify://products/the-essence-heart-pendant"
           }
         }
       },
@@ -150,7 +152,7 @@
       ],
       "name": "Glamor Collection - Studio",
       "settings": {
-        "background_image": "shopify://shop_images/glamor-collection-image.webp",
+        "background_image": "shopify://shop_images/0A6A0981_1.webp",
         "heading_text": "Glamour",
         "subtitle_text": "is a condition, not a commodity."
       }
@@ -159,8 +161,8 @@
       "type": "custom-rich-text-content-diamension-the-studio",
       "name": "Rich Text Content - The Studio",
       "settings": {
-        "heading": "Elevated for the Boardroom",
-        "description": "Crafted for professionals who value precision, presence, and quiet confidence.",
+        "heading": "Worn without thinking",
+        "description": "Over a Cup of Coffee is about the in-between moments...",
         "text_color": "#183754",
         "background_color": "#fffaf5"
       }
@@ -168,38 +170,66 @@
     "custom_section_image_marquee_MQW87p": {
       "type": "custom-section-image-marquee",
       "blocks": {
+        "image_DwMjVq": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/vlbj5g5m86mxqqgoyesk.webp"
+          }
+        },
+        "image_qapMKW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/aet1rywm6qmwmktqmqni.webp"
+          }
+        },
+        "image_gXDDTb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/iy0eyk6hues0tzvbyu1n.webp"
+          }
+        },
+        "image_e4pAwr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/s5yaz0wkyrqf422wcbru.webp"
+          }
+        },
         "image_W8pjAa": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/image-metopolis-image-2.png"
+            "image": "shopify://shop_images/yaoige5suoxumxcorobi.webp"
           }
         },
         "image_B4CD83": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/image-corporate-comeback.png"
+            "image": "shopify://shop_images/j2e76a4gjh6cfuufv9pc.webp"
           }
         },
         "image_XGcpwN": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Artboard1.webp"
+            "image": "shopify://shop_images/uwapkb20f20e0rtut5xk.webp"
           }
         },
         "image_mCHiXr": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Frame_32.png"
+            "image": "shopify://shop_images/n92qezzkmt7ktfrcxiom.webp"
           }
         },
         "image_BjTnAj": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/LAB09697_1.png"
+            "image": "shopify://shop_images/cr5guyddw0pqzmncwxrl.webp"
           }
         }
       },
       "block_order": [
+        "image_DwMjVq",
+        "image_qapMKW",
+        "image_gXDDTb",
+        "image_e4pAwr",
         "image_W8pjAa",
         "image_B4CD83",
         "image_XGcpwN",
@@ -217,20 +247,26 @@
       "name": "Rich Text Content - The Studio",
       "settings": {
         "heading": "",
-        "description": "\"My two decades as a colourist guides me as a jeweller, especially when working with multicoloured gemstones. For me, the quality of gemstones is a given, but the beauty of jewellery-making is in disrupting the hierarchy of precious stones and mixing them in a fierce amalgamation of modernity and traditionalism.\"",
+        "description": "Over a Cup of Coffee captures the ease of everyday moments, where jewellery feels effortless, intimate, and quietly a part of your story rather than the centre of it.",
         "text_color": "#183754",
         "background_color": "#fffaf5"
       }
     },
     "custom_section_editorial_hero_qBFJ7c": {
       "type": "custom-section-editorial-hero",
+      "custom_css": [
+        ".custom-section-editorial-hero__heading {font-size: 10vw;}",
+        "@media (max-width: 1024px) {hero__heading {font-size: 6vw; }}",
+        "@media (max-width: 767px) {hero__heading {font-size: 4vw; }}",
+        "@media (max-width: 375px) {hero__heading {font-size: 4vw; }}"
+      ],
       "name": "Editorial Hero",
       "settings": {
-        "background_image": "shopify://shop_images/sleek-luxury-images.png",
-        "heading": "Jewellery",
-        "tagline": "will outlast fashion, and all of us.",
+        "background_image": "shopify://shop_images/0A6A1127_1.webp",
+        "heading": "Ease into everyday elegance",
+        "tagline": "",
         "cta_text": "Explore Collections",
-        "cta_link": "#"
+        "cta_link": "shopify://collections/over-the-cup-of-coffee"
       }
     }
   },

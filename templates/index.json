@@ -42,23 +42,13 @@
             "video_youtube_vimeo": ""
           }
         },
-        "category_TyLE4h": {
-          "type": "category",
-          "settings": {
-            "category_name": "Necklace",
-            "collection": "necklace",
-            "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/c7b0669167bb4dd5a0fd70688715a08d.webm",
-            "video_youtube_vimeo": ""
-          }
-        },
         "category_Tr3Nfg": {
           "type": "category",
           "settings": {
             "category_name": "Rings",
             "collection": "rings",
             "description": "",
-            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/ebba22304f5e4fb8ae79c24a789d45e6.webm",
+            "video_direct_url": "https://cdn.shopify.com/videos/c/o/v/0f20dc6822f049b2aa8a3be838586aa5.webm",
             "video_youtube_vimeo": ""
           }
         },
@@ -85,7 +75,6 @@
       },
       "block_order": [
         "category_PRJiVp",
-        "category_TyLE4h",
         "category_Tr3Nfg",
         "category_bnDGXH",
         "category_bKBkPD"

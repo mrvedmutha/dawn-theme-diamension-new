@@ -13,29 +13,29 @@
       "type": "custom-section-image-hero-diamension-the-studio",
       "name": "Custom Image Hero - The Studio",
       "settings": {
-        "image": "shopify://shop_images/image-corporate-comeback.png",
-        "heading": "Corporate Vibes",
+        "image": "shopify://shop_images/summer-of-26-studio-main-cover.webp",
+        "heading": "Summer of 26",
         "heading_size": 180,
         "heading_size_tablet": 60,
         "heading_size_mobile": 60,
         "font_family": "bickham-script",
-        "cta_text": "",
-        "cta_link": "#"
+        "cta_text": "Explore",
+        "cta_link": "shopify://collections/summer-of-26"
       }
     },
     "custom_section_diamension_quote_htEpPc": {
       "type": "custom-section-diamension-quote",
       "name": "Diamension Quote",
       "settings": {
-        "quote_text": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance — a quiet power that speaks volumes.</p>"
+        "quote_text": "<p>The Summer of 26 unfolds through blooming diamond forms, each piece inspired by flowers at their peak. Light, open, and quietly radiant, these designs capture the softness of the season while holding their brilliance long after it passes.</p>"
       }
     },
     "custom_section_dynamic_hero_studio_KwHRhL": {
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/jew-with-typewriter.png",
-        "image_1_overlay_text": "Beauty",
+        "image_1": "shopify://shop_images/summer-of-26-image-2.webp",
+        "image_1_overlay_text": "",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
         "image_1_overlay_text_size_mobile": 60,
@@ -43,21 +43,21 @@
         "image_2_overlay_text_size_desktop": 160,
         "image_2_overlay_text_size_tablet": 100,
         "image_2_overlay_text_size_mobile": 60,
-        "tagline": "Sleek. Minimal. Commanding.",
-        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+        "tagline": "This is what summer feels like.",
+        "description": "<p>Inspired by bloom and built in light, these pieces move effortlessly with you. Designed to feel easy in the moment, yet lasting far beyond it, they reflect a balance of softness and strength.</p>"
       }
     },
     "custom_section_two_image_hero_studio_bXbAXF": {
       "type": "custom-section-two-image-hero-studio",
       "name": "Two Image Hero - The Studio",
       "settings": {
-        "left_image": "shopify://shop_images/lady-hand-jewellery-in-red-top.png",
-        "right_background_image": "shopify://shop_images/neck-bracelet-in-red-background.png",
+        "left_image": "shopify://shop_images/summer-of-26-image-2-1212.webp",
+        "right_background_image": "shopify://shop_images/summer-of-26-image-2-1214.webp",
         "background_color": "#c8102e",
-        "tagline": "For the Ones Who Define Success",
+        "tagline": "Enter The Summer of 26",
         "cta_text": "Explore",
-        "cta_link": "shopify://collections/corporate-comeback",
-        "heading": "Sleek Minimal",
+        "cta_link": "shopify://collections/summer-of-26",
+        "heading": "",
         "text_color": "#fffaf5"
       }
     },
@@ -66,8 +66,8 @@
       "custom_css": [],
       "name": "Custom Rich Text Diamension",
       "settings": {
-        "headline": "For the Ones Who Define Success",
-        "subtext": "Because brilliance belongs not just in moments of celebration,  but in every meeting, every pitch, every victory — big or small.",
+        "headline": "Somewhere between undone and ready",
+        "subtext": "Each piece is shaped like a bloom in its fullest form, opening in light and held in structure. A quiet expression of summer, designed to be worn with ease.",
         "headline_color": "#183754",
         "subtext_color": "#3e6282",
         "background_color": "#fffaf5",
@@ -78,28 +78,28 @@
       "type": "custom-section-hero-five-product",
       "name": "Hero + 5 Products",
       "settings": {
-        "hero_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
+        "hero_image": "shopify://shop_images/summer-of-26-image-3-1219-1.webp",
         "show_logo": true,
-        "hero_quote": "\"Glamour is a condition, not a commodity.\"",
-        "collection": "corporate-comeback"
+        "hero_quote": "\"The moment passes. This stays\"",
+        "collection": "summer-of-26"
       }
     },
     "custom_section_dynamic_hero_studio_6EBrcw": {
       "type": "custom-section-dynamic-hero-studio",
       "name": "Dynamic Hero - Studio",
       "settings": {
-        "image_1": "shopify://shop_images/lady-holding-red-phone-wearing-jewellery.png",
-        "image_1_overlay_text": "Beauty",
+        "image_1": "shopify://shop_images/the-sumer-of-26-image-03-02-1176.webp",
+        "image_1_overlay_text": "",
         "image_1_overlay_text_size_desktop": 160,
         "image_1_overlay_text_size_tablet": 100,
         "image_1_overlay_text_size_mobile": 60,
-        "image_2": "shopify://shop_images/lady-holding-mirror-looking-at-herself.png",
-        "image_2_overlay_text": "Beauty",
+        "image_2": "shopify://shop_images/the-sumer-of-26-image-03-01-1210.webp",
+        "image_2_overlay_text": "",
         "image_2_overlay_text_size_desktop": 160,
         "image_2_overlay_text_size_tablet": 100,
         "image_2_overlay_text_size_mobile": 60,
-        "tagline": "Sleek. Minimal. Commanding.",
-        "description": "<p>Created in our solar-powered ateliers, the Solaris ring fuses purposeful design with precision-cut lab-grown diamonds set in 14K rose gold. A symbol of forward-thinking elegance.</p>"
+        "tagline": "Worn for the moment, kept for longer.",
+        "description": "<p>Each piece is shaped like a bloom in its fullest form, opening in light and held in structure. A quiet expression of summer, designed to be worn with ease.</p>"
       }
     },
     "custom_section_glamor_collection_studio_RdX44n": {
@@ -108,37 +108,37 @@
         "product_card_6JwJ6F": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR10107_Y_04.webp",
-            "product_name": "The Celeste Droplet Bracelet",
+            "product_image": "shopify://shop_images/CBR10101A_W_08.webp",
+            "product_name": "The Cascade Pear Bracelet",
             "cta_text": "View",
-            "cta_link": "shopify://products/the-celeste-droplet-bracelet"
+            "cta_link": "shopify://products/the-cascade-pear-bracelet"
           }
         },
         "product_card_kMpfJU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR10103_R_01.webp",
-            "product_name": "The Solis Halo Bolo Bracelet",
+            "product_image": "shopify://shop_images/CLR40178_Y_02.webp",
+            "product_name": "Cascading Laurel Wrap Ring",
             "cta_text": "View",
-            "cta_link": "shopify://products/the-solis-halo-bolo-bracelet"
+            "cta_link": "shopify://products/cascading-laurel-wrap-ring"
           }
         },
         "product_card_4wNQR4": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CLR40563_W_01.webp",
-            "product_name": "The Trinity Marquise Band",
+            "product_image": "shopify://shop_images/CE50072A_Y_01.webp",
+            "product_name": "The Lumina Pear Open Hoops",
             "cta_text": "View",
-            "cta_link": "shopify://products/the-trinity-marquise-band"
+            "cta_link": "shopify://products/the-lumina-pear-open-hoops"
           }
         },
         "product_card_CatwBU": {
           "type": "product_card",
           "settings": {
-            "product_image": "shopify://shop_images/CBR70218_Y_04.webp",
-            "product_name": "Ethereal Cluster Bypass Bangle",
+            "product_image": "shopify://shop_images/CBR70131B_R_01.webp",
+            "product_name": "The 'Toi et Moi' Emerald & Pear Open Bangle",
             "cta_text": "View",
-            "cta_link": "shopify://products/ethereal-cluster-bypass-bangle"
+            "cta_link": "shopify://products/the-toi-et-moi-emerald-pear-open-bangle"
           }
         }
       },
@@ -150,7 +150,7 @@
       ],
       "name": "Glamor Collection - Studio",
       "settings": {
-        "background_image": "shopify://shop_images/glamor-collection-image.webp",
+        "background_image": "shopify://shop_images/0A6A1250_1.webp",
         "heading_text": "Glamour",
         "subtitle_text": "is a condition, not a commodity."
       }
@@ -159,8 +159,8 @@
       "type": "custom-rich-text-content-diamension-the-studio",
       "name": "Rich Text Content - The Studio",
       "settings": {
-        "heading": "Elevated for the Boardroom",
-        "description": "Crafted for professionals who value precision, presence, and quiet confidence.",
+        "heading": "A bloom held in time",
+        "description": "A quiet expression of summer, designed to be worn with ease.",
         "text_color": "#183754",
         "background_color": "#fffaf5"
       }
@@ -168,38 +168,45 @@
     "custom_section_image_marquee_MQW87p": {
       "type": "custom-section-image-marquee",
       "blocks": {
+        "image_MaWGfP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/u5g0ryg5y4pi8c6rvshp.webp"
+          }
+        },
         "image_W8pjAa": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/image-metopolis-image-2.png"
+            "image": "shopify://shop_images/bi8c75fazzutkf09yhq8.webp"
           }
         },
         "image_B4CD83": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/image-corporate-comeback.png"
+            "image": "shopify://shop_images/rjapmzthgx54cqwovwa3.webp"
           }
         },
         "image_XGcpwN": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Artboard1.webp"
+            "image": "shopify://shop_images/utbrnmwvev62hh3qxmpk.webp"
           }
         },
         "image_mCHiXr": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Frame_32.png"
+            "image": "shopify://shop_images/u5g0ryg5y4pi8c6rvshp.webp"
           }
         },
         "image_BjTnAj": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/LAB09697_1.png"
+            "image": "shopify://shop_images/jj7fughxkbabd02u4iss.webp"
           }
         }
       },
       "block_order": [
+        "image_MaWGfP",
         "image_W8pjAa",
         "image_B4CD83",
         "image_XGcpwN",
@@ -217,7 +224,7 @@
       "name": "Rich Text Content - The Studio",
       "settings": {
         "heading": "",
-        "description": "“My two decades as a colourist guides me as a jeweller, especially when working with multicoloured gemstones. For me, the quality of gemstones is a given, but the beauty of jewellery-making is in disrupting the hierarchy of precious stones and mixing them in a fierce amalgamation of modernity and traditionalism.\"",
+        "description": "\"Blooming diamond forms come to life in this first studio, inspired by flowers at their peak. Light, open, and quietly radiant, each piece captures the softness of summer while holding its brilliance long after the moment passes.\"",
         "text_color": "#183754",
         "background_color": "#fffaf5"
       }
@@ -226,11 +233,11 @@
       "type": "custom-section-editorial-hero",
       "name": "Editorial Hero",
       "settings": {
-        "background_image": "shopify://shop_images/lady-typing-in-laptop-hearning-hand-jwellery.png",
-        "heading": "Jewellery",
-        "tagline": "will outlast fashion, and all of us.",
-        "cta_text": "Explore Collections",
-        "cta_link": "shopify://collections/corporate-comeback"
+        "background_image": "shopify://shop_images/iqyyfrjwrkkzuakdwpyo.webp",
+        "heading": "Caught in good light",
+        "tagline": "",
+        "cta_text": "Enter The Summer of 26",
+        "cta_link": "shopify://collections/summer-of-26"
       }
     }
   },

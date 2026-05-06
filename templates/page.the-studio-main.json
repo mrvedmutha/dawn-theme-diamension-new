@@ -20,74 +20,46 @@
         "enable_animation": true
       }
     },
-    "custom_section_two_column_hero_diamension_YceGcH": {
-      "type": "custom-section-two-column-hero-diamension",
-      "blocks": {
-        "image_block_nQJdjM": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/image-metropolis-content.png",
-            "heading": "CELEBRATIONS",
-            "description": "<p>Diamension’s Celebration Line turns life’s biggest moments into timeless memories. Whether marking a milestone, honoring success, or gifting someone special, each piece shines with understated brilliance.</p>",
-            "button_text": "EXPLORE",
-            "button_link": "shopify://pages/celebrations"
-          }
-        },
-        "image_block_ECPyKi": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/celebration-jewellery-2.jpg",
-            "heading": "",
-            "description": "",
-            "button_text": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_block_nQJdjM",
-        "image_block_ECPyKi"
-      ],
-      "name": "Two Column Hero - The Studio",
-      "settings": {}
+    "custom_section_image_hero_corporate_7dgXYU": {
+      "type": "custom-section-image-hero-corporate",
+      "name": "Image Hero - Corporate",
+      "settings": {
+        "hero_image": "shopify://shop_images/summer-of-26-studio-main-cover_c74e913e-0a33-4180-a326-465819de0b0f.webp",
+        "heading": "Summer of 26",
+        "description": "<p>The Summer of 26 unfolds through blooming diamond forms, each piece inspired by flowers at their peak. Light, open, and quietly radiant, these designs capture the softness of the season while holding their brilliance long after it passes. </p>",
+        "button_text": "EXPLORE",
+        "button_link": "shopify://pages/summer-of-26"
+      }
     },
     "custom_section_sleek_minimal_hero_XKJHVb": {
       "type": "custom-section-sleek-minimal-hero",
       "name": "Sleek Minimal Hero",
       "settings": {
         "background_color": "#fffaf5",
-        "quote_text": "\"A capsule collection for intuitive self-expression throughout party season\"",
-        "hero_image": "shopify://shop_images/image-metropolis-content.png",
-        "heading": "Sleek Minimal",
-        "description": "Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.",
+        "quote_text": "",
+        "hero_image": "shopify://shop_images/over-the-cup-of-coffee-studio-main.webp",
+        "heading": "Over a cup of coffee",
+        "description": "Over a Cup of Coffee moves with ease, with lighter diamond pieces made for unplanned moments and everyday wear. Effortless and fluid, each design carries a quiet charm, adding just enough without ever feeling too much.",
         "button_text": "EXPLORE",
-        "button_link": "shopify://pages/sleek-minimal"
+        "button_link": "shopify://pages/over-the-cup-of-coffee"
       }
     },
     "custom_section_image_hero_corporate_HCmWD4": {
       "type": "custom-section-image-hero-corporate",
       "name": "Image Hero - Corporate",
       "settings": {
-        "hero_image": "shopify://shop_images/image-corporate-comeback.png",
-        "heading": "Corporate Comeback",
-        "description": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance.</p>",
+        "hero_image": "shopify://shop_images/selfmade-studio-main-cover.webp",
+        "heading": "⁠⁠Selfmade",
+        "description": "<p>Selfmade is defined by structure and intent, with diamond pieces that hold their presence with quiet strength. Designed for moments that demand more, each piece balances weight with precision, reflecting confidence, clarity, and a sense of becoming.<br/></p>",
         "button_text": "EXPLORE",
-        "button_link": "shopify://pages/corporate-comeback"
-      }
-    },
-    "custom_section_diamension_quote_p3WEHw": {
-      "type": "custom-section-diamension-quote",
-      "name": "Diamension Quote",
-      "settings": {
-        "quote_text": "<p>Diamension's Corporate line redefines daily luxury for those who lead with confidence. Designed for the boardroom and beyond, each piece reflects understated brilliance — a quiet power that speaks volumes.</p>"
+        "button_link": "shopify://pages/selfmade"
       }
     }
   },
   "order": [
     "custom_rich_text",
-    "custom_section_two_column_hero_diamension_YceGcH",
+    "custom_section_image_hero_corporate_7dgXYU",
     "custom_section_sleek_minimal_hero_XKJHVb",
-    "custom_section_image_hero_corporate_HCmWD4",
-    "custom_section_diamension_quote_p3WEHw"
+    "custom_section_image_hero_corporate_HCmWD4"
   ]
 }

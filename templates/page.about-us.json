@@ -95,15 +95,6 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
-    },
-    "custom_section_founders_vision_tg6pqN": {
-      "type": "custom-section-founders-vision",
-      "name": "Founder's Vision",
-      "settings": {
-        "image": "shopify://shop_images/founder-photo.webp",
-        "heading": "The Founder's Vision",
-        "description": "<p>Diamension was born with a singular vision: to make brilliance better. Backed by over 25 years of expertise from our parent company HVK Diamonds, we combine tradition with cutting-edge technology to redefine what diamonds mean for today's generation.</p><p>From manufacturing lab-grown diamonds and gold to supplying leading global jewelers, our journey is one of precision, integrity, and ambition.</p>"
-      }
     }
   },
   "order": [
@@ -112,7 +103,6 @@
     "custom_section_rtc_quote_6xziPn",
     "custom_section_brand_story_38EUKL",
     "custom_section_bespoke_creations_mHkd4Y",
-    "custom_section_sustainability_hero_9ynihn",
-    "custom_section_founders_vision_tg6pqN"
+    "custom_section_sustainability_hero_9ynihn"
   ]
 }
